@@ -6,20 +6,30 @@
 
         <div class="form-group form-control-sm">
           <label for="title">Titre</label>
-          <input type="text" id="title"
-                 class="form-control" formControlName="title">
+          <input type="text" id="title" class="form-control" formControlName="title"
+            [ngClass]="{ 'is-invalid': shouldShowTitleError() }">
+              <div *ngIf="f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Le titre est obligatoire</div>
+              </div>
         </div>
 
         <div class="form-group form-control-sm">
           <label for="author">Auteur</label>
-          <input type="text" id="author"
-                 class="form-control" formControlName="author">
+          <input type="text" id="author" class="form-control" formControlName="author"
+            [ngClass]="{ 'is-invalid': shouldShowAuthorError() }">
+            <div *ngIf="f.author.errors" class="invalid-feedback">
+              <div *ngIf="f.author.errors.required">L'auteur est obligatoire</div>
+            </div>
         </div>
 
         <div class="form-group form-control-sm">
           <label for="content">Description</label>
-          <textarea id="content" class="form-control" formControlName="content">
+          <textarea id="content" class="form-control" formControlName="content"
+            [ngClass]="{ 'is-invalid': shouldShowContentError() }">
           </textarea>
+          <div *ngIf="f.content.errors" class="invalid-feedback">
+            <div *ngIf="f.content.errors.required">Le contenu est obligatoire</div>
+          </div>
         </div>
 
         <div class="form-group form-control-sm">
@@ -34,8 +44,11 @@
           [placeholder]="'Sélectionner un ou plusieurs Tags'"
           [settings]="dropdownSettings"
           [data]="dropdownList"
-          (onSelect)="onItemSelect($event)">
+          [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }">
           </ng-multiselect-dropdown>
+          <div *ngIf="f.tagsKey.errors" class="invalid-feedback">
+            <div *ngIf="f.tagsKey.errors.required">Minimum un tag doit être sélectionné</div>
+          </div>
         </div>
 
         <button class="btn btn-success" type="submit" [disabled]="productForm.invalid">Enregistrer</button>

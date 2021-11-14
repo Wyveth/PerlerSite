@@ -66,22 +66,26 @@ export class ProductService {
   }
 
   /// Create Product /// OK
-  createNewProduct(newProduct: Product) {
+  createProduct(product: Product) {
     addDoc(this.db, { key: this.utilsService.getKey(), 
-      title: newProduct.title, 
-      author: newProduct.author, 
-      content: newProduct.content, 
-      pictureUrl: newProduct.pictureUrl,
-      tagsKey: newProduct.tagsKey });
-  }
-
-  updateProduct(product: Product) {
-    updateDoc(this.db, { 
       title: product.title, 
       author: product.author, 
       content: product.content, 
       pictureUrl: product.pictureUrl,
       tagsKey: product.tagsKey });
+  }
+
+  updateProduct(key: string, product: Product) {
+    this.product.title = product.title;
+    this.product.author = product.author;
+    this.product.content = product.content;
+    if(product.pictureUrl !== undefined)
+      this.product.pictureUrl = product.pictureUrl
+    this.product.tagsKey = product.tagsKey
+
+    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
+      updateDoc(doc.ref, this.product);
+    });
   }
 
   /// Remove Product + Suppression de l'image /// OK

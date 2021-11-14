@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-//import { addDoc, collection,  deleteDoc,  doc, getDoc, getDocs, getFirestore, query, setDoc, updateDoc, where  } from 'firebase/firestore';
 import { Observable, of, Subject, timer } from 'rxjs';
 import { Tag } from '../Models/Tag.Model';
-import { Firestore, collectionData, collection, addDoc, where, query, getDocs, deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
-import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Firestore, collectionData, collection, addDoc, where, query, getDocs, deleteDoc, updateDoc, DocumentReference } from '@angular/fire/firestore';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { UtilsService } from './Utils.service';
 import { HttpClient } from '@angular/common/http';
@@ -69,9 +68,12 @@ export class TagService {
 
   /// Create Tag /// OK
   createTag(tag: Tag) {
-    addDoc(this.db, { key: this.utilsService.getKey(), code: tag.code, libelle: tag.libelle });
+    addDoc(this.db, { key: this.utilsService.getKey(), 
+      code: tag.code, 
+      libelle: tag.libelle });
   }
 
+  /// Update Tag /// OK
   updateTag(key: string, tag: Tag) {
     this.tag.code = tag.code;
     this.tag.libelle = tag.libelle;

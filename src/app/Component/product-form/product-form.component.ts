@@ -19,8 +19,6 @@ export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   id!: string;
   isAddMode!: boolean;
-  loading = false;
-  submitted = false;
   dropdownList!: Array<{ key: string, code: string }>;
   dropdownSettings: any;
   fileIsUploading = false;
@@ -59,8 +57,8 @@ export class ProductFormComponent implements OnInit {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      selectAllText: 'Tout sélectionner',
+      unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
       noDataAvailablePlaceholderText: 'Aucun tag n\'est disponible'
     };
@@ -76,27 +74,40 @@ export class ProductFormComponent implements OnInit {
     });
 
     if (!this.isAddMode) {
-      console.log('EditMode');
       this.productService.getProduct(this.id).then((data: any) => {
         this.productForm.patchValue(data);
       });
     }
   }
 
+  /// Obtenir pour un accès facile aux champs de formulaire
+  get f() { return this.productForm.controls; }
+
   onSubmitForm() {
-    this.submitted = true;
+    const formValue = this.productForm.value;
+    const product = new Product(
+      formValue['title'],
+      formValue['author'],
+      formValue['content']
+    );
 
-    // stop here if form is invalid
-    if (this.productForm.invalid) {
-      return;
+    if (this.fileUrl && this.fileUrl !== '') {
+      product.pictureUrl = this.fileUrl;
+      product.file = this.fileObject;
+      this.filesUploadService.saveFileData(product.file);
     }
 
-    this.loading = true;
+    if (formValue.tagsKey && formValue.tagsKey !== '') {
+      product.tagsKey = formValue.tagsKey;
+    }
+
     if (this.isAddMode) {
-      this.createProduct();
+      this.productService.createProduct(product);
     } else {
-      //this.updateUser();
+      this.productService.updateProduct(this.id, product);
     }
+
+    this.router.navigate(['/products']);
   }
 
   onUploadFile(file: File) {
@@ -115,61 +126,25 @@ export class ProductFormComponent implements OnInit {
     this.onUploadFile(event.target.files[0]);
   }
 
-  onItemSelect($event: any) {
-    console.log('$event is ', $event);
+  /*Validation Erreur*/
+  shouldShowTitleError() {
+    const title = this.productForm.controls.title;
+    return title.touched && title.hasError('required');
   }
 
-  /*setDefaultSelection() {
-    let item = this.getData()[0];
-    this.productForm.patchValue({
-      tagsKey: [{
-        item_id: item['item_id'],
-        item_text: item['item_text']
-      }]
-    })
-  }*/
-
-  private createProduct() {
-    const formValue = this.productForm.value;
-    const newProduct = new Product(
-      formValue['title'],
-      formValue['author'],
-      formValue['content']
-    );
-
-    if (this.fileUrl && this.fileUrl !== '') {
-      newProduct.pictureUrl = this.fileUrl;
-      newProduct.file = this.fileObject;
-      this.filesUploadService.saveFileData(newProduct.file);
-    }
-
-    if (this.fileUrl && this.fileUrl !== '') {
-      newProduct.tagsKey = formValue.tagsKey;
-    }
-
-    this.productService.createNewProduct(newProduct);
-    this.router.navigate(['/products']);
+  shouldShowAuthorError() {
+    const author = this.productForm.controls.author;
+    return author.touched && author.hasError('required');
   }
 
-  private editProduct() {
-    const formValue = this.productForm.value;
-    const newProduct = new Product(
-      formValue['title'],
-      formValue['author'],
-      formValue['content']
-    );
-
-    if (this.fileUrl && this.fileUrl !== '') {
-      newProduct.pictureUrl = this.fileUrl;
-      newProduct.file = this.fileObject;
-      this.filesUploadService.saveFileData(newProduct.file);
-    }
-
-    if (this.fileUrl && this.fileUrl !== '') {
-      newProduct.tagsKey = formValue.tagsKey;
-    }
-
-    this.productService.createNewProduct(newProduct);
-    this.router.navigate(['/products']);
+  shouldShowContentError() {
+    const content = this.productForm.controls.content;
+    return content.touched && content.hasError('required');
   }
+
+  shouldShowTagsKeyError() {
+    const tagsKey = this.productForm.controls.tagsKey;
+    return tagsKey.touched && tagsKey.hasError('required');
+  }
+  /* Fin Validation Error */
 }
