@@ -71,17 +71,12 @@ export class TagFormComponent implements OnInit {
   }
 
   /*Validation Erreur*/
-  shouldShowCodeRequiredError() {
+  shouldShowCodeError() {
     const code = this.tagForm.controls.code;
-    return code.touched && code.hasError('required');
+    return code.touched && (code.hasError('required') || code.hasError('tagCodeExists'));
   }
 
-  shouldShowCodeUniqueError() {
-    const code = this.tagForm.controls.code;
-    return code.touched && code.hasError('tagCodeExists');
-  }
-
-  shouldShowLibelleRequiredError() {
+  shouldShowLibelleError() {
     const libelle = this.tagForm.controls.libelle;
     return libelle.touched && libelle.hasError('required');
   }
