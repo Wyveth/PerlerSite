@@ -75,6 +75,7 @@ export class ProductService {
       tagsKey: product.tagsKey });
   }
 
+  /// Update Product /// OK
   updateProduct(key: string, product: Product) {
     this.product.title = product.title;
     this.product.author = product.author;
@@ -96,18 +97,8 @@ export class ProductService {
       });
     }
 
-    var qry = query(this.db, where("key", "==", product.key));
-
-    getDocs(qry).then((querySnapshot) => {
-      if (querySnapshot) {
-        console.log("Document data:", querySnapshot);
-      } else {
-        // doc.data() will be undefined in this case
-        console.error("No such document!");
-      }
-      querySnapshot.forEach(function (doc) {
-        deleteDoc(doc.ref);
-      });
+    this.utilsService.getDocByKey(this.db, product.key).then((doc: any) => {
+      deleteDoc(doc.ref);
     });
   }
 
