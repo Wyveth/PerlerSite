@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <h2>Enregistrer un nouveau tag</h2>
+    <form [formGroup]="tagForm" (ngSubmit)="onSubmitForm()">
+      <div class="form-group form-control-sm">
+        <label for="code">Code</label>
+        <input type="text" id="code" class="form-control" formControlName="code"
+          [ngClass]="{'is-invalid': shouldShowCodeRequiredError()}">
+        <div *ngIf="shouldShowCodeRequiredError()" class="invalid-feedback">Le code est obligatoire</div>
+        <div *ngIf="!shouldShowCodeUniqueError()" class="invalid-feedback">Le code doit être unique</div>
+
+        <div *ngIf="f.code.errors" class="invalid-feedback">
+          <div *ngIf="f.code.errors">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group form-control-sm">
+        <label for="libelle">Libelle</label>
+        <input type="text" id="libelle" class="form-control" formControlName="libelle"
+          [ngClass]="{ 'is-invalid': shouldShowLibelleRequiredError() }">
+        <div *ngIf="shouldShowLibelleRequiredError()" class="invalid-feedback">Le libelle est requis</div>
+        <div *ngIf="f.libelle.errors" class="invalid-feedback">
+          <div *ngIf="f.libelle.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <button class="btn btn-success" type="submit" [disabled]="tagForm.invalid">Enregistrer</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "perlerwyveth": {
+      "hosting": {
+        "PerlerWyveth": [
+          "perlerwyveth"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "perlerwyveth"
+  }
+}

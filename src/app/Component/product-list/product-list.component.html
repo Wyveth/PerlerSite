@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col" style="text-align:center;">
+    <h2>Les Produits</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h2>Vos Produits</h2>
+    <div class="list-group">
+      <button
+        class="list-group-item"
+        *ngFor="let product of products; let i = index"
+        (click)="onViewProduct(product.key)">
+        <h3 class="list-group-item-heading">
+          {{ product.title }}
+          <button class="btn btn-default pull-right" (click)="onEditProduct(product.key)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-default pull-right" (click)="onDeleteProduct(product)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </h3>
+        <p class="list-group-item-text">{{ product.author }}</p>
+      </button>
+    </div>
+    <button class="btn btn-primary" (click)="onNewProduct()">Nouveau Produit</button>
+  </div>
+</div>
+
+<div class="row">
+  <div *ngFor="let product of products; let i = index" class="card col-6" style="width: 18rem;">
+    <img src="{{ product.pictureUrl }}" class="card-img-top" alt="test">
+    <div class="card-body">
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+  <div class="col" *ngFor="let product of products; let i = index">
+    <div class="card shadow-sm">
+      <div class="card-head">
+        <img style="max-height: 50%;" class="bd-placeholder-img card-img-top" src="{{ product.pictureUrl }}" role="img" aria-label="Placeholder: Test" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{ product.title }}</p>
+        <p class="card-text">{{ product.content }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-search"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-trash"></i></button>
+          </div>
+          <small class="text-muted">{{ product.author }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col" *ngFor="let product of products; let i = index">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">World</strong>
+        <h3 class="mb-0">{{ product.title }}</h3>
+        <div class="mb-1 text-muted">{{ product.author }}</div>
+        <p class="card-text mb-auto">{{ product.content }}</p>
+        <a href="#" class="stretched-link">Continue reading</a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+        <img class="bd-placeholder-img" width="200" height="250" src="{{ product.pictureUrl }}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" />
+      </div>
+    </div>
+  </div>
+</div>
