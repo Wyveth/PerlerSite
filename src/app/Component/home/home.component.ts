@@ -8,15 +8,10 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private router: Router){}
+  constructor(private router: Router){
+  }
 
   ngOnInit() {
-    this.loadJsFile("assets/vendor/glightbox/js/glightbox.min.js");
-    this.loadJsFile("assets/vendor/isotope-layout/isotope.pkgd.min.js");
-    this.loadJsFile("assets/vendor/swiper/swiper-bundle.min.js");
-    this.loadJsFile("assets/vendor/typed.js/typed.min.js");
-    this.loadJsFile("assets/vendor/waypoints/noframework.waypoints.js");
     this.loadJsFile("assets/js/main.js");
   }
   
@@ -27,3 +22,4 @@ export class HomeComponent implements OnInit {
     document.getElementsByTagName('head')[0].appendChild(node);
   }  
 }
+

@@ -38,7 +38,12 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js"
+              "node_modules/aos/dist/aos.js",
+              "node_modules/glightbox/dist/js/glightbox.min.js",
+              "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
+              "node_modules/swiper/swiper-bundle.min.js",
+              "node_modules/typed.js/lib/typed.min.js",
+              "node_modules/waypoints/lib/noframework.waypoints.js"
             ]
           },
           "configurations": {
@@ -112,7 +117,12 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js"
+              "node_modules/aos/dist/aos.js",
+              "node_modules/glightbox/dist/js/glightbox.min.js",
+              "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
+              "node_modules/swiper/swiper-bundle.min.js",
+              "node_modules/typed.js/lib/typed.min.js",
+              "node_modules/waypoints/lib/noframework.waypoints.js"
             ]
           }
         },
