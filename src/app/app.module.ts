@@ -35,6 +35,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FileUploadService } from './Shared/Services/UploadFile.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { UtilsService } from './Shared/Services/Utils.service';
+import { SectionWelcomeComponent } from './Component/section-welcome/section-welcome.component';
+import { SectionAboutComponent } from './Component/section-about/section-about.component';
+import { SectionResumeComponent } from './Component/section-resume/section-resume.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -55,6 +58,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
+    SectionWelcomeComponent,
+    SectionAboutComponent,
+    SectionResumeComponent,
     HeaderComponent,
     SignupComponent,
     SigninComponent,

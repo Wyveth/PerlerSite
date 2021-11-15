@@ -38,8 +38,7 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js",
-              "node_modules/isotope-layout/dist/isotope.pkgd.min.js"
+              "node_modules/aos/dist/aos.js"
             ]
           },
           "configurations": {
@@ -113,8 +112,7 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js",
-              "node_modules/isotope-layout/dist/isotop.pkgd.min.js"
+              "node_modules/aos/dist/aos.js"
             ]
           }
         },
