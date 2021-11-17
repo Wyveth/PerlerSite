@@ -38,6 +38,9 @@ import { UtilsService } from './Shared/Services/Utils.service';
 import { SectionWelcomeComponent } from './Component/section-welcome/section-welcome.component';
 import { SectionAboutComponent } from './Component/section-about/section-about.component';
 import { SectionResumeComponent } from './Component/section-resume/section-resume.component';
+import { SectionPortfolioComponent } from './Component/section-portfolio/section-portfolio.component';
+import { SectionContactComponent } from './Component/section-contact/section-contact.component';
+import { BreadcrumbsComponent } from './Shared/Component/breadcrumbs/breadcrumbs.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -61,7 +64,10 @@ const appRoutes: Routes = [
     SectionWelcomeComponent,
     SectionAboutComponent,
     SectionResumeComponent,
+    SectionPortfolioComponent,
+    SectionContactComponent,
     HeaderComponent,
+    BreadcrumbsComponent,
     SignupComponent,
     SigninComponent,
     ProductFormComponent,

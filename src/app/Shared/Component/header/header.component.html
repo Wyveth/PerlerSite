@@ -1,70 +1,25 @@
-<!--<header>
-  <div class="px-3 py-2 bg-dark text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
-
-        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-          <li routerLinkActive="active">
-            <a routerLink="home" class="nav-link text-secondary" data-aos="fade-up" data-aos-duration="3000">
-              <i class="fas fa-home" style="font-size: 24px;"></i>
-              Accueil
-            </a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="products" class="nav-link text-secondary">
-              <i class="fas fa-th-list" style="font-size: 24px;"></i>
-              Produits
-            </a>
-          </li>
-          <li routerLinkActive="active">
-            <a routerLink="tags" class="nav-link text-secondary">
-              <i class="fas fa-th-list" style="font-size: 24px;"></i>
-              Tags
-            </a>
-          </li>
-          <li routerLinkActive="active" *ngIf="!isAuth">
-            <a routerLink="auth/signup">Créer un compte</a>
-          </li>
-          <li routerLinkActive="active" *ngIf="!isAuth">
-            <a routerLink="auth/signin">Connexion</a>
-          </li>
-          <li>
-            <a (click)="onSignOut()" style="cursor:pointer" *ngIf="isAuth">Déconnexion</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</header>-->
-
 <!-- ======= Header ======= -->
-<!--<header id="header" class="header fixed-top header-scrolled">
+<header id="header" class="header fixed-top">
   <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
     <a href="index.html" class="logo d-flex align-items-center nav-link">
       <img src="assets/img/logo.png" alt="">
-      <span>Wyveth</span>
+      <span>Wyveth Perler</span>
     </a>
 
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="nav-link scrollto active" href="#hero"><i class="ri-home-4-line"></i>Home</a></li>
-        <li><a class="nav-link scrollto" href="#about">About</a></li>
-        <li><a class="nav-link scrollto" href="#services">Services</a></li>
-        <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+        <li><a class="nav-link scrollto active" href="#hero"><i class="ri-home-4-line"></i>Accueil</a></li>
+        <li><a class="nav-link scrollto" href="#about">A propos</a></li>
+        <li><a class="nav-link scrollto" href="#portfolio">Mes réalisations</a></li>
         <li><a class="nav-link" href="blog.html">Blog</a></li>
         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         <li class="dropdown"><a href="#" class="nav-link"><span><i class="ri-account-circle-line"></i></span><i class="bi bi-chevron-down"></i></a>
           <ul>
-            --><!--<li routerLinkActive="active" *ngIf="!isAuth">
+            <!--<li routerLinkActive="active" *ngIf="!isAuth">
               <a routerLink="auth/signup" class="nav-link">Créer un compte</a>
             </li>-->
-            <!--<li routerLinkActive="active" *ngIf="!isAuth">
+            <li routerLinkActive="active" *ngIf="!isAuth">
               <a routerLink="auth/signin" class="nav-link">Connexion</a>
             </li>
             <li><a class="nav-link" *ngIf="isAuth">Profil</a></li>
@@ -82,27 +37,7 @@
         
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>--><!-- .navbar -->
+    </nav><!-- .navbar -->
 
-  <!--</div>
-</header>--><!-- End Header -->
-
-<!-- ======= Mobile nav toggle button ======= -->
-  <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
-
-    <nav id="navbar" class="navbar nav-menu">
-      <ul>
-        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-        <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-        <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-        <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
-        <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
-        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-        <li><a class="nav-link scrollto"><i class="bx bx-user-circle"></i> <span>Profil</span></a></li>
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </header><!-- End Header -->
+  </div>
+</header><!-- End Header -->
