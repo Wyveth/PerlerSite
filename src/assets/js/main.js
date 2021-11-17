@@ -216,6 +216,7 @@
        aos_init();
      }, true);
     }
+
   window.addEventListener('load', () => {
     let portfolioContainer = select('.portfolio-container');
     if (portfolioContainer) {
@@ -307,5 +308,4 @@
   window.addEventListener('load', () => {
     aos_init();
   });
-
 })();
