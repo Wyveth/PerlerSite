@@ -16,7 +16,7 @@ export class SingleProductComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.product = new Product('','','');
+    this.product = new Product('','','','','','','');
     this.key = this.route.snapshot.params['id'];
     this.productService.getProduct(this.key).then(
       (product: any) => {

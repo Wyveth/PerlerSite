@@ -67,10 +67,14 @@ export class ProductFormComponent implements OnInit {
   initForm() {
     this.productForm = this.formBuilder.group({
       title: ['', Validators.required],
+      titleContent: ['', Validators.required],
       content: ['', Validators.required],
       author: ['', Validators.required],
+      size: ['', Validators.required],
+      time: ['', Validators.required],
+      date: ['', Validators.required],
       photo: '',
-      tagsKey: ['', [Validators.required]]
+      tagsKey: ['', Validators.required]
     });
 
     if (!this.isAddMode) {
@@ -87,8 +91,12 @@ export class ProductFormComponent implements OnInit {
     const formValue = this.productForm.value;
     const product = new Product(
       formValue['title'],
+      formValue['titleContent'],
+      formValue['content'],
       formValue['author'],
-      formValue['content']
+      formValue['size'],
+      formValue['time'],
+      formValue['date']
     );
 
     if (this.fileUrl && this.fileUrl !== '') {
@@ -132,9 +140,9 @@ export class ProductFormComponent implements OnInit {
     return title.touched && title.hasError('required');
   }
 
-  shouldShowAuthorError() {
-    const author = this.productForm.controls.author;
-    return author.touched && author.hasError('required');
+  shouldShowTitleContentError() {
+    const titleContent = this.productForm.controls.titleContent;
+    return titleContent.touched && titleContent.hasError('required');
   }
 
   shouldShowContentError() {
@@ -142,6 +150,26 @@ export class ProductFormComponent implements OnInit {
     return content.touched && content.hasError('required');
   }
 
+  shouldShowAuthorError() {
+    const author = this.productForm.controls.author;
+    return author.touched && author.hasError('required');
+  }
+
+  shouldShowSizeError() {
+    const size = this.productForm.controls.size;
+    return size.touched && size.hasError('required');
+  }
+
+  shouldShowTimeError() {
+    const time = this.productForm.controls.time;
+    return time.touched && time.hasError('required');
+  }
+
+  shouldShowDateError() {
+    const date = this.productForm.controls.date;
+    return date.touched && date.hasError('required');
+  }
+  
   shouldShowTagsKeyError() {
     const tagsKey = this.productForm.controls.tagsKey;
     return tagsKey.touched && tagsKey.hasError('required');

@@ -3,7 +3,10 @@
   <div class="container">
     <ol>
       <li><a href="{{ nodeParentUrl }}">{{ nodeParent }}</a></li>
-      <li>{{ nodeChild }}</li>
+      <li *ngIf="!nodeChildUrl">{{ nodeChild }}</li>
+      <li *ngIf="nodeChildUrl"><a href="{{ nodeChildUrl }}">{{ nodeChild }}</a></li>
+      <li *ngIf="!nodeChildChildUrl">{{ nodeChildChild }}</li>
+      <li *ngIf="nodeChildChildUrl"><a href="{{ nodeChildChildUrl }}">{{ nodeChildChild }}</a></li>
     </ol>
   </div>
 </section>

@@ -9,6 +9,7 @@ import { FileUploadService } from './UploadFile.service';
 import { FileUpload } from '../Models/FileUpload.Model';
 import { updateDoc } from '@firebase/firestore';
 import { set } from '@angular/fire/database';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -67,20 +68,34 @@ export class ProductService {
 
   /// Create Product /// OK
   createProduct(product: Product) {
-    addDoc(this.db, { key: this.utilsService.getKey(), 
-      title: product.title, 
-      author: product.author, 
-      content: product.content, 
+    addDoc(this.db, {
+      key: this.utilsService.getKey(),
+      title: product.title,
+      titleContent: product.titleContent,
+      content: product.content,
+      author: product.author,
+      size: product.size,
+      time: product.time,
+      date: product.date,
       pictureUrl: product.pictureUrl,
-      tagsKey: product.tagsKey });
+      tagsKey: product.tagsKey,
+      dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+    });
   }
 
   /// Update Product /// OK
   updateProduct(key: string, product: Product) {
     this.product.title = product.title;
-    this.product.author = product.author;
+    this.product.titleContent = product.titleContent;
     this.product.content = product.content;
-    if(product.pictureUrl !== undefined)
+    this.product.author = product.author;
+    this.product.size = product.size;
+    this.product.time = product.time;
+    this.product.date = product.date;
+    this.product.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+
+    if (product.pictureUrl !== undefined)
       this.product.pictureUrl = product.pictureUrl
     this.product.tagsKey = product.tagsKey
 

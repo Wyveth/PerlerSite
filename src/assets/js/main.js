@@ -194,7 +194,7 @@
   /**
    * Porfolio isotope and filter
    */
-   let portfolioContainer = select('.portfolio-container');
+   /*let portfolioContainer = select('.portfolio-container');
    if (portfolioContainer) {
      let portfolioIsotope = new Isotope(portfolioContainer, {
        itemSelector: '.portfolio-item',
@@ -241,14 +241,14 @@
       }, true);
     }
 
-  });
+  });*/
 
   /**
    * Initiate portfolio lightbox 
    */
-  const portfolioLightbox = GLightbox({
+  /*const portfolioLightbox = GLightbox({
     selector: '.portfokio-lightbox'
-  });
+  });*/
 
   /**
    * Portfolio details slider

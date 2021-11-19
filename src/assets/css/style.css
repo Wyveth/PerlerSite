@@ -73,12 +73,12 @@ section {
   padding: 15px 0;
   background: #012970;
   min-height: 40px;
-  margin-top: 82px;
+  margin-top: 100px;
   color: #fff;
 }
 @media (max-width: 992px) {
   .breadcrumbs {
-    margin-top: 57px;
+    margin-top: 80px;
   }
 }
 .breadcrumbs h2 {
@@ -2038,4 +2038,27 @@ section {
 
 .dropdown-list {
   position:relative !important;
+}
+
+.formStyle {
+  padding: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: 1px;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.formStyle {
+  position: relative;
+  padding: 1rem;
+  border: solid #dee2e6;
+  border-width: 1px;
+}
+
+.styleTitle{
+  text-decoration: underline;
+  color: #012970;
+  text-align:center;
+  margin-bottom: 2rem;
 }

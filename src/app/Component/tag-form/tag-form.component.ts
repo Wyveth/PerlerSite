@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { Tag } from 'src/app/Shared/Models/Tag.Model';
 import { TagService } from 'src/app/Shared/Services/tag.service';
+import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
 
 @Component({
   selector: 'app-tag-form',
@@ -11,13 +13,18 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
 })
 export class TagFormComponent implements OnInit {
   tagForm!: FormGroup;
+  fileIsUploading = false;
+  fileUploaded = false;
+  fileUrl!: string;
+  fileObject!: FileUpload;
 
   id!: string;
   isAddMode!: boolean;
-  tag: Tag = new Tag('','');
+  tag: Tag = new Tag('', '');
 
   constructor(private formBuilder: FormBuilder,
     private tagService: TagService,
+    private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -51,12 +58,34 @@ export class TagFormComponent implements OnInit {
       formValue['libelle']
     );
 
+    if (this.fileUrl && this.fileUrl !== '') {
+      tag.pictureUrl = this.fileUrl;
+      tag.file = this.fileObject;
+      this.filesUploadService.saveFileData(tag.file);
+    }
+
     if (this.isAddMode) {
       this.tagService.createTag(tag);
     } else {
       this.tagService.updateTag(this.id, tag);
     }
     this.router.navigate(['/tags']);
+  }
+
+  onUploadFile(file: File) {
+    this.fileObject = new FileUpload(file);
+
+    this.fileIsUploading = true;
+    this.filesUploadService.pushFileToStorage(this.fileObject).then((url: any) => {
+      this.fileUrl = url;
+      this.fileIsUploading = false;
+      this.fileUploaded = true;
+    }
+    );
+  }
+
+  detectFiles(event: any) {
+    this.onUploadFile(event.target.files[0]);
   }
 
   /*Validation Erreur*/

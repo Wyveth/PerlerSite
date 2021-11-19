@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Product } from 'src/app/Shared/Models/Product.Model';
 import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 
@@ -15,6 +16,8 @@ export class SectionPortfolioComponent implements OnInit {
   tags!: any[];
   tagSubscription!: Subscription;
 
+  class!: string;
+
   constructor(private productService: ProductService, private tagService: TagService) {
     this.tagSubscription = this.tagService.tagsSubject.subscribe(
       (tags: any[]) => {
@@ -26,7 +29,6 @@ export class SectionPortfolioComponent implements OnInit {
           node.textContent = tag.libelle;
           document.getElementById('portfolio-flters')?.append(node);
         })
-        this.loadJsFile("assets/js/isotope.js");
       }
     );
     this.tagService.emitTags();
@@ -35,7 +37,74 @@ export class SectionPortfolioComponent implements OnInit {
   ngOnInit() {
     this.productSubscription = this.productService.productsSubject.subscribe(
       (products: any[]) => {
-        this.products = products;
+        this.products = products.sort((a,b) => a.title.localeCompare(b.title));
+        
+        this.products.forEach((product: Product) => {
+        //Creation Icon Plus
+        let i_plus = document.createElement('i');
+        i_plus.setAttribute("class", "bi bi-plus");
+
+        //Creation A href
+        let a_href_img = document.createElement('a');
+        a_href_img.setAttribute("href", product.pictureUrl);
+        a_href_img.setAttribute("data-gallery", "portfolioGallery");
+        a_href_img.setAttribute("class", "portfokio-lightbox");
+        a_href_img.setAttribute("title", product.title);
+
+        a_href_img.append(i_plus);
+
+        //Creation Icon Lien
+        let i_lien = document.createElement('i');
+        i_lien.setAttribute("class", "bi bi-link");
+
+        let a_href_redirect = document.createElement('a');
+        a_href_redirect.setAttribute("routerLink", "#");
+        a_href_redirect.setAttribute("title", "Détails");
+
+        a_href_redirect.append(i_lien);
+
+        let div_link = document.createElement('div');
+        div_link.setAttribute("class", "portfolio-links");
+
+        div_link.append(a_href_img, a_href_redirect);
+
+        let h4 = document.createElement("h4");
+        h4.textContent = product.title;
+
+        let p = document.createElement('p');
+        p.textContent = "APP"
+
+        let div_info = document.createElement('div');
+        div_info.setAttribute("class", "portfolio-info");
+
+        div_info.append(h4, p, div_link);
+
+        let img = document.createElement('img');
+        img.setAttribute("src", product.pictureUrl);
+        img.setAttribute("class", "img-fluid");
+        img.setAttribute("alt", product.content);
+
+        let div_wrap = document.createElement('div');
+        div_wrap.setAttribute("class", "portfolio-wrap");
+
+        div_wrap.append(img, div_info);
+
+        this.class = "";
+        product.tagsKey.forEach((element: any) => {
+          this.class= " filter-" + element['item_text'] + " ";
+        });
+
+        let div_item = document.createElement('div');
+        div_item.setAttribute("class", "col-lg-4 col-md-6 portfolio-item" + this.class);
+
+        div_item.append(div_wrap);
+
+        document.getElementById('portfolio-container')?.append(div_item);
+        });
+
+        setTimeout(() => {
+          this.loadJsFile("assets/js/isotope.js");
+        }, 1000);
       }
     );
     this.productService.emitProducts();

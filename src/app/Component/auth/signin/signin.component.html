@@ -1,25 +1,30 @@
-<div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-      <h2>Se Connecter</h2>
-      <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="email">Adresse mail</label>
-          <input type="text"
-                 id="email"
-                 class="form-control"
-                 formControlName="email">
+<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Se connecter"></app-breadcrumbs>
+
+<section class="inner-page">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-6 formStyle">
+        <div class="row justify-content-md-center">
+          <h2 class="styleTitle">Se Connecter</h2>
         </div>
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input type="password"
-                 id="password"
-                 class="form-control"
-                 formControlName="password">
-        </div>
-        <button class="btn btn-primary"
-                type="submit"
-                [disabled]="signinForm.invalid">Se Connecter</button>
-      </form>
-      <p class="text-danger">{{ errorMessage }}</p>
+
+        <form class="row g-3" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Adresse mail</label>
+              <input type="text" id="email" class="form-control" formControlName="email">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" class="form-control" formControlName="password">
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="signinForm.invalid">Se Connecter</button>
+        </form>
+        <p class="text-danger">{{ errorMessage }}</p>
+      </div>
     </div>
   </div>
+</section>

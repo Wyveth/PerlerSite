@@ -6,6 +6,9 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/fo
 import { switchMap } from 'rxjs/operators';
 import { UtilsService } from './Utils.service';
 import { HttpClient } from '@angular/common/http';
+import { FileUploadService } from './UploadFile.service';
+import { FileUpload } from '../Models/FileUpload.Model';
+import { formatDate } from '@angular/common';
 
 
 @Injectable({
@@ -20,7 +23,7 @@ export class TagService {
 
   tagDDL: Array<{ key: string, code: string }> = [];
 
-  constructor(private http: HttpClient, private utilsService: UtilsService, private firestore: Firestore) {
+  constructor(private http: HttpClient, private utilsService: UtilsService, private fileUploadService: FileUploadService, private firestore: Firestore) {
     this.db = collection(this.firestore, 'tags');
     this.getTags();
   }
@@ -70,13 +73,19 @@ export class TagService {
   createTag(tag: Tag) {
     addDoc(this.db, { key: this.utilsService.getKey(), 
       code: tag.code, 
-      libelle: tag.libelle });
+      libelle: tag.libelle,
+      pictureUrl: tag.pictureUrl,
+      dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+     });
   }
 
   /// Update Tag /// OK
   updateTag(key: string, tag: Tag) {
     this.tag.code = tag.code;
     this.tag.libelle = tag.libelle;
+    this.tag.pictureUrl = tag.pictureUrl;
+    this.tag.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
       updateDoc(doc.ref, this.tag);
@@ -85,6 +94,12 @@ export class TagService {
 
   /// Remove Tag /// OK
   removeTag(tag: Tag) {
+    if (tag.pictureUrl) {
+      this.fileUploadService.getFileUpload(tag.pictureUrl).then((fileUpload) => {
+        return this.fileUploadService.deleteFile(fileUpload as FileUpload);
+      });
+    }
+
     this.utilsService.getDocByKey(this.db, tag.key).then((doc: any) => {
       deleteDoc(doc.ref);
     });

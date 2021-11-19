@@ -1,9 +1,53 @@
-<div class="row">
-    <div class="col-xs-12">
-      <img style="max-width:400px;" *ngIf="product.pictureUrl" [src]="product.pictureUrl">
-      <h1>{{ product.title }}</h1>
-      <h3>{{ product.author }}</h3>
-      <p>{{ product.content }}</p>
-      <button class="btn btn-default" (click)="onBack()">Retour</button>
+<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits" nodeChildUrl="products"
+  nodeChildChild="Détails"></app-breadcrumbs>
+
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <div class="col-lg-8">
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide">
+              <img *ngIf="product.pictureUrl" src="{{ product.pictureUrl }}" alt="">
+            </div>
+            <!--<div class="swiper-slide">
+                <img src="assets/img/portfolio/portfolio-2.jpg" alt="">
+              </div>
+              <div class="swiper-slide">
+                <img src="assets/img/portfolio/portfolio-3.jpg" alt="">
+              </div>-->
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="portfolio-info">
+          <h3>{{ product.title }}</h3>
+          <ul>
+            <li><strong>Tags</strong>: </li>
+            <li><strong>Créateur</strong>: {{ product.author }}</li>
+            <li><strong>Taille</strong>: {{ product.size }}</li>
+            <li><strong>Temps</strong>: {{ product.time }}</li>
+            <li><strong>Date</strong>: {{ product.date }}</li>
+          </ul>
+        </div>
+        <div class="portfolio-description">
+          <h2>{{ product.titleContent }}</h2>
+          <p>
+            {{ product.content }}
+          </p>
+          <p>
+            <button class="btn btn-default" (click)="onBack()">Retour</button>
+          </p>
+        </div>
+      </div>
+
     </div>
+
   </div>
+</section><!-- End Portfolio Details Section -->
