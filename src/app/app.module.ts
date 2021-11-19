@@ -36,7 +36,6 @@ import { FileUploadService } from './Shared/Services/UploadFile.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { UtilsService } from './Shared/Services/Utils.service';
 import { SectionWelcomeComponent } from './Component/section-welcome/section-welcome.component';
-import { SectionAboutComponent } from './Component/section-about/section-about.component';
 import { SectionResumeComponent } from './Component/section-resume/section-resume.component';
 import { SectionPortfolioComponent } from './Component/section-portfolio/section-portfolio.component';
 import { SectionContactComponent } from './Component/section-contact/section-contact.component';
@@ -62,7 +61,6 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     SectionWelcomeComponent,
-    SectionAboutComponent,
     SectionResumeComponent,
     SectionPortfolioComponent,
     SectionContactComponent,
