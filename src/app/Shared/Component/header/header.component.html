@@ -22,13 +22,9 @@
               <a routerLink="auth/signin" class="nav-link">Connexion</a>
             </li>
             <!--<li><a class="nav-link" *ngIf="isAuth">Profil</a></li>-->
-            <li class="dropdown"><a href="#" class="nav-link" *ngIf="isAuth"><i class="ri-dashboard-2-line"></i><span>Administration</span><i class="bi bi-chevron-right"></i></a>
-              <ul>
-                <li routerLinkActive="active"><a routerLink="products" class="nav-link">Produits</a></li>
-                <li routerLinkActive="active"><a routerLink="tags" class="nav-link">Tags</a></li>
-                <li routerLinkActive="active"><a routerLink="contacts" class="nav-link">Contacts</a></li>
-              </ul>
-            </li>
+            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="products" class="nav-link">Produits</a></li>
+            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="tags" class="nav-link">Tags</a></li>
+            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="contacts" class="nav-link">Contacts</a></li>
             <li>
               <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
             </li>

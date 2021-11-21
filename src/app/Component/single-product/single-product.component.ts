@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/Shared/Models/Product.Model';
+import { AuthService } from 'src/app/Shared/Services/auth.service';
 import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 
@@ -10,13 +12,23 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
   styleUrls: ['./single-product.component.scss']
 })
 export class SingleProductComponent implements OnInit {
+  isAuth!: boolean;
   product!: Product;
   key!: string;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private tagService: TagService,
-              private router: Router) {}
+              private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+          this.isAuth = true;
+        } else {
+          this.isAuth = false;
+        }
+      }
+    );
+    
     this.product = new Product('','','','','','','');
     this.key = this.route.snapshot.params['id'];
     this.productService.getProduct(this.key).then(

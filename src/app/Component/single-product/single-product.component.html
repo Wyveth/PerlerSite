@@ -1,5 +1,5 @@
-<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits" nodeChildUrl="products"
-  nodeChildChild="Détails"></app-breadcrumbs>
+<app-breadcrumbs *ngIf="isAuth" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits" nodeChildUrl="products" nodeChildChild="Détails"></app-breadcrumbs>
+  <app-breadcrumbs *ngIf="!isAuth" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits" nodeChildChild="Détails"></app-breadcrumbs>
 
 <!-- ======= Portfolio Details Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
