@@ -10,31 +10,50 @@
 
         <div class="row gy-4 justify-content-md-center">
           <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" class="php-email-form">
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
               <div class="row gy-4">
 
                 <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Votre Nom" required>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Votre Nom"
+                  [ngClass]="{ 'is-invalid': shouldShowNameError() }" >
+                  <div *ngIf="f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Le nom est obligatoire</div>
+                  </div>
                 </div>
 
                 <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Votre Email" required>
+                  <input type="email" class="form-control" id="email" formControlName="email" placeholder="Votre Email" [ngClass]="{ 'is-invalid': shouldShowMailError() }">
+                  <div *ngIf="f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
+                    <div *ngIf="f.email.errors.email">L'email n'est pas valide</div>
+                  </div>
                 </div>
 
                 <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Objet" required>
+                  <input type="text" class="form-control" id="subject" formControlName="subject" placeholder="Objet"
+                  [ngClass]="{ 'is-invalid': shouldShowSubjectError() }" >
+                  <div *ngIf="f.subject.errors" class="invalid-feedback">
+                    <div *ngIf="f.subject.errors.required">L'objet est obligatoire</div>
+                  </div>
                 </div>
 
                 <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                  <textarea class="form-control" id="message" formControlName="message" rows="6" placeholder="Message" [ngClass]="{ 'is-invalid': shouldShowMessageError() }"></textarea>
+                  <div *ngIf="f.message.errors" class="invalid-feedback">
+                    <div *ngIf="f.message.errors.required">Le message est obligatoire</div>
+                  </div>
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <div *ngIf="loading" class="loading">Chargement <i class="fas fa-spinner fa-pulse"></i></div>
+                  <div *ngIf="errorSent" class="error-message">Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement.</div>
+                  <div *ngIf="successSent" class="sent-message">Votre message a bien été envoyé!</div>
 
-                  <button type="submit">Envoyer le message</button>
+                  <div class="row" style="margin-top: 2rem;">
+                    <div class="col">
+                      <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer le message</button>
+                    </div>
+                  </div>
                 </div>
 
               </div>

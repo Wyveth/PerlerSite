@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/Shared/Models/Product.Model';
 import { ProductService } from 'src/app/Shared/Services/product.service';
-import { TagService } from 'src/app/Shared/Services/tag.service';
 
 @Component({
   selector: 'app-product-list',
@@ -38,7 +37,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onViewProduct(key: string) {
-    this.router.navigate(['/products', 'view', key]);
+    this.router.navigate(['/products', 'viewA', key]);
   }
 
   ngOnDestroy() {

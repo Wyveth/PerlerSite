@@ -58,7 +58,7 @@ export class SectionPortfolioComponent implements OnInit {
         i_lien.setAttribute("class", "bi bi-link");
 
         let a_href_redirect = document.createElement('a');
-        a_href_redirect.setAttribute("routerLink", "#");
+        a_href_redirect.setAttribute("href", "products/view/" + product.key);
         a_href_redirect.setAttribute("title", "Détails");
 
         a_href_redirect.append(i_lien);
@@ -72,7 +72,7 @@ export class SectionPortfolioComponent implements OnInit {
         h4.textContent = product.title;
 
         let p = document.createElement('p');
-        p.textContent = "APP"
+        p.textContent = product.titleContent;
 
         let div_info = document.createElement('div');
         div_info.setAttribute("class", "portfolio-info");

@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
     const app = initializeApp(environment.firebase);
     //const analytics = getAnalytics(app);
   }
+
   ngOnInit() {
     this.loadJsFile("assets/js/main.js");
   }

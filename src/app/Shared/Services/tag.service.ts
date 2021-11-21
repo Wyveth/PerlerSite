@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject, timer } from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
 import { Tag } from '../Models/Tag.Model';
-import { Firestore, collectionData, collection, addDoc, where, query, getDocs, deleteDoc, updateDoc, DocumentReference } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, where, query, getDocs, deleteDoc, updateDoc } from '@angular/fire/firestore';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import { UtilsService } from './Utils.service';
-import { HttpClient } from '@angular/common/http';
 import { FileUploadService } from './UploadFile.service';
 import { FileUpload } from '../Models/FileUpload.Model';
 import { formatDate } from '@angular/common';
@@ -23,7 +22,7 @@ export class TagService {
 
   tagDDL: Array<{ key: string, code: string }> = [];
 
-  constructor(private http: HttpClient, private utilsService: UtilsService, private fileUploadService: FileUploadService, private firestore: Firestore) {
+  constructor(private utilsService: UtilsService, private fileUploadService: FileUploadService, private firestore: Firestore) {
     this.db = collection(this.firestore, 'tags');
     this.getTags();
   }
@@ -32,7 +31,7 @@ export class TagService {
     this.tagsSubject.next(this.tags);
   }
 
-  /// Get All Tags /// OK
+  /// Get All Tag /// OK
   getTags() {
     this.tags$ = collectionData(this.db) as Observable<Tag[]>;
 

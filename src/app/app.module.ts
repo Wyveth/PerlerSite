@@ -40,6 +40,8 @@ import { SectionResumeComponent } from './Component/section-resume/section-resum
 import { SectionPortfolioComponent } from './Component/section-portfolio/section-portfolio.component';
 import { SectionContactComponent } from './Component/section-contact/section-contact.component';
 import { BreadcrumbsComponent } from './Shared/Component/breadcrumbs/breadcrumbs.component';
+import { ContactListComponent } from './Component/contact-list/contact-list.component';
+import { ContactService } from './Shared/Services/Contact.service';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -51,7 +53,9 @@ const appRoutes: Routes = [
   { path: 'products', canActivate: [AuthGuardService], component: ProductListComponent },
   { path: 'products/new', canActivate: [AuthGuardService], component: ProductFormComponent },
   { path: 'products/edit/:id', canActivate: [AuthGuardService], component: ProductFormComponent },
-  { path: 'products/view/:id', canActivate: [AuthGuardService], component: SingleProductComponent },
+  { path: 'products/viewA/:id', canActivate: [AuthGuardService], component: SingleProductComponent },
+  { path: 'products/view/:id', component: SingleProductComponent },
+  { path: 'contacts', canActivate: [AuthGuardService], component: ContactListComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: 'home' }
 ];
@@ -72,7 +76,8 @@ const appRoutes: Routes = [
     ProductListComponent,
     SingleProductComponent,
     TagFormComponent,
-    TagListComponent
+    TagListComponent,
+    ContactListComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +97,7 @@ const appRoutes: Routes = [
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage())
   ],
-  providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, FileUploadService, UtilsService],
+  providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
