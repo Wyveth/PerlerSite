@@ -15,6 +15,7 @@ export class Product extends Base {
   pictureUrl!: string;
   tagsKey!: string[];
   
+  tagsVisu!: string;
   tags!: Tag[]
   file!: FileUpload;
 

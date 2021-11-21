@@ -29,7 +29,7 @@
         <div class="portfolio-info">
           <h3>{{ product.title }}</h3>
           <ul>
-            <li><strong>Tags</strong>: </li>
+            <li><strong>Tags</strong>: {{ product.tagsVisu }}</li>
             <li><strong>Créateur</strong>: {{ product.author }}</li>
             <li><strong>Taille</strong>: {{ product.size }}</li>
             <li><strong>Temps</strong>: {{ product.time }}</li>
@@ -43,7 +43,7 @@
           </p>
           <!--<p>
             <button class="btn btn-default" (click)="onBack()">Retour</button>
-          </p>
+          </p>-->
         </div>
       </div>
 
