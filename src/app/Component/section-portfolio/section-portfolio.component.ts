@@ -72,7 +72,7 @@ export class SectionPortfolioComponent implements OnInit {
         h4.textContent = product.title;
 
         let p = document.createElement('p');
-        p.textContent = product.titleContent;
+        p.textContent = product.size;
 
         let div_info = document.createElement('div');
         div_info.setAttribute("class", "portfolio-info");
