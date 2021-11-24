@@ -26,7 +26,6 @@
     "firebase": "^9.2.0",
     "glightbox": "^3.1.0",
     "isotope-layout": "^3.0.6",
-    "marked": "^4.0.4",
     "ng-multiselect-dropdown": "^0.3.7",
     "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
@@ -37,8 +36,8 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^13.0.3",
-    "@angular/cli": "^13.0.3",
+    "@angular-devkit/build-angular": "~12.2.9",
+    "@angular/cli": "~12.2.9",
     "@angular/compiler-cli": "~12.2.0",
     "@types/aos": "^3.0.4",
     "@types/isotope-layout": "^3.0.9",
