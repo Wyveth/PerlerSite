@@ -1,7 +1,5 @@
 import { formatDate } from "@angular/common";
 import { Base } from "./Base.Model";
-import { FileUpload } from "./FileUpload.Model";
-
 export class Contact extends Base {
   key!: string;
   name!: string;
