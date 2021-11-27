@@ -78,7 +78,7 @@ export class FileUploadService {
         console.log('Direction la suppression dans le storage');
         this.deleteFileStorage(fileUpload.url);
       })
-      .catch(error => console.log('lolilol' + error));
+      .catch(error => console.log('Erreur: ' + error));
   }
 
   private deleteFileDatabase(key: string): Promise<void> {

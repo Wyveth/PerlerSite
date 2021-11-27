@@ -15,6 +15,7 @@ export class SingleProductComponent implements OnInit {
   isAuth!: boolean;
   product!: Product;
   key!: string;
+  currentRate = 3.14;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private tagService: TagService,
               private router: Router, private authService: AuthService) {}
@@ -44,13 +45,6 @@ export class SingleProductComponent implements OnInit {
               this.product.tagsVisu = this.product.tagsVisu + tag['item_text'];
             else
               this.product.tagsVisu = this.product.tagsVisu + tag['item_text'] + ", ";
-
-          /*this.tagService.getTag(tag['item.id']).then((tagObj: any) =>{
-            if(countGo == count)
-              this.product.tagsVisu = tagObj.libelle;
-            else
-              this.product.tagsVisu = tagObj.libelle = ", ";
-          });*/
         })
         ;
       }

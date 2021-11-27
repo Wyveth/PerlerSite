@@ -18,9 +18,9 @@
                 <label for="code">Code</label>
                 <input type="text" id="code" class="form-control" formControlName="code"
                   [ngClass]="{'is-invalid': shouldShowCodeError()}">
-                <div *ngIf="f.code.errors || f.code.invalid" class="invalid-feedback">
-                  <div *ngIf="f.code.errors?.required">Le code est obligatoire</div>
-                  <div *ngIf="f.code.invalid && (f.code.dirty || f.code.touched)">Le code doit être unique</div>
+                <div *ngIf="f.code.errors" class="invalid-feedback">
+                  <div *ngIf="f.code.errors.required">Le code est obligatoire</div>
+                  <div *ngIf="f.code.errors.tagCodeExists">Le code doit être unique</div>
                 </div>
               </div>
             </div>

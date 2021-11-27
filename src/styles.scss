@@ -149,3 +149,19 @@
       height: 160vh;
     }
   }
+
+  .star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+  }
+  .full {
+    color:#FAD01E;
+  }
+  .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #FAD01E;
+  }

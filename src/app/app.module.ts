@@ -42,6 +42,7 @@ import { SectionContactComponent } from './Component/section-contact/section-con
 import { BreadcrumbsComponent } from './Shared/Component/breadcrumbs/breadcrumbs.component';
 import { ContactListComponent } from './Component/contact-list/contact-list.component';
 import { ContactService } from './Shared/Services/Contact.service';
+import { NgbRatingConfig, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -95,7 +96,8 @@ const appRoutes: Routes = [
     provideMessaging(() => getMessaging()),
     providePerformance(() => getPerformance()),
     provideRemoteConfig(() => getRemoteConfig()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    NgbRatingModule
   ],
   providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService],
   bootstrap: [AppComponent]

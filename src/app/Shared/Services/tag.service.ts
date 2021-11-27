@@ -9,7 +9,6 @@ import { FileUploadService } from './UploadFile.service';
 import { FileUpload } from '../Models/FileUpload.Model';
 import { formatDate } from '@angular/common';
 
-
 @Injectable({
   providedIn: 'root'
 })
