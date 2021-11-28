@@ -3,7 +3,7 @@ import { Base } from "./Base.Model";
 
 export class User extends Base {
     key!: string;
-    pseudo!: string;
+    displayName!: string;
     surname!: string;
     name!: string;
     adress!: string;
@@ -12,11 +12,11 @@ export class User extends Base {
     pictureUrl!: string;
     email!: string;
     admin!: boolean;
-    statut!:boolean;
+    disabled!: boolean;
 
-    constructor(pseudo: string, email: string){
+    constructor(displayName: string, email: string){
         super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));
-        this.pseudo = pseudo;
+        this.displayName = displayName;
         this.email = email;
     }
 }

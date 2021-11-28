@@ -37,7 +37,18 @@ export class SigninComponent implements OnInit {
         this.router.navigate(['/home']);
       },
       (error: string) => {
-        this.errorMessage = error;
+        if(error == 'auth/invalid-email'){
+          this.errorMessage = 'L\'adresse email est erronée';
+        }
+        else if(error == 'auth/user-disabled'){
+          this.errorMessage = 'Le compte est désactivé';
+        }
+        else if(error == 'auth/user-not-found'){
+          this.errorMessage = 'Aucun utilisateur n\'a été retrouvé avec cette adresse email';
+        }
+        else if(error == 'auth/wrong-password'){
+          this.errorMessage = 'Le mot de passe est erroné';
+        }
       }
     );
   }

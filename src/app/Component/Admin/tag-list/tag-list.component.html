@@ -21,7 +21,7 @@
                 <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditTag(tag.key)">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn btn-sm btn-outline-light link-danger" (click)="onDeleteTag(tag)">
+                <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le tag: ' + tag.code + ' - ' + tag.libelle, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteTag(tag)">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>

@@ -11,15 +11,11 @@ import { UserService } from './Shared/Services/user.service';
 import { ProductService } from './Shared/Services/product.service';
 
 import { AuthGuardService } from './Shared/Guard/auth-guard.service';
-import { ProductListComponent } from './Component/product-list/product-list.component';
-import { ProductFormComponent } from './Component/product-form/product-form.component';
 import { SingleProductComponent } from './Component/single-product/single-product.component';
 import { SignupComponent } from './Component/auth/signup/signup.component';
 import { SigninComponent } from './Component/auth/signin/signin.component';
 import { HeaderComponent } from './Shared/Component/header/header.component';
 import { HomeComponent } from './Component/home/home.component';
-import { TagListComponent } from './Component/tag-list/tag-list.component';
-import { TagFormComponent } from './Component/tag-form/tag-form.component';
 import { TagService } from './Shared/Services/tag.service';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -40,23 +36,31 @@ import { SectionResumeComponent } from './Component/section-resume/section-resum
 import { SectionPortfolioComponent } from './Component/section-portfolio/section-portfolio.component';
 import { SectionContactComponent } from './Component/section-contact/section-contact.component';
 import { BreadcrumbsComponent } from './Shared/Component/breadcrumbs/breadcrumbs.component';
-import { ContactListComponent } from './Component/contact-list/contact-list.component';
+import { ContactListComponent } from './Component/Admin/contact-list/contact-list.component';
 import { ContactService } from './Shared/Services/Contact.service';
-import { NgbRatingConfig, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TagListComponent } from './Component/Admin/tag-list/tag-list.component';
+import { TagFormComponent } from './Component/Admin/tag-form/tag-form.component';
+import { ProductListComponent } from './Component/Admin/product-list/product-list.component';
+import { ProductFormComponent } from './Component/Admin/product-form/product-form.component';
+import { UserListComponent } from './Component/Admin/user-list/user-list.component';
+import { AuthAdminGuardService } from './Shared/Guard/authAdmin-guard.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'tags', canActivate: [AuthGuardService], component: TagListComponent },
-  { path: 'tags/new', canActivate: [AuthGuardService], component: TagFormComponent },
-  { path: 'tags/edit/:id', canActivate: [AuthGuardService], component: TagFormComponent },
-  { path: 'products', canActivate: [AuthGuardService], component: ProductListComponent },
-  { path: 'products/new', canActivate: [AuthGuardService], component: ProductFormComponent },
-  { path: 'products/edit/:id', canActivate: [AuthGuardService], component: ProductFormComponent },
-  { path: 'products/viewA/:id', canActivate: [AuthGuardService], component: SingleProductComponent },
+  { path: 'tags', canActivate: [AuthAdminGuardService], component: TagListComponent },
+  { path: 'tags/new', canActivate: [AuthAdminGuardService], component: TagFormComponent },
+  { path: 'tags/edit/:id', canActivate: [AuthAdminGuardService], component: TagFormComponent },
+  { path: 'products', canActivate: [AuthAdminGuardService], component: ProductListComponent },
+  { path: 'products/new', canActivate: [AuthAdminGuardService], component: ProductFormComponent },
+  { path: 'products/edit/:id', canActivate: [AuthAdminGuardService], component: ProductFormComponent },
+  { path: 'products/viewA/:id', canActivate: [AuthAdminGuardService], component: SingleProductComponent },
   { path: 'products/view/:id', component: SingleProductComponent },
-  { path: 'contacts', canActivate: [AuthGuardService], component: ContactListComponent },
+  { path: 'contacts', canActivate: [AuthAdminGuardService], component: ContactListComponent },
+  { path: 'users', canActivate: [AuthAdminGuardService], component: UserListComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: 'home' }
 ];
@@ -78,7 +82,8 @@ const appRoutes: Routes = [
     SingleProductComponent,
     TagFormComponent,
     TagListComponent,
-    ContactListComponent
+    ContactListComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +102,8 @@ const appRoutes: Routes = [
     providePerformance(() => getPerformance()),
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
+    SweetAlert2Module.forRoot(),
+    NgbModalModule,
     NgbRatingModule
   ],
   providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService],

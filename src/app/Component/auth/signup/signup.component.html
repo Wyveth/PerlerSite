@@ -24,11 +24,11 @@
 
           <div class="form-group">
             <label>Pseudo</label>
-            <input type="text" formControlName="pseudo" class="form-control form-control-sm"
-              [ngClass]="{ 'is-invalid': shouldShowPseudoError() }" />
-            <div *ngIf="f.pseudo.errors" class="invalid-feedback">
-              <div *ngIf="f.pseudo.errors.required">Le pseudo est obligatoire</div>
-              <div *ngIf="f.pseudo.errors.pseudoExists && (f.pseudo.dirty || f.pseudo.touched)">Le pseudo est déjà utilisé</div>
+            <input type="text" formControlName="displayName" class="form-control form-control-sm"
+              [ngClass]="{ 'is-invalid': shouldShowDisplayNameError() }" />
+            <div *ngIf="f.displayName.errors" class="invalid-feedback">
+              <div *ngIf="f.displayName.errors.required">Le pseudo est obligatoire</div>
+              <div *ngIf="f.displayName.errors.displayNameExists && (f.displayName.dirty || f.displayName.touched)">Le pseudo est déjà utilisé</div>
             </div>
           </div>
           <div class="form-group">

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updatePassword, User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, deleteUser, getAuth, signInWithEmailAndPassword, signOut, updatePassword, User } from 'firebase/auth';
 
 @Injectable()
 export class AuthService {
@@ -9,6 +9,7 @@ export class AuthService {
   createNewUser(email: string, password:string){
     return new Promise<void>(
       (resolve, reject) => {
+        
         createUserWithEmailAndPassword(getAuth(), email, password).then(
           () => {
             resolve();
@@ -29,7 +30,7 @@ export class AuthService {
             resolve();
           },
           (error) => {
-            reject(error);
+            reject(error.code);
           }
         );
       }

@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
 
   initForm() {
     this.signupForm = this.formBuilder.group({
-      pseudo: ['', Validators.required, this.userService.existingPseudoValidator()],
+      displayName: ['', Validators.required, this.userService.existingDisplayNameValidator()],
       email: ['', [Validators.required, Validators.email], this.userService.existingEmailValidator()],
       password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/[0-9a-zA-Z]{6,}/)]],
       confirmPassword: ['', Validators.required]
@@ -40,14 +40,16 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     const formValue = this.signupForm.value;
-    const pseudo = formValue['pseudo'];
     const email = formValue['email'];
     const password = formValue['password'];
 
     const user = new User(
-      formValue['pseudo'],
+      formValue['displayName'],
       formValue['email'],
     );
+
+    user.admin = false;
+    user.disabled = false;
 
     this.authService.createNewUser(email, password).then(
       () => {
@@ -61,9 +63,9 @@ export class SignupComponent implements OnInit {
   }
 
   /*Validation Erreur*/
-  shouldShowPseudoError() {
-    const pseudo = this.signupForm.controls.pseudo;
-    return pseudo.touched && (pseudo.hasError('required') || pseudo.hasError('pseudoExists'));
+  shouldShowDisplayNameError() {
+    const displayName = this.signupForm.controls.displayName;
+    return displayName.touched && (displayName.hasError('required') || displayName.hasError('displayNameExists'));
   }
 
   shouldShowEmailError() {

@@ -21,7 +21,7 @@ export class UserService {
 
   constructor(private utilsService: UtilsService, private fileUploadService: FileUploadService, private firestore: Firestore) {
     this.db = collection(this.firestore, 'users');
-    //this.getUsers();
+    this.getUsers();
   }
 
   emitUsers() {
@@ -43,7 +43,7 @@ export class UserService {
     });
   }
 
-  /// Get Single Tags /// OK
+  /// Get Single User /// OK
   getUser(key: string) {
     return new Promise(
       (resolve, reject) => {
@@ -65,12 +65,36 @@ export class UserService {
       });
   }
 
+  /// Get Single User By Email /// OK
+  getUserByEmail(email: string | null) {
+    return new Promise(
+      (resolve, reject) => {
+        var qry = query(this.db, where("email", "==", email));
+
+        getDocs(qry).then((querySnapshot) => {
+          if (querySnapshot) {
+            console.log("Document data:", querySnapshot);
+            querySnapshot.docs.forEach(element => {
+              this.user = element.data() as User;
+            });
+            resolve(this.user);
+          } else {
+            //doc.data() will be undefined in this case
+            console.error("No such document!");
+            reject("No such document!")
+          }
+        });
+      });
+  }
+
   /// Create User /// OK
   createUser(user: User) {
     addDoc(this.db, {
       key: this.utilsService.getKey(),
-      pseudo: user.pseudo,
+      displayName: user.displayName,
       email: user.email,
+      admin: user.admin,
+      disabled: user.disabled,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -87,11 +111,43 @@ export class UserService {
     this.user.email = user.email;
     this.user.pictureUrl = user.pictureUrl;
     this.user.admin = user.admin;
-    this.user.statut = user.statut;
+    this.user.disabled = user.disabled;
     this.user.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
       updateDoc(doc.ref, this.user);
+    });
+  }
+
+  updateOffAdmin(user: User){
+    user.admin = false;
+
+    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
+      updateDoc(doc.ref, user);
+    });
+  }
+
+  updateOnAdmin(user: User){
+    user.admin = true;
+
+    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
+      updateDoc(doc.ref, user);
+    });
+  }
+
+  updateOffDisabled(user: User){
+    user.disabled = false;
+
+    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
+      updateDoc(doc.ref, user);
+    });
+  }
+
+  updateOnDisabled(user: User){
+    user.disabled = true;
+
+    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
+      updateDoc(doc.ref, user);
     });
   }
 
@@ -108,22 +164,22 @@ export class UserService {
     });
   }
 
-  /// Validator Existing Pseudo /// OK
-  existingPseudoValidator(): AsyncValidatorFn {
+  /// Validator Existing DisplayName /// OK
+  existingDisplayNameValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       const debounceTime = 10; //milliseconds
       return timer(debounceTime).pipe(switchMap(() => {
-        return this.isPseudoAvailable(control.value)
-          .then(result => result ? null : { "pseudoExists": true });
+        return this.isDisplayNameAvailable(control.value)
+          .then(result => result ? null : { "displayNameExists": true });
       }));
     };
   }
 
-  /// Async Validator Existing Pseudo /// OK
-  async isPseudoAvailable(value: string): Promise<boolean> {
-    return getDocs(query(this.db, where("pseudo", "==", value)))
+  /// Async Validator Existing DisplayName /// OK
+  async isDisplayNameAvailable(value: string): Promise<boolean> {
+    return getDocs(query(this.db, where("displayName", "==", value)))
       .then((documentSnapshot) => {
-        console.log("isPseudoAvailable");
+        console.log("isDisplayNameAvailable");
         console.log("Value: " + value);
         console.log("documentSnapshot: " + documentSnapshot.empty)
 
@@ -149,7 +205,7 @@ export class UserService {
   async isEmailAvailable(value: string): Promise<boolean> {
     return getDocs(query(this.db, where("email", "==", value)))
       .then((documentSnapshot) => {
-        console.log("isPseudoAvailable");
+        console.log("isDisplayNameAvailable");
         console.log("Value: " + value);
         console.log("documentSnapshot: " + documentSnapshot.empty)
 

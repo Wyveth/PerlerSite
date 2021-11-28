@@ -25,7 +25,7 @@
                 <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditProduct(product.key)">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn btn-sm btn-outline-light link-danger" (click)="onDeleteProduct(product)">
+                <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le produit: ' + product.title, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteProduct(product)">
                   <i class="fas fa-trash"></i>
                 </a>
               </div>

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { CanActivate, Router } from '@angular/router';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { Observable } from 'rxjs';
 import { User } from '../Models/User.Model';
 import { UserService } from '../Services/user.service';
 
-@Injectable()
-export class AuthGuardService implements CanActivate {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthAdminGuardService implements CanActivate {
   user!: User;
 
   constructor(private router: Router, private userService: UserService) { }
@@ -17,11 +19,13 @@ export class AuthGuardService implements CanActivate {
         onAuthStateChanged(getAuth(),
           (user) => {
             if(user) {
+              console.log('Auth Admin: ' + user.email);
               this.userService.getUserByEmail(user.email).then(
                 (user: any) => {
                   this.user = user as User;
 
-                  if(this.user.disabled === false){
+                  if(this.user.admin === true 
+                    && this.user.disabled === false){
                     resolve(true);
                   }
                   else{
@@ -39,4 +43,3 @@ export class AuthGuardService implements CanActivate {
     );
   }
 }
-

@@ -25,6 +25,7 @@
             <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="products" class="nav-link">Produits</a></li>
             <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="tags" class="nav-link">Tags</a></li>
             <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="contacts" class="nav-link">Contacts</a></li>
+            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="users" class="nav-link">Utilisateurs</a></li>
             <li>
               <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
             </li>
