@@ -5,8 +5,8 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th class="col-1">Action</th>
-          <th class="col-3">Email</th>
+          <th class="col-2">Action</th>
+          <th class="col">Email</th>
           <th class="col-2">Pseudo</th>
           <th class="col-2">Nom</th>
           <th class="col-2">Prenom</th>
@@ -20,6 +20,9 @@
             <!--(click)="onViewUser(user.key)"-->
             <a class="btn btn-sm btn-outline-light link-info" (click)="open(content, user)">
               <i class="fas fa-search"></i>
+            </a>
+            <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditUser(user.key)">
+              <i class="fas fa-edit"></i>
             </a>
             <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer l\'utilisateur: ' + user.email, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteUser(user)">
               <i class="fas fa-trash"></i>
@@ -38,11 +41,11 @@
             </a>
           </td>
           <td style="text-align:center;">
-            <a *ngIf="user.disabled === true" class="text-success" (click)="onUpdateDisabled(user.key)">
-              <i class="fas fa-toggle-on"></i>
-            </a>
-            <a *ngIf="user.disabled === false && user.admin !== true" class="text-danger" (click)="onUpdateDisabled(user.key)">
+            <a *ngIf="user.disabled === true" class="text-danger" (click)="onUpdateDisabled(user.key)">
               <i class="fas fa-toggle-off"></i>
+            </a>
+            <a *ngIf="user.disabled === false && user.admin !== true" class="text-success" (click)="onUpdateDisabled(user.key)">
+              <i class="fas fa-toggle-on"></i>
             </a>
           </td>
         </tr>

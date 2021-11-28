@@ -11,7 +11,7 @@
       <ul>
         <li><a class="nav-link scrollto active" href="#hero"><i class="ri-home-4-line"></i>Accueil</a></li>
         <li><a class="nav-link scrollto" href="#portfolio">Mes réalisations</a></li>
-        <li><a class="nav-link" href="#faq">F.A.Q</a></li>
+        <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         <li class="dropdown"><a href="#" class="nav-link"><span><i class="ri-account-circle-line"></i></span><i class="bi bi-chevron-down"></i></a>
           <ul>
@@ -21,11 +21,15 @@
             <li routerLinkActive="active" *ngIf="!isAuth">
               <a routerLink="auth/signin" class="nav-link">Connexion</a>
             </li>
-            <!--<li><a class="nav-link" *ngIf="isAuth">Profil</a></li>-->
-            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="products" class="nav-link">Produits</a></li>
-            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="tags" class="nav-link">Tags</a></li>
-            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="contacts" class="nav-link">Contacts</a></li>
-            <li *ngIf="isAuth" routerLinkActive="active"><a routerLink="users" class="nav-link">Utilisateurs</a></li>
+            <li *ngIf="isAuth"><a routerLink="profil" class="nav-link" (click)="onProfil(user.key)">Profil</a></li>
+            <li class="dropdown"><a href="#" class="nav-link"><span>Administration</span><i class="bi bi-chevron-right"></i></a>
+              <ul>
+                <li *ngIf="isAuthA"><a routerLink="products" class="nav-link">Produits</a></li>
+                <li *ngIf="isAuthA"><a routerLink="tags" class="nav-link">Tags</a></li>
+                <li *ngIf="isAuthA"><a routerLink="contacts" class="nav-link">Contacts</a></li>
+                <li *ngIf="isAuthA"><a routerLink="users" class="nav-link">Utilisateurs</a></li>
+              </ul>
+            </li>
             <li>
               <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
             </li>

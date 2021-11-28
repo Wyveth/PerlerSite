@@ -1,5 +1,6 @@
 import { formatDate } from "@angular/common";
 import { Base } from "./Base.Model";
+import { FileUpload } from "./FileUpload.Model";
 
 export class User extends Base {
     key!: string;
@@ -13,6 +14,7 @@ export class User extends Base {
     email!: string;
     admin!: boolean;
     disabled!: boolean;
+    file!: FileUpload;
 
     constructor(displayName: string, email: string){
         super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));

@@ -1,0 +1,93 @@
+<app-breadcrumbs *ngIf="ShowBreadcrumb" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Utilisateurs" nodeChildUrl="users"
+    nodeChildChild="Modifier un profil"></app-breadcrumbs>
+
+<section class="inner-page">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-10 formStyle">
+                <div class="row justify-content-md-center">
+                    <h2 class="styleTitle">Modifier le profil</h2>
+                </div>
+                <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()">
+                    <div class="row">
+                        <div class="col-4" style="text-align:center;">
+                            <div class="bd-placeholder-img rounded-circle"
+                                style="background-color: #ccc; width: 140px; height: 140px;">
+                                <img *ngIf="fileUrl" class="rounded-circle" src="{{ fileUrl }}"
+                                    style="width: 140px; height: 140px; position: absolute;">
+                                    <img class="rounded-circle" src="{{ fileUrl }}"
+                                    style="width: 140px; height: 140px; position: absolute;">
+                                    <label for="file-upload" class="custom-file-upload rounded-circle">
+                                        <i class="fas fa-upload"></i>
+                                    </label>
+                            </div>
+                            <input id="file-upload" type="file" class="profil" (change)="detectFiles($event)" accept="image/*"/>
+                            <p class="text-success" *ngIf="fileUploaded">Photo uploadé!</p>
+                        </div>
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="displayName">Pseudo</label>
+                                    <input type="text" id="displayName" class="form-control" formControlName="displayName" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="email" class="form-control" formControlName="email" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-sm" style="margin-top: 2rem;">
+                        <label for="surname">Nom</label>
+                        <input type="text" id="surname" class="form-control" formControlName="surname"
+                            [ngClass]="{ 'is-invalid': shouldShowSurnameError() }">
+                        <div *ngIf="f.surname.errors" class="invalid-feedback">
+                            <div *ngIf="f.surname.errors.required">Le nom est obligatoire</div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-sm">
+                        <label for="name">Prénom</label>
+                        <input type="text" id="name" class="form-control" formControlName="name"
+                            [ngClass]="{ 'is-invalid': shouldShowNameError() }">
+                        <div *ngIf="f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Le prénom est obligatoire</div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-sm">
+                        <label for="adress">Adresse</label>
+                        <textarea type="text" id="adress" class="form-control" formControlName="adress"
+                            [ngClass]="{ 'is-invalid': shouldShowAdresseError() }">
+                        </textarea>
+                        <div *ngIf="f.adress.errors" class="invalid-feedback">
+                            <div *ngIf="f.adress.errors.required">L'adresse est obligatoire</div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-sm">
+                        <label for="zipcode">Code Postal</label>
+                        <input type="text" id="zipcode" class="form-control" formControlName="zipcode"
+                            [ngClass]="{ 'is-invalid': shouldShowZipCodeError() }">
+                        <div *ngIf="f.zipcode.errors" class="invalid-feedback">
+                            <div *ngIf="f.zipcode.errors.required">Le code postal est obligatoire</div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-sm">
+                        <label for="city">Ville</label>
+                        <input type="text" id="city" class="form-control" formControlName="city"
+                            [ngClass]="{ 'is-invalid': shouldShowCityError() }">
+                        <div *ngIf="f.city.errors" class="invalid-feedback">
+                            <div *ngIf="f.city.errors.required">La ville est obligatoire</div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 2rem;">
+                        <div class="col">
+                            <button class="btn btn-success" type="submit"
+                                [disabled]="userForm.invalid">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

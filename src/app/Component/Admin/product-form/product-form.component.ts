@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
@@ -73,7 +73,6 @@ export class ProductFormComponent implements OnInit {
       size: ['', Validators.required],
       time: ['', Validators.required],
       date: ['', Validators.required],
-      photo: '',
       tagsKey: ['', Validators.required]
     });
 
@@ -134,7 +133,7 @@ export class ProductFormComponent implements OnInit {
     this.onUploadFile(event.target.files[0]);
   }
 
-  /*Validation Erreur*/
+  /* Validation Erreur */
   shouldShowTitleError() {
     const title = this.productForm.controls.title;
     return title.touched && title.hasError('required');

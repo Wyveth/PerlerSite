@@ -110,8 +110,6 @@ export class UserService {
     this.user.pictureUrl = user.pictureUrl;
     this.user.email = user.email;
     this.user.pictureUrl = user.pictureUrl;
-    this.user.admin = user.admin;
-    this.user.disabled = user.disabled;
     this.user.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {

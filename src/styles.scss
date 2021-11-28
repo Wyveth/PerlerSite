@@ -165,3 +165,27 @@
     overflow: hidden;
     color: #FAD01E;
   }
+
+  input.profil {
+    display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  opacity: 0;
+  padding: 58px 64px;
+  cursor: pointer;
+  height: 140px;
+  width: 140px;
+}
+
+.custom-file-upload:hover {
+    display: inline-block;
+    opacity: 0.5;
+    background-color: #555555;
+    color: white;
+    padding: 58px 65px;
+    cursor: pointer;
+    height: 140px;
+    width: 140px;
+}

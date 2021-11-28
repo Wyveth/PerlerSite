@@ -27,7 +27,7 @@ export class UserListComponent implements OnInit {
   }
 
   onEditUser(key: string) {
-    this.router.navigate(['/users', 'edit', key]);
+    this.router.navigate(['/users', 'editA', key]);
   }
 
   onDeleteUser(user: User) {

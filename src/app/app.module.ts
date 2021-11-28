@@ -38,7 +38,7 @@ import { SectionContactComponent } from './Component/section-contact/section-con
 import { BreadcrumbsComponent } from './Shared/Component/breadcrumbs/breadcrumbs.component';
 import { ContactListComponent } from './Component/Admin/contact-list/contact-list.component';
 import { ContactService } from './Shared/Services/Contact.service';
-import { NgbRatingModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingModule, NgbModalModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagListComponent } from './Component/Admin/tag-list/tag-list.component';
 import { TagFormComponent } from './Component/Admin/tag-form/tag-form.component';
 import { ProductListComponent } from './Component/Admin/product-list/product-list.component';
@@ -46,6 +46,8 @@ import { ProductFormComponent } from './Component/Admin/product-form/product-for
 import { UserListComponent } from './Component/Admin/user-list/user-list.component';
 import { AuthAdminGuardService } from './Shared/Guard/authAdmin-guard.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { UserFormComponent } from './Component/Admin/user-form/user-form.component';
+import { ProfilComponent } from './Component/profil/profil.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -61,6 +63,9 @@ const appRoutes: Routes = [
   { path: 'products/view/:id', component: SingleProductComponent },
   { path: 'contacts', canActivate: [AuthAdminGuardService], component: ContactListComponent },
   { path: 'users', canActivate: [AuthAdminGuardService], component: UserListComponent },
+  { path: 'users/editA/:id', canActivate: [AuthAdminGuardService], component: UserFormComponent },
+  { path: 'users/edit/:id', canActivate: [AuthGuardService], component: UserFormComponent },
+  { path: 'profil/:id', canActivate: [AuthGuardService], component: ProfilComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: 'home' }
 ];
@@ -83,7 +88,9 @@ const appRoutes: Routes = [
     TagFormComponent,
     TagListComponent,
     ContactListComponent,
-    UserListComponent
+    UserListComponent,
+    UserFormComponent,
+    ProfilComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +111,7 @@ const appRoutes: Routes = [
     provideStorage(() => getStorage()),
     SweetAlert2Module.forRoot(),
     NgbModalModule,
+    NgbToastModule,
     NgbRatingModule
   ],
   providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService],
