@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword, deleteUser, getAuth, signInWithEmailAndPassword, signOut, updatePassword, User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updatePassword, User } from 'firebase/auth';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +42,17 @@ export class AuthService {
   }
 
   updatePasswordUser(user: User, newPassword:string){
-    updatePassword(user, newPassword);
+    return new Promise<void>(
+      (resolve, reject) => {
+          updatePassword(user, newPassword).then(
+            () => {
+              resolve();
+            },
+            (error) => {
+              reject(error.code);
+            }
+          );
+        }
+      );
   }
 }

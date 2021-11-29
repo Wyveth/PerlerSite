@@ -20,8 +20,6 @@ export class UserFormComponent implements OnInit {
   fileUrl!: string;
   fileObject!: FileUpload;
 
-  ShowBreadcrumb = true;
-
   @Input() option: string = "Admin";
 
   constructor(private formBuilder: FormBuilder,
@@ -32,10 +30,6 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-
-    if(this.option == "Profil"){
-      this.ShowBreadcrumb = false;
-    }
     this.initForm();
   }
 

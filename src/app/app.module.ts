@@ -48,6 +48,9 @@ import { AuthAdminGuardService } from './Shared/Guard/authAdmin-guard.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UserFormComponent } from './Component/Admin/user-form/user-form.component';
 import { ProfilComponent } from './Component/profil/profil.component';
+import { UserEditComponent } from './Component/Admin/user-edit/user-edit.component';
+import { OrdererListComponent } from './Component/orderer-list/orderer-list.component';
+import { ChangePasswordComponent } from './Component/change-password/change-password.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -63,8 +66,8 @@ const appRoutes: Routes = [
   { path: 'products/view/:id', component: SingleProductComponent },
   { path: 'contacts', canActivate: [AuthAdminGuardService], component: ContactListComponent },
   { path: 'users', canActivate: [AuthAdminGuardService], component: UserListComponent },
-  { path: 'users/editA/:id', canActivate: [AuthAdminGuardService], component: UserFormComponent },
-  { path: 'users/edit/:id', canActivate: [AuthGuardService], component: UserFormComponent },
+  { path: 'users/editA/:id', canActivate: [AuthAdminGuardService], component: UserEditComponent },
+  { path: 'users/edit/:id', canActivate: [AuthGuardService], component: UserEditComponent },
   { path: 'profil/:id', canActivate: [AuthGuardService], component: ProfilComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: 'home' }
@@ -89,8 +92,11 @@ const appRoutes: Routes = [
     TagListComponent,
     ContactListComponent,
     UserListComponent,
+    UserEditComponent,
     UserFormComponent,
-    ProfilComponent
+    ProfilComponent,
+    OrdererListComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

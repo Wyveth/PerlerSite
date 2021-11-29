@@ -72,6 +72,16 @@ export class SignupComponent implements OnInit {
     const email = this.signupForm.controls.email;
     return email.touched && (email.hasError('required') || email.hasError('emailExists'));
   }
+
+  shouldShowPasswordError() {
+    const password = this.signupForm.controls.password;
+    return password.touched && password.hasError('required');
+  }
+
+  shouldShowConfirmPasswordError() {
+    const confirmPassword = this.signupForm.controls.confirmPassword;
+    return confirmPassword.touched && confirmPassword.hasError('required');
+  }
   /* Fin Validation Error */
 }
 
