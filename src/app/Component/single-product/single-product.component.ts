@@ -18,7 +18,7 @@ export class SingleProductComponent implements OnInit {
   currentRate = 3.14;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private tagService: TagService,
-              private router: Router, private authService: AuthService) {}
+              private router: Router) {}
 
   ngOnInit() {
     onAuthStateChanged(getAuth(), (user) => {

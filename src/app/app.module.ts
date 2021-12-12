@@ -51,6 +51,9 @@ import { ProfilComponent } from './Component/profil/profil.component';
 import { UserEditComponent } from './Component/Admin/user-edit/user-edit.component';
 import { OrdererListComponent } from './Component/orderer-list/orderer-list.component';
 import { ChangePasswordComponent } from './Component/change-password/change-password.component';
+import { ToastService } from './Shared/Services/Toast.service';
+import { ToastComponent } from './Shared/Component/toast/toast.component';
+import { CommentListComponent } from './Component/comment-list/comment-list.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
@@ -83,6 +86,7 @@ const appRoutes: Routes = [
     SectionContactComponent,
     HeaderComponent,
     BreadcrumbsComponent,
+    ToastComponent,
     SignupComponent,
     SigninComponent,
     ProductFormComponent,
@@ -96,7 +100,8 @@ const appRoutes: Routes = [
     UserFormComponent,
     ProfilComponent,
     OrdererListComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    CommentListComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +125,7 @@ const appRoutes: Routes = [
     NgbToastModule,
     NgbRatingModule
   ],
-  providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService],
+  providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService, ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

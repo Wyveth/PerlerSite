@@ -80,7 +80,7 @@ export class SignupComponent implements OnInit {
 
   shouldShowConfirmPasswordError() {
     const confirmPassword = this.signupForm.controls.confirmPassword;
-    return confirmPassword.touched && confirmPassword.hasError('required');
+    return confirmPassword.touched && (confirmPassword.hasError('required') || confirmPassword.hasError('mustMatch'));
   }
   /* Fin Validation Error */
 }

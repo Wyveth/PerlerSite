@@ -45,7 +45,7 @@ export class TagService {
     });
   }
 
-  /// Get Single Tags /// OK
+  /// Get Single Tag /// OK
   getTag(key: string) {
     return new Promise(
       (resolve, reject) => {

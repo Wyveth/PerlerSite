@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { EmailAuthProvider, getAuth, User } from '@angular/fire/auth';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { getAuth, User } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
+import { ToastService } from 'src/app/Shared/Services/Toast.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
@@ -13,12 +14,14 @@ import { UserService } from 'src/app/Shared/Services/user.service';
 export class ChangePasswordComponent implements OnInit {
   passwordForm!: FormGroup;
   id!: string;
+  toasts: any[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private toastService: ToastService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -45,10 +48,36 @@ export class ChangePasswordComponent implements OnInit {
     this.authService.updatePasswordUser(user, password).then(
       () => {
         //TODO Toast
+        this.toastService.show('Le mot de passe a bien été mis à jour.', {
+          classname: 'bg-success text-light',
+          delay: 3000 ,
+          autohide: true
+        });
       },
       (error: string) => {
         //TODO Toast + error;
+        this.toastService.show('La mise à jour du mot de passe a échoué. Veuillez réessayer ultérieurement.', {
+          classname: 'bg-danger text-light',
+          delay: 3000 ,
+          autohide: true
+        });
       });
+  }
+
+  showCustomToastSuccess(customTpl: string | TemplateRef<any>) {
+    this.toastService.show(customTpl, {
+      classname: 'bg-danger text-light',
+      delay: 3000,
+      autohide: true
+    });
+  }
+
+  showCustomToastError(customTpl: string | TemplateRef<any>) {
+    this.toastService.show(customTpl, {
+      classname: 'bg-danger text-light',
+      delay: 3000,
+      autohide: true
+    });
   }
 
   shouldShowPasswordError() {
@@ -58,7 +87,7 @@ export class ChangePasswordComponent implements OnInit {
 
   shouldShowConfirmPasswordError() {
     const confirmPassword = this.passwordForm.controls.confirmPassword;
-    return confirmPassword.touched && confirmPassword.hasError('required');
+    return confirmPassword.touched && (confirmPassword.hasError('required') || confirmPassword.hasError('mustMatch'));
   }
 }
 

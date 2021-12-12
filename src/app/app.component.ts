@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { initializeApp } from "firebase/app";
 import { environment } from 'src/environments/environment';
 
@@ -36,5 +36,5 @@ export class AppComponent implements OnInit {
     node.src = url;  
     node.type = 'text/javascript';  
     document.getElementsByTagName('head')[0].appendChild(node);
-  }  
+  }
 }
