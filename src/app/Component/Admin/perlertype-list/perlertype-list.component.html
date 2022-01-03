@@ -1,0 +1,36 @@
+<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="PerlerTypes"></app-breadcrumbs>
+
+<section class="inner-page">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-2">
+        <button class="btn btn-primary btn-sm" (click)="onNewPerlerType()">Nouveau Type de Perle</button>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" style="margin-top: 20px;">
+      <div class="col" *ngFor="let perlerType of perlerTypes; let i = index">
+        <div class="card shadow-sm">
+          <div class="card-head">
+            <img style="max-height: 50%;" class="bd-placeholder-img card-img-top" src=""
+              role="img" aria-label="Placeholder: Test" preserveAspectRatio="xMidYMid slice" focusable="false" />
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ perlerType.reference }} - {{ perlerType.libelle }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditPerlerType(perlerType.key)">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le type de perle: ' + perlerType.reference + ' - ' + perlerType.libelle, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeletePerlerType(perlerType)">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

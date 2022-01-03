@@ -1,0 +1,48 @@
+<app-breadcrumbs *ngIf="isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Tags" nodeChildUrl="tags"
+  nodeChildChild="Créer"></app-breadcrumbs>
+<app-breadcrumbs *ngIf="!isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Tags" nodeChildUrl="tags"
+  nodeChildChild="Modifier"></app-breadcrumbs>
+
+<section class="inner-page">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-6 formStyle">
+        <div class="row justify-content-md-center">
+          <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau tag</h2>
+          <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un tag</h2>
+        </div>
+        <form [formGroup]="perlerTypeForm" (ngSubmit)="onSubmitForm()">
+          <div class="row">
+            <div class="col">
+              <div class="form-group form-control-sm">
+                <label for="code">Code</label>
+                <input type="text" id="code" class="form-control" formControlName="code"
+                  [ngClass]="{'is-invalid': shouldShowCodeError()}">
+                <div *ngIf="f.code.errors" class="invalid-feedback">
+                  <div *ngIf="f.code.errors.required">La référence est obligatoire</div>
+                  <div *ngIf="f.code.errors.tagCodeExists">La référence doit être unique</div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group form-control-sm">
+                <label for="libelle">Libelle</label>
+                <input type="text" id="libelle" class="form-control" formControlName="libelle"
+                  [ngClass]="{ 'is-invalid': shouldShowLibelleError() }">
+                <div *ngIf="f.libelle.errors" class="invalid-feedback">
+                  <div *ngIf="f.libelle.errors.required">Le libelle est obligatoire</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 2rem;">
+            <div class="col">
+              <button class="btn btn-success" type="submit" [disabled]="perlerTypeForm.invalid">Enregistrer</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

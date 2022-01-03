@@ -43,6 +43,8 @@ import { TagListComponent } from './Component/Admin/tag-list/tag-list.component'
 import { TagFormComponent } from './Component/Admin/tag-form/tag-form.component';
 import { ProductListComponent } from './Component/Admin/product-list/product-list.component';
 import { ProductFormComponent } from './Component/Admin/product-form/product-form.component';
+import { PerlertypeListComponent } from './Component/Admin/perlertype-list/perlertype-list.component';
+import { PerlertypeFormComponent } from './Component/Admin/perlertype-form/perlertype-form.component';
 import { UserListComponent } from './Component/Admin/user-list/user-list.component';
 import { AuthAdminGuardService } from './Shared/Guard/authAdmin-guard.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -62,6 +64,9 @@ const appRoutes: Routes = [
   { path: 'tags', canActivate: [AuthAdminGuardService], component: TagListComponent },
   { path: 'tags/new', canActivate: [AuthAdminGuardService], component: TagFormComponent },
   { path: 'tags/edit/:id', canActivate: [AuthAdminGuardService], component: TagFormComponent },
+  { path: 'perlerTypes', canActivate: [AuthAdminGuardService], component: PerlertypeListComponent },
+  { path: 'perlerTypes/new', canActivate: [AuthAdminGuardService], component: PerlertypeFormComponent },
+  { path: 'perlerTypes/edit/:id', canActivate: [AuthAdminGuardService], component: PerlertypeFormComponent },
   { path: 'products', canActivate: [AuthAdminGuardService], component: ProductListComponent },
   { path: 'products/new', canActivate: [AuthAdminGuardService], component: ProductFormComponent },
   { path: 'products/edit/:id', canActivate: [AuthAdminGuardService], component: ProductFormComponent },
@@ -94,6 +99,8 @@ const appRoutes: Routes = [
     SingleProductComponent,
     TagFormComponent,
     TagListComponent,
+    PerlertypeListComponent,
+    PerlertypeFormComponent,
     ContactListComponent,
     UserListComponent,
     UserEditComponent,
