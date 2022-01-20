@@ -29,6 +29,7 @@
     "glightbox": "^3.1.0",
     "isotope-layout": "^3.0.6",
     "ng-multiselect-dropdown": "^0.3.7",
+    "ngx-color-picker": "^11.0.0",
     "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "swiper": "^7.2.0",

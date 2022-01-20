@@ -1,3 +1,4 @@
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/Shared/Models/Product.Model';
@@ -68,16 +69,39 @@ export class SectionPortfolioComponent implements OnInit {
 
         div_link.append(a_href_img, a_href_redirect);
 
+        let div_title = document.createElement('div');
+        
+        var dateToday = new Date();
+
+        var dateCreation = product.dateCreation.split('/');
+        var month = Number(dateCreation[1]);
+
+        var myCurrentDate = new Date(dateCreation[1] + "/" + dateCreation[0] + "/" + dateCreation[2]);
+        var myFutureDate = new Date(myCurrentDate);
+        myFutureDate.setMonth(month);
+
+        let spanNew = document.createElement('span');
+        spanNew.textContent = "New";
+        spanNew.setAttribute("class", "spanNew");
+
         let h4 = document.createElement("h4");
         h4.textContent = product.title;
+        h4.setAttribute("style", "margin-top: 20px;");
 
+        if(myFutureDate > dateToday){
+          div_title.append(spanNew, h4);
+        }
+        else{
+          div_title.append(h4);
+        }
+        
         let p = document.createElement('p');
         p.textContent = product.size + " cm";
 
         let div_info = document.createElement('div');
         div_info.setAttribute("class", "portfolio-info");
 
-        div_info.append(h4, p, div_link);
+        div_info.append(div_title, p, div_link);
 
         let img = document.createElement('img');
         img.setAttribute("src", product.pictureUrl);

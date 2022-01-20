@@ -11,6 +11,7 @@ import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: FormGroup;
+  color!: string;
 
   id!: string;
   isAddMode!: boolean;
@@ -30,8 +31,9 @@ export class PerlertypeFormComponent implements OnInit {
 
   initForm() {
     this.perlerTypeForm = this.formBuilder.group({
-      code: ['', Validators.required, this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode)],
+      reference: ['', Validators.required, this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode)],
       libelle: ['', Validators.required],
+      color: ['', Validators.required]
     });
 
     if (!this.isAddMode) {
@@ -61,8 +63,8 @@ export class PerlertypeFormComponent implements OnInit {
   }
 
   /*Validation Erreur*/
-  shouldShowCodeError() {
-    const reference = this.perlerTypeForm.controls.code;
+  shouldShowReferenceError() {
+    const reference = this.perlerTypeForm.controls.reference;
     return reference.touched && (reference.hasError('required') || reference.hasError('perlerTypeRefExists'));
   }
 
@@ -72,7 +74,7 @@ export class PerlertypeFormComponent implements OnInit {
   }
 
   shouldShowColorError() {
-    const color = this.perlerTypeForm.controls.libelle;
+    const color = this.perlerTypeForm.controls.color;
     return color.touched && color.hasError('required');
   }
   /* Fin Validation Error */
