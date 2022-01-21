@@ -10,7 +10,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3" style="margin-top: 20px;">
       <div class="col" *ngFor="let perlerType of perlerTypes; let i = index">
         <div class="card shadow-sm">
-          <div class="card-head">
+          <div class="card-head" [style.background-color]="perlerType.color">
             <img style="max-height: 50%;" class="bd-placeholder-img card-img-top" src=""
               role="img" aria-label="Placeholder: Test" preserveAspectRatio="xMidYMid slice" focusable="false" />
           </div>
