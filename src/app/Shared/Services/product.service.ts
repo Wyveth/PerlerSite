@@ -34,8 +34,8 @@ export class ProductService {
   getProducts() {
     this.products$ = collectionData(this.db) as Observable<Product[]>;
 
-    this.products$.subscribe((products: any[]) => {
-      this.products = products;
+    this.products$.subscribe((products: Product[]) => {
+      this.products = products.sort((a,b) => a.title.localeCompare(b.title));
       this.emitProducts();
     }, (error) => {
       console.log(error);
@@ -79,6 +79,7 @@ export class ProductService {
       date: product.date,
       pictureUrl: product.pictureUrl,
       tagsKey: product.tagsKey,
+      perlerTypesKey: product.perlerTypesKey,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -97,7 +98,8 @@ export class ProductService {
 
     if (product.pictureUrl !== undefined)
       this.product.pictureUrl = product.pictureUrl
-    this.product.tagsKey = product.tagsKey
+    this.product.tagsKey = product.tagsKey;
+    this.product.perlerTypesKey = product.perlerTypesKey;
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
       updateDoc(doc.ref, this.product);

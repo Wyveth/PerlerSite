@@ -14,6 +14,7 @@ export class Product extends Base {
   date!: string;
   pictureUrl!: string;
   tagsKey!: string[];
+  perlerTypesKey!: string[];
   
   tagsVisu!: string;
   tags!: Tag[]

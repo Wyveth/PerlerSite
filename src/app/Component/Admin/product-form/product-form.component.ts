@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { Product } from 'src/app/Shared/Models/Product.Model';
+import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
@@ -19,8 +20,12 @@ export class ProductFormComponent implements OnInit {
   productForm!: FormGroup;
   id!: string;
   isAddMode!: boolean;
-  dropdownList!: Array<{ key: string, code: string }>;
-  dropdownSettings: any;
+  dropdownListTags!: Array<{ key: string, code: string }>;
+  dropdownSettingsTags: any;
+
+  dropdownListPerlerTypes!: Array<{ key: string, code: string }>;
+  dropdownSettingsPerlerTypes: any;
+
   fileIsUploading = false;
   fileUploaded = false;
   fileUrl!: string;
@@ -30,9 +35,14 @@ export class ProductFormComponent implements OnInit {
   tagSubscription!: Subscription;
   tagDDL: any[] = [];
 
+  perlerTypes!: any[];
+  perlerTypeSubscription!: Subscription;
+  perlerTypeDDL: any[] = [];
+
   constructor(private formBuilder: FormBuilder,
     private productService: ProductService,
     private tagService: TagService,
+    private perlerTypeService: PerlerTypeService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -46,14 +56,25 @@ export class ProductFormComponent implements OnInit {
         this.tags = tags;
         this.tags.forEach(item => {
           this.tagDDL.push({ item_id: item.key, item_text: item.code });
-          this.dropdownList = this.tagDDL;
+          this.dropdownListTags = this.tagDDL;
         });
       }
     );
     this.tagService.emitTags();
 
+    this.perlerTypeSubscription = this.perlerTypeService.perlerTypesSubject.subscribe(
+      (perlerTypes: any[]) => {
+        this.perlerTypes = perlerTypes;
+        this.perlerTypes.forEach(item => {
+          this.perlerTypeDDL.push({ item_id: item.key, item_text: item.reference + " - " + item.libelle });
+          this.dropdownListPerlerTypes = this.perlerTypeDDL;
+        });
+      }
+    );
+    this.perlerTypeService.emitPerlerTypes();
+
     this.initForm();
-    this.dropdownSettings = {
+    this.dropdownSettingsTags = {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
@@ -61,6 +82,16 @@ export class ProductFormComponent implements OnInit {
       unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
       noDataAvailablePlaceholderText: 'Aucun tag n\'est disponible'
+    };
+
+    this.dropdownSettingsPerlerTypes = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Tout sélectionner',
+      unSelectAllText: 'Tout désélectionner',
+      allowSearchFilter: true,
+      noDataAvailablePlaceholderText: 'Aucun type de perle n\'est disponible'
     };
   }
 
@@ -73,7 +104,8 @@ export class ProductFormComponent implements OnInit {
       size: ['', Validators.required],
       time: ['', Validators.required],
       date: ['', Validators.required],
-      tagsKey: ['', Validators.required]
+      tagsKey: ['', Validators.required],
+      perlerTypesKey: ['', Validators.required]
     });
 
     if (!this.isAddMode) {
@@ -106,6 +138,10 @@ export class ProductFormComponent implements OnInit {
 
     if (formValue.tagsKey && formValue.tagsKey !== '') {
       product.tagsKey = formValue.tagsKey;
+    }
+
+    if (formValue.perlerTypesKey && formValue.perlerTypesKey !== '') {
+      product.perlerTypesKey = formValue.perlerTypesKey;
     }
 
     if (this.isAddMode) {
@@ -170,6 +206,11 @@ export class ProductFormComponent implements OnInit {
   }
   
   shouldShowTagsKeyError() {
+    const tagsKey = this.productForm.controls.tagsKey;
+    return tagsKey.touched && tagsKey.hasError('required');
+  }
+
+  shouldShowPerlerTypesKeyError() {
     const tagsKey = this.productForm.controls.tagsKey;
     return tagsKey.touched && tagsKey.hasError('required');
   }

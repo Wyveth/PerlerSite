@@ -33,7 +33,7 @@ export class PerlerTypeService {
     this.perlerTypes$ = collectionData(this.db) as Observable<PerlerType[]>;
 
     this.perlerTypes$.subscribe((perlerTypes: PerlerType[]) => {
-      this.perlerTypes = perlerTypes;
+      this.perlerTypes = perlerTypes.sort((a,b) => a.reference.localeCompare(b.reference));
 
       this.emitPerlerTypes();
     }, (error) => {
