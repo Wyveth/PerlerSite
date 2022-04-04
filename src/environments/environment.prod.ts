@@ -5,7 +5,7 @@ export const environment = {
     databaseURL: 'https://perlerwyveth-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'perlerwyveth.appspot.com',
     locationId: 'europe-west',
-    apiKey: 'AIzaSyCtUz6VvXBUAhQjwM_ehArQQOSpgUaThnc',
+    apiKey: '*****************************',
     authDomain: 'perlerwyveth.firebaseapp.com',
     messagingSenderId: '707528245165',
     measurementId: 'G-NXZRD0EQ7C',
