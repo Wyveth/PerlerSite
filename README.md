@@ -1,6 +1,7 @@
 # PerlerWyveth
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.9.
+Access: [Site](https://perlerwyveth.web.app/)
 
 ## Development server
 
