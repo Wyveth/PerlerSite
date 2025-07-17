@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
@@ -82,61 +82,54 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: 'home' }
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SectionWelcomeComponent,
-    SectionResumeComponent,
-    SectionPortfolioComponent,
-    SectionContactComponent,
-    HeaderComponent,
-    BreadcrumbsComponent,
-    ToastComponent,
-    SignupComponent,
-    SigninComponent,
-    ProductFormComponent,
-    ProductListComponent,
-    SingleProductComponent,
-    TagFormComponent,
-    TagListComponent,
-    PerlertypeListComponent,
-    PerlertypeFormComponent,
-    ContactListComponent,
-    UserListComponent,
-    UserEditComponent,
-    UserFormComponent,
-    ProfilComponent,
-    OrdererListComponent,
-    ChangePasswordComponent,
-    CommentListComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    provideFirestore(() => getFirestore()),
-    provideAnalytics(() => getAnalytics()),
-    provideFunctions(() => getFunctions()),
-    provideMessaging(() => getMessaging()),
-    providePerformance(() => getPerformance()),
-    provideRemoteConfig(() => getRemoteConfig()),
-    provideStorage(() => getStorage()),
-    SweetAlert2Module.forRoot(),
-    NgbModalModule,
-    NgbToastModule,
-    NgbRatingModule,
-    ColorPickerModule
-  ],
-  providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService, ToastService],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        SectionWelcomeComponent,
+        SectionResumeComponent,
+        SectionPortfolioComponent,
+        SectionContactComponent,
+        HeaderComponent,
+        BreadcrumbsComponent,
+        ToastComponent,
+        SignupComponent,
+        SigninComponent,
+        ProductFormComponent,
+        ProductListComponent,
+        SingleProductComponent,
+        TagFormComponent,
+        TagListComponent,
+        PerlertypeListComponent,
+        PerlertypeFormComponent,
+        ContactListComponent,
+        UserListComponent,
+        UserEditComponent,
+        UserFormComponent,
+        ProfilComponent,
+        OrdererListComponent,
+        ChangePasswordComponent,
+        CommentListComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgMultiSelectDropDownModule.forRoot(),
+        RouterModule.forRoot(appRoutes),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideDatabase(() => getDatabase()),
+        provideFirestore(() => getFirestore()),
+        provideAnalytics(() => getAnalytics()),
+        provideFunctions(() => getFunctions()),
+        provideMessaging(() => getMessaging()),
+        providePerformance(() => getPerformance()),
+        provideRemoteConfig(() => getRemoteConfig()),
+        provideStorage(() => getStorage()),
+        SweetAlert2Module.forRoot(),
+        NgbModalModule,
+        NgbToastModule,
+        NgbRatingModule,
+        ColorPickerModule], providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService, ToastService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
 
