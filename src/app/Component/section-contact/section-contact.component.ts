@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Contact } from 'src/app/Shared/Models/Contact.Model';
 import { ContactService } from 'src/app/Shared/Services/Contact.service';
 
@@ -9,12 +9,12 @@ import { ContactService } from 'src/app/Shared/Services/Contact.service';
   styleUrls: ['./section-contact.component.scss']
 })
 export class SectionContactComponent implements OnInit {
-  contactForm!: FormGroup;
+  contactForm!: UntypedFormGroup;
   loading: boolean = false;
   errorSent: boolean = false;
   successSent: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private contactService: ContactService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private contactService: ContactService) { }
 
   ngOnInit() {
     this.initForm();

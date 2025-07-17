@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { Tag } from 'src/app/Shared/Models/Tag.Model';
@@ -12,7 +12,7 @@ import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
   styleUrls: ['./tag-form.component.scss']
 })
 export class TagFormComponent implements OnInit {
-  tagForm!: FormGroup;
+  tagForm!: UntypedFormGroup;
   fileIsUploading = false;
   fileUploaded = false;
   fileUrl!: string;
@@ -22,7 +22,7 @@ export class TagFormComponent implements OnInit {
   isAddMode!: boolean;
   tag: Tag = new Tag('', '');
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private tagService: TagService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,

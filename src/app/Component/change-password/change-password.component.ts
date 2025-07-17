@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { getAuth, User } from '@angular/fire/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
 import { ToastService } from 'src/app/Shared/Services/Toast.service';
@@ -12,11 +12,11 @@ import { UserService } from 'src/app/Shared/Services/user.service';
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
-  passwordForm!: FormGroup;
+  passwordForm!: UntypedFormGroup;
   id!: string;
   toasts: any[] = [];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     private userService: UserService,
     private route: ActivatedRoute,
@@ -92,7 +92,7 @@ export class ChangePasswordComponent implements OnInit {
 }
 
 export function MustMatch(controlName: string, matchingControlName: string) {
-  return (formGroup: FormGroup) => {
+  return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 

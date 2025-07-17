@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Shared/Models/User.Model';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
@@ -11,10 +11,10 @@ import { UserService } from 'src/app/Shared/Services/user.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  signupForm!: FormGroup;
+  signupForm!: UntypedFormGroup;
   errorMessage!: string;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private authService: AuthService,
               private router: Router,
               private userService: UserService) { }
@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
 }
 
 export function MustMatch(controlName: string, matchingControlName: string) {
-  return (formGroup: FormGroup) => {
+  return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 

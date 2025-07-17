@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
@@ -17,7 +17,7 @@ import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
 
 export class ProductFormComponent implements OnInit {
   //Constante Form
-  productForm!: FormGroup;
+  productForm!: UntypedFormGroup;
   id!: string;
   isAddMode!: boolean;
   dropdownListTags!: Array<{ key: string, code: string }>;
@@ -39,7 +39,7 @@ export class ProductFormComponent implements OnInit {
   perlerTypeSubscription!: Subscription;
   perlerTypeDDL: any[] = [];
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private productService: ProductService,
     private tagService: TagService,
     private perlerTypeService: PerlerTypeService,

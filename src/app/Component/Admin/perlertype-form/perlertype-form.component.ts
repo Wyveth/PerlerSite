@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PerlerType } from 'src/app/Shared/Models/PerlerType.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
@@ -10,14 +10,14 @@ import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
   styleUrls: ['./perlertype-form.component.scss']
 })
 export class PerlertypeFormComponent implements OnInit {
-  perlerTypeForm!: FormGroup;
+  perlerTypeForm!: UntypedFormGroup;
   color!: string;
 
   id!: string;
   isAddMode!: boolean;
   perlerType: PerlerType = new PerlerType('', '', '');
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private perlerTypeService: PerlerTypeService,
     private route: ActivatedRoute,
     private router: Router) { }

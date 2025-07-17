@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { User } from 'src/app/Shared/Models/User.Model';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/Shared/Services/user.service';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  userForm!: FormGroup;
+  userForm!: UntypedFormGroup;
   pictureUrl!: string;
   id!: string;
   fileIsUploading = false;
@@ -22,7 +22,7 @@ export class UserFormComponent implements OnInit {
 
   @Input() option: string = "Admin";
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
