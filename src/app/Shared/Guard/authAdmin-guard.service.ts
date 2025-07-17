@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../Models/User.Model';
 import { UserService } from '../Services/user.service';
@@ -8,7 +8,7 @@ import { UserService } from '../Services/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthAdminGuardService implements CanActivate {
+export class AuthAdminGuardService  {
   user!: User;
 
   constructor(private router: Router, private userService: UserService) { }
