@@ -110,11 +110,7 @@ const appRoutes: Routes = [
         ChangePasswordComponent,
         CommentListComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgMultiSelectDropDownModule.forRoot(),
-        RouterModule.forRoot(appRoutes),
+    bootstrap: [AppComponent], imports: [
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
         provideDatabase(() => getDatabase()),
@@ -125,11 +121,7 @@ const appRoutes: Routes = [
         providePerformance(() => getPerformance()),
         provideRemoteConfig(() => getRemoteConfig()),
         provideStorage(() => getStorage()),
-        SweetAlert2Module.forRoot(),
-        NgbModalModule,
-        NgbToastModule,
-        NgbRatingModule,
-        ColorPickerModule], providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService, ToastService, provideHttpClient(withInterceptorsFromDi())] })
+        providers: [AuthService, UserService, AuthGuardService, ProductService, TagService, ContactService, FileUploadService, UtilsService, ToastService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
 
