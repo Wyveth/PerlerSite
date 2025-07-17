@@ -10,15 +10,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.2.14",
-    "@angular/common": "^19.2.14",
-    "@angular/compiler": "^19.2.14",
-    "@angular/core": "^19.2.14",
+    "@angular/animations": "^20.1.1",
+    "@angular/common": "^20.1.1",
+    "@angular/compiler": "^20.1.1",
+    "@angular/core": "^20.1.1",
     "@angular/fire": "^7.1.1",
-    "@angular/forms": "^19.2.14",
-    "@angular/platform-browser": "^19.2.14",
-    "@angular/platform-browser-dynamic": "^19.2.14",
-    "@angular/router": "^19.2.14",
+    "@angular/forms": "^20.1.1",
+    "@angular/platform-browser": "^20.1.1",
+    "@angular/platform-browser-dynamic": "^20.1.1",
+    "@angular/router": "^20.1.1",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@popperjs/core": "^2.10.2",
@@ -39,10 +39,10 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.15",
-    "@angular/cli": "^19.2.15",
-    "@angular/compiler-cli": "^19.2.14",
-    "@angular/localize": "^19.2.14",
+    "@angular/build": "^20.1.1",
+    "@angular/cli": "^20.1.1",
+    "@angular/compiler-cli": "^20.1.1",
+    "@angular/localize": "^20.1.1",
     "@types/aos": "^3.0.4",
     "@types/isotope-layout": "^3.0.9",
     "@types/jasmine": "~3.8.0",
@@ -53,6 +53,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "less": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }
