@@ -6,9 +6,10 @@ import { PerlerType } from 'src/app/Shared/Models/PerlerType.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 
 @Component({
-  selector: 'app-perlertype-list',
-  templateUrl: './perlertype-list.component.html',
-  styleUrls: ['./perlertype-list.component.scss']
+    selector: 'app-perlertype-list',
+    templateUrl: './perlertype-list.component.html',
+    styleUrls: ['./perlertype-list.component.scss'],
+    standalone: false
 })
 export class PerlertypeListComponent implements OnInit {
   perlerTypes!: any[];

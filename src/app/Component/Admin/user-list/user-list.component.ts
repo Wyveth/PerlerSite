@@ -6,9 +6,10 @@ import { User } from 'src/app/Shared/Models/User.Model';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+    selector: 'app-user-list',
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.scss'],
+    standalone: false
 })
 export class UserListComponent implements OnInit {
   users!: any[];

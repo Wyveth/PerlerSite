@@ -4,9 +4,10 @@ import { Contact } from 'src/app/Shared/Models/Contact.Model';
 import { ContactService } from 'src/app/Shared/Services/Contact.service';
 
 @Component({
-  selector: 'app-section-contact',
-  templateUrl: './section-contact.component.html',
-  styleUrls: ['./section-contact.component.scss']
+    selector: 'app-section-contact',
+    templateUrl: './section-contact.component.html',
+    styleUrls: ['./section-contact.component.scss'],
+    standalone: false
 })
 export class SectionContactComponent implements OnInit {
   contactForm!: UntypedFormGroup;

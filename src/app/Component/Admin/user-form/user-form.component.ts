@@ -7,9 +7,10 @@ import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+    selector: 'app-user-form',
+    templateUrl: './user-form.component.html',
+    styleUrls: ['./user-form.component.scss'],
+    standalone: false
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;

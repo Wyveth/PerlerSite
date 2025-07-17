@@ -7,9 +7,10 @@ import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 
 @Component({
-  selector: 'app-single-product',
-  templateUrl: './single-product.component.html',
-  styleUrls: ['./single-product.component.scss']
+    selector: 'app-single-product',
+    templateUrl: './single-product.component.html',
+    styleUrls: ['./single-product.component.scss'],
+    standalone: false
 })
 export class SingleProductComponent implements OnInit {
   isAuth!: boolean;

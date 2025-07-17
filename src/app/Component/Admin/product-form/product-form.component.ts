@@ -10,9 +10,10 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
 import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
 
 @Component({
-  selector: 'app-product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.scss']
+    selector: 'app-product-form',
+    templateUrl: './product-form.component.html',
+    styleUrls: ['./product-form.component.scss'],
+    standalone: false
 })
 
 export class ProductFormComponent implements OnInit {

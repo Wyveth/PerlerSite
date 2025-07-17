@@ -6,9 +6,10 @@ import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 
 @Component({
-  selector: 'app-section-portfolio',
-  templateUrl: './section-portfolio.component.html',
-  styleUrls: ['./section-portfolio.component.scss']
+    selector: 'app-section-portfolio',
+    templateUrl: './section-portfolio.component.html',
+    styleUrls: ['./section-portfolio.component.scss'],
+    standalone: false
 })
 export class SectionPortfolioComponent implements OnInit {
   products!: any[];

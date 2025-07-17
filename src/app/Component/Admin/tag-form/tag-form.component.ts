@@ -7,9 +7,10 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
 import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
 
 @Component({
-  selector: 'app-tag-form',
-  templateUrl: './tag-form.component.html',
-  styleUrls: ['./tag-form.component.scss']
+    selector: 'app-tag-form',
+    templateUrl: './tag-form.component.html',
+    styleUrls: ['./tag-form.component.scss'],
+    standalone: false
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;

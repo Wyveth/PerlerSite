@@ -5,9 +5,10 @@ import { PerlerType } from 'src/app/Shared/Models/PerlerType.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 
 @Component({
-  selector: 'app-perlertype-form',
-  templateUrl: './perlertype-form.component.html',
-  styleUrls: ['./perlertype-form.component.scss']
+    selector: 'app-perlertype-form',
+    templateUrl: './perlertype-form.component.html',
+    styleUrls: ['./perlertype-form.component.scss'],
+    standalone: false
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;

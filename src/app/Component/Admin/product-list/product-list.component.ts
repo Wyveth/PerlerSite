@@ -5,9 +5,10 @@ import { Product } from 'src/app/Shared/Models/Product.Model';
 import { ProductService } from 'src/app/Shared/Services/product.service';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+    selector: 'app-product-list',
+    templateUrl: './product-list.component.html',
+    styleUrls: ['./product-list.component.scss'],
+    standalone: false
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products!: any[];

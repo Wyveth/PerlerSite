@@ -5,9 +5,10 @@ import { Contact } from 'src/app/Shared/Models/Contact.Model';
 import { ContactService } from 'src/app/Shared/Services/Contact.service';
 
 @Component({
-  selector: 'app-contact-list',
-  templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.scss']
+    selector: 'app-contact-list',
+    templateUrl: './contact-list.component.html',
+    styleUrls: ['./contact-list.component.scss'],
+    standalone: false
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   contacts!: any[];
