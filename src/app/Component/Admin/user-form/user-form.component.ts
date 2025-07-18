@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { User } from 'src/app/Shared/Models/User.Model';
@@ -10,7 +11,8 @@ import { UserService } from 'src/app/Shared/Services/user.service';
     selector: 'app-user-form',
     templateUrl: './user-form.component.html',
     styleUrls: ['./user-form.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;

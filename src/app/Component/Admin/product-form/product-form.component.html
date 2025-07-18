@@ -85,20 +85,20 @@
           </div>
 
           <div class="form-group form-control-sm">
-            <ng-multiselect-dropdown formControlName="tagsKey" [placeholder]="'Sélectionner un ou plusieurs Tags'"
+            <!-- <ng-multiselect-dropdown formControlName="tagsKey" [placeholder]="'Sélectionner un ou plusieurs Tags'"
               [settings]="dropdownSettingsTags" [data]="dropdownListTags"
               [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }">
-            </ng-multiselect-dropdown>
+            </ng-multiselect-dropdown> -->
             <div *ngIf="f.tagsKey.errors" class="invalid-feedback">
               <div *ngIf="f.tagsKey.errors.required">Minimum un tag doit être sélectionné</div>
             </div>
           </div>
 
           <div class="form-group form-control-sm">
-            <ng-multiselect-dropdown formControlName="perlerTypesKey" [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
+            <!-- <ng-multiselect-dropdown formControlName="perlerTypesKey" [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
               [settings]="dropdownSettingsPerlerTypes" [data]="dropdownListPerlerTypes"
               [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }">
-            </ng-multiselect-dropdown>
+            </ng-multiselect-dropdown> -->
             <div *ngIf="f.perlerTypesKey.errors" class="invalid-feedback">
               <div *ngIf="f.perlerTypesKey.errors.required">Minimum un type de perle doit être sélectionné</div>
             </div>

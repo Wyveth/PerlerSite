@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Contact } from 'src/app/Shared/Models/Contact.Model';
 import { ContactService } from 'src/app/Shared/Services/Contact.service';
 
@@ -7,7 +8,8 @@ import { ContactService } from 'src/app/Shared/Services/Contact.service';
     selector: 'app-section-contact',
     templateUrl: './section-contact.component.html',
     styleUrls: ['./section-contact.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class SectionContactComponent implements OnInit {
   contactForm!: UntypedFormGroup;

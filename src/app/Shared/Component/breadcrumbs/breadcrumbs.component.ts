@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-breadcrumbs',
     templateUrl: './breadcrumbs.component.html',
     styleUrls: ['./breadcrumbs.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class BreadcrumbsComponent implements OnInit {
 

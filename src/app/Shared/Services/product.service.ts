@@ -8,7 +8,6 @@ import { UtilsService } from './Utils.service';
 import { FileUploadService } from './UploadFile.service';
 import { FileUpload } from '../Models/FileUpload.Model';
 import { updateDoc } from '@firebase/firestore';
-import { set } from '@angular/fire/database';
 import { formatDate } from '@angular/common';
 
 @Injectable({

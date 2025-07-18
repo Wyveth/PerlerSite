@@ -24,7 +24,8 @@
             <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditUser(user.key)">
               <i class="fas fa-edit"></i>
             </a>
-            <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer l\'utilisateur: ' + user.email, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteUser(user)">
+            <a class="btn btn-sm btn-outline-light link-danger">
+            <!-- [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer l\'utilisateur: ' + user.email, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteUser(user)"> -->
               <i class="fas fa-trash"></i>
             </a>
           </td>

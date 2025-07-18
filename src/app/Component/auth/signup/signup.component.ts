@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/Shared/Models/User.Model';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
 import { UserService } from 'src/app/Shared/Services/user.service';
@@ -9,7 +11,8 @@ import { UserService } from 'src/app/Shared/Services/user.service';
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class SignupComponent implements OnInit {
   signupForm!: UntypedFormGroup;

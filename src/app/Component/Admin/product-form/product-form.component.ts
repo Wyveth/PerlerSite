@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { Product } from 'src/app/Shared/Models/Product.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
@@ -13,7 +15,8 @@ import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
     selector: 'app-product-form',
     templateUrl: './product-form.component.html',
     styleUrls: ['./product-form.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 
 export class ProductFormComponent implements OnInit {

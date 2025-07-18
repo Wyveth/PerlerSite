@@ -21,7 +21,8 @@
                 <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditPerlerType(perlerType.key)">
                   <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn btn-sm btn-outline-light link-danger" [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le type de perle: ' + perlerType.reference + ' - ' + perlerType.libelle, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeletePerlerType(perlerType)">
+                <a class="btn btn-sm btn-outline-light link-danger">
+                <!-- [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le type de perle: ' + perlerType.reference + ' - ' + perlerType.libelle, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeletePerlerType(perlerType)" -->
                   <i class="fas fa-trash"></i>
                 </a>
               </div>

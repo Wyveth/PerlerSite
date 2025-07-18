@@ -37,12 +37,12 @@
             <div class="col">
               <div class="form-group form-control-sm">
                 <label for="color">Couleur</label>
-                <input type="text" id="color" class="form-control" [value]="color"
+                <!-- <input type="text" id="color" class="form-control" [value]="color"
                 [style.background]="color"
                 [(colorPicker)]="color"
                 (colorPickerChange)="onChangeColor($event)"
                 formControlName="color"
-                [ngClass]="{ 'is-invalid': shouldShowColorError() }"/>
+                [ngClass]="{ 'is-invalid': shouldShowColorError() }"/> -->
                 <div *ngIf="f.color.errors" class="invalid-feedback">
                   <div *ngIf="f.color.errors.required">La couleur est obligatoire</div>
                 </div>

@@ -1,16 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { Product } from 'src/app/Shared/Models/Product.Model';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
 import { ProductService } from 'src/app/Shared/Services/product.service';
 import { TagService } from 'src/app/Shared/Services/tag.service';
+import { CommentListComponent } from '../comment-list/comment-list.component';
 
 @Component({
     selector: 'app-single-product',
     templateUrl: './single-product.component.html',
     styleUrls: ['./single-product.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, BreadcrumbsComponent, CommentListComponent]
 })
 export class SingleProductComponent implements OnInit {
   isAuth!: boolean;

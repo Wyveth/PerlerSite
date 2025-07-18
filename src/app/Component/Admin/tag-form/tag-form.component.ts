@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { FileUpload } from 'src/app/Shared/Models/FileUpload.Model';
 import { Tag } from 'src/app/Shared/Models/Tag.Model';
 import { TagService } from 'src/app/Shared/Services/tag.service';
@@ -10,7 +12,8 @@ import { FileUploadService } from 'src/app/Shared/Services/UploadFile.service';
     selector: 'app-tag-form',
     templateUrl: './tag-form.component.html',
     styleUrls: ['./tag-form.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;

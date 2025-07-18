@@ -5,12 +5,14 @@ import * as AOS from 'aos';
 import { UserService } from '../../Services/user.service';
 import { User } from '../../Models/User.Model';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class HeaderComponent implements OnInit {
   isAuth: boolean = false;

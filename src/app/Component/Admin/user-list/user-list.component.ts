@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/Shared/Models/User.Model';
 import { UserService } from 'src/app/Shared/Services/user.service';
 
@@ -9,7 +11,8 @@ import { UserService } from 'src/app/Shared/Services/user.service';
     selector: 'app-user-list',
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, BreadcrumbsComponent]
 })
 export class UserListComponent implements OnInit {
   users!: any[];

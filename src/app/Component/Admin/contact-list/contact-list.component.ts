@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { Contact } from 'src/app/Shared/Models/Contact.Model';
 import { ContactService } from 'src/app/Shared/Services/Contact.service';
 
@@ -8,7 +10,8 @@ import { ContactService } from 'src/app/Shared/Services/Contact.service';
     selector: 'app-contact-list',
     templateUrl: './contact-list.component.html',
     styleUrls: ['./contact-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, BreadcrumbsComponent]
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   contacts!: any[];

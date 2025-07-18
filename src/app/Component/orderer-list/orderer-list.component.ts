@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-orderer-list',
     templateUrl: './orderer-list.component.html',
     styleUrls: ['./orderer-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class OrdererListComponent implements OnInit {
 

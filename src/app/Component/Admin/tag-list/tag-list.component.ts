@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { Tag } from 'src/app/Shared/Models/Tag.Model';
 import { TagService } from 'src/app/Shared/Services/tag.service';
 
@@ -8,7 +10,8 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
     selector: 'app-tag-list',
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, BreadcrumbsComponent]
 })
 export class TagListComponent implements OnInit {
   tags!: any[];

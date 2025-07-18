@@ -1,4 +1,4 @@
-import { DatePipe, formatDate } from '@angular/common';
+import { CommonModule, DatePipe, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/Shared/Models/Product.Model';
@@ -9,7 +9,8 @@ import { TagService } from 'src/app/Shared/Services/tag.service';
     selector: 'app-section-portfolio',
     templateUrl: './section-portfolio.component.html',
     styleUrls: ['./section-portfolio.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class SectionPortfolioComponent implements OnInit {
   products!: any[];

@@ -1,35 +1,21 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { initializeApp } from "firebase/app";
-import { environment } from 'src/environments/environment';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, RouterOutlet]
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   constructor() {
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyCtUz6VvXBUAhQjwM_ehArQQOSpgUaThnc",
-      authDomain: "perlerwyveth.firebaseapp.com",
-      projectId: "perlerwyveth",
-      storageBucket: "perlerwyveth.appspot.com",
-      messagingSenderId: "707528245165",
-      appId: "1:707528245165:web:33dd8eb0d6d2a50207eb24",
-      measurementId: "G-NXZRD0EQ7C"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(environment.firebase);
-    //const analytics = getAnalytics(app);
   }
 
-  ngOnInit() {
-    this.loadJsFile("assets/js/main.js");
+  ngAfterViewInit(): void {
+    //this.loadJsFile("assets/js/main.js");
   }
   
   public loadJsFile(url: string) {  

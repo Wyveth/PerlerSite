@@ -1,7 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { PerlerType } from 'src/app/Shared/Models/PerlerType.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 
@@ -9,7 +10,8 @@ import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
     selector: 'app-perlertype-list',
     templateUrl: './perlertype-list.component.html',
     styleUrls: ['./perlertype-list.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, BreadcrumbsComponent]
 })
 export class PerlertypeListComponent implements OnInit {
   perlerTypes!: any[];

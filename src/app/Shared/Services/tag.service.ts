@@ -8,8 +8,6 @@ import { UtilsService } from './Utils.service';
 import { FileUploadService } from './UploadFile.service';
 import { FileUpload } from '../Models/FileUpload.Model';
 import { formatDate } from '@angular/common';
-import { orderByValue } from 'firebase/database';
-import { orderByChild } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'

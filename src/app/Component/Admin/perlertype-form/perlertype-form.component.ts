@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { PerlerType } from 'src/app/Shared/Models/PerlerType.Model';
 import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
 
@@ -8,7 +10,8 @@ import { PerlerTypeService } from 'src/app/Shared/Services/PerlerType.service';
     selector: 'app-perlertype-form',
     templateUrl: './perlertype-form.component.html',
     styleUrls: ['./perlertype-form.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;

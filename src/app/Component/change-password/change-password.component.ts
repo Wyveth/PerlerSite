@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { getAuth, User } from '@angular/fire/auth';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/Shared/Services/auth.service';
 import { ToastService } from 'src/app/Shared/Services/Toast.service';
@@ -10,7 +11,8 @@ import { UserService } from 'src/app/Shared/Services/user.service';
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class ChangePasswordComponent implements OnInit {
   passwordForm!: UntypedFormGroup;
