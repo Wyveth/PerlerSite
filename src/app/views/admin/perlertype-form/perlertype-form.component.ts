@@ -9,7 +9,6 @@ import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 @Component({
     selector: 'app-perlertype-form',
     templateUrl: './perlertype-form.component.html',
-    styleUrls: ['./perlertype-form.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })

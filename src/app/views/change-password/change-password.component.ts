@@ -10,7 +10,6 @@ import { UserService } from 'src/app/api/services/user.service';
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
-    styleUrls: ['./change-password.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })

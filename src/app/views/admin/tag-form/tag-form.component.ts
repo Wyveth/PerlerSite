@@ -11,7 +11,6 @@ import { FileUploadService } from 'src/app/api/services/upload-file.service';
 @Component({
     selector: 'app-tag-form',
     templateUrl: './tag-form.component.html',
-    styleUrls: ['./tag-form.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })

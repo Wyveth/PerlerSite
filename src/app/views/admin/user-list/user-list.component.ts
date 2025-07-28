@@ -10,7 +10,6 @@ import { UserService } from 'src/app/api/services/user.service';
 @Component({
     selector: 'app-user-list',
     templateUrl: './user-list.component.html',
-    styleUrls: ['./user-list.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent]
 })

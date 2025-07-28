@@ -7,7 +7,6 @@ import { UserFormComponent } from '../user-form/user-form.component';
 @Component({
     selector: 'app-user-edit',
     templateUrl: './user-edit.component.html',
-    styleUrls: ['./user-edit.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent, UserFormComponent]
 })

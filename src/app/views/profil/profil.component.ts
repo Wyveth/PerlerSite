@@ -8,7 +8,6 @@ import { OrdererListComponent } from '../orderer-list/orderer-list.component';
 @Component({
     selector: 'app-profil',
     templateUrl: './profil.component.html',
-    styleUrls: ['./profil.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent, UserFormComponent, ChangePasswordComponent, OrdererListComponent]
 })

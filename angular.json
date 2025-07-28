@@ -36,7 +36,7 @@
               "src/environment"
             ],
             "styles": [
-              "src/styles.scss",
+              "src/assets/styles/styles.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/aos/dist/aos.css"
@@ -117,7 +117,7 @@
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "src/styles.scss",
+              "src/assets/styles/styles.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/aos/dist/aos.css"

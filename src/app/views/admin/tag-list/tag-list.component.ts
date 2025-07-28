@@ -9,7 +9,6 @@ import { Tag } from 'src/app/api/models/class/tag';
 @Component({
     selector: 'app-tag-list',
     templateUrl: './tag-list.component.html',
-    styleUrls: ['./tag-list.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent]
 })

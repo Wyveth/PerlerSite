@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { Product } from 'src/app/api/models/class/product';
-import { AuthService } from 'src/app/api/services/auth.service';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
@@ -12,7 +11,6 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
 @Component({
     selector: 'app-single-product',
     templateUrl: './single-product.component.html',
-    styleUrls: ['./single-product.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent, CommentListComponent]
 })

@@ -6,7 +6,6 @@ import { CardModule } from 'primeng/card';
 @Component({
     selector: 'app-section-welcome',
     templateUrl: './section-welcome.component.html',
-    styleUrls: ['./section-welcome.component.scss'],
     standalone: true,
     imports: [CommonModule, GalleriaModule, CardModule]
 })

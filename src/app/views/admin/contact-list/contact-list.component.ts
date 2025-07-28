@@ -9,7 +9,6 @@ import { ContactService } from 'src/app/api/services/contact.service';
 @Component({
     selector: 'app-contact-list',
     templateUrl: './contact-list.component.html',
-    styleUrls: ['./contact-list.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent]
 })

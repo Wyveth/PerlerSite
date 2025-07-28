@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/api/models/class/product';
@@ -8,7 +8,6 @@ import { TagService } from 'src/app/api/services/tag.service';
 @Component({
     selector: 'app-section-portfolio',
     templateUrl: './section-portfolio.component.html',
-    styleUrls: ['./section-portfolio.component.scss'],
     standalone: true,
     imports: [CommonModule]
 })

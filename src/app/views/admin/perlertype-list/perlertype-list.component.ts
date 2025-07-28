@@ -9,7 +9,6 @@ import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 @Component({
     selector: 'app-perlertype-list',
     templateUrl: './perlertype-list.component.html',
-    styleUrls: ['./perlertype-list.component.scss'],
     standalone: true,
     imports: [CommonModule, BreadcrumbsComponent]
 })

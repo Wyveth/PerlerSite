@@ -8,15 +8,16 @@ import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { UserService } from 'src/app/api/services/user.service';
 import { User } from 'src/app/api/models/class/user';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { Base } from '../base/base';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
     standalone: true,
     imports: [CommonModule, RouterModule, MenubarModule]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends Base implements OnInit {
   isAuth: boolean = false;
   isAuthA: boolean = false;
   user!: User;
@@ -53,11 +54,11 @@ export class HeaderComponent implements OnInit {
 
   isDropdownOpen = false;
 
-toggleDropdown() {
-  this.isDropdownOpen = !this.isDropdownOpen;
-}
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+
+  constructor(resources: AppResource, private authService: AuthService, private userService: UserService, private router: Router) { 
+    super(resources);
+  }
 
   ngOnInit() {
     AOS.init({
@@ -87,6 +88,10 @@ toggleDropdown() {
       }
     }
     );
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   onProfil(key: string){

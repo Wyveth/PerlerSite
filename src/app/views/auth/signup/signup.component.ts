@@ -10,7 +10,6 @@ import { UserService } from 'src/app/api/services/user.service';
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
-    styleUrls: ['./signup.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })

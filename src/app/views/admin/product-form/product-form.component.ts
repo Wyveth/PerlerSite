@@ -14,7 +14,6 @@ import { FileUploadService } from 'src/app/api/services/upload-file.service';
 @Component({
     selector: 'app-product-form',
     templateUrl: './product-form.component.html',
-    styleUrls: ['./product-form.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })

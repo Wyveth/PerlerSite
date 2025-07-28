@@ -7,7 +7,6 @@ import { ContactService } from 'src/app/api/services/contact.service';
 @Component({
     selector: 'app-section-contact',
     templateUrl: './section-contact.component.html',
-    styleUrls: ['./section-contact.component.scss'],
     standalone: true,
     imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
