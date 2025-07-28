@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
-import { ToastComponent } from '../toast/toast.component';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { ButtonModule } from 'primeng/button';
+import { HeaderComponent } from 'src/app/shared/component/header/header.component';
+import { ToastComponent } from 'src/app/shared/component/toast/toast.component';
 
 @Component({
   selector: 'app-layout',

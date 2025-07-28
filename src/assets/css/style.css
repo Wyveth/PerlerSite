@@ -154,20 +154,14 @@ section {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 20px 0;
+  padding: 20px 10px;
 }
 .header.header-scrolled {
   background: #fff;
   padding: 15px 0;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
 }
-.header .logo {
-  line-height: 0;
-}
-.header .logo img {
-  max-height: 40px;
-  margin-right: 6px;
-}
+
 .header .logo span {
   font-size: 30px;
   font-weight: 700;
@@ -175,7 +169,7 @@ section {
   color: #012970;
   font-family: "Nunito", sans-serif;
   margin-top: 3px;
-}
+} 
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -231,7 +225,7 @@ section {
 .navbar .dropdown ul {
   display: block;
   position: absolute;
-  left: 14px;
+  right: 1px;
   top: calc(100% + 30px);
   margin: 0;
   padding: 10px 0;
@@ -591,24 +585,24 @@ section {
   background: #4154f1;
   color: #fff;
 }
-.features .feture-tabs {
+.features .feature-tabs {
   margin-top: 120px;
 }
-.features .feture-tabs h3 {
+.features .feature-tabs h3 {
   color: #012970;
   font-weight: 700;
   font-size: 32px;
   margin-bottom: 10px;
 }
 @media (max-width: 768px) {
-  .features .feture-tabs h3 {
+  .features .feature-tabs h3 {
     font-size: 28px;
   }
 }
-.features .feture-tabs .nav-pills {
+.features .feature-tabs .nav-pills {
   border-bottom: 1px solid #eee;
 }
-.features .feture-tabs .nav-link {
+.features .feature-tabs .nav-link {
   background: none;
   text-transform: uppercase;
   font-size: 15px;
@@ -619,17 +613,17 @@ section {
   margin-bottom: -2px;
   border-radius: 0;
 }
-.features .feture-tabs .nav-link.active {
+.features .feature-tabs .nav-link.active {
   color: #4154f1;
   border-bottom: 3px solid #4154f1;
 }
-.features .feture-tabs .tab-content h4 {
+.features .feature-tabs .tab-content h4 {
   font-size: 18px;
   margin: 0;
   font-weight: 700;
   color: #012970;
 }
-.features .feture-tabs .tab-content i {
+.features .feature-tabs .tab-content i {
   font-size: 24px;
   line-height: 0;
   margin-right: 8px;

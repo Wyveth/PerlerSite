@@ -1,23 +1,61 @@
+import { MenubarModule } from 'primeng/menubar';
 import { Component, OnInit } from '@angular/core';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { AuthService } from '../../Services/auth.service';
 import * as AOS from 'aos';
-import { UserService } from '../../Services/user.service';
-import { User } from '../../Models/User.Model';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/api/services/auth.service';
+import { UserService } from 'src/app/api/services/user.service';
+import { User } from 'src/app/api/models/class/user';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule, RouterModule, MenubarModule]
 })
 export class HeaderComponent implements OnInit {
   isAuth: boolean = false;
   isAuthA: boolean = false;
   user!: User;
+
+  mobileMenu: boolean = false;
+
+  menuItems: MenuItem[] = [
+    {
+      label: 'Accueil',
+      icon: 'pi pi-home',
+      routerLink: ['/']
+    },
+    {
+      label: 'Mes réalisations',
+      icon: 'pi pi-images',
+      routerLink: ['#portfolio']
+    },
+    {
+      label: 'F.A.Q',
+      icon: 'pi pi-question',
+      routerLink: ['#faq']
+    },
+    {
+      label: 'Contact',
+      icon: 'pi pi-envelope',
+      routerLink: ['#contact']
+    },
+    {
+      label: 'Profil',
+      icon: 'pi pi-user',
+      visible: this.isAuth
+    }
+  ];
+
+  isDropdownOpen = false;
+
+toggleDropdown() {
+  this.isDropdownOpen = !this.isDropdownOpen;
+}
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
@@ -28,6 +66,8 @@ export class HeaderComponent implements OnInit {
       once: true,
       mirror: false
     });
+
+    this.mobileMenu = false;    
 
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {

@@ -1,5 +1,5 @@
 import { Component, TemplateRef } from '@angular/core';
-import { ToastService } from '../../Services/Toast.service';
+import { ToastService } from '../../../api/services/toast.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
