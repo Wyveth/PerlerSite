@@ -1,13 +1,14 @@
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-  <div class="container">
-    <ol>
-      <li><a href="{{ nodeParentUrl }}">{{ nodeParent }}</a></li>
-      <li *ngIf="!nodeChildUrl" class="active">{{ nodeChild }}</li>
-      <li *ngIf="nodeChildUrl"><a href="{{ nodeChildUrl }}">{{ nodeChild }}</a></li>
-      <li *ngIf="!nodeChildChildUrl" class="active">{{ nodeChildChild }}</li>
-      <li *ngIf="nodeChildChildUrl"  class="active"><a href="{{ nodeChildChildUrl }}">{{ nodeChildChild }}</a></li>
-    </ol>
-  </div>
-</section>
-<!-- End Breadcrumbs -->
+<div class="mt-[100px]">
+  <p-breadcrumb [model]="items" [home]="home">
+    <ng-template #item let-item>
+      <a class="cursor-pointer" [routerLink]="item.routerLink" 
+      [class.text-gray-400]="!item.routerLink"
+      [class.pointer-events-none]="!item.routerLink"
+      [class.no-underline]="!item.routerLink"
+      (click)="!item.routerLink && $event.preventDefault()">
+          <i [class]="item.icon"></i> {{ item.label }}
+      </a>
+    </ng-template>
+    <ng-template #separator><span class="text-[#8894f6]">/</span></ng-template>
+  </p-breadcrumb>
+</div>

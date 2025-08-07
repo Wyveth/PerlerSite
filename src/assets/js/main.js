@@ -158,7 +158,7 @@
   /**
    * Hero carousel indicators
    */
-  let heroCarouselIndicators = select("#hero-carousel-indicators")
+  let heroCarouselIndicators = select("#welcome-carousel-indicators")
   let heroCarouselItems = select('#heroCarousel .carousel-item', true)
 
   heroCarouselItems.forEach((item, index) => {
@@ -213,9 +213,9 @@
        layoutMode: 'fitRows'
      });
 
-     let portfolioFilters = select('#portfolio-flters li', true);
+     let portfolioFilters = select('#portfolio-filters li', true);
 
-     on('click', '#portfolio-flters li', function(e) {
+     on('click', '#portfolio-filters li', function(e) {
        e.preventDefault();
        portfolioFilters.forEach(function(el) {
          el.classList.remove('filter-active');
@@ -237,9 +237,9 @@
         layoutMode: 'fitRows'
       });
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+      let portfolioFilters = select('#portfolio-filters li', true);
 
-      on('click', '#portfolio-flters li', function(e) {
+      on('click', '#portfolio-filters li', function(e) {
         e.preventDefault();
         portfolioFilters.forEach(function(el) {
           el.classList.remove('filter-active');

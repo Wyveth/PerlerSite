@@ -1,2 +1,41 @@
 {
+    "layout": {
+        "header": {
+            "logo": "assets/img/LogoHome.png",
+            "title": "yveth Perler",
+            "menu": {
+                "home": "Accueil",
+                "achievements": "Mes réalisations",
+                "faq": "F.A.Q",
+                "contact": "Contact",
+                "signin": "Connexion",
+                "profil": "Profil",
+                "admin": "Administration",
+                "products": "Produits",
+                "tags": "Tags",
+                "perlertypes": "Types Perles",
+                "contacts": "Contacts",
+                "users": "Utilisateurs",
+                "signout": "Déconnexion"
+            },
+            "router": {
+                "base": "/",
+                "routes": {
+                    "home": "home",
+                    "welcome": "welcome",
+                    "achievements": "portfolio",
+                    "faq": "faq",
+                    "contact": "contact",
+                    "signin": "auth/signin",
+                    "profil": "profil",
+                    "admin": "#",
+                    "products": "products",
+                    "tags": "tags",
+                    "perlertypes": "perler-types",
+                    "contacts": "contacts",
+                    "users": "users"
+                }
+            }
+        }
+    }
 }

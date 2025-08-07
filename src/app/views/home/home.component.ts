@@ -1,4 +1,4 @@
-import { SectionResumeComponent } from '../section-resume/section-resume.component';
+import { SectionFaqComponent } from '../section-faq/section-faq.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { SectionContactComponent } from '../section-contact/section-contact.comp
     selector: 'app-home',
     templateUrl: './home.component.html',
     standalone: true,
-    imports: [CommonModule, SectionWelcomeComponent, SectionPortfolioComponent, SectionResumeComponent, SectionContactComponent]
+    imports: [CommonModule, SectionWelcomeComponent, SectionPortfolioComponent, SectionFaqComponent, SectionContactComponent]
 })
 export class HomeComponent implements OnInit {
   constructor(private router: Router){

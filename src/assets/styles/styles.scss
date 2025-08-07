@@ -114,6 +114,20 @@ section {
   content: "/";
 }
 
+p-breadcrumb {
+  nav.p-breadcrumb {
+    background: #012970;
+    color: #fff;
+
+    ol.p-breadcrumb-list {
+      li.p-breadcrumb-item > a{
+        font-size: 14px;
+        color: #fff;
+      }
+    }
+  }
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -907,7 +921,7 @@ section {
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
-.portfolio #portfolio-flters {
+.portfolio #portfolio-filters {
   padding: 0;
   margin: 0 auto 25px auto;
   list-style: none;
@@ -916,7 +930,7 @@ section {
   border-radius: 50px;
   padding: 2px 15px;
 }
-.portfolio #portfolio-flters li {
+.portfolio #portfolio-filters li {
   cursor: pointer;
   display: inline-block;
   padding: 8px 20px 10px 20px;
@@ -929,11 +943,11 @@ section {
   border-radius: 50px;
   border: 1px solid #fff;
 }
-.portfolio #portfolio-flters li:hover, .portfolio #portfolio-flters li.filter-active {
+.portfolio #portfolio-filters li:hover, .portfolio #portfolio-filters li.filter-active {
   color: #4154f1;
   border-color: #4154f1;
 }
-.portfolio #portfolio-flters li:last-child {
+.portfolio #portfolio-filters li:last-child {
   margin-right: 0;
 }
 .portfolio .portfolio-wrap {
@@ -2067,23 +2081,23 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Hero Section
+# Welcome Section
 --------------------------------------------------------------*/
-#hero {
+#welcome {
     width: 100%;
     height: 100vh;
     background-color: rgba(60, 60, 60, 0.8);
     overflow: hidden;
     position: relative;
   }
-  #hero .carousel, #hero .carousel-inner, #hero .carousel-item, #hero .carousel-item::before {
+  #welcome .carousel, #welcome .carousel-inner, #welcome .carousel-item, #welcome .carousel-item::before {
     position: absolute;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
   }
-  #hero .carousel-item {
+  #welcome .carousel-item {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -2091,7 +2105,7 @@ section {
     justify-content: center;
     align-items: flex-end;
   }
-  #hero .container {
+  #welcome .container {
     text-align: center;
     background: rgba(255, 255, 255, 0.9);
     padding-top: 30px;
@@ -2100,44 +2114,44 @@ section {
     border-top: 4px solid #012970;
   }
   @media (max-width: 1200px) {
-    #hero .container {
+    #welcome .container {
       margin-left: 50px;
       margin-right: 50px;
     }
   }
-  #hero h2 {
+  #welcome h2 {
     color: #2f2f2f;
     margin-bottom: 20px;
     font-size: 36px;
     font-weight: 700;
   }
-  #hero p {
+  #welcome p {
     margin: 0 auto 30px auto;
     color: #555555;
   }
-  #hero .carousel-inner .carousel-item {
+  #welcome .carousel-inner .carousel-item {
     transition-property: opacity;
     background-position: center top;
   }
-  #hero .carousel-inner .carousel-item,
-  #hero .carousel-inner .active.carousel-item-start,
-  #hero .carousel-inner .active.carousel-item-end {
+  #welcome .carousel-inner .carousel-item,
+  #welcome .carousel-inner .active.carousel-item-start,
+  #welcome .carousel-inner .active.carousel-item-end {
     opacity: 0;
   }
-  #hero .carousel-inner .active,
-  #hero .carousel-inner .carousel-item-next.carousel-item-start,
-  #hero .carousel-inner .carousel-item-prev.carousel-item-end {
+  #welcome .carousel-inner .active,
+  #welcome .carousel-inner .carousel-item-next.carousel-item-start,
+  #welcome .carousel-inner .carousel-item-prev.carousel-item-end {
     opacity: 1;
     transition: 0.5s;
   }
-  #hero .carousel-inner .carousel-item-next,
-  #hero .carousel-inner .carousel-item-prev,
-  #hero .carousel-inner .active.carousel-item-start,
-  #hero .carousel-inner .active.carousel-item-end {
+  #welcome .carousel-inner .carousel-item-next,
+  #welcome .carousel-inner .carousel-item-prev,
+  #welcome .carousel-inner .active.carousel-item-start,
+  #welcome .carousel-inner .active.carousel-item-end {
     left: 0;
     transform: translate3d(0, 0, 0);
   }
-  #hero .carousel-control-next-icon, #hero .carousel-control-prev-icon {
+  #welcome .carousel-control-next-icon, #welcome .carousel-control-prev-icon {
     background: none;
     font-size: 30px;
     line-height: 0;
@@ -2154,11 +2168,11 @@ section {
     align-items: center;
     justify-content: center;
   }
-  #hero .carousel-control-next-icon:hover, #hero .carousel-control-prev-icon:hover {
+  #welcome .carousel-control-next-icon:hover, #welcome .carousel-control-prev-icon:hover {
     background: #012970;
     color: rgba(255, 255, 255, 0.8);
   }
-  #hero .carousel-indicators li {
+  #welcome .carousel-indicators li {
     cursor: pointer;
     background: #fff;
     overflow: hidden;
@@ -2169,11 +2183,11 @@ section {
     opacity: 0.6;
     transition: 0.3s;
   }
-  #hero .carousel-indicators li.active {
+  #welcome .carousel-indicators li.active {
     opacity: 1;
     background: #012970;
   }
-  #hero .btn-get-started {
+  #welcome .btn-get-started {
     font-family: "Roboto", sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -2186,29 +2200,29 @@ section {
     color: #fff;
     background: #012970;
   }
-  #hero .btn-get-started:hover {
+  #welcome .btn-get-started:hover {
     background: #012970;
   }
   @media (max-width: 992px) {
-    #hero {
+    #welcome {
       height: 100vh;
     }
-    #hero .container {
+    #welcome .container {
       margin-top: 100px;
     }
   }
   @media (max-width: 768px) {
-    #hero h2 {
+    #welcome h2 {
       font-size: 28px;
     }
   }
   @media (min-width: 1024px) {
-    #hero .carousel-control-prev, #hero .carousel-control-next {
+    #welcome .carousel-control-prev, #welcome .carousel-control-next {
       width: 5%;
     }
   }
   @media (max-height: 500px) {
-    #hero {
+    #welcome {
       height: 160vh;
     }
   }
@@ -2263,4 +2277,39 @@ section {
 p-galleria.welcome .p-galleria-caption {
   background: transparent !important;
   margin-bottom: 5rem;
+}
+
+p-menubar > div.p-menubar {
+  background: transparent;
+  border: 0;
+  font-weight: 600;
+
+  a.p-menubar-item-link, 
+  a.p-menubar-item-link > span.p-menubar-item-icon {
+    color: #013289 !important;
+
+    :hover {
+      color: #4154f1;
+    }
+  }
+
+  .p-menubar-item-active > .p-menubar-item-content {
+    background: transparent;
+    color: #013289;
+  }
+
+  .p-menubar-submenu {
+    right: 5px;
+  }
+
+  .p-menubar-item:not(.p-disabled) > .p-menubar-item-content:hover,
+  .p-menubar-item.p-focus > .p-menubar-item-content  {
+    background: transparent;
+    color: #4154f1;
+  }
+
+  a.p-menubar-item-active-color ,
+  .p-menubar-item-content:hover {
+    color: #4154f1;
+  }
 }

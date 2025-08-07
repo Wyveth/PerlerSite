@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-section-resume',
-    templateUrl: './section-resume.component.html',
+    selector: 'app-section-faq',
+    templateUrl: './section-faq.component.html',
     standalone: true,
     imports: [CommonModule]
 })
-export class SectionResumeComponent implements OnInit {
+export class SectionFaqComponent implements OnInit {
 
   constructor() { }
 

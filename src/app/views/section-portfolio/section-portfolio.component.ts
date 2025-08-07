@@ -21,16 +21,10 @@ export class SectionPortfolioComponent implements OnInit {
   class!: string;
 
   constructor(private productService: ProductService, private tagService: TagService) {
+    console.log("SectionPortfolioComponent constructor called");
     this.tagSubscription = this.tagService.tagsSubject.subscribe(
       (tags: any[]) => {
         this.tags = tags;
-        this.tags.forEach(tag => {
-          let node = document.createElement('li');
-          let classFilter = '.filter-' + tag.code;
-          node.setAttribute("data-filter", classFilter);
-          node.textContent = tag.libelle;
-          document.getElementById('portfolio-flters')?.append(node);
-        })
       }
     );
     this.tagService.emitTags();

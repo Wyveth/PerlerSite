@@ -1,39 +1,102 @@
 <header id="header" class="header fixed-top">
   <div class="flex items-center justify-between">
 
-    <a href="index.html" class="flex logo items-center nav-link">
-      <img src="assets/img/LogoHome.png" alt="Logo" class=" h-[42px] object-contain " />
-      <span class="font-semibold leading-[1] inline-block align-middle">yveth Perler</span>
+    <a [routerLink]="resource.layout.header.router.routes.home" routerLinkActive="router-link-active" class="flex logo items-center nav-link">
+      <img [src]="resource.layout.header.logo" alt="Logo" class=" h-[42px] object-contain " />
+      <span class="font-semibold leading-[1] inline-block align-middle" [innerHtml]="resource.layout.header.title" ></span>
     </a>
 
-    <nav id="navbar" class="navbar">
-      <ul >
-        <li><a class="nav-link scrollto" href="#hero"><i class="ri-home-4-line"></i>Accueil</a></li>
-        <li><a class="nav-link scrollto" href="#portfolio">Mes réalisations</a></li>
-        <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
-        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        <li class="dropdown"><a href="#" class="nav-link"><span><i class="ri-account-circle-line"></i></span><i class="bi bi-chevron-down"></i></a>
+    <p-menubar [model]="header.items" />
+    
+    <!-- <nav id="navbar" class="navbar">
+      <ul>
+        <li *ngFor="let item of header.items">
+          <ng-container *ngIf="item.visible !== false">
+            <ng-container *ngIf="hasChildren(item); else single">
+              <div class="dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0)">
+                  <i *ngIf="item.icon" [class]="item.icon"></i> {{ item.label }}
+                </a>
+                <ul class="dropdown-menu">
+                  <ng-container *ngFor="let child of item.items">
+                    <ng-container *ngIf="child.visible !== false">
+                      <li>
+                        <a class="dropdown-item"
+                           [routerLink]="child.routerLink">
+                          <i *ngIf="child.icon" [class]="child.icon"></i> {{ child.label }}
+                        </a>
+                      </li>
+                    </ng-container>
+                  </ng-container>
+                </ul>
+              </div>
+            </ng-container>
+    
+            <ng-template #single>
+              <a class="nav-link scrollto" [href]="item.routerLink">
+                <i *ngIf="item.icon" [class]="item.icon"></i> {{ item.label }}
+              </a>
+            </ng-template>
+          </ng-container>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav> -->
+     
+    <!-- <nav id="navbar" class="navbar">
+      <ul>
+        <li *ngFor="let item of header.items">
+          <ng-container *ngIf="hasChildren(item); else single;">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                <i *ngIf="item.icon" [class]="item.icon"></i> {{ item.label }}
+              </a>
+              <ul class="dropdown-menu">
+                <li *ngFor="let child of item.items">
+                  <a class="dropdown-item" [routerLink]="child.routerLink" >
+                    <i *ngIf="child.icon" [class]="child.icon"></i> {{ child.label }}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+
+          <ng-template #single>
+            <a class="nav-link scrollto" [href]="item.routerLink">
+              <i *ngIf="item.icon != null" [class]="item.icon"></i>{{ item.label }}
+            </a>
+          </ng-template>
+        </li>
+        
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav> -->
+  </div>
+</header>
+
+<!-- <li class="dropdown"><a href="#" class="nav-link"><span><i class="ri-account-circle-line"></i></span><i class="bi bi-chevron-down"></i></a>
           <ul>
             <li routerLinkActive="active" *ngIf="!isAuth">
               <a routerLink="auth/signin" class="nav-link text-center">Connexion</a>
             </li>
+            @if (isAuth) {
             <li *ngIf="isAuth"><a routerLink="profil" class="nav-link" (click)="onProfil(user.key)">Profil</a></li>
-            <li *ngIf="isAuthA" class="dropdown"><a href="#" class="nav-link"><span>Administration</span><i class="bi bi-chevron-right"></i></a>
-              <ul>
-                <li *ngIf="isAuthA"><a routerLink="products" class="nav-link">Produits</a></li>
-                <li *ngIf="isAuthA"><a routerLink="tags" class="nav-link">Tags</a></li>
-                <li *ngIf="isAuthA"><a routerLink="perlerTypes" class="nav-link">Types Perles</a></li>
-                <li *ngIf="isAuthA"><a routerLink="contacts" class="nav-link">Contacts</a></li>
-                <li *ngIf="isAuthA"><a routerLink="users" class="nav-link">Utilisateurs</a></li>
-              </ul>
-            </li>
-            <li>
-              <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
-            </li>
+              @if (isAuthA) {
+                <li *ngIf="isAuthA" class="dropdown"><a href="#" class="nav-link"><span>Administration</span><i class="bi bi-chevron-right"></i></a>
+                  <ul>
+                    <li><a routerLink="products" class="nav-link">Produits</a></li>
+                    <li><a routerLink="tags" class="nav-link">Tags</a></li>
+                    <li><a routerLink="perlerTypes" class="nav-link">Types Perles</a></li>
+                    <li><a routerLink="contacts" class="nav-link">Contacts</a></li>
+                    <li><a routerLink="users" class="nav-link">Utilisateurs</a></li>
+                  </ul>
+                </li>
+              }
+            }
+            @else {
+              <li>
+                <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
+              </li>
+            }
           </ul>
-        </li>
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
-  </div>
-</header>
+        </li> -->

@@ -7,18 +7,45 @@ export interface Resource {
   }
 
 export interface Header {
+    logo: string;
+    title: string;
     menu: Menu;
+    router: Router;
 }
 
 export interface Menu {
     home: string;
-    tags: string;
-    perlerTypes: string;
-    users: string;
-    admin: string;
-    logout: string;
+    achievements: string;
+    faq: string;
+    contact: string;
     signin: string;
-    signup: string;
-    changePassword: string;
-    profile: string;
-  }
+    profil: string;
+    admin: string;
+    products: string;
+    tags: string;
+    perlertypes: string;
+    contacts: string;
+    users: string;
+    signout: string;
+}
+
+export interface Router {
+    base: string;
+    routes: Routes;
+}
+
+export interface Routes {
+    home: string;
+    welcome: string;
+    achievements: string;
+    faq: string;
+    contact: string;
+    signin: string;
+    profil: string;
+    admin: string;
+    products: string;
+    tags: string;
+    perlertypes: string;
+    contacts: string;
+    users: string;
+}
