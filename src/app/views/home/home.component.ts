@@ -10,10 +10,10 @@ import { SectionContactComponent } from '../section-contact/section-contact.comp
     selector: 'app-home',
     templateUrl: './home.component.html',
     standalone: true,
-    imports: [CommonModule, SectionWelcomeComponent, SectionPortfolioComponent, SectionFaqComponent, SectionContactComponent]
+    imports: [CommonModule, SectionWelcomeComponent, SectionPortfolioComponent, SectionFaqComponent, SectionContactComponent],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router){
+  constructor(){
   }
 
   ngOnInit() {

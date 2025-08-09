@@ -1,5 +1,5 @@
 <!-- ======= F.A.Q Section ======= -->
-<section id="faq" class="faq">
+<section id="faq" class="faq flex justify-center mx-5 md:mx-auto">
 
   <div class="container" data-aos="flip-down" data-aos-delay="300">
 
@@ -8,7 +8,7 @@
       <p [innerHTML]="resource.faq.subtitle"></p>
     </header>
 
-    <div class="row">
+    <div class="flex">
       <div class="grid grid-cols-2 gap-4" data-aos="fade-right" data-aos-delay="500">
         <p-accordion *ngFor="let tab of resource.faq.tabs">
           <p-accordion-panel *ngFor="let item of tab.items; let index = index" [value]="index">

@@ -1,5 +1,5 @@
 <!-- ======= Portfolio Section ======= -->
-<section id="portfolio" class="portfolio">
+<section id="portfolio" class="portfolio flex justify-center mx-5 md:mx-auto">
 
   <div class="container" data-aos="fade-up">
 
@@ -8,18 +8,18 @@
       <p [innerText]="resource.portfolio.subtitle"></p>
     </header>
 
-    <div class="row" data-aos="fade-up" data-aos-delay="100">
-      <div class="col-lg-12 d-flex justify-content-center">
+    <div class="flex" data-aos="fade-up" data-aos-delay="100">
+      <div class="w-full flex justify-center">
         <ul id="portfolio-filters">
-          <li 
-            data-filter="*" 
+          <li
+            data-filter="*"
             [class.filter-active]="activeFilter === '*'"
             (click)="setActiveFilter('*')"
             [innerText]="resource.portfolio.all"
           >
           </li>
-    
-          <li 
+
+          <li
             *ngFor="let tag of tags"
             [attr.data-filter]="'.filter-' + tag.code"
             [class.filter-active]="activeFilter === '.filter-' + tag.code"
@@ -31,47 +31,40 @@
       </div>
     </div>
 
-    <div id="portfolio-container" class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
-      <div 
-        class="col-lg-4 col-md-6 portfolio-item"
+    <div id="portfolio-container" class="portfolio-container grid lg:grid-cols-3 md:grid-cols-2 gap-6" data-aos="fade-up" data-aos-delay="200">
+      <div
         *ngFor="let product of products"
         [ngClass]="product.filterClasses"
+        class="portfolio-item"
       >
         <div class="portfolio-wrap">
-          <img 
-            [src]="product.pictureUrl" 
-            class="img-fluid" 
-            [alt]="product.content"
+          <img
+            [src]="product.pictureUrl"
+            alt="{{ product.content }}"
+            class="w-full h-auto rounded"
           />
-    
-          <div class="portfolio-info">
+          <div class="portfolio-info p-4">
             <div>
-              <span 
-                *ngIf="product.isNew" 
-                class="spanNew"
+              <span
+                *ngIf="product.isNew"
+                class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded"
                 [innerText]="resource.portfolio.new"
-              >
-              </span>
-    
-              <h4 class="mt-[20px]">
-                {{ product.title }}
-              </h4>
+              ></span>
+              <h4 class="mt-5 text-lg font-semibold">{{ product.title }}</h4>
             </div>
-    
-            <p [innerText]="resource.portfolio.measure | format: product.size"></p>
-    
-            <div class="portfolio-links">
-              <a 
+            <p class="text-gray-600" [innerText]="resource.portfolio.measure | format: product.size"></p>
+            <div class="portfolio-links mt-3 flex space-x-4">
+              <a
                 [href]="product.pictureUrl"
-                class="portfokio-lightbox"
+                class="text-blue-600 hover:text-blue-800"
                 data-gallery="portfolioGallery"
                 [title]="product.title"
               >
                 <i class="bi bi-plus"></i>
               </a>
-    
-              <a 
+              <a
                 [routerLink]="resource.portfolio.redirect_product_view | format:product.key"
+                class="text-blue-600 hover:text-blue-800"
                 [title]="resource.portfolio.details"
               >
                 <i class="bi bi-link"></i>
@@ -81,8 +74,6 @@
         </div>
       </div>
     </div>
-    
-
   </div>
 
 </section><!-- End Portfolio Section -->

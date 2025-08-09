@@ -1,22 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { Contact } from 'src/app/api/models/class/contact';
 import { ContactService } from 'src/app/api/services/contact.service';
+import { Base } from 'src/app/shared/component/base/base';
+import { AppResource } from './../../shared/models/app.resource';
+import { MessageService } from 'primeng/api';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
     selector: 'app-section-contact',
     templateUrl: './section-contact.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule]
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule]
 })
-export class SectionContactComponent implements OnInit {
+export class SectionContactComponent extends Base implements OnInit {
   contactForm!: UntypedFormGroup;
   loading: boolean = false;
-  errorSent: boolean = false;
-  successSent: boolean = false;
 
-  constructor(private formBuilder: UntypedFormBuilder, private contactService: ContactService) { }
+  constructor(resources: AppResource,private messageService: MessageService, private formBuilder: UntypedFormBuilder, private contactService: ContactService) { 
+    super(resources);
+  }
 
   ngOnInit() {
     this.initForm();
@@ -54,11 +60,11 @@ export class SectionContactComponent implements OnInit {
 
       setTimeout(() => {
         this.loading = false;
-        this.successSent = true;
+        this.messageService.add({ severity: severity.success, summary: this.resource.severity.success, detail: 'Votre message a bien été envoyé!' });
       }, 2000);
     } catch (error) {
       this.loading = false;
-      this.errorSent = true;
+      this.messageService.add({ severity: severity.danger, summary: this.resource.severity.danger, detail: 'Une erreur s\'est produite lors de l\'envoi, veuillez réessayer ultérieurement.' });
     }
   }
 

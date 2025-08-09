@@ -1,69 +1,69 @@
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact flex justify-center mx-5 md:mx-auto">
 
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Contact</h2>
-          <p>Me contacter</p>
+          <h2 [innerText]="resource.contact.title"></h2>
+          <p [innerText]="resource.contact.subtitle"></p>
         </header>
 
-        <div class="row gy-4 justify-content-md-center">
-          <div class="col-lg-6">
+        <div class="flex justify-center">
+          <div class="w-full lg:w-1/2">
             <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Votre Nom"
-                  [ngClass]="{ 'is-invalid': shouldShowNameError() }" >
-                  <div *ngIf="f.name.errors" class="invalid-feedback">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <input type="text" pInputText id="name" formControlName="name" placeholder="Votre Nom"
+                    [ngClass]="{ 'border-red-500': shouldShowNameError() }"
+                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <div *ngIf="f.name.errors  && (f.name.touched || f.name.dirty)" class="text-red-600 text-sm mt-1">
                     <div *ngIf="f.name.errors.required">Le nom est obligatoire</div>
                   </div>
                 </div>
 
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" id="email" formControlName="email" placeholder="Votre Email" [ngClass]="{ 'is-invalid': shouldShowMailError() }">
-                  <div *ngIf="f.email.errors" class="invalid-feedback">
+                <div>
+                  <input type="email" pInputText id="email" formControlName="email" placeholder="Votre Email"
+                    [ngClass]="{ 'border-red-500': shouldShowMailError() }"
+                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <div *ngIf="f.email.errors && (f.email.touched || f.email.dirty)" class="text-red-600 text-sm mt-1">
                     <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
                     <div *ngIf="f.email.errors.email">L'email n'est pas valide</div>
                   </div>
                 </div>
 
-                <div class="col-md-12">
-                  <input type="text" class="form-control" id="subject" formControlName="subject" placeholder="Objet"
-                  [ngClass]="{ 'is-invalid': shouldShowSubjectError() }" >
-                  <div *ngIf="f.subject.errors" class="invalid-feedback">
+                <div class="md:col-span-2">
+                  <input type="text" pInputText id="subject" formControlName="subject" placeholder="Objet"
+                    [ngClass]="{ 'border-red-500': shouldShowSubjectError() }"
+                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <div *ngIf="f.subject.errors && (f.subject.touched || f.subject.dirty)" class="text-red-600 text-sm mt-1">
                     <div *ngIf="f.subject.errors.required">L'objet est obligatoire</div>
                   </div>
                 </div>
 
-                <div class="col-md-12">
-                  <textarea class="form-control" id="message" formControlName="message" rows="6" placeholder="Message" [ngClass]="{ 'is-invalid': shouldShowMessageError() }"></textarea>
-                  <div *ngIf="f.message.errors" class="invalid-feedback">
+                <div class="md:col-span-2">
+                  <textarea pTextarea id="message" formControlName="message" rows="6" placeholder="Message"
+                    [ngClass]="{ 'border-red-500': shouldShowMessageError() }"
+                    class="w-full border rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                  <div *ngIf="f.message.errors  && (f.message.touched || f.message.dirty)" class="text-red-600 text-sm mt-1">
                     <div *ngIf="f.message.errors.required">Le message est obligatoire</div>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-12 text-center">
-                  <div *ngIf="loading" class="loading">Chargement <i class="fas fa-spinner fa-pulse"></i></div>
-                  <div *ngIf="errorSent" class="error-message">Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement.</div>
-                  <div *ngIf="successSent" class="sent-message">Votre message a bien été envoyé!</div>
-
-                  <div class="row" style="margin-top: 2rem;">
-                    <div class="col">
-                      <button class="btn btn-primary" type="submit" [disabled]="contactForm.invalid">Envoyer le message</button>
-                    </div>
-                  </div>
+              <div class="md:col-span-2 text-center mt-6">
+                <div *ngIf="loading" class="mb-3 text-blue-600 font-semibold flex justify-center items-center space-x-2">
+                  <span>Chargement</span>
+                  <i class="fas fa-spinner fa-pulse"></i>
                 </div>
 
+                <button type="submit" [disabled]="contactForm.invalid"
+                  class="bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition">
+                  Envoyer le message
+                </button>
               </div>
             </form>
-
           </div>
-
         </div>
-
       </div>
-
     </section><!-- End Contact Section -->
 

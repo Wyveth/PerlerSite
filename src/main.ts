@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, importProvidersFrom, inject } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideStorage } from '@angular/fire/storage';
@@ -17,9 +17,13 @@ import { environment } from './environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    importProvidersFrom(ToastModule),
+    MessageService, // <-- instance unique globale
     provideRouter(routes
     ),
     provideFirebaseApp(() =>
@@ -27,6 +31,17 @@ bootstrapApplication(AppComponent, {
             environment.firebase[environment.env as keyof typeof environment.firebase] as FirebaseOptions,
         ),
     ),
+    providePrimeNG({
+      theme: {
+          preset: Aura,
+          options: {
+              cssLayer: {
+                  name: 'primeng',
+                  order: 'theme, base, primeng'
+              }
+          }
+      }
+    }),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     provideAnimations(),

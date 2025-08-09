@@ -11,17 +11,19 @@ import { User } from 'src/app/api/models/class/user';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { Base } from '../base/base';
 import { Header } from '../../models/class/header';
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     standalone: true,
-    imports: [CommonModule, RouterModule, MenubarModule]
+    imports: [CommonModule, RouterModule, MenubarModule, DrawerModule]
 })
 export class HeaderComponent extends Base implements OnInit {
   isAuth: boolean = false;
   isAuthA: boolean = false;
   user!: User;
+  visibleSidebar = false;
 
   header: Header = {
     logo: this.resource.layout.header.logo,
@@ -138,7 +140,7 @@ export class HeaderComponent extends Base implements OnInit {
 
 
 
-  constructor(resources: AppResource, private authService: AuthService, private userService: UserService, private router: Router) { 
+  constructor(resources: AppResource, private authService: AuthService, private userService: UserService, private router: Router) {
     super(resources);
   }
 
@@ -148,7 +150,7 @@ export class HeaderComponent extends Base implements OnInit {
       easing: 'ease-in-out',
       once: true,
       mirror: false
-    }); 
+    });
 
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
@@ -185,6 +187,13 @@ export class HeaderComponent extends Base implements OnInit {
   hasChildren(item: any): boolean {
     return Array.isArray(item?.items) && item.items.length > 0;
   }
+
+  executeCommand(item: MenuItem) {
+    if (item.command) {
+      item.command({ originalEvent: undefined, item: item });
+      this.visibleSidebar = false;
+    }
+  }
 }
 
 function scrollViewFragment(router: Router, fragment: string, scrollType: 'smooth' | 'auto' = 'smooth') {
@@ -203,3 +212,5 @@ function scrollViewFragment(router: Router, fragment: string, scrollType: 'smoot
     if (el) el.scrollIntoView({ behavior: scrollType });
   }
 }
+
+

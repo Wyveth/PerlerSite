@@ -13,7 +13,6 @@ import { AccordionModule } from 'primeng/accordion';
 export class SectionFaqComponent extends Base implements OnInit {
   constructor(resources: AppResource) { 
     super(resources);
-    console.log(this.resource.faq)
   }
 
   ngOnInit() {

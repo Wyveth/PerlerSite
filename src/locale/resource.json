@@ -153,7 +153,25 @@
         ]
     },
     "contact": {
-        "title": "Mes réalisations",
-        "subtitle": "Mes dernières pièces"
+        "title": "Contact",
+        "subtitle": "Me contacter",
+        "loading": "Chargement",
+        "send_message": "Envoyer le message",
+        "send_message_success": "Message envoyé avec succès"
+    },
+    "form": {
+        "name": "Nom",
+        "email": "Email",
+        "subject": "Objet",
+        "message": "Message"
+    },
+    "error": {},
+    "severity": {
+        "info": "Info",
+        "success": "Succès",
+        "warn": "Attention",
+        "danger": "Erreur",
+        "secondary": "Secondaire",
+        "contrast": "Contraste"
     }
 }

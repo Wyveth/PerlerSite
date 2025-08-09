@@ -4,6 +4,9 @@ export interface Resource {
     portfolio: Portfolio;
     faq: FAQ;
     contact: Contact;
+    form: Form;
+    error: Error;
+    severity: Severity;
   }
 
 export interface Layout {
@@ -98,5 +101,23 @@ export interface FAQLink {
 }
 
 export interface Contact {
+    title: string;
+    subtitle: string;
+}
 
+export interface Form {
+
+}
+
+export interface Error {
+
+}
+
+export interface Severity {
+    success: string;
+    info: string;
+    warn: string;
+    danger: string;
+    secondary: string;
+    contrast: string;
 }

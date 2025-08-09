@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     standalone: true,
-    imports: [CommonModule, RouterOutlet]
+    imports: [CommonModule, RouterOutlet, ToastModule]
 })
 
 export class AppComponent implements AfterViewInit {
