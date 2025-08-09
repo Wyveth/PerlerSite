@@ -13,12 +13,15 @@ export class Product extends Base {
   time!: string;
   date!: string;
   pictureUrl!: string;
-  tagsKey!: string[];
+  tagsKey!: TagKey[];
   perlerTypesKey!: string[];
   
   tagsVisu!: string;
   tags!: Tag[]
   file!: FileUpload;
+
+  isNew?: boolean; // facultatif
+  filterClasses?: string; // facultatif
 
   constructor(title: string, titleContent: string, content: string, author: string, size: string, time: string, date: string) {
     super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));
@@ -30,4 +33,9 @@ export class Product extends Base {
     this.time = time;
     this.date = date;
   }
+}
+
+export interface TagKey {
+  item_text: string;
+  item_value: string;
 }

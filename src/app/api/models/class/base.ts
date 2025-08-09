@@ -1,8 +1,8 @@
 export class Base {
-    dateCreation!: String;
-    dateModification!: String;
+    dateCreation!: string;
+    dateModification!: string;
 
-    constructor(dateCreation: String, dateModification: String) {
+    constructor(dateCreation: string, dateModification: string) {
         this.dateCreation = dateCreation;
         this.dateModification = dateModification;
     }

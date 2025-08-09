@@ -6,7 +6,7 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideStorage } from '@angular/fire/storage';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withRouterConfig, withViewTransitions } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -53,15 +53,3 @@ bootstrapApplication(AppComponent, {
     }
   ],
 });
-function withEnabledBlockingInitialNavigation(): import("@angular/router").RouterFeatures {
-  throw new Error('Function not implemented.');
-}
-
-function withNavigation(): import("@angular/router").RouterFeatures {
-  throw new Error('Function not implemented.');
-}
-
-function withComponentInputBinding(): import("@angular/router").RouterFeatures {
-  throw new Error('Function not implemented.');
-}
-

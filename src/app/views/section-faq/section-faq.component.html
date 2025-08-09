@@ -4,131 +4,26 @@
   <div class="container" data-aos="flip-down" data-aos-delay="300">
 
     <header class="section-header">
-      <h2>F.A.Q</h2>
-      <p>Foire Aux Questions</p>
+      <h2 [innerHTML]="resource.faq.title"></h2>
+      <p [innerHTML]="resource.faq.subtitle"></p>
     </header>
 
     <div class="row">
-      <div class="col-lg-6" data-aos="fade-right" data-aos-delay="500">
-        <!-- F.A.Q List 1-->
-        <div class="accordion accordion-flush" id="faqlist1">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq-content-1">
-                Quel type de perle?
-              </button>
-            </h2>
-            <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
+      <div class="grid grid-cols-2 gap-4" data-aos="fade-right" data-aos-delay="500">
+        <p-accordion *ngFor="let tab of resource.faq.tabs">
+          <p-accordion-panel *ngFor="let item of tab.items; let index = index" [value]="index">
+            <p-accordion-header>{{ item.question }}</p-accordion-header>
+            <p-accordion-content>
               <div class="accordion-body">
-                <p>Les pièces sont fabriquées avec les perles HAMA MIDI (Ø5 mm).</p>
-                <p>Pour en acheter aux moins cher:</p>
+                <p *ngFor="let paragraph of item.answer.paragraphs" [innerText]="paragraph"></p>
                 <ul>
-                  <li>Megacréa: <a
-                      href="https://www.megacrea.com/activites-enfant-40000/perle-a-repasser-hama-40400/">Cliquer
-                      ici</a> (Bon rapport qualité/prix mais pas toutes les couleurs du nuancier HAMA)</li>
-                  <li>RittoHobby: <a href="https://ritohobby.fr/45_hama">Cliquer ici</a> (Le moins cher, mais frais de
-                    port élevé sur les petites commandes)</li>
+                  <li *ngFor="let item of item.answer.links">{{item.label}} <a *ngIf="item.link !== undefined"
+                      [href]="item.url" [innerText]="item.link"></a> {{ item.note }}</li>
                 </ul>
               </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq-content-2">
-                La fabrication est-elle longue?
-              </button>
-            </h2>
-            <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-              <div class="accordion-body">
-                Ça dépend des pièces, les plus petites prennent environ 1h et pour les plus grosses, ça peut monter
-                jusqu'à 20h de travail.
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq-content-3">
-                Evolution du site? 
-              </button>
-            </h2>
-            <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist1">
-              <div class="accordion-body">
-                <p>Pour le futur, le site aura de nouvelles fonctionnalités: (Développé par mes soins en Angular 12 avec FireBase)</p>
-                <ul>
-                  <li>
-                    Système d'avis sur les pièces
-                  </li>
-                  <li>
-                    Mode Sombre + Mode Anglais
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="500">
-        <!-- F.A.Q List 2-->
-        <div class="accordion accordion-flush" id="faqlist2">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq2-content-1">
-                Quels matériels?
-              </button>
-            </h2>
-            <div id="faq2-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-              <div class="accordion-body">
-                <p>il vous faut:</p>
-                <ul>
-                  <li>
-                    Des plaques pour perle MIDI. Pour en acheter: <a
-                      href="https://www.megacrea.com/plaque-carre-transp-assemblable-pour-perles-a-repasser-dia5mm-33749.html">Cliquer
-                      ici</a>
-                  </li>
-                  <li>
-                    Une pince pour déplacer les perles. Pour en acheter: <a
-                      href="https://www.megacrea.com/pince-attrape-perles-a-repasser-27868.html">Cliquer ici</a>
-                  </li>
-                  <li>
-                    Du papier cuisson et un fer à repasser.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq2-content-2">
-                Peut on les acheter?
-              </button>
-            </h2>
-            <div id="faq2-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-              <div class="accordion-body">
-                Vous pouvez prendre contact avec moi via le formulaire en bas de page pour connaître les modalités.
-              </div>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#faq2-content-3">
-                Je suis peut être en Live sur twitch!
-              </button>
-            </h2>
-            <div id="faq2-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist2">
-              <div class="accordion-body">
-                Si vous avez la moindre question, ne pas hésiter à me contacter par le formulaire de contact ou venir me
-                voir en live sur twitch
-              </div>
-            </div>
-          </div>
-        </div>
+            </p-accordion-content>
+          </p-accordion-panel>
+        </p-accordion>
       </div>
     </div>
   </div>

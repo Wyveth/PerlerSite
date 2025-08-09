@@ -2276,7 +2276,33 @@ p-breadcrumb {
 
 p-galleria.welcome .p-galleria-caption {
   background: transparent !important;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
+}
+
+.p-galleria-inset-indicators .p-galleria-indicator-list {
+  background: transparent !important;
+}
+
+.p-galleria-next-button, 
+.p-galleria-prev-button {
+  background: #012970 !important;
+  color: #fff !important;
+  opacity: 0.5;
+  
+}
+
+.p-galleria-next-button:hover, 
+.p-galleria-prev-button:hover {
+  opacity: 1;
+}
+
+.p-galleria-inset-indicators .p-galleria-indicator-button {
+  width: 12px;
+  height: 12px;
+}
+
+.p-galleria-inset-indicators .p-galleria-indicator-active .p-galleria-indicator-button {
+  background: #012970 !important;
 }
 
 p-menubar > div.p-menubar {
@@ -2312,4 +2338,18 @@ p-menubar > div.p-menubar {
   .p-menubar-item-content:hover {
     color: #4154f1;
   }
+}
+
+.p-scrolltop.p-button {
+  background: #012970;
+  border: #012970 solid 1px;
+  color: #fff;
+  border-radius: 15% !important;
+}
+
+.p-scrolltop.p-button:not(:disabled):hover {
+  background: #012970;
+  color: #fff;
+  border: #012970 solid 1px;
+  opacity: 0.5;
 }

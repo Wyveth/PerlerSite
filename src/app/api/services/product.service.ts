@@ -97,8 +97,8 @@ export class ProductService {
 
     if (product.pictureUrl !== undefined)
       this.product.pictureUrl = product.pictureUrl
-    this.product.tagsKey = product.tagsKey;
-    this.product.perlerTypesKey = product.perlerTypesKey;
+      this.product.tagsKey = product.tagsKey;
+      this.product.perlerTypesKey = product.perlerTypesKey;
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
       updateDoc(doc.ref, this.product);

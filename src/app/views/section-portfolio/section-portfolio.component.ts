@@ -1,132 +1,84 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import imagesLoaded from 'imagesloaded';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/api/models/class/product';
+import { Tag } from 'src/app/api/models/class/tag';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
+import { ImageModule } from 'primeng/image';
+import { Base } from 'src/app/shared/component/base/base';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
 
 @Component({
     selector: 'app-section-portfolio',
     templateUrl: './section-portfolio.component.html',
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule, RouterModule, ImageModule, FormatPipe]
 })
-export class SectionPortfolioComponent implements OnInit {
-  products!: any[];
+export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy {
+  products!: Product[];
   productSubscription!: Subscription;
 
-  tags!: any[];
+  tags!: Tag[];
   tagSubscription!: Subscription;
 
   class!: string;
+  activeFilter: string = '*';
 
-  constructor(private productService: ProductService, private tagService: TagService) {
-    console.log("SectionPortfolioComponent constructor called");
+  constructor(resources: AppResource, private productService: ProductService, private tagService: TagService) {
+    super(resources);
+  }
+
+  setActiveFilter(filter: string) {
+    this.activeFilter = filter;
+  }
+
+  ngOnInit() {
     this.tagSubscription = this.tagService.tagsSubject.subscribe(
-      (tags: any[]) => {
+      (tags: Tag[]) => {
         this.tags = tags;
       }
     );
     this.tagService.emitTags();
+
+    this.productSubscription = this.productService.productsSubject.subscribe(
+      (products: Product[]) => {
+        this.products = products
+          .sort((a, b) => a.title.localeCompare(b.title))
+          .map(product => {
+            const isNew = this.isNew(product.dateCreation);
+            const filterClasses = product.tagsKey
+              .map(t => 'filter-' + t.item_text)
+              .join(' ');
+            return { ...product, isNew, filterClasses };
+          });
+
+          setTimeout(() => {
+            const grid = document.querySelector('#portfolio-container');
+            if (grid) {
+              imagesLoaded(grid, () => {
+                this.loadJsFile('assets/js/isotope.js');
+              });
+            }
+          }, 0);
+      }
+  );
+
+  this.productService.emitProducts();
   }
 
-  ngOnInit() {
-    this.productSubscription = this.productService.productsSubject.subscribe(
-      (products: any[]) => {
-        this.products = products.sort((a,b) => a.title.localeCompare(b.title));
-        
-        this.products.forEach((product: Product) => {
-        //Creation Icon Plus
-        let i_plus = document.createElement('i');
-        i_plus.setAttribute("class", "bi bi-plus");
+  // Détermine si un produit est "New"
+  isNew(dateCreationStr: string): boolean {
+    const today = new Date();
+    const [day, month, year] = dateCreationStr.split('/').map(Number);
+    const creationDate = new Date(year, month - 1, day);
+    const newUntil = new Date(creationDate);
+    newUntil.setMonth(newUntil.getMonth() + 1); // Produit "new" pendant 1 mois
 
-        //Creation A href
-        let a_href_img = document.createElement('a');
-        a_href_img.setAttribute("href", product.pictureUrl);
-        a_href_img.setAttribute("data-gallery", "portfolioGallery");
-        a_href_img.setAttribute("class", "portfokio-lightbox");
-        a_href_img.setAttribute("title", product.title);
-
-        a_href_img.append(i_plus);
-
-        //Creation Icon Lien
-        let i_lien = document.createElement('i');
-        i_lien.setAttribute("class", "bi bi-link");
-
-        let a_href_redirect = document.createElement('a');
-        a_href_redirect.setAttribute("href", "products/view/" + product.key);
-        a_href_redirect.setAttribute("title", "Détails");
-
-        a_href_redirect.append(i_lien);
-
-        let div_link = document.createElement('div');
-        div_link.setAttribute("class", "portfolio-links");
-
-        div_link.append(a_href_img, a_href_redirect);
-
-        let div_title = document.createElement('div');
-        
-        var dateToday = new Date();
-
-        var dateCreation = product.dateCreation.split('/');
-        var month = Number(dateCreation[1]);
-
-        var myCurrentDate = new Date(dateCreation[1] + "/" + dateCreation[0] + "/" + dateCreation[2]);
-        var myFutureDate = new Date(myCurrentDate);
-        myFutureDate.setMonth(month);
-
-        let spanNew = document.createElement('span');
-        spanNew.textContent = "New";
-        spanNew.setAttribute("class", "spanNew");
-
-        let h4 = document.createElement("h4");
-        h4.textContent = product.title;
-        h4.setAttribute("style", "margin-top: 20px;");
-
-        if(myFutureDate > dateToday){
-          div_title.append(spanNew, h4);
-        }
-        else{
-          div_title.append(h4);
-        }
-        
-        let p = document.createElement('p');
-        p.textContent = product.size + " cm";
-
-        let div_info = document.createElement('div');
-        div_info.setAttribute("class", "portfolio-info");
-
-        div_info.append(div_title, p, div_link);
-
-        let img = document.createElement('img');
-        img.setAttribute("src", product.pictureUrl);
-        img.setAttribute("class", "img-fluid");
-        img.setAttribute("alt", product.content);
-
-        let div_wrap = document.createElement('div');
-        div_wrap.setAttribute("class", "portfolio-wrap");
-
-        div_wrap.append(img, div_info);
-
-        this.class = "";
-        product.tagsKey.forEach((element: any) => {
-          this.class= " filter-" + element['item_text'] + " ";
-        });
-
-        let div_item = document.createElement('div');
-        div_item.setAttribute("class", "col-lg-4 col-md-6 portfolio-item" + this.class);
-
-        div_item.append(div_wrap);
-
-        document.getElementById('portfolio-container')?.append(div_item);
-        });
-
-        setTimeout(() => {
-          this.loadJsFile("assets/js/isotope.js");
-        }, 1000);
-      }
-    );
-    this.productService.emitProducts();
+    return today <= newUntil;
   }
   
   public loadJsFile(url: string) {  
@@ -134,5 +86,11 @@ export class SectionPortfolioComponent implements OnInit {
     node.src = url;  
     node.type = 'text/javascript';  
     document.getElementsByTagName('head')[0].appendChild(node);
-  }  
+  }
+
+  ngOnDestroy() {
+    if (this.tagSubscription) {
+      this.tagSubscription.unsubscribe();
+    }
+  }
 }
