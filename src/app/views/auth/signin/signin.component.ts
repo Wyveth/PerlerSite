@@ -4,16 +4,31 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/services/auth.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+    imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      BreadcrumbsComponent,
+      InputTextModule,
+      PasswordModule,
+      FloatLabelModule,
+      DividerModule
+    ]
 })
 export class SigninComponent implements OnInit {
   signinForm!: UntypedFormGroup;
   errorMessage!: string;
+
+  passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
   constructor(private formBuilder: UntypedFormBuilder,
               private authService: AuthService,
