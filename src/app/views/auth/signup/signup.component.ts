@@ -6,12 +6,25 @@ import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/bread
 import { User } from 'src/app/api/models/class/user';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { UserService } from 'src/app/api/services/user.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
     selector: 'app-signup',
     templateUrl: './signup.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+    imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      BreadcrumbsComponent,
+      InputTextModule,
+      PasswordModule,
+      FloatLabelModule,
+      DividerModule
+    ]
 })
 export class SignupComponent implements OnInit {
   signupForm!: UntypedFormGroup;
@@ -30,7 +43,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       displayName: ['', Validators.required, this.userService.existingDisplayNameValidator()],
       email: ['', [Validators.required, Validators.email], this.userService.existingEmailValidator()],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/[0-9a-zA-Z]{6,}/)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]],
       confirmPassword: ['', Validators.required]
     },
     {

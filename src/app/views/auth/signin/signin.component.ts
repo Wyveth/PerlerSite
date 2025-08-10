@@ -1,3 +1,5 @@
+import { MessageService } from 'primeng/api';
+import { AppResource } from 'src/app/shared/models/app.resource';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -7,7 +9,7 @@ import { AuthService } from 'src/app/api/services/auth.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { DividerModule } from 'primeng/divider';
+import { Base } from 'src/app/shared/component/base/base';
 
 @Component({
     selector: 'app-signin',
@@ -20,19 +22,19 @@ import { DividerModule } from 'primeng/divider';
       BreadcrumbsComponent,
       InputTextModule,
       PasswordModule,
-      FloatLabelModule,
-      DividerModule
+      FloatLabelModule
     ]
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent extends Base implements OnInit {
   signinForm!: UntypedFormGroup;
   errorMessage!: string;
 
-  passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(resources: AppResource, private formBuilder: UntypedFormBuilder,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) {
+                super(resources);
+              }
 
   ngOnInit() {
     this.initForm();
@@ -67,6 +69,12 @@ export class SigninComponent implements OnInit {
         else if(error == 'auth/wrong-password'){
           this.errorMessage = 'Le mot de passe est erroné';
         }
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur de connexion',
+          detail: this.errorMessage
+        });
       }
     );
   }

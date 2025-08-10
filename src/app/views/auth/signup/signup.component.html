@@ -1,65 +1,66 @@
 <app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Créer un compte"></app-breadcrumbs>
 
-<section class="inner-page">
-  <div class="container">
-    <div class="row justify-content-md-center">
-      <div class="col-sm-6 formStyle">
-        <div class="row justify-content-md-center">
+<section class="h-full inner-page">
+  <div class="flex justify-center">
+    <div class="w-1/2 formStyle">
+      <div class="flex justify-center">
           <h2 class="styleTitle">Créer un compte</h2>
         </div>
-        <form class="row g-3" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-          <!--<div class="col-md-6">
-            <div class="form-group">
-              <label for="email">Adresse mail</label>
-              <input type="text" id="email" class="form-control" formControlName="email">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="password">Mot de passe</label>
-              <input type="password" id="password" class="form-control" formControlName="password">
-            </div>
-          </div>-->
-
-          <div class="form-group">
-            <label>Pseudo</label>
-            <input type="text" formControlName="displayName" class="form-control form-control-sm"
-              [ngClass]="{ 'is-invalid': shouldShowDisplayNameError() }" />
-            <div *ngIf="f.displayName.errors" class="invalid-feedback">
+        <form class="flex flex-col space-y-8" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="space-y-2">
+            <p-floatlabel class="flex w-1/2 mx-auto">
+              <label>Pseudo</label>
+              <input type="text" pInputText formControlName="displayName" class="w-full" />
+            </p-floatlabel>
+            <div *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)" class="text-red-600 text-sm mt-1 text-center">
               <div *ngIf="f.displayName.errors.required">Le pseudo est obligatoire</div>
               <div *ngIf="f.displayName.errors.displayNameExists && (f.displayName.dirty || f.displayName.touched)">Le pseudo est déjà utilisé</div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" formControlName="email" class="form-control form-control-sm"
-              [ngClass]="{ 'is-invalid': shouldShowEmailError() }" />
-            <div *ngIf="f.email.errors" class="invalid-feedback">
+          <div class="space-y-2">
+            <p-floatlabel class="flex w-1/2 mx-auto">
+              <label>Email</label>
+              <input type="text" pInputText formControlName="email" class="w-full" />
+            </p-floatlabel>
+            <div *ngIf="f.email.errors && (f.email.touched || f.email.dirty)" class="text-red-600 text-sm mt-1 text-center">
               <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
               <div *ngIf="f.email.errors.email">L'email n'est pas valide</div>
               <div *ngIf="f.email.errors.emailExists">L'email est déjà utilisé</div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Mot de passe</label>
-            <input type="password" formControlName="password" class="form-control form-control-sm"
-              [ngClass]="{ 'is-invalid': shouldShowPasswordError() }" />
-            <div *ngIf="f.password.errors" class="invalid-feedback">
+          <div class="space-y-2">
+            <p-floatlabel class="flex w-1/2 mx-auto">
+              <label class="z-1">Mot de passe</label>
+              <p-password type="password" formControlName="password" [inputStyleClass]="'w-full'" promptLabel="Saisir un mot de passe"
+              class="w-full" [styleClass]="'w-full'" [toggleMask]="true" weakLabel="Trop simple" mediumLabel="Correct" strongLabel="Mot de passe complexe">
+                <ng-template #footer>
+                  <p-divider />
+                  <ul class="pl-2 my-0 leading-normal">
+                      <li>Au moins une minuscule</li>
+                      <li>Au moins une majuscule</li>
+                      <li>Au moins un chiffre</li>
+                      <li>8 caractères minimum</li>
+                  </ul>
+                </ng-template>
+              </p-password>
+            </p-floatlabel>
+            <div *ngIf="f.password.errors && (f.passwordtouched || f.password.dirty)" class="text-red-600 text-sm mt-1 text-center">
               <div *ngIf="f.password.errors.required">Le mot de passe est requis</div>
-              <div *ngIf="f.password.errors.minlength">Le mot de passe doit avoir au moins 6 caractères</div>
+              <div *ngIf="f.password.errors.minlength">Le mot de passe doit avoir au moins 8 caractères</div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Confirmer Mot de passe</label>
-            <input type="password" formControlName="confirmPassword" class="form-control form-control-sm"
-              [ngClass]="{ 'is-invalid': shouldShowConfirmPasswordError() }" />
-            <div *ngIf="f.confirmPassword.errors" class="invalid-feedback">
+          <div class="space-y-2">
+            <p-floatlabel class="flex w-1/2 mx-auto">
+              <label class="z-1">Confirmer Mot de passe</label>
+              <p-password type="password" formControlName="confirmPassword" [inputStyleClass]="'w-full'" promptLabel="Saisir un mot de passe"
+              class="w-full" [styleClass]="'w-full'" [toggleMask]="true" [feedback]="false" />
+            </p-floatlabel>
+            <div *ngIf="f.confirmPassword.errors && (f.confirmPassword.touched || f.confirmPassword.dirty)" class="text-red-600 text-sm mt-1 text-center">
               <div *ngIf="f.confirmPassword.errors.required">La confirmation du mot de passe est requis</div>
               <div *ngIf="f.confirmPassword.errors.mustMatch">Les mots de passe doivent être identique</div>
             </div>
           </div>
-          <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid">Créer mon compte</button>
+          <button class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition" type="submit" [disabled]="signupForm.invalid">Créer mon compte</button>
         </form>
-        <p class="text-danger">{{ errorMessage }}</p>
       </div>
     </div>

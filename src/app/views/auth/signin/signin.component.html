@@ -15,21 +15,11 @@
             <p-floatlabel class="flex w-1/2 mx-auto">
               <label class="z-1" for="password">Mot de passe</label>
               <p-password type="password"  id="password" formControlName="password" [inputStyleClass]="'w-full'" promptLabel="Saisir un mot de passe"
-              class="w-full" [styleClass]="'w-full'" [toggleMask]="true" [feedback]="false">
-            <!-- <ng-template #footer>
-                <p-divider />
-                <ul class="pl-2 my-0 leading-normal">
-                    <li>Au moins une minuscule</li>
-                    <li>Au moins une majuscule</li>
-                    <li>Au moins un chiffre</li>
-                    <li>8 caractères minimum</li>
-                </ul>
-            </ng-template> -->
-            </p-password>
+                class="w-full" [styleClass]="'w-full'" [toggleMask]="true" [feedback]="false">
+              </p-password>
             </p-floatlabel>
-          <button class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition" type="submit" [disabled]="signinForm.invalid">Se Connecter</button>
+            <button class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition" type="submit" [disabled]="signinForm.invalid">Se Connecter</button>
         </form>
-        <p class="text-danger">{{ errorMessage }}</p>
       </div>
     </div>
 </section>
