@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, OnDestroy, OnInit, afterNextRender, effect, inject, runInInjectionContext, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import imagesLoaded from 'imagesloaded';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/api/models/class/product';
+import { Product, TagKey } from 'src/app/api/models/class/product';
 import { Tag } from 'src/app/api/models/class/tag';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
@@ -19,7 +19,7 @@ import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
     imports: [CommonModule, RouterModule, ImageModule, FormatPipe]
 })
 export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy {
-  products!: Product[];
+  products = signal<Product[]>([]);
   productSubscription!: Subscription;
 
   tags!: Tag[];
@@ -28,12 +28,42 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
   class!: string;
   activeFilter: string = '*';
 
+  private isotope: any;
+  private injector = inject(EnvironmentInjector);
+
   constructor(resources: AppResource, private productService: ProductService, private tagService: TagService) {
     super(resources);
+
+    // Quand products change → on initialise Isotope
+    effect(() => {
+      const list = this.products();
+      if (!list.length) return;
+
+      runInInjectionContext(this.injector, () => {
+        afterNextRender(async () => {
+          const grid = document.querySelector('#portfolio-container') as HTMLElement; // Ajout du cast vers HTMLElement
+          if (!grid) return;
+
+          imagesLoaded(grid, async () => {
+            const IsotopeModule = await import('isotope-layout');
+            const Isotope = IsotopeModule.default;
+            this.isotope = new Isotope(grid, {
+              itemSelector: '.portfolio-item',
+              percentPosition: true,
+              masonry: { columnWidth: '.portfolio-item' } // ou layoutMode: 'fitRows'
+            });
+          });
+        });
+      });
+    });
   }
 
   setActiveFilter(filter: string) {
     this.activeFilter = filter;
+
+    if (this.isotope) {
+      this.isotope.arrange({ filter });
+    }
   }
 
   ngOnInit() {
@@ -44,30 +74,21 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
     );
     this.tagService.emitTags();
 
-    this.productSubscription = this.productService.productsSubject.subscribe(
-      (products: Product[]) => {
-        this.products = products
+    this.productService.productsSubject.subscribe((products: Product[]) => { // BEGIN:
+      this.products.set( // Changement ici pour appeler la méthode set de signal
+        products
           .sort((a, b) => a.title.localeCompare(b.title))
-          .map(product => {
+          .map((product) => {
             const isNew = this.isNew(product.dateCreation);
             const filterClasses = product.tagsKey
-              .map(t => 'filter-' + t.item_text)
+              .map((t: TagKey) => 'filter-' + t.item_text) // Changement ici pour utiliser 'libelle' de TagKey
               .join(' ');
             return { ...product, isNew, filterClasses };
-          });
+          })
+      );
+    }); // END:
 
-          setTimeout(() => {
-            const grid = document.querySelector('#portfolio-container');
-            if (grid) {
-              imagesLoaded(grid, () => {
-                this.loadJsFile('assets/js/isotope.js');
-              });
-            }
-          }, 0);
-      }
-  );
-
-  this.productService.emitProducts();
+    this.productService.emitProducts();
   }
 
   // Détermine si un produit est "New"
@@ -79,13 +100,6 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
     newUntil.setMonth(newUntil.getMonth() + 1); // Produit "new" pendant 1 mois
 
     return today <= newUntil;
-  }
-  
-  public loadJsFile(url: string) {  
-    let node = document.createElement('script');  
-    node.src = url;  
-    node.type = 'text/javascript';  
-    document.getElementsByTagName('head')[0].appendChild(node);
   }
 
   ngOnDestroy() {
