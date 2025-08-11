@@ -4,20 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { ButtonModule } from 'primeng/button';
 import { HeaderComponent } from 'src/app/shared/component/header/header.component';
-import { ToastComponent } from 'src/app/shared/component/toast/toast.component';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    ToastComponent,
-    RouterOutlet,
-    ScrollTopModule,
-    ButtonModule
-  ]
+  imports: [CommonModule, HeaderComponent, RouterOutlet, ScrollTopModule, ButtonModule]
 })
 export class LayoutComponent implements OnInit {
   constructor() {}
