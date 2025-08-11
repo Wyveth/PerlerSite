@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { Base } from 'src/app/shared/component/base/base';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
   selector: 'app-signin',
@@ -68,21 +69,26 @@ export class SigninComponent extends Base implements OnInit {
     this.authService.signInUser(email, password).then(
       () => {
         this.router.navigate(['/home']);
+        this.messageService.add({
+          severity: severity.success,
+          summary: this.resource.signin.signin_success_summary,
+          detail: this.resource.signin.signin_success_detail
+        });
       },
       (error: string) => {
         if (error == 'auth/invalid-email') {
-          this.errorMessage = "L'adresse email est erronée";
+          this.errorMessage = this.resource.signin.email_password_false;
         } else if (error == 'auth/user-disabled') {
-          this.errorMessage = 'Le compte est désactivé';
+          this.errorMessage = this.resource.signin.user_desactivated;
         } else if (error == 'auth/user-not-found') {
-          this.errorMessage = "Aucun utilisateur n'a été retrouvé avec cette adresse email";
+          this.errorMessage = this.resource.signin.user_not_found;
         } else if (error == 'auth/wrong-password') {
-          this.errorMessage = 'Le mot de passe est erroné';
+          this.errorMessage = this.resource.signin.email_password_false;
         }
 
         this.messageService.add({
-          severity: 'error',
-          summary: 'Erreur de connexion',
+          severity: severity.error,
+          summary: this.resource.signin.error,
           detail: this.errorMessage
         });
       }

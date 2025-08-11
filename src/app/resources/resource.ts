@@ -1,5 +1,6 @@
 export interface Resource {
   layout: Layout;
+  router: Router;
   welcome: Welcome;
   portfolio: Portfolio;
   faq: FAQ;
@@ -8,6 +9,7 @@ export interface Resource {
   error: Error;
   severity: Severity;
   signin: Signin;
+  signup: Signup;
 }
 
 export interface Layout {
@@ -18,7 +20,6 @@ export interface Header {
   logo: string;
   title: string;
   menu: Menu;
-  router: Router;
 }
 
 export interface Menu {
@@ -115,22 +116,30 @@ export interface Contact {
 
 export interface Form {
   name: string;
-  name_mandatory: string;
   email: string;
-  email_mandatory: string;
-  email_invalid: string;
   subject: string;
-  subject_mandatory: string;
   message: string;
-  message_mandatory: string;
   password: string;
-  password_mandatory: string;
-  password_required: string;
-  password_confirm: string;
-  password_confirm_mandatory: string;
+  confirm_password: string;
+  pseudo: string;
+  prompt_password: string;
 }
 
 export interface Error {
+  name_mandatory: string;
+  email_mandatory: string;
+  email_invalid: string;
+  subject_mandatory: string;
+  message_mandatory: string;
+  password_mandatory: string;
+  password_required: string;
+  password_minlength: string;
+  confirm_password_mandatory: string;
+  confirm_password_required: string;
+  pseudo_mandatory: string;
+  pseudo_invalid: string;
+  pseudo_required: string;
+  pseudo_already_exists: string;
   default: string;
   unauthorized: string;
   forbidden: string;
@@ -146,23 +155,43 @@ export interface Error {
   password_mismatch: string;
   password_too_short: string;
   password_too_weak: string;
+  weak_label: string;
+  medium_label: string;
+  strong_label: string;
 }
 
 export interface Severity {
   success: string;
   info: string;
   warn: string;
-  danger: string;
+  error: string;
   secondary: string;
   contrast: string;
 }
 
 export interface Signin {
   title: string;
-  email: string;
-  password: string;
   remember_me: string;
   forgot_password: string;
   signin_button: string;
-  signin_error: string;
+  signin_success_summary: string;
+  signin_success_detail: string;
+  error: string;
+  signin_required: string;
+  signin_required_admin: string;
+  signin_required_user: string;
+  email_password_false: string;
+  user_desactivated: string;
+  user_not_found: string;
+}
+
+export interface Signup {
+  title: string;
+  at_least_one_lowercase: string;
+  at_least_one_uppercase: string;
+  at_least_one_numeric: string;
+  minimum_characters: string;
+  signup_button: string;
+  signup_success: string;
+  signup_error: string;
 }

@@ -82,8 +82,8 @@ export class SectionContactComponent extends Base implements OnInit {
     } catch (error) {
       this.loading = false;
       this.messageService.add({
-        severity: severity.danger,
-        summary: this.resource.severity.danger,
+        severity: severity.error,
+        summary: this.resource.severity.error,
         detail: this.resource.error.server_error
       });
     }

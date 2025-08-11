@@ -33,25 +33,25 @@ export class HeaderComponent extends Base implements OnInit {
         label: this.resource.layout.header.menu.home,
         icon: 'ri-home-4-line',
         command: () => {
-          scrollViewFragment(this.router, this.resource.layout.header.router.routes.welcome);
+          scrollViewFragment(this.router, this.resource.router.routes.welcome);
         }
       },
       {
         label: this.resource.layout.header.menu.achievements,
         command: () => {
-          scrollViewFragment(this.router, this.resource.layout.header.router.routes.achievements);
+          scrollViewFragment(this.router, this.resource.router.routes.achievements);
         }
       },
       {
         label: this.resource.layout.header.menu.faq,
         command: () => {
-          scrollViewFragment(this.router, this.resource.layout.header.router.routes.faq);
+          scrollViewFragment(this.router, this.resource.router.routes.faq);
         }
       },
       {
         label: this.resource.layout.header.menu.contact,
         command: () => {
-          scrollViewFragment(this.router, this.resource.layout.header.router.routes.contact);
+          scrollViewFragment(this.router, this.resource.router.routes.contact);
         }
       },
       {
@@ -60,7 +60,7 @@ export class HeaderComponent extends Base implements OnInit {
           {
             label: this.resource.layout.header.menu.signin,
             visible: !this.isAuth,
-            routerLink: this.resource.layout.header.router.routes.signin
+            routerLink: this.resource.router.routes.signin
           },
           {
             visible: this.isAuth,
@@ -72,27 +72,27 @@ export class HeaderComponent extends Base implements OnInit {
           {
             visible: this.isAuthA,
             label: this.resource.layout.header.menu.admin,
-            routerLink: this.resource.layout.header.router.routes.admin,
+            routerLink: this.resource.router.routes.admin,
             items: [
               {
                 label: this.resource.layout.header.menu.products,
-                routerLink: this.resource.layout.header.router.routes.products
+                routerLink: this.resource.router.routes.products
               },
               {
                 label: this.resource.layout.header.menu.tags,
-                routerLink: this.resource.layout.header.router.routes.tags
+                routerLink: this.resource.router.routes.tags
               },
               {
                 label: this.resource.layout.header.menu.perlertypes,
-                routerLink: this.resource.layout.header.router.routes.perlertypes
+                routerLink: this.resource.router.routes.perlertypes
               },
               {
                 label: this.resource.layout.header.menu.contacts,
-                routerLink: this.resource.layout.header.router.routes.contacts
+                routerLink: this.resource.router.routes.contacts
               },
               {
                 label: this.resource.layout.header.menu.users,
-                routerLink: this.resource.layout.header.router.routes.users
+                routerLink: this.resource.router.routes.users
               }
             ]
           },

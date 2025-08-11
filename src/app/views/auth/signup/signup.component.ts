@@ -16,6 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
+import { Base } from 'src/app/shared/component/base/base';
+import { AppResource } from 'src/app/shared/models/app.resource';
 
 @Component({
   selector: 'app-signup',
@@ -32,16 +34,19 @@ import { DividerModule } from 'primeng/divider';
     DividerModule
   ]
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent extends Base implements OnInit {
   signupForm!: UntypedFormGroup;
   errorMessage!: string;
 
   constructor(
+    resources: AppResource,
     private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     this.initForm();

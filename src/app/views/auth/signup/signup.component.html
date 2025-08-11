@@ -1,72 +1,77 @@
 <app-breadcrumbs
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Créer un compte"
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.signup.title"
 ></app-breadcrumbs>
 
 <section class="h-full inner-page">
   <div class="flex justify-center">
     <div class="w-1/2 formStyle">
       <div class="flex justify-center">
-        <h2 class="styleTitle">Créer un compte</h2>
+        <h2 class="styleTitle" [innerText]="this.resource.signup.title"></h2>
       </div>
       <form class="flex flex-col space-y-8" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label>Pseudo</label>
+            <label [innerText]="resource.form.pseudo"></label>
             <input type="text" pInputText formControlName="displayName" class="w-full" />
           </p-floatlabel>
           <div
             *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
             class="text-red-600 text-sm mt-1 text-center"
           >
-            <div *ngIf="f.displayName.errors.required">Le pseudo est obligatoire</div>
+            <div
+              *ngIf="f.displayName.errors.required"
+              [innerText]="resource.error.pseudo_mandatory"
+            ></div>
             <div
               *ngIf="
                 f.displayName.errors.displayNameExists &&
                 (f.displayName.dirty || f.displayName.touched)
               "
-            >
-              Le pseudo est déjà utilisé
-            </div>
+              [innerText]="resource.error.pseudo_already_exists"
+            ></div>
           </div>
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label>Email</label>
+            <label [innerText]="resource.form.email"></label>
             <input type="text" pInputText formControlName="email" class="w-full" />
           </p-floatlabel>
           <div
             *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
             class="text-red-600 text-sm mt-1 text-center"
           >
-            <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
-            <div *ngIf="f.email.errors.email">L'email n'est pas valide</div>
-            <div *ngIf="f.email.errors.emailExists">L'email est déjà utilisé</div>
+            <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
+            <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
+            <div
+              *ngIf="f.email.errors.emailExists"
+              [innerText]="resource.error.email_already_exists"
+            ></div>
           </div>
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label class="z-1">Mot de passe</label>
+            <label class="z-1" [innerText]="resource.form.password"></label>
             <p-password
               type="password"
               formControlName="password"
               [inputStyleClass]="'w-full'"
-              promptLabel="Saisir un mot de passe"
+              [promptLabel]="resource.form.prompt_password"
               class="w-full"
               [styleClass]="'w-full'"
               [toggleMask]="true"
-              weakLabel="Trop simple"
-              mediumLabel="Correct"
-              strongLabel="Mot de passe complexe"
+              [weakLabel]="resource.error.weak_label"
+              [mediumLabel]="resource.error.medium_label"
+              [strongLabel]="resource.error.strong_label"
             >
               <ng-template #footer>
                 <p-divider />
                 <ul class="pl-2 my-0 leading-normal">
-                  <li>Au moins une minuscule</li>
-                  <li>Au moins une majuscule</li>
-                  <li>Au moins un chiffre</li>
-                  <li>8 caractères minimum</li>
+                  <li [innerText]="resource.signup.at_least_one_lowercase"></li>
+                  <li [innerText]="resource.signup.at_least_one_uppercase"></li>
+                  <li [innerText]="resource.signup.at_least_one_uppercase"></li>
+                  <li [innerText]="resource.signup.minimum_characters"></li>
                 </ul>
               </ng-template>
             </p-password>
@@ -75,20 +80,23 @@
             *ngIf="f.password.errors && (f.password.touched || f.password.dirty)"
             class="text-red-600 text-sm mt-1 text-center"
           >
-            <div *ngIf="f.password.errors.required">Le mot de passe est requis</div>
-            <div *ngIf="f.password.errors.minlength">
-              Le mot de passe doit avoir au moins 8 caractères
-            </div>
+            <div
+              *ngIf="f.password.errors.required"
+              [innerText]="resource.error.password_required"
+            ></div>
+            <div
+              *ngIf="f.password.errors.minlength"
+              [innerText]="resource.error.password_minlength"
+            ></div>
           </div>
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label class="z-1">Confirmer Mot de passe</label>
+            <label class="z-1" [innerText]="resource.form.confirm_password"></label>
             <p-password
               type="password"
               formControlName="confirmPassword"
               [inputStyleClass]="'w-full'"
-              promptLabel="Saisir un mot de passe"
               class="w-full"
               [styleClass]="'w-full'"
               [toggleMask]="true"
@@ -101,21 +109,22 @@
             "
             class="text-red-600 text-sm mt-1 text-center"
           >
-            <div *ngIf="f.confirmPassword.errors.required">
-              La confirmation du mot de passe est requis
-            </div>
-            <div *ngIf="f.confirmPassword.errors.mustMatch">
-              Les mots de passe doivent être identique
-            </div>
+            <div
+              *ngIf="f.confirmPassword.errors.required"
+              [innerText]="resource.error.confirm_password_required"
+            ></div>
+            <div
+              *ngIf="f.confirmPassword.errors.mustMatch"
+              [innerText]="resource.error.password_mismatch"
+            ></div>
           </div>
         </div>
         <button
           class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
           type="submit"
           [disabled]="signupForm.invalid"
-        >
-          Créer mon compte
-        </button>
+          [innerText]="resource.signup.signup_button"
+        ></button>
       </form>
     </div>
   </div>

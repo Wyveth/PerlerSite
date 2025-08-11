@@ -1,7 +1,7 @@
 <app-breadcrumbs
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Se connecter"
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.signin.title"
 ></app-breadcrumbs>
 
 <section class="h-full inner-page">
@@ -14,20 +14,20 @@
       <form class="flex flex-col space-y-8" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label for="email" [innerText]="resource.signin.email"></label>
+            <label for="email" [innerText]="resource.form.email"></label>
             <input type="text" pInputText id="email" formControlName="email" class="w-full" />
           </p-floatlabel>
           <div
             *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
             class="text-red-600 text-sm mt-1 text-center"
           >
-            <div *ngIf="f.email.errors.required" [innerText]="resource.form.email_mandatory"></div>
-            <div *ngIf="f.email.errors.email" [innerText]="resource.form.email_invalid"></div>
+            <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
+            <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
           </div>
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label class="z-1" for="password" [innerText]="resource.signin.password"></label>
+            <label class="z-1" for="password" [innerText]="resource.form.password"></label>
             <p-password
               type="password"
               id="password"
@@ -46,7 +46,7 @@
           >
             <div
               *ngIf="f.password.errors.required"
-              [innerText]="resource.form.password_required"
+              [innerText]="resource.error.password_required"
             ></div>
           </div>
         </div>

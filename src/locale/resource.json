@@ -17,25 +17,25 @@
         "contacts": "Contacts",
         "users": "Utilisateurs",
         "signout": "Déconnexion"
-      },
-      "router": {
-        "base": "/",
-        "routes": {
-          "home": "home",
-          "welcome": "welcome",
-          "achievements": "portfolio",
-          "faq": "faq",
-          "contact": "contact",
-          "signin": "auth/signin",
-          "profil": "profil",
-          "admin": "#",
-          "products": "products",
-          "tags": "tags",
-          "perlertypes": "perler-types",
-          "contacts": "contacts",
-          "users": "users"
-        }
       }
+    }
+  },
+  "router": {
+    "base": "/",
+    "routes": {
+      "home": "home",
+      "welcome": "welcome",
+      "achievements": "portfolio",
+      "faq": "faq",
+      "contact": "contact",
+      "signin": "auth/signin",
+      "profil": "profil",
+      "admin": "#",
+      "products": "products",
+      "tags": "tags",
+      "perlertypes": "perler-types",
+      "contacts": "contacts",
+      "users": "users"
     }
   },
   "welcome": {
@@ -163,21 +163,29 @@
   },
   "form": {
     "name": "Nom",
-    "name_mandatory": "Le nom est obligatoire",
     "email": "Email",
-    "email_mandatory": "L'email est obligatoire",
-    "email_invalid": "L'email n'est pas valide",
     "subject": "Objet",
-    "subject_mandatory": "L'objet est obligatoire",
     "message": "Message",
-    "message_mandatory": "Le message est obligatoire",
     "password": "Mot de passe",
-    "password_mandatory": "Le mot de passe est obligatoire",
-    "password_required": "Le mot de passe est requis",
-    "password_confirm": "Confirmer le mot de passe",
-    "password_confirm_mandatory": "La confirmation du mot de passe est obligatoire"
+    "confirm_password": "Confirmer le mot de passe",
+    "pseudo": "Pseudo",
+    "prompt_password": "Saisir un mot de passe"
   },
   "error": {
+    "name_mandatory": "Le nom est obligatoire",
+    "email_mandatory": "L'email est obligatoire",
+    "email_invalid": "L'email n'est pas valide",
+    "subject_mandatory": "L'objet est obligatoire",
+    "message_mandatory": "Le message est obligatoire",
+    "password_mandatory": "Le mot de passe est obligatoire",
+    "password_required": "Le mot de passe est requis",
+    "password_minlength": "Le mot de passe doit contenir au moins 8 caractères",
+    "confirm_password_mandatory": "La confirmation du mot de passe est obligatoire",
+    "confirm_password_required": "La confirmation du mot de passe est requise",
+    "pseudo_mandatory": "Le pseudo est obligatoire",
+    "pseudo_invalid": "Le pseudo n'est pas valide",
+    "pseudo_required": "Le pseudo est requis",
+    "pseudo_already_exists": "Le pseudo existe déjà, veuillez en choisir un autre",
     "default": "Une erreur est survenue, veuillez réessayer plus tard",
     "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page",
     "forbidden": "Accès interdit",
@@ -192,23 +200,42 @@
     "email_already_exists": "L'email existe déjà, veuillez en utiliser un autre",
     "password_mismatch": "Les mots de passe ne correspondent pas, veuillez les vérifier",
     "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
-    "password_too_weak": "Le mot de passe est trop faible, veuillez en choisir un plus fort"
+    "password_too_weak": "Le mot de passe est trop faible, veuillez en choisir un plus fort",
+    "weak_label": "Complexité simple",
+    "medium_label": "Complexité moyenne",
+    "strong_label": "Complexité forte"
   },
   "severity": {
     "info": "Info",
     "success": "Succès",
     "warn": "Attention",
-    "danger": "Erreur",
+    "error": "Erreur",
     "secondary": "Secondaire",
     "contrast": "Contraste"
   },
   "signin": {
     "title": "Connexion",
-    "email": "Email",
-    "password": "Mot de passe",
     "remember_me": "Se souvenir de moi",
     "forgot_password": "Mot de passe oublié?",
     "signin_button": "Se connecter",
-    "signin_error": "Erreur de connexion, veuillez vérifier vos identifiants"
+    "signin_success_summary": "Connexion réussie",
+    "signin_success_detail": "Bienvenue!",
+    "error": "Erreur de connexion",
+    "signin_required": "Vous devez être connecté pour accéder à cette page",
+    "signin_required_admin": "Vous devez être connecté en tant qu'administrateur pour accéder à cette page",
+    "signin_required_user": "Vous devez être connecté en tant qu'utilisateur pour accéder à cette page",
+    "email_password_false": "L'email ou le mot de passe est incorrect, veuillez réessayer",
+    "user_desactivated": "Votre compte est désactivé, veuillez contacter l'administrateur",
+    "user_not_found": "Utilisateur non trouvé, veuillez vérifier vos identifiants"
+  },
+  "signup": {
+    "title": "Inscription",
+    "at_least_one_lowercase": "Au moins une minuscule",
+    "at_least_one_uppercase": "Au moins une majuscule",
+    "at_least_one_numeric": "Au moins un chiffre",
+    "minimum_characters": "8 caractères minimum",
+    "signup_button": "S'inscrire",
+    "signup_success": "Inscription réussie, vous pouvez maintenant vous connecter!",
+    "signup_error": "Erreur d'inscription, veuillez vérifier vos données"
   }
 }
