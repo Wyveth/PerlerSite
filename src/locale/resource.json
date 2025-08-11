@@ -17,7 +17,9 @@
         "contacts": "Contacts",
         "users": "Utilisateurs",
         "signout": "Déconnexion"
-      }
+      },
+      "signout_success_summary": "Déconnexion réussie",
+      "signout_success_detail": "Au revoir!"
     }
   },
   "router": {

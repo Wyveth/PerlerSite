@@ -82,7 +82,6 @@ export class PerlertypeFormComponent implements OnInit {
   public onChangeColor(color: string): void {
     this.f.color.setValue(color);
     this.color = color;
-    console.log('Color changed:', color);
   }
 
   /*Validation Erreur*/

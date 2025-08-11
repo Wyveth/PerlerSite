@@ -20,6 +20,8 @@ export interface Header {
   logo: string;
   title: string;
   menu: Menu;
+  signout_success_summary: string;
+  signout_success_detail: string;
 }
 
 export interface Menu {

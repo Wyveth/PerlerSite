@@ -83,7 +83,7 @@ export class UserService {
   }
 
   /// Get Single User By Email /// OK
-  getUserByEmail(email: string | null) {
+  getUserByEmail(email: string | null): Promise<User> {
     return new Promise((resolve, reject) => {
       var qry = query(this.db, where('email', '==', email));
 

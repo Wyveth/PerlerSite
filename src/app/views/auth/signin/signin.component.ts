@@ -66,7 +66,7 @@ export class SigninComponent extends Base implements OnInit {
     const email = formValue['email'];
     const password = formValue['password'];
 
-    this.authService.signInUser(email, password).then(
+    this.authService.login(email, password).then(
       () => {
         this.router.navigate(['/home']);
         this.messageService.add({

@@ -20,7 +20,6 @@ export class AuthAdminGuardService {
     return new Promise((resolve, reject) => {
       onAuthStateChanged(getAuth(), user => {
         if (user) {
-          console.log('Auth Admin: ' + user.email);
           this.userService.getUserByEmail(user.email).then((user: any) => {
             this.user = user as User;
 

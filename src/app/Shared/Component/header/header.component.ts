@@ -1,17 +1,17 @@
 import { MenubarModule } from 'primeng/menubar';
 import { Component, OnInit } from '@angular/core';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import * as AOS from 'aos';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/api/services/auth.service';
-import { UserService } from 'src/app/api/services/user.service';
 import { User } from 'src/app/api/models/class/user';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { Base } from '../base/base';
 import { Header } from '../../models/class/header';
 import { DrawerModule } from 'primeng/drawer';
+import { combineLatest } from 'rxjs';
+import { severity } from '../../enum/severity';
 
 @Component({
   selector: 'app-header',
@@ -21,14 +21,76 @@ import { DrawerModule } from 'primeng/drawer';
 })
 export class HeaderComponent extends Base implements OnInit {
   isAuth: boolean = false;
-  isAuthA: boolean = false;
-  user!: User;
+  isAdmin: boolean = false;
+  user!: User | null;
   visibleSidebar = false;
 
-  header: Header = {
-    logo: this.resource.layout.header.logo,
-    titre: this.resource.layout.header.title,
-    items: [
+  menuItems: MenuItem[] = [];
+
+  isDropdownOpen = false;
+
+  constructor(
+    resources: AppResource,
+    private messageService: MessageService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    super(resources);
+  }
+
+  ngOnInit() {
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+
+    this.authService.currentUser$.subscribe(user => {
+      this.user = user;
+    });
+
+    combineLatest([this.authService.isAuth$, this.authService.isAdmin$]).subscribe(
+      ([isAuth, isAdmin]) => {
+        this.isAuth = isAuth;
+        this.isAdmin = isAdmin;
+        this.updateMenuItems();
+      }
+    );
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  onProfil(key: string) {
+    this.router.navigate(['/profil', key]);
+  }
+
+  onSignOut() {
+    this.authService.logout().then(() => {
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.layout.header.signout_success_summary,
+        detail: this.resource.layout.header.signout_success_detail
+      });
+      this.router.navigate(['/']);
+    });
+  }
+
+  hasChildren(item: any): boolean {
+    return Array.isArray(item?.items) && item.items.length > 0;
+  }
+
+  executeCommand(item: MenuItem) {
+    if (item.command) {
+      item.command({ originalEvent: undefined, item: item });
+      this.visibleSidebar = false;
+    }
+  }
+
+  updateMenuItems() {
+    this.menuItems = [
       {
         label: this.resource.layout.header.menu.home,
         icon: 'ri-home-4-line',
@@ -70,7 +132,7 @@ export class HeaderComponent extends Base implements OnInit {
             }
           },
           {
-            visible: this.isAuthA,
+            visible: this.isAdmin,
             label: this.resource.layout.header.menu.admin,
             routerLink: this.resource.router.routes.admin,
             items: [
@@ -99,100 +161,11 @@ export class HeaderComponent extends Base implements OnInit {
           {
             visible: this.isAuth,
             label: this.resource.layout.header.menu.signout,
-            command() {
-              this.onSignOut();
-            }
+            command: () => this.onSignOut()
           }
         ]
       }
-    ]
-  };
-
-  menuItems: MenuItem[] = [
-    {
-      label: 'Accueil',
-      icon: 'pi pi-home',
-      routerLink: ['/']
-    },
-    {
-      label: 'Mes réalisations',
-      icon: 'pi pi-images',
-      routerLink: ['#portfolio']
-    },
-    {
-      label: 'F.A.Q',
-      icon: 'pi pi-question',
-      routerLink: ['#faq']
-    },
-    {
-      label: 'Contact',
-      icon: 'pi pi-envelope',
-      routerLink: ['#contact']
-    },
-    {
-      label: 'Profil',
-      icon: 'pi pi-user',
-      visible: this.isAuth
-    }
-  ];
-
-  isDropdownOpen = false;
-
-  constructor(
-    resources: AppResource,
-    private authService: AuthService,
-    private userService: UserService,
-    private router: Router
-  ) {
-    super(resources);
-  }
-
-  ngOnInit() {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-
-    onAuthStateChanged(getAuth(), user => {
-      if (user) {
-        this.userService.getUserByEmail(user.email).then((user: any) => {
-          this.user = user as User;
-          if (this.user.admin === true) {
-            this.isAuthA = true;
-          } else {
-            this.isAuthA = false;
-          }
-        });
-        this.isAuth = true;
-      } else {
-        this.isAuth = false;
-      }
-    });
-  }
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  onProfil(key: string) {
-    this.router.navigate(['/profil', key]);
-  }
-
-  onSignOut() {
-    this.authService.signOutUser();
-  }
-
-  hasChildren(item: any): boolean {
-    return Array.isArray(item?.items) && item.items.length > 0;
-  }
-
-  executeCommand(item: MenuItem) {
-    if (item.command) {
-      item.command({ originalEvent: undefined, item: item });
-      this.visibleSidebar = false;
-    }
+    ];
   }
 }
 

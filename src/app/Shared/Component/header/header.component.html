@@ -12,7 +12,7 @@
       ></span>
     </a>
 
-    <p-menubar class="hidden md:block" [model]="header.items" />
+    <p-menubar class="hidden md:block" [model]="menuItems" />
 
     <p-drawer
       [(visible)]="visibleSidebar"
@@ -22,7 +22,7 @@
       (onHide)="visibleSidebar = false"
     >
       <ul class="menu-list p-0 m-0">
-        <ng-container *ngFor="let item of header.items">
+        <ng-container *ngFor="let item of menuItems">
           <ng-container *ngIf="item.visible !== false">
             <li>
               <a
@@ -49,7 +49,6 @@
                     >
                       <span>{{ subItem.label }}</span>
                     </a>
-                    <!-- Tu peux gérer récursivement ici si besoin -->
                   </li>
                 </ul>
               </div>
