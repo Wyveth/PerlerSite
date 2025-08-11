@@ -76,7 +76,7 @@ export class SectionContactComponent extends Base implements OnInit {
         this.messageService.add({
           severity: severity.success,
           summary: this.resource.severity.success,
-          detail: 'Votre message a bien été envoyé!'
+          detail: this.resource.contact.send_message_success
         });
       }, 2000);
     } catch (error) {
@@ -84,7 +84,7 @@ export class SectionContactComponent extends Base implements OnInit {
       this.messageService.add({
         severity: severity.danger,
         summary: this.resource.severity.danger,
-        detail: "Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement."
+        detail: this.resource.error.server_error
       });
     }
   }

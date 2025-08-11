@@ -153,17 +153,47 @@
   "contact": {
     "title": "Contact",
     "subtitle": "Me contacter",
+    "name_placeholder": "Votre nom",
+    "email_placeholder": "Votre email",
+    "subject_placeholder": "Objet",
+    "message_placeholder": "Votre message",
     "loading": "Chargement",
     "send_message": "Envoyer le message",
-    "send_message_success": "Message envoyé avec succès"
+    "send_message_success": "Votre message a bien été envoyé!"
   },
   "form": {
     "name": "Nom",
+    "name_mandatory": "Le nom est obligatoire",
     "email": "Email",
+    "email_mandatory": "L'email est obligatoire",
+    "email_invalid": "L'email n'est pas valide",
     "subject": "Objet",
-    "message": "Message"
+    "subject_mandatory": "L'objet est obligatoire",
+    "message": "Message",
+    "message_mandatory": "Le message est obligatoire",
+    "password": "Mot de passe",
+    "password_mandatory": "Le mot de passe est obligatoire",
+    "password_required": "Le mot de passe est requis",
+    "password_confirm": "Confirmer le mot de passe",
+    "password_confirm_mandatory": "La confirmation du mot de passe est obligatoire"
   },
-  "error": {},
+  "error": {
+    "default": "Une erreur est survenue, veuillez réessayer plus tard",
+    "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page",
+    "forbidden": "Accès interdit",
+    "not_found": "Ressource non trouvée",
+    "server_error": "Erreur du serveur",
+    "bad_request": "Requête incorrecte",
+    "network_error": "Erreur réseau, veuillez vérifier votre connexion",
+    "validation_error": "Erreur de validation, veuillez vérifier vos données",
+    "form_error": "Erreur dans le formulaire, veuillez vérifier vos entrées",
+    "login_error": "Erreur de connexion, veuillez vérifier vos identifiants",
+    "signup_error": "Erreur d'inscription, veuillez vérifier vos données",
+    "email_already_exists": "L'email existe déjà, veuillez en utiliser un autre",
+    "password_mismatch": "Les mots de passe ne correspondent pas, veuillez les vérifier",
+    "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+    "password_too_weak": "Le mot de passe est trop faible, veuillez en choisir un plus fort"
+  },
   "severity": {
     "info": "Info",
     "success": "Succès",
@@ -171,5 +201,14 @@
     "danger": "Erreur",
     "secondary": "Secondaire",
     "contrast": "Contraste"
+  },
+  "signin": {
+    "title": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "remember_me": "Se souvenir de moi",
+    "forgot_password": "Mot de passe oublié?",
+    "signin_button": "Se connecter",
+    "signin_error": "Erreur de connexion, veuillez vérifier vos identifiants"
   }
 }
