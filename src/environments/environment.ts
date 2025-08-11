@@ -13,7 +13,7 @@ export const environment = {
       apiKey: 'AIzaSyCtUz6VvXBUAhQjwM_ehArQQOSpgUaThnc',
       authDomain: 'perlerwyveth.firebaseapp.com',
       messagingSenderId: '707528245165',
-      measurementId: 'G-NXZRD0EQ7C'
+      measurementId: 'G-NXZRD0EQ7C',
     },
     production: {
       projectId: 'perlerwyveth',
@@ -24,11 +24,11 @@ export const environment = {
       apiKey: '*****************************',
       authDomain: '*****************************',
       messagingSenderId: '*****************************',
-      measurementId: '*****************************'
-    }
+      measurementId: '*****************************',
+    },
   },
   env: 'development',
-  production: false
+  production: false,
 };
 
 /*

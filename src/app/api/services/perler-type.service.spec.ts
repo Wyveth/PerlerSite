@@ -6,7 +6,7 @@ import { PerlerTypeService } from './perler-type.service';
 describe('Service: PerlerType', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PerlerTypeService]
+      providers: [PerlerTypeService],
     });
   });
 

@@ -1,22 +1,36 @@
 <header id="header" class="header w-full fixed top-0 absolute">
   <div class="flex items-center justify-between">
-
-    <a [routerLink]="resource.layout.header.router.routes.home" routerLinkActive="router-link-active" class="flex logo items-center nav-link">
-      <img [src]="resource.layout.header.logo" alt="Logo" class=" h-[42px] object-contain" />
-      <span class="font-semibold leading-[1] lg:inline-block align-middle hidden" [innerHtml]="resource.layout.header.title" ></span>
+    <a
+      [routerLink]="resource.layout.header.router.routes.home"
+      routerLinkActive="router-link-active"
+      class="flex logo items-center nav-link"
+    >
+      <img [src]="resource.layout.header.logo" alt="Logo" class="h-[42px] object-contain" />
+      <span
+        class="font-semibold leading-[1] lg:inline-block align-middle hidden"
+        [innerHtml]="resource.layout.header.title"
+      ></span>
     </a>
 
     <p-menubar class="hidden md:block" [model]="header.items" />
 
-    <p-drawer [(visible)]="visibleSidebar" [modal]="true" position="left" class="md:hidden" (onHide)="visibleSidebar=false">
+    <p-drawer
+      [(visible)]="visibleSidebar"
+      [modal]="true"
+      position="left"
+      class="md:hidden"
+      (onHide)="visibleSidebar = false"
+    >
       <ul class="menu-list p-0 m-0">
         <ng-container *ngFor="let item of header.items">
           <ng-container *ngIf="item.visible !== false">
             <li>
-              <a *ngIf="!item.items"
-                 (click)="executeCommand(item)"
-                 [routerLink]="item.routerLink"
-                 class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
+              <a
+                *ngIf="!item.items"
+                (click)="executeCommand(item)"
+                [routerLink]="item.routerLink"
+                class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+              >
                 <i *ngIf="item.icon" [class]="item.icon"></i>
                 <span>{{ item.label }}</span>
               </a>
@@ -27,10 +41,12 @@
                 </div>
                 <ul class="ml-4">
                   <li *ngFor="let subItem of item.items">
-                    <a *ngIf="subItem.visible !== false"
-                    (click)="executeCommand(subItem)"
-                       [routerLink]="subItem.routerLink"
-                       class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
+                    <a
+                      *ngIf="subItem.visible !== false"
+                      (click)="executeCommand(subItem)"
+                      [routerLink]="subItem.routerLink"
+                      class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                    >
                       <span>{{ subItem.label }}</span>
                     </a>
                     <!-- Tu peux gérer récursivement ici si besoin -->
@@ -43,6 +59,8 @@
       </ul>
     </p-drawer>
 
-    <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar=true"><i class="pi pi-bars w-4 h-4"></i></button>
+    <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar = true">
+      <i class="pi pi-bars w-4 h-4"></i>
+    </button>
   </div>
 </header>

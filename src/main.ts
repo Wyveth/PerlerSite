@@ -24,23 +24,24 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(ToastModule),
     MessageService, // <-- instance unique globale
-    provideRouter(routes
-    ),
+    provideRouter(routes),
     provideFirebaseApp(() =>
-        initializeApp(
-            environment.firebase[environment.env as keyof typeof environment.firebase] as FirebaseOptions,
-        ),
+      initializeApp(
+        environment.firebase[
+          environment.env as keyof typeof environment.firebase
+        ] as FirebaseOptions
+      )
     ),
     providePrimeNG({
       theme: {
-          preset: Aura,
-          options: {
-              cssLayer: {
-                  name: 'primeng',
-                  order: 'theme, base, primeng'
-              }
-          }
-      }
+        preset: Aura,
+        options: {
+          cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng',
+          },
+        },
+      },
     }),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
@@ -48,7 +49,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
-      theme: { preset: Aura }
+      theme: { preset: Aura },
     }),
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -56,7 +57,7 @@ bootstrapApplication(AppComponent, {
       useValue: () => {
         const config = inject(AppConfig);
         return config.load();
-      }
+      },
     },
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -64,7 +65,7 @@ bootstrapApplication(AppComponent, {
       useValue: () => {
         const resource = inject(AppResource);
         return resource.load();
-      }
-    }
+      },
+    },
   ],
 });

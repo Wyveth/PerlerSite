@@ -1,34 +1,58 @@
-<app-breadcrumbs *ngIf="isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Types Perle" nodeChildUrl="perlerTypes"
-  nodeChildChild="Créer"></app-breadcrumbs>
-<app-breadcrumbs *ngIf="!isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Types Perle" nodeChildUrl="perlerTypes"
-  nodeChildChild="Modifier"></app-breadcrumbs>
+<app-breadcrumbs
+  *ngIf="isAddMode"
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Types Perle"
+  nodeChildUrl="perlerTypes"
+  nodeChildChild="Créer"
+></app-breadcrumbs>
+<app-breadcrumbs
+  *ngIf="!isAddMode"
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Types Perle"
+  nodeChildUrl="perlerTypes"
+  nodeChildChild="Modifier"
+></app-breadcrumbs>
 
-<section class="inner-page" style="min-height: 32rem;">
+<section class="inner-page" style="min-height: 32rem">
   <div class="container">
-    <div class="row justify-content-md-center">
+    <div class="flex justify-center">
       <div class="col-sm-6 formStyle">
-        <div class="row justify-content-md-center">
+        <div class="flex justify-center">
           <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau type de perle</h2>
           <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un type de perle</h2>
         </div>
         <form [formGroup]="perlerTypeForm" (ngSubmit)="onSubmitForm()">
-          <div class="row">
+          <div class="flex">
             <div class="col">
               <div class="form-group form-control-sm">
                 <label for="reference">Reference</label>
-                <input type="text" id="reference" class="form-control" formControlName="reference"
-                  [ngClass]="{'is-invalid': shouldShowReferenceError()}">
+                <input
+                  type="text"
+                  id="reference"
+                  class="form-control"
+                  formControlName="reference"
+                  [ngClass]="{ 'is-invalid': shouldShowReferenceError() }"
+                />
                 <div *ngIf="f.reference.errors" class="invalid-feedback">
                   <div *ngIf="f.reference.errors.required">La référence est obligatoire</div>
-                  <div *ngIf="f.reference.errors.perlerTypeRefExists">La référence doit être unique</div>
+                  <div *ngIf="f.reference.errors.perlerTypeRefExists">
+                    La référence doit être unique
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col">
               <div class="form-group form-control-sm">
                 <label for="libelle">Libelle</label>
-                <input type="text" id="libelle" class="form-control" formControlName="libelle"
-                  [ngClass]="{ 'is-invalid': shouldShowLibelleError() }">
+                <input
+                  type="text"
+                  id="libelle"
+                  class="form-control"
+                  formControlName="libelle"
+                  [ngClass]="{ 'is-invalid': shouldShowLibelleError() }"
+                />
                 <div *ngIf="f.libelle.errors" class="invalid-feedback">
                   <div *ngIf="f.libelle.errors.required">Le libelle est obligatoire</div>
                 </div>
@@ -50,9 +74,11 @@
             </div>
           </div>
 
-          <div class="row" style="margin-top: 2rem;">
+          <div class="flex" style="margin-top: 2rem">
             <div class="col">
-              <button class="btn btn-success" type="submit" [disabled]="perlerTypeForm.invalid">Enregistrer</button>
+              <button class="btn btn-success" type="submit" [disabled]="perlerTypeForm.invalid">
+                Enregistrer
+              </button>
             </div>
           </div>
         </form>

@@ -6,7 +6,7 @@ import { TagService } from './tag.service';
 describe('Service: Tag', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TagService]
+      providers: [TagService],
     });
   });
 

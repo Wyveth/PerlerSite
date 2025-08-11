@@ -6,40 +6,36 @@ import { User } from '../../api/models/class/user';
 import { UserService } from '../../api/services/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthAdminGuardService  {
+export class AuthAdminGuardService {
   user!: User;
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return new Promise(
-      (resolve, reject) => {
-        onAuthStateChanged(getAuth(),
-          (user) => {
-            if(user) {
-              console.log('Auth Admin: ' + user.email);
-              this.userService.getUserByEmail(user.email).then(
-                (user: any) => {
-                  this.user = user as User;
+    return new Promise((resolve, reject) => {
+      onAuthStateChanged(getAuth(), user => {
+        if (user) {
+          console.log('Auth Admin: ' + user.email);
+          this.userService.getUserByEmail(user.email).then((user: any) => {
+            this.user = user as User;
 
-                  if(this.user.admin === true 
-                    && this.user.disabled === false){
-                    resolve(true);
-                  }
-                  else{
-                    this.router.navigate(['/auth', 'signin']);
-                    resolve(false);
-                  }
-              });
+            if (this.user.admin === true && this.user.disabled === false) {
+              resolve(true);
             } else {
               this.router.navigate(['/auth', 'signin']);
               resolve(false);
             }
-          }
-        );
-      }
-    );
+          });
+        } else {
+          this.router.navigate(['/auth', 'signin']);
+          resolve(false);
+        }
+      });
+    });
   }
 }

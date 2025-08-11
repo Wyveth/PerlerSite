@@ -6,7 +6,7 @@ import { ContactService } from './contact.service';
 describe('Service: SendMessage', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ContactService]
+      providers: [ContactService],
     });
   });
 

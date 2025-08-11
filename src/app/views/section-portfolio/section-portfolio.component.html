@@ -1,8 +1,6 @@
 <!-- ======= Portfolio Section ======= -->
 <section id="portfolio" class="portfolio flex justify-center mx-5 md:mx-auto">
-
   <div class="container" data-aos="fade-up">
-
     <header class="section-header">
       <h2 [innerText]="resource.portfolio.title"></h2>
       <p [innerText]="resource.portfolio.subtitle"></p>
@@ -16,8 +14,7 @@
             [class.filter-active]="activeFilter === '*'"
             (click)="setActiveFilter('*')"
             [innerText]="resource.portfolio.all"
-          >
-          </li>
+          ></li>
 
           <li
             *ngFor="let tag of tags"
@@ -31,7 +28,12 @@
       </div>
     </div>
 
-    <div id="portfolio-container" class="portfolio-container relative" data-aos="fade-up" data-aos-delay="200">
+    <div
+      id="portfolio-container"
+      class="portfolio-container relative"
+      data-aos="fade-up"
+      data-aos-delay="200"
+    >
       <div
         *ngFor="let product of products()"
         [ngClass]="product.filterClasses"
@@ -52,7 +54,10 @@
               ></span>
               <h4 class="mt-5 text-lg font-semibold">{{ product.title }}</h4>
             </div>
-            <p class="text-gray-600" [innerText]="resource.portfolio.measure | format: product.size"></p>
+            <p
+              class="text-gray-600"
+              [innerText]="resource.portfolio.measure | format: product.size"
+            ></p>
             <div class="portfolio-links mt-3 flex space-x-4">
               <a
                 [href]="product.pictureUrl"
@@ -63,7 +68,7 @@
                 <i class="bi bi-plus"></i>
               </a>
               <a
-                [routerLink]="resource.portfolio.redirect_product_view | format:product.key"
+                [routerLink]="resource.portfolio.redirect_product_view | format: product.key"
                 class="text-blue-600 hover:text-blue-800"
                 [title]="resource.portfolio.details"
               >
@@ -75,6 +80,5 @@
       </div>
     </div>
   </div>
-
-</section><!-- End Portfolio Section -->
-
+</section>
+<!-- End Portfolio Section -->

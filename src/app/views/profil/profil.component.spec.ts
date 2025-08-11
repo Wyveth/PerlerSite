@@ -11,9 +11,8 @@ describe('ProfilComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfilComponent ]
-    })
-    .compileComponents();
+      declarations: [ProfilComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

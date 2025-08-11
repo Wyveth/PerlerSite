@@ -5,16 +5,13 @@ import { User } from 'src/app/api/models/class/user';
 import { UserFormComponent } from '../user-form/user-form.component';
 
 @Component({
-    selector: 'app-user-edit',
-    templateUrl: './user-edit.component.html',
-    standalone: true,
-    imports: [CommonModule, BreadcrumbsComponent, UserFormComponent]
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  standalone: true,
+  imports: [CommonModule, BreadcrumbsComponent, UserFormComponent],
 })
 export class UserEditComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,177 +1,175 @@
 {
-    "layout": {
-        "header": {
-            "logo": "assets/img/LogoHome.png",
-            "title": "yveth Perler",
-            "menu": {
-                "home": "Accueil",
-                "achievements": "Mes réalisations",
-                "faq": "F.A.Q.",
-                "contact": "Contact",
-                "signin": "Connexion",
-                "profil": "Profil",
-                "admin": "Administration",
-                "products": "Produits",
-                "tags": "Tags",
-                "perlertypes": "Types Perles",
-                "contacts": "Contacts",
-                "users": "Utilisateurs",
-                "signout": "Déconnexion"
-            },
-            "router": {
-                "base": "/",
-                "routes": {
-                    "home": "home",
-                    "welcome": "welcome",
-                    "achievements": "portfolio",
-                    "faq": "faq",
-                    "contact": "contact",
-                    "signin": "auth/signin",
-                    "profil": "profil",
-                    "admin": "#",
-                    "products": "products",
-                    "tags": "tags",
-                    "perlertypes": "perler-types",
-                    "contacts": "contacts",
-                    "users": "users"
-                }
-            }
+  "layout": {
+    "header": {
+      "logo": "assets/img/LogoHome.png",
+      "title": "yveth Perler",
+      "menu": {
+        "home": "Accueil",
+        "achievements": "Mes réalisations",
+        "faq": "F.A.Q.",
+        "contact": "Contact",
+        "signin": "Connexion",
+        "profil": "Profil",
+        "admin": "Administration",
+        "products": "Produits",
+        "tags": "Tags",
+        "perlertypes": "Types Perles",
+        "contacts": "Contacts",
+        "users": "Utilisateurs",
+        "signout": "Déconnexion"
+      },
+      "router": {
+        "base": "/",
+        "routes": {
+          "home": "home",
+          "welcome": "welcome",
+          "achievements": "portfolio",
+          "faq": "faq",
+          "contact": "contact",
+          "signin": "auth/signin",
+          "profil": "profil",
+          "admin": "#",
+          "products": "products",
+          "tags": "tags",
+          "perlertypes": "perler-types",
+          "contacts": "contacts",
+          "users": "users"
         }
-    },
-    "welcome": {
-        "title": "Wyveth <span>Pixel Art</span>",
-        "subtitle": "Et si les perles à chauffer n'était pas que pour les enfants?",
-        "button": "Découvrir"
-    },
-    "portfolio": {
-        "title": "Mes réalisations",
-        "subtitle": "Mes dernières pièces",
-        "all": "Toutes",
-        "new": "New",
-        "measure": "{0} cm",
-        "details": "Détails",
-        "redirect_product_view": "/products/view/{0}"
-    },
-    "faq": {
-        "title": "F.A.Q.",
-        "subtitle": "Foire Aux Questions",
-        "tabs": [
-            {
-                "items":[
-                    {
-                        "question": "Quel type de perle?",
-                        "answer": {
-                            "paragraphs": [
-                                "Les pièces sont fabriquées avec les perles HAMA MIDI (Ø5 mm) ou HAMA MINI (Ø2.5 mm).",
-                                "Pour en acheter aux moins cher:"
-                            ],
-                            "links": [
-                                {
-                                    "label": "Megacréa: ",
-                                    "url": "https://www.megacrea.com/activites-enfant-40000/perle-a-repasser-hama-40400/",
-                                    "link": "Cliquer ici",
-                                    "note": "Bon rapport qualité/prix mais pas toutes les couleurs du nuancier HAMA"
-                                },
-                                {
-                                    "label": "RittoHobby: ",
-                                    "url": "https://ritohobby.fr/45_hama",
-                                    "link": "Cliquer ici",
-                                    "note": "Le moins cher, mais frais de port élevé sur les petites commandes"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "question": "La fabrication est-elle longue?",
-                        "answer": {
-                            "paragraphs": [
-                                "Ça dépend des pièces, les plus petites prennent environ 1h et pour les plus grosses, ça peut monter jusqu'à 20h de travail."
-                            ]
-                        }
-                    },
-                    {
-                        "question": "Evolution du site? ",
-                        "answer": {
-                            "paragraphs": [
-                                "Pour le futur, le site aura de nouvelles fonctionnalités: (Développé par mes soins en Angular 20 avec FireBase)"
-                            ],
-                            "links": [
-                                {
-                                    "label": "Système d'avis sur les pièces"
-                                },
-                                {
-                                    "label": "Mode Sombre + Mode Anglais"
-                                }
-                            ]
-                        }
-                    }
-                ]
-            },
-            {
-                "items": [ 
-                    {
-                        "question": "Quels matériels?",
-                        "answer": {
-                            "paragraphs": [
-                                "il vous faut:"
-                            ],
-                            "links": [
-                                {
-                                    "label": "Des plaques pour perle MIDI. Pour en acheter: ",
-                                    "url": "https://www.megacrea.com/plaque-carre-transp-assemblable-pour-perles-a-repasser-dia5mm-33749.html",
-                                    "link": "Cliquer ici"
-                                },
-                                {
-                                    "label": "RittoHobby: ",
-                                    "url": "https://www.megacrea.com/pince-attrape-perles-a-repasser-27868.html",
-                                    "link": "Cliquer ici"
-                                },
-                                {
-                                    "label": "Du papier cuisson et un fer à repasser."
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "question": "Peut on les acheter?",
-                        "answer": {
-                            "paragraphs": [
-                                "Vous pouvez prendre contact avec moi via le formulaire en bas de page pour connaître les modalités."
-                            ]
-                        }
-                    },
-                    {
-                        "question": "Je suis peut être en Live sur twitch!",
-                        "answer": {
-                            "paragraphs": [
-                                "Si vous avez la moindre question, ne pas hésiter à me contacter par le formulaire de contact ou venir me voir en live sur twitch"
-                            ]
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    "contact": {
-        "title": "Contact",
-        "subtitle": "Me contacter",
-        "loading": "Chargement",
-        "send_message": "Envoyer le message",
-        "send_message_success": "Message envoyé avec succès"
-    },
-    "form": {
-        "name": "Nom",
-        "email": "Email",
-        "subject": "Objet",
-        "message": "Message"
-    },
-    "error": {},
-    "severity": {
-        "info": "Info",
-        "success": "Succès",
-        "warn": "Attention",
-        "danger": "Erreur",
-        "secondary": "Secondaire",
-        "contrast": "Contraste"
+      }
     }
+  },
+  "welcome": {
+    "title": "Wyveth <span>Pixel Art</span>",
+    "subtitle": "Et si les perles à chauffer n'était pas que pour les enfants?",
+    "button": "Découvrir"
+  },
+  "portfolio": {
+    "title": "Mes réalisations",
+    "subtitle": "Mes dernières pièces",
+    "all": "Toutes",
+    "new": "New",
+    "measure": "{0} cm",
+    "details": "Détails",
+    "redirect_product_view": "/products/view/{0}"
+  },
+  "faq": {
+    "title": "F.A.Q.",
+    "subtitle": "Foire Aux Questions",
+    "tabs": [
+      {
+        "items": [
+          {
+            "question": "Quel type de perle?",
+            "answer": {
+              "paragraphs": [
+                "Les pièces sont fabriquées avec les perles HAMA MIDI (Ø5 mm) ou HAMA MINI (Ø2.5 mm).",
+                "Pour en acheter aux moins cher:"
+              ],
+              "links": [
+                {
+                  "label": "Megacréa: ",
+                  "url": "https://www.megacrea.com/activites-enfant-40000/perle-a-repasser-hama-40400/",
+                  "link": "Cliquer ici",
+                  "note": "Bon rapport qualité/prix mais pas toutes les couleurs du nuancier HAMA"
+                },
+                {
+                  "label": "RittoHobby: ",
+                  "url": "https://ritohobby.fr/45_hama",
+                  "link": "Cliquer ici",
+                  "note": "Le moins cher, mais frais de port élevé sur les petites commandes"
+                }
+              ]
+            }
+          },
+          {
+            "question": "La fabrication est-elle longue?",
+            "answer": {
+              "paragraphs": [
+                "Ça dépend des pièces, les plus petites prennent environ 1h et pour les plus grosses, ça peut monter jusqu'à 20h de travail."
+              ]
+            }
+          },
+          {
+            "question": "Evolution du site? ",
+            "answer": {
+              "paragraphs": [
+                "Pour le futur, le site aura de nouvelles fonctionnalités: (Développé par mes soins en Angular 20 avec FireBase)"
+              ],
+              "links": [
+                {
+                  "label": "Système d'avis sur les pièces"
+                },
+                {
+                  "label": "Mode Sombre + Mode Anglais"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "items": [
+          {
+            "question": "Quels matériels?",
+            "answer": {
+              "paragraphs": ["il vous faut:"],
+              "links": [
+                {
+                  "label": "Des plaques pour perle MIDI. Pour en acheter: ",
+                  "url": "https://www.megacrea.com/plaque-carre-transp-assemblable-pour-perles-a-repasser-dia5mm-33749.html",
+                  "link": "Cliquer ici"
+                },
+                {
+                  "label": "RittoHobby: ",
+                  "url": "https://www.megacrea.com/pince-attrape-perles-a-repasser-27868.html",
+                  "link": "Cliquer ici"
+                },
+                {
+                  "label": "Du papier cuisson et un fer à repasser."
+                }
+              ]
+            }
+          },
+          {
+            "question": "Peut on les acheter?",
+            "answer": {
+              "paragraphs": [
+                "Vous pouvez prendre contact avec moi via le formulaire en bas de page pour connaître les modalités."
+              ]
+            }
+          },
+          {
+            "question": "Je suis peut être en Live sur twitch!",
+            "answer": {
+              "paragraphs": [
+                "Si vous avez la moindre question, ne pas hésiter à me contacter par le formulaire de contact ou venir me voir en live sur twitch"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Me contacter",
+    "loading": "Chargement",
+    "send_message": "Envoyer le message",
+    "send_message_success": "Message envoyé avec succès"
+  },
+  "form": {
+    "name": "Nom",
+    "email": "Email",
+    "subject": "Objet",
+    "message": "Message"
+  },
+  "error": {},
+  "severity": {
+    "info": "Info",
+    "success": "Succès",
+    "warn": "Attention",
+    "danger": "Erreur",
+    "secondary": "Secondaire",
+    "contrast": "Contraste"
+  }
 }

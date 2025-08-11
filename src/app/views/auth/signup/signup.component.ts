@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/api/models/class/user';
@@ -12,57 +18,71 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
 
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    standalone: true,
-    imports: [
-      CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      BreadcrumbsComponent,
-      InputTextModule,
-      PasswordModule,
-      FloatLabelModule,
-      DividerModule
-    ]
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BreadcrumbsComponent,
+    InputTextModule,
+    PasswordModule,
+    FloatLabelModule,
+    DividerModule,
+  ],
 })
 export class SignupComponent implements OnInit {
   signupForm!: UntypedFormGroup;
   errorMessage!: string;
 
-  constructor(private formBuilder: UntypedFormBuilder,
-              private authService: AuthService,
-              private router: Router,
-              private userService: UserService) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.initForm();
   }
 
   initForm() {
-    this.signupForm = this.formBuilder.group({
-      displayName: ['', Validators.required, this.userService.existingDisplayNameValidator()],
-      email: ['', [Validators.required, Validators.email], this.userService.existingEmailValidator()],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]],
-      confirmPassword: ['', Validators.required]
-    },
-    {
-      validator: MustMatch('password', 'confirmPassword')
-    });
+    this.signupForm = this.formBuilder.group(
+      {
+        displayName: ['', Validators.required, this.userService.existingDisplayNameValidator()],
+        email: [
+          '',
+          [Validators.required, Validators.email],
+          this.userService.existingEmailValidator(),
+        ],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validator: MustMatch('password', 'confirmPassword'),
+      }
+    );
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.signupForm.controls; }
+  get f() {
+    return this.signupForm.controls;
+  }
 
   onSubmit() {
     const formValue = this.signupForm.value;
     const email = formValue['email'];
     const password = formValue['password'];
 
-    const user = new User(
-      formValue['displayName'],
-      formValue['email'],
-    );
+    const user = new User(formValue['displayName'], formValue['email']);
 
     user.admin = false;
     user.disabled = false;
@@ -81,7 +101,10 @@ export class SignupComponent implements OnInit {
   /*Validation Erreur*/
   shouldShowDisplayNameError() {
     const displayName = this.signupForm.controls.displayName;
-    return displayName.touched && (displayName.hasError('required') || displayName.hasError('displayNameExists'));
+    return (
+      displayName.touched &&
+      (displayName.hasError('required') || displayName.hasError('displayNameExists'))
+    );
   }
 
   shouldShowEmailError() {
@@ -96,26 +119,29 @@ export class SignupComponent implements OnInit {
 
   shouldShowConfirmPasswordError() {
     const confirmPassword = this.signupForm.controls.confirmPassword;
-    return confirmPassword.touched && (confirmPassword.hasError('required') || confirmPassword.hasError('mustMatch'));
+    return (
+      confirmPassword.touched &&
+      (confirmPassword.hasError('required') || confirmPassword.hasError('mustMatch'))
+    );
   }
   /* Fin Validation Error */
 }
 
 export function MustMatch(controlName: string, matchingControlName: string) {
   return (formGroup: UntypedFormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
 
-      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-          // return if another validator has already found an error on the matchingControl
-          return;
-      }
+    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+      // return if another validator has already found an error on the matchingControl
+      return;
+    }
 
-      // set error on matchingControl if validation fails
-      if (control.value !== matchingControl.value) {
-          matchingControl.setErrors({ mustMatch: true });
-      } else {
-          matchingControl.setErrors(null);
-      }
-  }
+    // set error on matchingControl if validation fails
+    if (control.value !== matchingControl.value) {
+      matchingControl.setErrors({ mustMatch: true });
+    } else {
+      matchingControl.setErrors(null);
+    }
+  };
 }

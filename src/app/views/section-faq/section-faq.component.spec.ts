@@ -11,9 +11,8 @@ describe('SectionResumeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SectionFaqComponent ]
-    })
-    .compileComponents();
+      declarations: [SectionFaqComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

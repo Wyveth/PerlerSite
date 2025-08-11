@@ -11,9 +11,8 @@ describe('SectionWelcomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SectionWelcomeComponent ]
-    })
-    .compileComponents();
+      declarations: [SectionWelcomeComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,9 +11,8 @@ describe('SectionPortfolioComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SectionPortfolioComponent ]
-    })
-    .compileComponents();
+      declarations: [SectionPortfolioComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

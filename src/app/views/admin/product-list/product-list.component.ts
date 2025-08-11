@@ -8,23 +8,24 @@ import { Product } from 'src/app/api/models/class/product';
 import { ProductService } from 'src/app/api/services/product.service';
 
 @Component({
-    selector: 'app-product-list',
-    templateUrl: './product-list.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products!: any[];
   productSubscription!: Subscription;
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.productSubscription = this.productService.productsSubject.subscribe(
-      (products: any[]) => {
-        this.products = products;
-      }
-    );
+    this.productSubscription = this.productService.productsSubject.subscribe((products: any[]) => {
+      this.products = products;
+    });
     this.productService.emitProducts();
   }
 

@@ -7,23 +7,24 @@ import { Contact } from 'src/app/api/models/class/contact';
 import { ContactService } from 'src/app/api/services/contact.service';
 
 @Component({
-    selector: 'app-contact-list',
-    templateUrl: './contact-list.component.html',
-    standalone: true,
-    imports: [CommonModule, BreadcrumbsComponent]
+  selector: 'app-contact-list',
+  templateUrl: './contact-list.component.html',
+  standalone: true,
+  imports: [CommonModule, BreadcrumbsComponent],
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   contacts!: any[];
   contactSubscription!: Subscription;
 
-  constructor(private contactService: ContactService, private router: Router) { }
+  constructor(
+    private contactService: ContactService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.contactSubscription = this.contactService.contactsSubject.subscribe(
-      (contacts: any[]) => {
-        this.contacts = contacts;
-      }
-    );
+    this.contactSubscription = this.contactService.contactsSubject.subscribe((contacts: any[]) => {
+      this.contacts = contacts;
+    });
     this.contactService.emitContacts();
   }
 

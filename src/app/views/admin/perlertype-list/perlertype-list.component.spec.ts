@@ -11,9 +11,8 @@ describe('PerlertypeListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PerlertypeListComponent ]
-    })
-    .compileComponents();
+      declarations: [PerlertypeListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

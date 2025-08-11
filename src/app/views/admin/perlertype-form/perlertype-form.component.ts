@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { PerlerType } from 'src/app/api/models/class/perler-type';
 import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 
 @Component({
-    selector: 'app-perlertype-form',
-    templateUrl: './perlertype-form.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  selector: 'app-perlertype-form',
+  templateUrl: './perlertype-form.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;
@@ -20,10 +26,12 @@ export class PerlertypeFormComponent implements OnInit {
   isAddMode!: boolean;
   perlerType: PerlerType = new PerlerType('', '', '');
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private perlerTypeService: PerlerTypeService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -34,9 +42,13 @@ export class PerlertypeFormComponent implements OnInit {
 
   initForm() {
     this.perlerTypeForm = this.formBuilder.group({
-      reference: ['', Validators.required, this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode)],
+      reference: [
+        '',
+        Validators.required,
+        this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode),
+      ],
       libelle: ['', Validators.required],
-      color: ['', Validators.required]
+      color: ['', Validators.required],
     });
 
     if (!this.isAddMode) {
@@ -47,7 +59,9 @@ export class PerlertypeFormComponent implements OnInit {
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
-  get f() { return this.perlerTypeForm.controls; }
+  get f() {
+    return this.perlerTypeForm.controls;
+  }
 
   onSubmitForm() {
     const formValue = this.perlerTypeForm.value;
@@ -64,7 +78,7 @@ export class PerlertypeFormComponent implements OnInit {
     }
     this.router.navigate(['/perlerTypes']);
   }
-  
+
   public onChangeColor(color: string): void {
     this.f.color.setValue(color);
     this.color = color;
@@ -74,7 +88,10 @@ export class PerlertypeFormComponent implements OnInit {
   /*Validation Erreur*/
   shouldShowReferenceError() {
     const reference = this.perlerTypeForm.controls.reference;
-    return reference.touched && (reference.hasError('required') || reference.hasError('perlerTypeRefExists'));
+    return (
+      reference.touched &&
+      (reference.hasError('required') || reference.hasError('perlerTypeRefExists'))
+    );
   }
 
   shouldShowLibelleError() {

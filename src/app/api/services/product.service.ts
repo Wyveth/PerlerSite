@@ -3,7 +3,16 @@ import { Observable, Subject } from 'rxjs';
 import { Product } from '../models/class/product';
 import * as firebaseStorage from 'firebase/storage';
 import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { Firestore, collectionData, collection, addDoc, where, query, getDocs, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collectionData,
+  collection,
+  addDoc,
+  where,
+  query,
+  getDocs,
+  deleteDoc,
+} from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { FileUploadService } from './upload-file.service';
 import { FileUpload } from '../models/class/file-upload';
@@ -11,7 +20,7 @@ import { updateDoc } from '@firebase/firestore';
 import { formatDate } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private products: Product[] = [];
@@ -20,7 +29,11 @@ export class ProductService {
   products$!: Observable<Product[]>;
   productsSubject = new Subject<any[]>();
 
-  constructor(private utilsService: UtilsService, private fileUploadService: FileUploadService, private firestore: Firestore) {
+  constructor(
+    private utilsService: UtilsService,
+    private fileUploadService: FileUploadService,
+    private firestore: Firestore
+  ) {
     this.db = collection(this.firestore, 'products');
     this.getProducts();
   }
@@ -33,36 +46,39 @@ export class ProductService {
   getProducts() {
     this.products$ = collectionData(this.db) as Observable<Product[]>;
 
-    this.products$.subscribe((products: Product[]) => {
-      this.products = products.sort((a,b) => a.title.localeCompare(b.title));
-      this.emitProducts();
-    }, (error) => {
-      console.log(error);
-    }, () => {
-      console.log('Produits Chargé!');
-    });
+    this.products$.subscribe(
+      (products: Product[]) => {
+        this.products = products.sort((a, b) => a.title.localeCompare(b.title));
+        this.emitProducts();
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        console.log('Produits Chargé!');
+      }
+    );
   }
 
   /// Get Single Product /// OK
   getProduct(key: string) {
-    return new Promise(
-      (resolve, reject) => {
-        var qry = query(this.db, where("key", "==", key));
+    return new Promise((resolve, reject) => {
+      var qry = query(this.db, where('key', '==', key));
 
-        getDocs(qry).then((querySnapshot) => {
-          if (querySnapshot) {
-            console.log("Document data:", querySnapshot);
-            querySnapshot.docs.forEach(element => {
-              this.product = element.data() as Product;
-            });
-            resolve(this.product);
-          } else {
-            // doc.data() will be undefined in this case
-            console.error("No such document!");
-            reject("No such document!")
-          }
-        });
+      getDocs(qry).then(querySnapshot => {
+        if (querySnapshot) {
+          console.log('Document data:', querySnapshot);
+          querySnapshot.docs.forEach(element => {
+            this.product = element.data() as Product;
+          });
+          resolve(this.product);
+        } else {
+          // doc.data() will be undefined in this case
+          console.error('No such document!');
+          reject('No such document!');
+        }
       });
+    });
   }
 
   /// Create Product /// OK
@@ -80,7 +96,7 @@ export class ProductService {
       tagsKey: product.tagsKey,
       perlerTypesKey: product.perlerTypesKey,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
     });
   }
 
@@ -95,10 +111,9 @@ export class ProductService {
     this.product.date = product.date;
     this.product.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
 
-    if (product.pictureUrl !== undefined)
-      this.product.pictureUrl = product.pictureUrl
-      this.product.tagsKey = product.tagsKey;
-      this.product.perlerTypesKey = product.perlerTypesKey;
+    if (product.pictureUrl !== undefined) this.product.pictureUrl = product.pictureUrl;
+    this.product.tagsKey = product.tagsKey;
+    this.product.perlerTypesKey = product.perlerTypesKey;
 
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
       updateDoc(doc.ref, this.product);
@@ -108,7 +123,7 @@ export class ProductService {
   /// Remove Product + Suppression de l'image /// OK
   removeProduct(product: Product) {
     if (product.pictureUrl) {
-      this.fileUploadService.getFileUpload(product.pictureUrl).then((fileUpload) => {
+      this.fileUploadService.getFileUpload(product.pictureUrl).then(fileUpload => {
         return this.fileUploadService.deleteFile(fileUpload as FileUpload);
       });
     }
@@ -120,23 +135,24 @@ export class ProductService {
 
   /// Upload File in Storage /// OK
   uploadFile(file: File) {
-    return new Promise(
-      (resolve, reject) => {
-        // Create a root reference
-        const storage = getStorage();
+    return new Promise((resolve, reject) => {
+      // Create a root reference
+      const storage = getStorage();
 
-        // Create a reference to Files
-        const almostUniqueFileName = Date.now().toString();
-        const upload = firebaseStorage.ref(storage, file.name + '_' + almostUniqueFileName);
+      // Create a reference to Files
+      const almostUniqueFileName = Date.now().toString();
+      const upload = firebaseStorage.ref(storage, file.name + '_' + almostUniqueFileName);
 
-        uploadBytes(upload, file).then((data: any) => {
+      uploadBytes(upload, file).then(
+        (data: any) => {
           resolve(getDownloadURL(upload));
           console.log('Chargement…');
-        }, (error) => {
+        },
+        error => {
           console.log('Erreur de chargement ! : ' + error);
           reject(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 }

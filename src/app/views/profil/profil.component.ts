@@ -6,15 +6,19 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 import { OrdererListComponent } from '../orderer-list/orderer-list.component';
 
 @Component({
-    selector: 'app-profil',
-    templateUrl: './profil.component.html',
-    standalone: true,
-    imports: [CommonModule, BreadcrumbsComponent, UserFormComponent, ChangePasswordComponent, OrdererListComponent]
+  selector: 'app-profil',
+  templateUrl: './profil.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    BreadcrumbsComponent,
+    UserFormComponent,
+    ChangePasswordComponent,
+    OrdererListComponent,
+  ],
 })
 export class ProfilComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

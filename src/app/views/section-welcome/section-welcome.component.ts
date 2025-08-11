@@ -6,39 +6,37 @@ import { AppResource } from 'src/app/shared/models/app.resource';
 import { Base } from 'src/app/shared/component/base/base';
 
 @Component({
-    selector: 'app-section-welcome',
-    templateUrl: './section-welcome.component.html',
-    standalone: true,
-    imports: [CommonModule, GalleriaModule, CardModule]
+  selector: 'app-section-welcome',
+  templateUrl: './section-welcome.component.html',
+  standalone: true,
+  imports: [CommonModule, GalleriaModule, CardModule],
 })
 export class SectionWelcomeComponent extends Base implements OnInit {
   images: string[] = [
     'assets/img/Perles-Atelier.jpg',
     'assets/img/PokemonGen1.jpg',
     'assets/img/Justice_League.jpg',
-    'assets/img/Pokemon_Starter.jpg'
+    'assets/img/Pokemon_Starter.jpg',
   ];
 
   responsiveOptions: any[] = [
     {
-        breakpoint: '991px',
-        numVisible: 4
+      breakpoint: '991px',
+      numVisible: 4,
     },
     {
-        breakpoint: '767px',
-        numVisible: 3
+      breakpoint: '767px',
+      numVisible: 3,
     },
     {
-        breakpoint: '575px',
-        numVisible: 1
-    }
-];
+      breakpoint: '575px',
+      numVisible: 1,
+    },
+  ];
 
-  constructor(resources: AppResource) { 
+  constructor(resources: AppResource) {
     super(resources);
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

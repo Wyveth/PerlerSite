@@ -16,9 +16,7 @@ export class AppResource {
     console.log('📥 Resource.load lancé');
 
     try {
-      this.resource = await lastValueFrom(
-        this.http.get('./locale/resource.json')
-      );
+      this.resource = await lastValueFrom(this.http.get('./locale/resource.json'));
       console.log('✅ Resource.load OK', this.resource);
     } catch (err) {
       console.error('❌ Erreur chargement resource.json', err);

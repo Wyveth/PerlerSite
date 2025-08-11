@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, EnvironmentInjector, OnDestroy, OnInit, afterNextRender, effect, inject, runInInjectionContext, signal } from '@angular/core';
+import {
+  Component,
+  EnvironmentInjector,
+  OnDestroy,
+  OnInit,
+  afterNextRender,
+  effect,
+  inject,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import imagesLoaded from 'imagesloaded';
 import { Subscription } from 'rxjs';
@@ -13,10 +23,10 @@ import { AppResource } from 'src/app/shared/models/app.resource';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
 
 @Component({
-    selector: 'app-section-portfolio',
-    templateUrl: './section-portfolio.component.html',
-    standalone: true,
-    imports: [CommonModule, RouterModule, ImageModule, FormatPipe]
+  selector: 'app-section-portfolio',
+  templateUrl: './section-portfolio.component.html',
+  standalone: true,
+  imports: [CommonModule, RouterModule, ImageModule, FormatPipe],
 })
 export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy {
   products = signal<Product[]>([]);
@@ -31,7 +41,11 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
   private isotope: any;
   private injector = inject(EnvironmentInjector);
 
-  constructor(resources: AppResource, private productService: ProductService, private tagService: TagService) {
+  constructor(
+    resources: AppResource,
+    private productService: ProductService,
+    private tagService: TagService
+  ) {
     super(resources);
 
     // Quand products change → on initialise Isotope
@@ -50,7 +64,7 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
             this.isotope = new Isotope(grid, {
               itemSelector: '.portfolio-item',
               percentPosition: true,
-              masonry: { columnWidth: '.portfolio-item' } // ou layoutMode: 'fitRows'
+              masonry: { columnWidth: '.portfolio-item' }, // ou layoutMode: 'fitRows'
             });
           });
         });
@@ -67,18 +81,18 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
   }
 
   ngOnInit() {
-    this.tagSubscription = this.tagService.tagsSubject.subscribe(
-      (tags: Tag[]) => {
-        this.tags = tags;
-      }
-    );
+    this.tagSubscription = this.tagService.tagsSubject.subscribe((tags: Tag[]) => {
+      this.tags = tags;
+    });
     this.tagService.emitTags();
 
-    this.productService.productsSubject.subscribe((products: Product[]) => { // BEGIN:
-      this.products.set( // Changement ici pour appeler la méthode set de signal
+    this.productService.productsSubject.subscribe((products: Product[]) => {
+      // BEGIN:
+      this.products.set(
+        // Changement ici pour appeler la méthode set de signal
         products
           .sort((a, b) => a.title.localeCompare(b.title))
-          .map((product) => {
+          .map(product => {
             const isNew = this.isNew(product.dateCreation);
             const filterClasses = product.tagsKey
               .map((t: TagKey) => 'filter-' + t.item_text) // Changement ici pour utiliser 'libelle' de TagKey

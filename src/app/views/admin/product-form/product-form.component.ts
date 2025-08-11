@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
@@ -12,21 +18,20 @@ import { TagService } from 'src/app/api/services/tag.service';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
 
 @Component({
-    selector: 'app-product-form',
-    templateUrl: './product-form.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  selector: 'app-product-form',
+  templateUrl: './product-form.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
 })
-
 export class ProductFormComponent implements OnInit {
   //Constante Form
   productForm!: UntypedFormGroup;
   id!: string;
   isAddMode!: boolean;
-  dropdownListTags!: Array<{ key: string, code: string }>;
+  dropdownListTags!: Array<{ key: string; code: string }>;
   dropdownSettingsTags: any;
 
-  dropdownListPerlerTypes!: Array<{ key: string, code: string }>;
+  dropdownListPerlerTypes!: Array<{ key: string; code: string }>;
   dropdownSettingsPerlerTypes: any;
 
   fileIsUploading = false;
@@ -42,34 +47,37 @@ export class ProductFormComponent implements OnInit {
   perlerTypeSubscription!: Subscription;
   perlerTypeDDL: any[] = [];
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productService: ProductService,
     private tagService: TagService,
     private perlerTypeService: PerlerTypeService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
 
-    this.tagSubscription = this.tagService.tagsSubject.subscribe(
-      (tags: any[]) => {
-        this.tags = tags;
-        this.tags.forEach(item => {
-          this.tagDDL.push({ item_id: item.key, item_text: item.code });
-          this.dropdownListTags = this.tagDDL;
-        });
-      }
-    );
+    this.tagSubscription = this.tagService.tagsSubject.subscribe((tags: any[]) => {
+      this.tags = tags;
+      this.tags.forEach(item => {
+        this.tagDDL.push({ item_id: item.key, item_text: item.code });
+        this.dropdownListTags = this.tagDDL;
+      });
+    });
     this.tagService.emitTags();
 
     this.perlerTypeSubscription = this.perlerTypeService.perlerTypesSubject.subscribe(
       (perlerTypes: any[]) => {
         this.perlerTypes = perlerTypes;
         this.perlerTypes.forEach(item => {
-          this.perlerTypeDDL.push({ item_id: item.key, item_text: item.reference + " - " + item.libelle });
+          this.perlerTypeDDL.push({
+            item_id: item.key,
+            item_text: item.reference + ' - ' + item.libelle,
+          });
           this.dropdownListPerlerTypes = this.perlerTypeDDL;
         });
       }
@@ -84,7 +92,7 @@ export class ProductFormComponent implements OnInit {
       selectAllText: 'Tout sélectionner',
       unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
-      noDataAvailablePlaceholderText: 'Aucun tag n\'est disponible'
+      noDataAvailablePlaceholderText: "Aucun tag n'est disponible",
     };
 
     this.dropdownSettingsPerlerTypes = {
@@ -94,7 +102,7 @@ export class ProductFormComponent implements OnInit {
       selectAllText: 'Tout sélectionner',
       unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
-      noDataAvailablePlaceholderText: 'Aucun type de perle n\'est disponible'
+      noDataAvailablePlaceholderText: "Aucun type de perle n'est disponible",
     };
   }
 
@@ -108,7 +116,7 @@ export class ProductFormComponent implements OnInit {
       time: ['', Validators.required],
       date: ['', Validators.required],
       tagsKey: ['', Validators.required],
-      perlerTypesKey: ['', Validators.required]
+      perlerTypesKey: ['', Validators.required],
     });
 
     if (!this.isAddMode) {
@@ -119,7 +127,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
-  get f() { return this.productForm.controls; }
+  get f() {
+    return this.productForm.controls;
+  }
 
   onSubmitForm() {
     const formValue = this.productForm.value;
@@ -164,8 +174,7 @@ export class ProductFormComponent implements OnInit {
       this.fileUrl = url;
       this.fileIsUploading = false;
       this.fileUploaded = true;
-    }
-    );
+    });
   }
 
   detectFiles(event: any) {
@@ -207,7 +216,7 @@ export class ProductFormComponent implements OnInit {
     const date = this.productForm.controls.date;
     return date.touched && date.hasError('required');
   }
-  
+
   shouldShowTagsKeyError() {
     const tagsKey = this.productForm.controls.tagsKey;
     return tagsKey.touched && tagsKey.hasError('required');

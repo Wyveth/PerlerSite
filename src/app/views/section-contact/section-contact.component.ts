@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { Contact } from 'src/app/api/models/class/contact';
@@ -11,16 +17,21 @@ import { MessageService } from 'primeng/api';
 import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
-    selector: 'app-section-contact',
-    templateUrl: './section-contact.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule]
+  selector: 'app-section-contact',
+  templateUrl: './section-contact.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule],
 })
 export class SectionContactComponent extends Base implements OnInit {
   contactForm!: UntypedFormGroup;
   loading: boolean = false;
 
-  constructor(resources: AppResource,private messageService: MessageService, private formBuilder: UntypedFormBuilder, private contactService: ContactService) { 
+  constructor(
+    resources: AppResource,
+    private messageService: MessageService,
+    private formBuilder: UntypedFormBuilder,
+    private contactService: ContactService
+  ) {
     super(resources);
   }
 
@@ -33,12 +44,14 @@ export class SectionContactComponent extends Base implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
     });
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
-  get f() { return this.contactForm.controls; }
+  get f() {
+    return this.contactForm.controls;
+  }
 
   onSubmitForm() {
     this.loading = true;
@@ -60,11 +73,19 @@ export class SectionContactComponent extends Base implements OnInit {
 
       setTimeout(() => {
         this.loading = false;
-        this.messageService.add({ severity: severity.success, summary: this.resource.severity.success, detail: 'Votre message a bien été envoyé!' });
+        this.messageService.add({
+          severity: severity.success,
+          summary: this.resource.severity.success,
+          detail: 'Votre message a bien été envoyé!',
+        });
       }, 2000);
     } catch (error) {
       this.loading = false;
-      this.messageService.add({ severity: severity.danger, summary: this.resource.severity.danger, detail: 'Une erreur s\'est produite lors de l\'envoi, veuillez réessayer ultérieurement.' });
+      this.messageService.add({
+        severity: severity.danger,
+        summary: this.resource.severity.danger,
+        detail: "Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement.",
+      });
     }
   }
 
@@ -73,22 +94,22 @@ export class SectionContactComponent extends Base implements OnInit {
   }
 
   //Error Form
-  shouldShowNameError(){
+  shouldShowNameError() {
     const name = this.contactForm.controls.name;
     return name.touched && name.hasError('required');
   }
 
-  shouldShowMailError(){
+  shouldShowMailError() {
     const email = this.contactForm.controls.email;
     return email.touched && (email.hasError('required') || email.hasError('email'));
   }
 
-  shouldShowSubjectError(){
+  shouldShowSubjectError() {
     const subject = this.contactForm.controls.subject;
     return subject.touched && subject.hasError('required');
   }
 
-  shouldShowMessageError(){
+  shouldShowMessageError() {
     const message = this.contactForm.controls.message;
     return message.touched && message.hasError('required');
   }

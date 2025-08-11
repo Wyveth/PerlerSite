@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
@@ -9,10 +16,10 @@ import { TagService } from 'src/app/api/services/tag.service';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
 
 @Component({
-    selector: 'app-tag-form',
-    templateUrl: './tag-form.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  selector: 'app-tag-form',
+  templateUrl: './tag-form.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;
@@ -25,11 +32,13 @@ export class TagFormComponent implements OnInit {
   isAddMode!: boolean;
   tag: Tag = new Tag('', '');
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private tagService: TagService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -52,14 +61,13 @@ export class TagFormComponent implements OnInit {
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
-  get f() { return this.tagForm.controls; }
+  get f() {
+    return this.tagForm.controls;
+  }
 
   onSubmitForm() {
     const formValue = this.tagForm.value;
-    const tag = new Tag(
-      formValue['code'],
-      formValue['libelle']
-    );
+    const tag = new Tag(formValue['code'], formValue['libelle']);
 
     if (this.fileUrl && this.fileUrl !== '') {
       tag.pictureUrl = this.fileUrl;
@@ -83,8 +91,7 @@ export class TagFormComponent implements OnInit {
       this.fileUrl = url;
       this.fileIsUploading = false;
       this.fileUploaded = true;
-    }
-    );
+    });
   }
 
   detectFiles(event: any) {

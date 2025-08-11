@@ -14,10 +14,10 @@ import { Header } from '../../models/class/header';
 import { DrawerModule } from 'primeng/drawer';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    standalone: true,
-    imports: [CommonModule, RouterModule, MenubarModule, DrawerModule]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  standalone: true,
+  imports: [CommonModule, RouterModule, MenubarModule, DrawerModule],
 })
 export class HeaderComponent extends Base implements OnInit {
   isAuth: boolean = false;
@@ -34,25 +34,25 @@ export class HeaderComponent extends Base implements OnInit {
         icon: 'ri-home-4-line',
         command: () => {
           scrollViewFragment(this.router, this.resource.layout.header.router.routes.welcome);
-        }
+        },
       },
       {
         label: this.resource.layout.header.menu.achievements,
         command: () => {
           scrollViewFragment(this.router, this.resource.layout.header.router.routes.achievements);
-        }
+        },
       },
       {
         label: this.resource.layout.header.menu.faq,
         command: () => {
           scrollViewFragment(this.router, this.resource.layout.header.router.routes.faq);
-        }
+        },
       },
       {
         label: this.resource.layout.header.menu.contact,
         command: () => {
           scrollViewFragment(this.router, this.resource.layout.header.router.routes.contact);
-        }
+        },
       },
       {
         icon: 'ri-account-circle-line',
@@ -60,14 +60,14 @@ export class HeaderComponent extends Base implements OnInit {
           {
             label: this.resource.layout.header.menu.signin,
             visible: !this.isAuth,
-            routerLink: this.resource.layout.header.router.routes.signin
+            routerLink: this.resource.layout.header.router.routes.signin,
           },
           {
             visible: this.isAuth,
             label: this.resource.layout.header.menu.profil,
             command() {
               this.onProfil(this.user.key);
-            }
+            },
           },
           {
             visible: this.isAuthA,
@@ -76,71 +76,74 @@ export class HeaderComponent extends Base implements OnInit {
             items: [
               {
                 label: this.resource.layout.header.menu.products,
-                routerLink: this.resource.layout.header.router.routes.products
+                routerLink: this.resource.layout.header.router.routes.products,
               },
               {
                 label: this.resource.layout.header.menu.tags,
-                routerLink: this.resource.layout.header.router.routes.tags
+                routerLink: this.resource.layout.header.router.routes.tags,
               },
               {
                 label: this.resource.layout.header.menu.perlertypes,
-                routerLink: this.resource.layout.header.router.routes.perlertypes
+                routerLink: this.resource.layout.header.router.routes.perlertypes,
               },
               {
                 label: this.resource.layout.header.menu.contacts,
-                routerLink: this.resource.layout.header.router.routes.contacts
+                routerLink: this.resource.layout.header.router.routes.contacts,
               },
               {
                 label: this.resource.layout.header.menu.users,
-                routerLink: this.resource.layout.header.router.routes.users
+                routerLink: this.resource.layout.header.router.routes.users,
               },
-            ]
+            ],
           },
           {
             visible: this.isAuth,
             label: this.resource.layout.header.menu.signout,
             command() {
               this.onSignOut();
-            }
-          }
-        ]
-      }
-    ]
-  }
+            },
+          },
+        ],
+      },
+    ],
+  };
 
   menuItems: MenuItem[] = [
     {
       label: 'Accueil',
       icon: 'pi pi-home',
-      routerLink: ['/']
+      routerLink: ['/'],
     },
     {
       label: 'Mes réalisations',
       icon: 'pi pi-images',
-      routerLink: ['#portfolio']
+      routerLink: ['#portfolio'],
     },
     {
       label: 'F.A.Q',
       icon: 'pi pi-question',
-      routerLink: ['#faq']
+      routerLink: ['#faq'],
     },
     {
       label: 'Contact',
       icon: 'pi pi-envelope',
-      routerLink: ['#contact']
+      routerLink: ['#contact'],
     },
     {
       label: 'Profil',
       icon: 'pi pi-user',
-      visible: this.isAuth
-    }
+      visible: this.isAuth,
+    },
   ];
 
   isDropdownOpen = false;
 
-
-
-  constructor(resources: AppResource, private authService: AuthService, private userService: UserService, private router: Router) {
+  constructor(
+    resources: AppResource,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {
     super(resources);
   }
 
@@ -149,34 +152,31 @@ export class HeaderComponent extends Base implements OnInit {
       duration: 1000,
       easing: 'ease-in-out',
       once: true,
-      mirror: false
+      mirror: false,
     });
 
-    onAuthStateChanged(getAuth(), (user) => {
+    onAuthStateChanged(getAuth(), user => {
       if (user) {
-        this.userService.getUserByEmail(user.email).then(
-          (user: any) => {
-            this.user = user as User;
-            if(this.user.admin === true){
-              this.isAuthA = true;
-            }
-            else{
-              this.isAuthA = false;
-            }
-          });
+        this.userService.getUserByEmail(user.email).then((user: any) => {
+          this.user = user as User;
+          if (this.user.admin === true) {
+            this.isAuthA = true;
+          } else {
+            this.isAuthA = false;
+          }
+        });
         this.isAuth = true;
       } else {
         this.isAuth = false;
       }
-    }
-    );
+    });
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  onProfil(key: string){
+  onProfil(key: string) {
     this.router.navigate(['/profil', key]);
   }
 
@@ -196,7 +196,11 @@ export class HeaderComponent extends Base implements OnInit {
   }
 }
 
-function scrollViewFragment(router: Router, fragment: string, scrollType: 'smooth' | 'auto' = 'smooth') {
+function scrollViewFragment(
+  router: Router,
+  fragment: string,
+  scrollType: 'smooth' | 'auto' = 'smooth'
+) {
   const currentUrl = router.url.split('#')[0];
   if (currentUrl !== '/') {
     // Si on n’est pas sur la home, navigue d’abord, puis scroll après la navigation
@@ -212,5 +216,3 @@ function scrollViewFragment(router: Router, fragment: string, scrollType: 'smoot
     if (el) el.scrollIntoView({ behavior: scrollType });
   }
 }
-
-

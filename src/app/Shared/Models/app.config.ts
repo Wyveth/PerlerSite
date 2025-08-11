@@ -19,9 +19,7 @@ export class AppConfig {
     console.log('Entrée dans AppConfig.load');
 
     try {
-      const envResponse: any = await lastValueFrom(
-        this.httpClient.get('./assets/env/env.json')
-      );
+      const envResponse: any = await lastValueFrom(this.httpClient.get('./assets/env/env.json'));
 
       this.env = envResponse['env'];
 
@@ -30,9 +28,7 @@ export class AppConfig {
         throw new Error('env is undefined');
       }
 
-      this.config = await lastValueFrom(
-        this.httpClient.get(`./assets/env/env.${this.env}.json`)
-      );
+      this.config = await lastValueFrom(this.httpClient.get(`./assets/env/env.${this.env}.json`));
 
       console.log('✅ Configuration chargée :', this.config);
     } catch (error) {

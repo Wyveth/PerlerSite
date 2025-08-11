@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { User } from 'src/app/api/models/class/user';
@@ -8,10 +14,10 @@ import { FileUploadService } from 'src/app/api/services/upload-file.service';
 import { UserService } from 'src/app/api/services/user.service';
 
 @Component({
-    selector: 'app-user-form',
-    templateUrl: './user-form.component.html',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule]
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;
@@ -22,13 +28,15 @@ export class UserFormComponent implements OnInit {
   fileUrl!: string;
   fileObject!: FileUpload;
 
-  @Input() option: string = "Admin";
+  @Input() option: string = 'Admin';
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -43,7 +51,7 @@ export class UserFormComponent implements OnInit {
       name: ['', Validators.required],
       adress: ['', Validators.required],
       zipcode: ['', Validators.required],
-      city: ['', Validators.required]
+      city: ['', Validators.required],
     });
 
     this.userService.getUser(this.id).then((data: any) => {
@@ -53,14 +61,13 @@ export class UserFormComponent implements OnInit {
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
-  get f() { return this.userForm.controls; }
+  get f() {
+    return this.userForm.controls;
+  }
 
   onSubmitForm() {
     const formValue = this.userForm.value;
-    const user = new User(
-      formValue['displayName'],
-      formValue['email']
-    );
+    const user = new User(formValue['displayName'], formValue['email']);
 
     user.surname = formValue['surname'];
     user.name = formValue['name'];
@@ -71,16 +78,14 @@ export class UserFormComponent implements OnInit {
     if (this.fileUrl && this.fileUrl !== '') {
       user.pictureUrl = this.fileUrl;
       user.file = this.fileObject;
-      if(user.file != undefined)
-        this.filesUploadService.saveFileData(user.file);
+      if (user.file != undefined) this.filesUploadService.saveFileData(user.file);
     }
 
     this.userService.updateUser(this.id, user);
 
-    if(this.option == "Profil"){
+    if (this.option == 'Profil') {
       this.router.navigate(['/profil']);
-    }
-    else{
+    } else {
       this.router.navigate(['/users']);
     }
   }
@@ -93,8 +98,7 @@ export class UserFormComponent implements OnInit {
       this.fileUrl = url;
       this.fileIsUploading = false;
       this.fileUploaded = true;
-    }
-    );
+    });
   }
 
   detectFiles(event: any) {
@@ -102,27 +106,27 @@ export class UserFormComponent implements OnInit {
   }
 
   /* Validation Erreur */
-  shouldShowSurnameError(){
+  shouldShowSurnameError() {
     const surname = this.userForm.controls.surname;
     return surname.touched && surname.hasError('required');
   }
 
-  shouldShowNameError(){
+  shouldShowNameError() {
     const name = this.userForm.controls.name;
     return name.touched && name.hasError('required');
   }
 
-  shouldShowAdresseError(){
+  shouldShowAdresseError() {
     const adress = this.userForm.controls.adress;
     return adress.touched && adress.hasError('required');
   }
 
-  shouldShowZipCodeError(){
+  shouldShowZipCodeError() {
     const zipCode = this.userForm.controls.zipcode;
     return zipCode.touched && zipCode.hasError('required');
   }
 
-  shouldShowCityError(){
+  shouldShowCityError() {
     const city = this.userForm.controls.city;
     return city.touched && city.hasError('required');
   }

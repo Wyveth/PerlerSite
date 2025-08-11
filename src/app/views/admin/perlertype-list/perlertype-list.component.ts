@@ -7,16 +7,19 @@ import { PerlerType } from 'src/app/api/models/class/perler-type';
 import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 
 @Component({
-    selector: 'app-perlertype-list',
-    templateUrl: './perlertype-list.component.html',
-    standalone: true,
-    imports: [CommonModule, BreadcrumbsComponent]
+  selector: 'app-perlertype-list',
+  templateUrl: './perlertype-list.component.html',
+  standalone: true,
+  imports: [CommonModule, BreadcrumbsComponent],
 })
 export class PerlertypeListComponent implements OnInit {
   perlerTypes!: any[];
   perlerTypeSubscription!: Subscription;
 
-  constructor(private perlerTypeService: PerlerTypeService, private router: Router) { }
+  constructor(
+    private perlerTypeService: PerlerTypeService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.perlerTypeSubscription = this.perlerTypeService.perlerTypesSubject.subscribe(

@@ -7,16 +7,19 @@ import { SectionPortfolioComponent } from '../section-portfolio/section-portfoli
 import { SectionContactComponent } from '../section-contact/section-contact.component';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    standalone: true,
-    imports: [CommonModule, SectionWelcomeComponent, SectionPortfolioComponent, SectionFaqComponent, SectionContactComponent],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    SectionWelcomeComponent,
+    SectionPortfolioComponent,
+    SectionFaqComponent,
+    SectionContactComponent,
+  ],
 })
 export class HomeComponent implements OnInit {
-  constructor(){
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
-

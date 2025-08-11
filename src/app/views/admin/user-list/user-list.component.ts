@@ -8,24 +8,26 @@ import { User } from 'src/app/api/models/class/user';
 import { UserService } from 'src/app/api/services/user.service';
 
 @Component({
-    selector: 'app-user-list',
-    templateUrl: './user-list.component.html',
-    standalone: true,
-    imports: [CommonModule, BreadcrumbsComponent]
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  standalone: true,
+  imports: [CommonModule, BreadcrumbsComponent],
 })
 export class UserListComponent implements OnInit {
   users!: any[];
   userSubscription!: Subscription;
   user!: User;
 
-  constructor(private userService: UserService, private router: Router, private modalService: NgbModal) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
-    this.userSubscription = this.userService.usersSubject.subscribe(
-      (users: any[]) => {
-        this.users = users;
-      }
-    );
+    this.userSubscription = this.userService.usersSubject.subscribe((users: any[]) => {
+      this.users = users;
+    });
     this.userService.emitUsers();
   }
 
@@ -38,24 +40,22 @@ export class UserListComponent implements OnInit {
   }
 
   onUpdateAdmin(key: string) {
-    this.userService.getUser(key).then(
-      (user: any) => {
-        if(user.admin === true) {
-          this.userService.updateOffAdmin(user);
-        } else if(user.admin === false) {
-          this.userService.updateOnAdmin(user);
-        }
+    this.userService.getUser(key).then((user: any) => {
+      if (user.admin === true) {
+        this.userService.updateOffAdmin(user);
+      } else if (user.admin === false) {
+        this.userService.updateOnAdmin(user);
+      }
     });
   }
 
   onUpdateDisabled(key: string) {
-    this.userService.getUser(key).then(
-      (user: any) => {
-        if(user.disabled === true) {
-          this.userService.updateOffDisabled(user);
-        } else if(user.disabled === false) {
-          this.userService.updateOnDisabled(user);
-        }
+    this.userService.getUser(key).then((user: any) => {
+      if (user.disabled === true) {
+        this.userService.updateOffDisabled(user);
+      } else if (user.disabled === false) {
+        this.userService.updateOnDisabled(user);
+      }
     });
   }
 

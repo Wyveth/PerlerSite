@@ -1,25 +1,61 @@
-<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Se connecter"></app-breadcrumbs>
+<app-breadcrumbs
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Se connecter"
+></app-breadcrumbs>
 
 <section class="h-full inner-page">
-    <div class="flex justify-center">
-      <div class="w-1/2 formStyle">
-        <div class="flex justify-center">
-          <h2 class="styleTitle">Se Connecter</h2>
-        </div>
-
-        <form class="flex flex-col space-y-8" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
-            <p-floatlabel class="flex w-1/2 mx-auto">
-              <label for="email">Adresse mail</label>
-              <input type="text" pInputText id="email" formControlName="email" class="w-full">
-            </p-floatlabel>
-            <p-floatlabel class="flex w-1/2 mx-auto">
-              <label class="z-1" for="password">Mot de passe</label>
-              <p-password type="password"  id="password" formControlName="password" [inputStyleClass]="'w-full'" promptLabel="Saisir un mot de passe"
-                class="w-full" [styleClass]="'w-full'" [toggleMask]="true" [feedback]="false">
-              </p-password>
-            </p-floatlabel>
-            <button class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition" type="submit" [disabled]="signinForm.invalid">Se Connecter</button>
-        </form>
+  <div class="flex justify-center">
+    <div class="w-1/2 formStyle">
+      <div class="flex justify-center">
+        <h2 class="styleTitle">Se Connecter</h2>
       </div>
+
+      <form class="flex flex-col space-y-8" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label for="email">Adresse mail</label>
+            <input type="text" pInputText id="email" formControlName="email" class="w-full" />
+          </p-floatlabel>
+          <div
+            *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
+            <div *ngIf="f.email.errors.email">L'email n'est pas valide</div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label class="z-1" for="password">Mot de passe</label>
+            <p-password
+              type="password"
+              id="password"
+              formControlName="password"
+              [inputStyleClass]="'w-full'"
+              promptLabel="Saisir un mot de passe"
+              class="w-full"
+              [styleClass]="'w-full'"
+              [toggleMask]="true"
+              [feedback]="false"
+            >
+            </p-password>
+          </p-floatlabel>
+          <div
+            *ngIf="f.password.errors && (f.password.touched || f.password.dirty)"
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div *ngIf="f.password.errors.required">Le mot de passe est requis</div>
+          </div>
+        </div>
+        <button
+          class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
+          type="submit"
+          [disabled]="signinForm.invalid"
+        >
+          Se Connecter
+        </button>
+      </form>
     </div>
+  </div>
 </section>

@@ -11,9 +11,8 @@ describe('CommentListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentListComponent ]
-    })
-    .compileComponents();
+      declarations: [CommentListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

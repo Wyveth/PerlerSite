@@ -1,7 +1,7 @@
-import { formatDate } from "@angular/common";
-import { Base } from "./base";
-import { FileUpload } from "./file-upload";
-import { Tag } from "./tag";
+import { formatDate } from '@angular/common';
+import { Base } from './base';
+import { FileUpload } from './file-upload';
+import { Tag } from './tag';
 
 export class Product extends Base {
   key!: string;
@@ -15,15 +15,23 @@ export class Product extends Base {
   pictureUrl!: string;
   tagsKey!: TagKey[];
   perlerTypesKey!: string[];
-  
+
   tagsVisu!: string;
-  tags!: Tag[]
+  tags!: Tag[];
   file!: FileUpload;
 
   isNew?: boolean; // facultatif
   filterClasses?: string; // facultatif
 
-  constructor(title: string, titleContent: string, content: string, author: string, size: string, time: string, date: string) {
+  constructor(
+    title: string,
+    titleContent: string,
+    content: string,
+    author: string,
+    size: string,
+    time: string,
+    date: string
+  ) {
     super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));
     this.title = title;
     this.titleContent = titleContent;

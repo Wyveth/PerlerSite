@@ -1,21 +1,38 @@
-<app-breadcrumbs *ngIf="isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits"
-  nodeChildUrl="products" nodeChildChild="Créer"></app-breadcrumbs>
-<app-breadcrumbs *ngIf="!isAddMode" nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits"
-  nodeChildUrl="products" nodeChildChild="Modifier"></app-breadcrumbs>
+<app-breadcrumbs
+  *ngIf="isAddMode"
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Produits"
+  nodeChildUrl="products"
+  nodeChildChild="Créer"
+></app-breadcrumbs>
+<app-breadcrumbs
+  *ngIf="!isAddMode"
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Produits"
+  nodeChildUrl="products"
+  nodeChildChild="Modifier"
+></app-breadcrumbs>
 
 <section class="inner-page">
   <div class="container">
-    <div class="row justify-content-md-center">
+    <div class="flex justify-center">
       <div class="col-sm-6 formStyle">
-        <div class="row justify-content-md-center">
+        <div class="flex justify-center">
           <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau produit</h2>
           <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un produit</h2>
         </div>
         <form [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
           <div class="form-group form-control-sm">
             <label for="title">Titre</label>
-            <input type="text" id="title" class="form-control" formControlName="title"
-              [ngClass]="{ 'is-invalid': shouldShowTitleError() }">
+            <input
+              type="text"
+              id="title"
+              class="form-control"
+              formControlName="title"
+              [ngClass]="{ 'is-invalid': shouldShowTitleError() }"
+            />
             <div *ngIf="f.title.errors" class="invalid-feedback">
               <div *ngIf="f.title.errors.required">Le titre est obligatoire</div>
             </div>
@@ -23,18 +40,29 @@
 
           <div class="form-group form-control-sm">
             <label for="titleContent">Titre de la Description</label>
-            <input type="text" id="titleContent" class="form-control" formControlName="titleContent"
-              [ngClass]="{ 'is-invalid': shouldShowTitleContentError() }">
+            <input
+              type="text"
+              id="titleContent"
+              class="form-control"
+              formControlName="titleContent"
+              [ngClass]="{ 'is-invalid': shouldShowTitleContentError() }"
+            />
             <div *ngIf="f.titleContent.errors" class="invalid-feedback">
-              <div *ngIf="f.titleContent.errors.required">Le titre de la description est obligatoire</div>
+              <div *ngIf="f.titleContent.errors.required">
+                Le titre de la description est obligatoire
+              </div>
             </div>
           </div>
 
           <div class="form-group form-control-sm">
             <label for="content">Description</label>
-            <textarea id="content" class="form-control" formControlName="content"
-              [ngClass]="{ 'is-invalid': shouldShowContentError() }">
-          </textarea>
+            <textarea
+              id="content"
+              class="form-control"
+              formControlName="content"
+              [ngClass]="{ 'is-invalid': shouldShowContentError() }"
+            >
+            </textarea>
             <div *ngIf="f.content.errors" class="invalid-feedback">
               <div *ngIf="f.content.errors.required">Le contenu est obligatoire</div>
             </div>
@@ -42,8 +70,13 @@
 
           <div class="form-group form-control-sm">
             <label for="author">Auteur</label>
-            <input type="text" id="author" class="form-control" formControlName="author"
-              [ngClass]="{ 'is-invalid': shouldShowAuthorError() }">
+            <input
+              type="text"
+              id="author"
+              class="form-control"
+              formControlName="author"
+              [ngClass]="{ 'is-invalid': shouldShowAuthorError() }"
+            />
             <div *ngIf="f.author.errors" class="invalid-feedback">
               <div *ngIf="f.author.errors.required">L'auteur est obligatoire</div>
             </div>
@@ -51,8 +84,13 @@
 
           <div class="form-group form-control-sm">
             <label for="size">Taille</label>
-            <input type="text" id="size" class="form-control" formControlName="size"
-              [ngClass]="{ 'is-invalid': shouldShowSizeError() }">
+            <input
+              type="text"
+              id="size"
+              class="form-control"
+              formControlName="size"
+              [ngClass]="{ 'is-invalid': shouldShowSizeError() }"
+            />
             <div *ngIf="f.size.errors" class="invalid-feedback">
               <div *ngIf="f.size.errors.required">La taille est obligatoire</div>
             </div>
@@ -60,8 +98,13 @@
 
           <div class="form-group form-control-sm">
             <label for="time">Temps</label>
-            <input type="text" id="time" class="form-control" formControlName="time"
-              [ngClass]="{ 'is-invalid': shouldShowTimeError() }">
+            <input
+              type="text"
+              id="time"
+              class="form-control"
+              formControlName="time"
+              [ngClass]="{ 'is-invalid': shouldShowTimeError() }"
+            />
             <div *ngIf="f.time.errors" class="invalid-feedback">
               <div *ngIf="f.time.errors.required">Le temps est obligatoire</div>
             </div>
@@ -69,17 +112,27 @@
 
           <div class="form-group form-control-sm">
             <label for="date">Date</label>
-            <input type="text" id="date" class="form-control" formControlName="date"
-              [ngClass]="{ 'is-invalid': shouldShowDateError() }">
+            <input
+              type="text"
+              id="date"
+              class="form-control"
+              formControlName="date"
+              [ngClass]="{ 'is-invalid': shouldShowDateError() }"
+            />
             <div *ngIf="f.date.errors" class="invalid-feedback">
               <div *ngIf="f.date.errors.required">La date est obligatoire</div>
             </div>
           </div>
 
-          <div class="row mb-3" style="margin-top: 2rem;">
+          <div class="flex mb-3" style="margin-top: 2rem">
             <label for="formFile" class="col-sm-3 col-form-label">Ajouter une photo</label>
             <div class="col-sm-9">
-              <input type="file" (change)="detectFiles($event)" class="form-control" accept="image/*">
+              <input
+                type="file"
+                (change)="detectFiles($event)"
+                class="form-control"
+                accept="image/*"
+              />
               <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
             </div>
           </div>
@@ -100,13 +153,17 @@
               [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }">
             </ng-multiselect-dropdown> -->
             <div *ngIf="f.perlerTypesKey.errors" class="invalid-feedback">
-              <div *ngIf="f.perlerTypesKey.errors.required">Minimum un type de perle doit être sélectionné</div>
+              <div *ngIf="f.perlerTypesKey.errors.required">
+                Minimum un type de perle doit être sélectionné
+              </div>
             </div>
           </div>
 
-          <div class="row" style="margin-top: 2rem;">
+          <div class="flex" style="margin-top: 2rem">
             <div class="col">
-              <button class="btn btn-success" type="submit" [disabled]="productForm.invalid">Enregistrer</button>
+              <button class="btn btn-success" type="submit" [disabled]="productForm.invalid">
+                Enregistrer
+              </button>
             </div>
           </div>
         </form>
