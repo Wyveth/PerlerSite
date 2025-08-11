@@ -5,7 +5,7 @@ import {
   UntypedFormGroup,
   Validators,
   FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
@@ -16,7 +16,7 @@ import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
   selector: 'app-perlertype-form',
   templateUrl: './perlertype-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;
@@ -45,10 +45,10 @@ export class PerlertypeFormComponent implements OnInit {
       reference: [
         '',
         Validators.required,
-        this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode),
+        this.perlerTypeService.existingPerlerTypeRefValidator(this.isAddMode)
       ],
       libelle: ['', Validators.required],
-      color: ['', Validators.required],
+      color: ['', Validators.required]
     });
 
     if (!this.isAddMode) {

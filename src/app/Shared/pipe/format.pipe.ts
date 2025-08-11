@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'format',
+  name: 'format'
 })
 export class FormatPipe implements PipeTransform {
   transform(template: string, ...values: (string | number)[]): string {

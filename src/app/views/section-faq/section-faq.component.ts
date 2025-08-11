@@ -8,7 +8,7 @@ import { AccordionModule } from 'primeng/accordion';
   selector: 'app-section-faq',
   templateUrl: './section-faq.component.html',
   standalone: true,
-  imports: [CommonModule, AccordionModule],
+  imports: [CommonModule, AccordionModule]
 })
 export class SectionFaqComponent extends Base implements OnInit {
   constructor(resources: AppResource) {

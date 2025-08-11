@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/services/auth.service';
@@ -28,8 +28,8 @@ import { Base } from 'src/app/shared/component/base/base';
     BreadcrumbsComponent,
     InputTextModule,
     PasswordModule,
-    FloatLabelModule,
-  ],
+    FloatLabelModule
+  ]
 })
 export class SigninComponent extends Base implements OnInit {
   signinForm!: UntypedFormGroup;
@@ -56,7 +56,7 @@ export class SigninComponent extends Base implements OnInit {
   initForm() {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]],
+      password: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{6,}/)]]
     });
   }
 
@@ -83,7 +83,7 @@ export class SigninComponent extends Base implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Erreur de connexion',
-          detail: this.errorMessage,
+          detail: this.errorMessage
         });
       }
     );

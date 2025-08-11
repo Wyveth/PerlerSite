@@ -11,7 +11,7 @@ describe('SectionContactComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SectionContactComponent],
+      declarations: [SectionContactComponent]
     }).compileComponents();
   }));
 

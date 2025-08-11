@@ -309,7 +309,7 @@
     'borderLeftWidth',
     'borderRightWidth',
     'borderTopWidth',
-    'borderBottomWidth',
+    'borderBottomWidth'
   ];
 
   var measurementsLength = measurements.length;
@@ -321,7 +321,7 @@
       innerWidth: 0,
       innerHeight: 0,
       outerWidth: 0,
-      outerHeight: 0,
+      outerHeight: 0
     };
     for (var i = 0; i < measurementsLength; i++) {
       var measurement = measurements[i];
@@ -788,7 +788,7 @@
 
   var transitionEndEvent = {
     WebkitTransition: 'webkitTransitionEnd',
-    transition: 'transitionend',
+    transition: 'transitionend'
   }[transitionProperty];
 
   // cache all vendor properties that could have vendor prefix
@@ -797,7 +797,7 @@
     transition: transitionProperty,
     transitionDuration: transitionProperty + 'Duration',
     transitionProperty: transitionProperty + 'Property',
-    transitionDelay: transitionProperty + 'Delay',
+    transitionDelay: transitionProperty + 'Delay'
   };
 
   // -------------------------- Item -------------------------- //
@@ -812,7 +812,7 @@
     this.layout = layout;
     this.position = {
       x: 0,
-      y: 0,
+      y: 0
     };
 
     this._create();
@@ -827,11 +827,11 @@
     this._transn = {
       ingProperties: {},
       clean: {},
-      onEnd: {},
+      onEnd: {}
     };
 
     this.css({
-      position: 'absolute',
+      position: 'absolute'
     });
   };
 
@@ -961,9 +961,9 @@
     this.transition({
       to: transitionStyle,
       onTransitionEnd: {
-        transform: this.layoutPosition,
+        transform: this.layoutPosition
       },
-      isCleaning: true,
+      isCleaning: true
     });
   };
 
@@ -1085,7 +1085,7 @@
     this.css({
       transitionProperty: transitionProps,
       transitionDuration: duration,
-      transitionDelay: this.staggerDelay || 0,
+      transitionDelay: this.staggerDelay || 0
     });
     // listen for transition end event
     this.element.addEventListener(transitionEndEvent, this, false);
@@ -1103,7 +1103,7 @@
 
   // properties that I munge to make my life easier
   var dashedVendorProperties = {
-    '-webkit-transform': 'transform',
+    '-webkit-transform': 'transform'
   };
 
   proto.ontransitionend = function (event) {
@@ -1160,7 +1160,7 @@
   var cleanTransitionStyle = {
     transitionProperty: '',
     transitionDuration: '',
-    transitionDelay: '',
+    transitionDelay: ''
   };
 
   proto.removeTransitionStyles = function () {
@@ -1214,7 +1214,7 @@
       from: options.hiddenStyle,
       to: options.visibleStyle,
       isCleaning: true,
-      onTransitionEnd: onTransitionEnd,
+      onTransitionEnd: onTransitionEnd
     });
   };
 
@@ -1260,7 +1260,7 @@
       to: options.hiddenStyle,
       // keep hidden stuff hidden
       isCleaning: true,
-      onTransitionEnd: onTransitionEnd,
+      onTransitionEnd: onTransitionEnd
     });
   };
 
@@ -1281,7 +1281,7 @@
       top: '',
       bottom: '',
       transition: '',
-      transform: '',
+      transform: ''
     });
   };
 
@@ -1304,7 +1304,7 @@
       'ev-emitter/ev-emitter',
       'get-size/get-size',
       'fizzy-ui-utils/utils',
-      './item',
+      './item'
     ], function (EvEmitter, getSize, utils, Item) {
       return factory(window, EvEmitter, getSize, utils, Item);
     });
@@ -1389,7 +1389,7 @@
   // default options
   Outlayer.defaults = {
     containerStyle: {
-      position: 'relative',
+      position: 'relative'
     },
     initLayout: true,
     originLeft: true,
@@ -1400,12 +1400,12 @@
     transitionDuration: '0.4s',
     hiddenStyle: {
       opacity: 0,
-      transform: 'scale(0.001)',
+      transform: 'scale(0.001)'
     },
     visibleStyle: {
       opacity: 1,
-      transform: 'scale(1)',
-    },
+      transform: 'scale(1)'
+    }
   };
 
   var proto = Outlayer.prototype;
@@ -1438,7 +1438,7 @@
     originLeft: 'isOriginLeft',
     originTop: 'isOriginTop',
     resize: 'isResizeBound',
-    resizeContainer: 'isResizingContainer',
+    resizeContainer: 'isResizingContainer'
   };
 
   proto._create = function () {
@@ -1621,7 +1621,7 @@
   proto._getItemLayoutPosition = function (/* item */) {
     return {
       x: 0,
-      y: 0,
+      y: 0
     };
   };
 
@@ -1871,7 +1871,7 @@
       left: boundingRect.left + size.paddingLeft + size.borderLeftWidth,
       top: boundingRect.top + size.paddingTop + size.borderTopWidth,
       right: boundingRect.right - (size.paddingRight + size.borderRightWidth),
-      bottom: boundingRect.bottom - (size.paddingBottom + size.borderBottomWidth),
+      bottom: boundingRect.bottom - (size.paddingBottom + size.borderBottomWidth)
     };
   };
 
@@ -1893,7 +1893,7 @@
       left: boundingRect.left - thisRect.left - size.marginLeft,
       top: boundingRect.top - thisRect.top - size.marginTop,
       right: thisRect.right - boundingRect.right - size.marginRight,
-      bottom: thisRect.bottom - boundingRect.bottom - size.marginBottom,
+      bottom: thisRect.bottom - boundingRect.bottom - size.marginBottom
     };
     return offset;
   };
@@ -2195,7 +2195,7 @@
   // how many milliseconds are in each unit
   var msUnits = {
     ms: 1,
-    s: 1000,
+    s: 1000
   };
 
   // munge time-like parameter into millisecond number
@@ -2285,7 +2285,7 @@
     _destroy.apply(this, arguments);
     // reset display, #741
     this.css({
-      display: '',
+      display: ''
     });
   };
 
@@ -2338,7 +2338,7 @@
     '_getContainerSize',
     '_getElementOffset',
     'needsResizeLayout',
-    '_getOption',
+    '_getOption'
   ];
 
   facadeMethods.forEach(function (methodName) {
@@ -2537,7 +2537,7 @@
     // position the brick
     var position = {
       x: this.columnWidth * colPosition.col,
-      y: colPosition.y,
+      y: colPosition.y
     };
     // apply setHeight to necessary columns
     var setHeight = colPosition.y + item.size.outerHeight;
@@ -2556,7 +2556,7 @@
 
     return {
       col: colGroup.indexOf(minimumY),
-      y: minimumY,
+      y: minimumY
     };
   };
 
@@ -2602,7 +2602,7 @@
 
     return {
       col: col,
-      y: this._getColGroupY(col, colSpan),
+      y: this._getColGroupY(col, colSpan)
     };
   };
 
@@ -2631,7 +2631,7 @@
   proto._getContainerSize = function () {
     this.maxY = Math.max.apply(Math, this.colYs);
     var size = {
-      height: this.maxY,
+      height: this.maxY
     };
 
     if (this._getOption('fitWidth')) {
@@ -2677,7 +2677,7 @@
     // AMD
     define('isotope-layout/js/layout-modes/masonry', [
       '../layout-mode',
-      'masonry-layout/masonry',
+      'masonry-layout/masonry'
     ], factory);
   } else if (typeof module == 'object' && module.exports) {
     // CommonJS
@@ -2699,7 +2699,7 @@
   var keepModeMethods = {
     _getElementOffset: true,
     layout: true,
-    _getMeasurement: true,
+    _getMeasurement: true
   };
 
   // inherit Masonry prototype
@@ -2775,7 +2775,7 @@
 
     var position = {
       x: this.x,
-      y: this.y,
+      y: this.y
     };
 
     this.maxY = Math.max(this.maxY, this.y + item.size.outerHeight);
@@ -2812,7 +2812,7 @@
   'use strict';
 
   var Vertical = LayoutMode.create('vertical', {
-    horizontalAlignment: 0,
+    horizontalAlignment: 0
   });
 
   var proto = Vertical.prototype;
@@ -2862,7 +2862,7 @@
       // include default layout modes
       'isotope-layout/js/layout-modes/masonry',
       'isotope-layout/js/layout-modes/fit-rows',
-      'isotope-layout/js/layout-modes/vertical',
+      'isotope-layout/js/layout-modes/vertical'
     ], function (Outlayer, getSize, matchesSelector, utils, Item, LayoutMode) {
       return factory(window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode);
     });
@@ -2914,7 +2914,7 @@
   var Isotope = Outlayer.create('isotope', {
     layoutMode: 'masonry',
     isJQueryFiltering: true,
-    sortAscending: true,
+    sortAscending: true
   });
 
   Isotope.Item = Item;
@@ -3095,7 +3095,7 @@
     return {
       matches: matches,
       needReveal: hiddenMatched,
-      needHide: visibleUnmatched,
+      needHide: visibleUnmatched
     };
   };
 
@@ -3225,7 +3225,7 @@
     },
     parseFloat: function (val) {
       return parseFloat(val);
-    },
+    }
   };
 
   // ----- sort method ----- //

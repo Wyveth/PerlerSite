@@ -11,7 +11,7 @@ import {
   where,
   query,
   getDocs,
-  deleteDoc,
+  deleteDoc
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { FileUploadService } from './upload-file.service';
@@ -20,7 +20,7 @@ import { updateDoc } from '@firebase/firestore';
 import { formatDate } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductService {
   private products: Product[] = [];
@@ -96,7 +96,7 @@ export class ProductService {
       tagsKey: product.tagsKey,
       perlerTypesKey: product.perlerTypesKey,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 

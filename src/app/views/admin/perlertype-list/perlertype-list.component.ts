@@ -10,7 +10,7 @@ import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
   selector: 'app-perlertype-list',
   templateUrl: './perlertype-list.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent],
+  imports: [CommonModule, BreadcrumbsComponent]
 })
 export class PerlertypeListComponent implements OnInit {
   perlerTypes!: any[];

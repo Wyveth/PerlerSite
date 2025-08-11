@@ -11,7 +11,7 @@ import { UserService } from 'src/app/api/services/user.service';
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent],
+  imports: [CommonModule, BreadcrumbsComponent]
 })
 export class UserListComponent implements OnInit {
   users!: any[];

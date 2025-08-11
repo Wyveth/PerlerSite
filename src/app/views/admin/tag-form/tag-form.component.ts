@@ -6,7 +6,7 @@ import {
   UntypedFormBuilder,
   UntypedFormGroup,
   ValidatorFn,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
@@ -19,7 +19,7 @@ import { FileUploadService } from 'src/app/api/services/upload-file.service';
   selector: 'app-tag-form',
   templateUrl: './tag-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;
@@ -50,7 +50,7 @@ export class TagFormComponent implements OnInit {
   initForm() {
     this.tagForm = this.formBuilder.group({
       code: ['', Validators.required, this.tagService.existingTagCodeValidator(this.isAddMode)],
-      libelle: ['', Validators.required],
+      libelle: ['', Validators.required]
     });
 
     if (!this.isAddMode) {

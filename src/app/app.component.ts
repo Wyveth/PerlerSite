@@ -7,7 +7,7 @@ import { ToastModule } from 'primeng/toast';
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ToastModule],
+  imports: [CommonModule, RouterOutlet, ToastModule]
 })
 export class AppComponent implements AfterViewInit {
   constructor() {}

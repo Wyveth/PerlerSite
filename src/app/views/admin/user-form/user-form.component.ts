@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
@@ -17,7 +17,7 @@ import { UserService } from 'src/app/api/services/user.service';
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;
@@ -51,7 +51,7 @@ export class UserFormComponent implements OnInit {
       name: ['', Validators.required],
       adress: ['', Validators.required],
       zipcode: ['', Validators.required],
-      city: ['', Validators.required],
+      city: ['', Validators.required]
     });
 
     this.userService.getUser(this.id).then((data: any) => {

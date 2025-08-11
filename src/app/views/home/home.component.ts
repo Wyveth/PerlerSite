@@ -15,8 +15,8 @@ import { SectionContactComponent } from '../section-contact/section-contact.comp
     SectionWelcomeComponent,
     SectionPortfolioComponent,
     SectionFaqComponent,
-    SectionContactComponent,
-  ],
+    SectionContactComponent
+  ]
 })
 export class HomeComponent implements OnInit {
   constructor() {}

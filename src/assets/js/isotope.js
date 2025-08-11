@@ -37,7 +37,7 @@
   if (portfolioContainer) {
     let portfolioIsotope = new Isotope(portfolioContainer, {
       itemSelector: '.portfolio-item',
-      layoutMode: 'fitRows',
+      layoutMode: 'fitRows'
     });
 
     let portfolioFilters = select('#portfolio-filters li', true);
@@ -53,7 +53,7 @@
         this.classList.add('filter-active');
 
         portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter'),
+          filter: this.getAttribute('data-filter')
         });
       },
       true
@@ -64,6 +64,6 @@
    * Initiate portfolio lightbox
    */
   const portfolioLightbox = GLightbox({
-    selector: '.portfokio-lightbox',
+    selector: '.portfokio-lightbox'
   });
 })();

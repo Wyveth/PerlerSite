@@ -11,7 +11,7 @@ describe('ChangePasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ChangePasswordComponent],
+      declarations: [ChangePasswordComponent]
     }).compileComponents();
   }));
 

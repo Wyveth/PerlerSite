@@ -9,7 +9,7 @@ import {
   query,
   getDocs,
   deleteDoc,
-  updateDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { formatDate } from '@angular/common';
 import { User } from '../models/class/user';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
   private users: User[] = [];
@@ -112,7 +112,7 @@ export class UserService {
       admin: user.admin,
       disabled: user.disabled,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 

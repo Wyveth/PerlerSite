@@ -8,7 +8,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent, UserFormComponent],
+  imports: [CommonModule, BreadcrumbsComponent, UserFormComponent]
 })
 export class UserEditComponent implements OnInit {
   constructor() {}

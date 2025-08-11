@@ -32,7 +32,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
     this.triggerPoint = null;
     this.group = Waypoint.Group.findOrCreate({
       name: this.options.group,
-      axis: this.axis,
+      axis: this.axis
     });
     this.context = Waypoint.Context.findOrCreateByElement(this.options.context);
 
@@ -154,7 +154,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
     enabled: true,
     group: 'default',
     horizontal: false,
-    offset: 0,
+    offset: 0
   };
 
   Waypoint.offsetAliases = {
@@ -163,7 +163,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
     },
     'right-in-view': function () {
       return this.context.innerWidth() - this.adapter.outerWidth();
-    },
+    }
   };
 
   window.Waypoint = Waypoint;
@@ -190,11 +190,11 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
     this.didResize = false;
     this.oldScroll = {
       x: this.adapter.scrollLeft(),
-      y: this.adapter.scrollTop(),
+      y: this.adapter.scrollTop()
     };
     this.waypoints = {
       vertical: {},
-      horizontal: {},
+      horizontal: {}
     };
 
     element.waypointContextKey = this.key;
@@ -273,14 +273,14 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
         newScroll: this.adapter.scrollLeft(),
         oldScroll: this.oldScroll.x,
         forward: 'right',
-        backward: 'left',
+        backward: 'left'
       },
       vertical: {
         newScroll: this.adapter.scrollTop(),
         oldScroll: this.oldScroll.y,
         forward: 'down',
-        backward: 'up',
-      },
+        backward: 'up'
+      }
     };
 
     for (var axisKey in axes) {
@@ -310,7 +310,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 
     this.oldScroll = {
       x: axes.horizontal.newScroll,
-      y: axes.vertical.newScroll,
+      y: axes.vertical.newScroll
     };
   };
 
@@ -373,7 +373,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
         oldScroll: this.oldScroll.x,
         forward: 'right',
         backward: 'left',
-        offsetProp: 'left',
+        offsetProp: 'left'
       },
       vertical: {
         contextOffset: isWindow ? 0 : contextOffset.top,
@@ -382,8 +382,8 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
         oldScroll: this.oldScroll.y,
         forward: 'down',
         backward: 'up',
-        offsetProp: 'top',
-      },
+        offsetProp: 'top'
+      }
     };
 
     for (var axisKey in axes) {
@@ -487,7 +487,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 
   var groups = {
     vertical: {},
-    horizontal: {},
+    horizontal: {}
   };
   var Waypoint = window.Waypoint;
 
@@ -512,7 +512,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
       up: [],
       down: [],
       left: [],
-      right: [],
+      right: []
     };
   };
 
@@ -651,7 +651,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
     var win = getWindow(this.element.ownerDocument);
     var rect = {
       top: 0,
-      left: 0,
+      left: 0
     };
 
     if (this.element.getBoundingClientRect) {
@@ -660,7 +660,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 
     return {
       top: rect.top + win.pageYOffset - documentElement.clientTop,
-      left: rect.left + win.pageXOffset - documentElement.clientLeft,
+      left: rect.left + win.pageXOffset - documentElement.clientLeft
     };
   };
 
@@ -746,7 +746,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 
   Waypoint.adapters.push({
     name: 'noframework',
-    Adapter: NoFrameworkAdapter,
+    Adapter: NoFrameworkAdapter
   });
   Waypoint.Adapter = NoFrameworkAdapter;
 })();

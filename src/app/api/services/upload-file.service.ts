@@ -9,12 +9,12 @@ import {
   Firestore,
   getDocs,
   query,
-  where,
+  where
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FileUploadService {
   private basePath = '/uploads';
@@ -60,7 +60,7 @@ export class FileUploadService {
       name: fileUpload.name,
       url: fileUpload.url,
       size: fileUpload.file.size,
-      type: fileUpload.file.type,
+      type: fileUpload.file.type
     });
   }
 

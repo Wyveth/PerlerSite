@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
   `,
   host: { '[class.ngb-toasts]': 'true' },
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule]
 })
 export class ToastComponent {
   constructor(public toastService: ToastService) {}

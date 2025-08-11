@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CollectionReference, DocumentData, getDocs, query, where } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UtilsService {
   constructor() {}

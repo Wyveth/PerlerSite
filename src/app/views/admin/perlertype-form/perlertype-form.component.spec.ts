@@ -11,7 +11,7 @@ describe('PerlertypeFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PerlertypeFormComponent],
+      declarations: [PerlertypeFormComponent]
     }).compileComponents();
   }));
 

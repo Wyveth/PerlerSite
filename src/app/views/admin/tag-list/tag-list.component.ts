@@ -10,7 +10,7 @@ import { Tag } from 'src/app/api/models/class/tag';
   selector: 'app-tag-list',
   templateUrl: './tag-list.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent],
+  imports: [CommonModule, BreadcrumbsComponent]
 })
 export class TagListComponent implements OnInit {
   tags!: any[];

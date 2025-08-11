@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
@@ -20,7 +20,7 @@ import { severity } from 'src/app/shared/enum/severity';
   selector: 'app-section-contact',
   templateUrl: './section-contact.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule]
 })
 export class SectionContactComponent extends Base implements OnInit {
   contactForm!: UntypedFormGroup;
@@ -44,7 +44,7 @@ export class SectionContactComponent extends Base implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
-      message: ['', Validators.required],
+      message: ['', Validators.required]
     });
   }
 
@@ -76,7 +76,7 @@ export class SectionContactComponent extends Base implements OnInit {
         this.messageService.add({
           severity: severity.success,
           summary: this.resource.severity.success,
-          detail: 'Votre message a bien été envoyé!',
+          detail: 'Votre message a bien été envoyé!'
         });
       }, 2000);
     } catch (error) {
@@ -84,7 +84,7 @@ export class SectionContactComponent extends Base implements OnInit {
       this.messageService.add({
         severity: severity.danger,
         summary: this.resource.severity.danger,
-        detail: "Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement.",
+        detail: "Une erreur s'est produite lors de l'envoi, veuillez réessayer ultérieurement."
       });
     }
   }

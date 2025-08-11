@@ -9,14 +9,14 @@ import {
   getDocs,
   query,
   updateDoc,
-  where,
+  where
 } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { Contact } from '../models/class/contact';
 import { UtilsService } from './utils.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ContactService {
   private contacts: Contact[] = [];
@@ -86,7 +86,7 @@ export class ContactService {
       subject: contact.subject,
       message: contact.message,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 

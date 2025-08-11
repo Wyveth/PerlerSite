@@ -9,7 +9,7 @@ import {
   query,
   getDocs,
   deleteDoc,
-  updateDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ import { Tag } from 'src/app/api/models/class/tag';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TagService {
   private tags: Tag[] = [];
@@ -92,7 +92,7 @@ export class TagService {
       libelle: tag.libelle,
       pictureUrl: tag.pictureUrl,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 

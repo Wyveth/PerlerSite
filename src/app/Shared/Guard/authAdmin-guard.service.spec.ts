@@ -6,7 +6,7 @@ import { AuthAdminGuardService } from './authAdmin-guard.service';
 describe('Service: AuthAdminGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthAdminGuardService],
+      providers: [AuthAdminGuardService]
     });
   });
 

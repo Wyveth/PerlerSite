@@ -8,7 +8,7 @@ import {
   effect,
   inject,
   runInInjectionContext,
-  signal,
+  signal
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import imagesLoaded from 'imagesloaded';
@@ -26,7 +26,7 @@ import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
   selector: 'app-section-portfolio',
   templateUrl: './section-portfolio.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, ImageModule, FormatPipe],
+  imports: [CommonModule, RouterModule, ImageModule, FormatPipe]
 })
 export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy {
   products = signal<Product[]>([]);
@@ -64,7 +64,7 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
             this.isotope = new Isotope(grid, {
               itemSelector: '.portfolio-item',
               percentPosition: true,
-              masonry: { columnWidth: '.portfolio-item' }, // ou layoutMode: 'fitRows'
+              masonry: { columnWidth: '.portfolio-item' } // ou layoutMode: 'fitRows'
             });
           });
         });

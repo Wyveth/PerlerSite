@@ -10,7 +10,7 @@ import {
   query,
   getDocs,
   deleteDoc,
-  updateDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { formatDate } from '@angular/common';
@@ -18,7 +18,7 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/fo
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PerlerTypeService {
   private perlerTypes: PerlerType[] = [];
@@ -89,7 +89,7 @@ export class PerlerTypeService {
       libelle: perlerType.libelle,
       color: perlerType.color,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
-      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
+      dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 

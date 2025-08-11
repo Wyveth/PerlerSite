@@ -8,7 +8,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbModule, RouterModule],
+  imports: [CommonModule, BreadcrumbModule, RouterModule]
 })
 export class BreadcrumbsComponent implements OnInit {
   items: MenuItem[] | undefined = [];
@@ -27,20 +27,20 @@ export class BreadcrumbsComponent implements OnInit {
     this.items = this.items || []; // Assurez-vous que items n'est pas undefined
     this.items.push({
       label: this.nodeParent,
-      routerLink: '/' + this.nodeParentUrl,
+      routerLink: '/' + this.nodeParentUrl
     });
 
     if (this.nodeChild) {
       this.items.push({
         label: this.nodeChild,
-        routerLink: this.nodeChildUrl,
+        routerLink: this.nodeChildUrl
       });
     }
 
     if (this.nodeChildChild) {
       this.items.push({
         label: this.nodeChildChild,
-        routerLink: this.nodeChildChildUrl,
+        routerLink: this.nodeChildChildUrl
       });
     }
   }

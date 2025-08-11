@@ -10,7 +10,7 @@ import { ContactService } from 'src/app/api/services/contact.service';
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent],
+  imports: [CommonModule, BreadcrumbsComponent]
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   contacts!: any[];

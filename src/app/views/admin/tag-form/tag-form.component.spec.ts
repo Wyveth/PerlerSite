@@ -11,7 +11,7 @@ describe('TagFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TagFormComponent],
+      declarations: [TagFormComponent]
     }).compileComponents();
   }));
 

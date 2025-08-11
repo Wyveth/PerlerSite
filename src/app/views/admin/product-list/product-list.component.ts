@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/api/services/product.service';
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products!: any[];

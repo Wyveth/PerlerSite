@@ -28,7 +28,7 @@
       /******/ var module = (installedModules[moduleId] = {
         /******/ exports: {},
         /******/ id: moduleId,
-        /******/ loaded: false,
+        /******/ loaded: false
         /******/
       });
       /******/
@@ -64,7 +64,7 @@
         'use strict';
 
         Object.defineProperty(exports, '__esModule', {
-          value: true,
+          value: true
         });
 
         var _createClass = (function () {
@@ -121,7 +121,7 @@
               key: 'toggle',
               value: function toggle() {
                 this.pause.status ? this.start() : this.stop();
-              },
+              }
 
               /**
                * Stop typing / backspacing and enable cursor blinking
@@ -136,7 +136,7 @@
                 this.toggleBlinking(true);
                 this.pause.status = true;
                 this.options.onStop(this.arrayPos, this);
-              },
+              }
 
               /**
                * Start typing / backspacing after being stopped
@@ -155,7 +155,7 @@
                   this.backspace(this.pause.curString, this.pause.curStrPos);
                 }
                 this.options.onStart(this.arrayPos, this);
-              },
+              }
 
               /**
                * Destroy this instance of Typed
@@ -167,7 +167,7 @@
               value: function destroy() {
                 this.reset(false);
                 this.options.onDestroy(this);
-              },
+              }
 
               /**
                * Reset Typed and optionally restarts
@@ -195,7 +195,7 @@
                   this.options.onReset(this);
                   this.begin();
                 }
-              },
+              }
 
               /**
                * Begins the typing animation
@@ -221,7 +221,7 @@
                     _this.backspace(_this.currentElContent, _this.currentElContent.length);
                   }
                 }, this.startDelay);
-              },
+              }
 
               /**
                * Called for each character typed
@@ -311,7 +311,7 @@
 
                   // humanized value for typing
                 }, humanize);
-              },
+              }
 
               /**
                * Continue to the next string & begin typing
@@ -335,7 +335,7 @@
                 this.replaceText(nextString);
                 // loop the function
                 this.typewrite(curString, curStrPos);
-              },
+              }
 
               /**
                * We're done typing the current string
@@ -364,7 +364,7 @@
                 this.timeout = setTimeout(function () {
                   _this3.backspace(curString, curStrPos);
                 }, this.backDelay);
-              },
+              }
 
               /**
                * Backspaces 1 character at a time
@@ -431,7 +431,7 @@
                   }
                   // humanized value for typing
                 }, humanize);
-              },
+              }
 
               /**
                * Full animation is complete
@@ -447,7 +447,7 @@
                 } else {
                   this.typingComplete = true;
                 }
-              },
+              }
 
               /**
                * Has the typing been stopped
@@ -463,7 +463,7 @@
                 this.pause.typewrite = isTyping;
                 this.pause.curString = curString;
                 this.pause.curStrPos = curStrPos;
-              },
+              }
 
               /**
                * Toggle the blinking cursor
@@ -484,7 +484,7 @@
                 } else {
                   this.cursor.classList.remove('typed-cursor--blink');
                 }
-              },
+              }
 
               /**
                * Speed in MS to type
@@ -496,7 +496,7 @@
               key: 'humanizer',
               value: function humanizer(speed) {
                 return Math.round((Math.random() * speed) / 2) + speed;
-              },
+              }
 
               /**
                * Shuffle the sequence of the strings array
@@ -510,7 +510,7 @@
                 this.sequence = this.sequence.sort(function () {
                   return Math.random() - 0.5;
                 });
-              },
+              }
 
               /**
                * Adds a CSS class to fade out current string
@@ -536,7 +536,7 @@
                     _this5.arrayPos = 0;
                   }
                 }, this.fadeOutDelay);
-              },
+              }
 
               /**
                * Replaces current text in the HTML element
@@ -559,7 +559,7 @@
                     this.el.textContent = str;
                   }
                 }
-              },
+              }
 
               /**
                * If using input elements, bind focus in order to
@@ -582,7 +582,7 @@
                   }
                   _this6.start();
                 });
-              },
+              }
 
               /**
                * On init, insert the cursor element
@@ -600,8 +600,8 @@
                 this.cursor.innerHTML = this.cursorChar;
                 this.el.parentNode &&
                   this.el.parentNode.insertBefore(this.cursor, this.el.nextSibling);
-              },
-            },
+              }
+            }
           ]);
 
           return Typed;
@@ -617,7 +617,7 @@
         'use strict';
 
         Object.defineProperty(exports, '__esModule', {
-          value: true,
+          value: true
         });
 
         var _extends =
@@ -788,7 +788,7 @@
                   status: false,
                   typewrite: true,
                   curString: '',
-                  curStrPos: 0,
+                  curStrPos: 0
                 };
 
                 // When the typing is complete (when not looped)
@@ -805,7 +805,7 @@
                 self.autoInsertCss = self.options.autoInsertCss;
 
                 this.appendAnimationCss(self);
-              },
+              }
             },
             {
               key: 'getCurrentElContent',
@@ -821,7 +821,7 @@
                   elContent = self.el.textContent;
                 }
                 return elContent;
-              },
+              }
             },
             {
               key: 'appendAnimationCss',
@@ -855,8 +855,8 @@
                 }
                 css.innerHTML = innerCss;
                 document.body.appendChild(css);
-              },
-            },
+              }
+            }
           ]);
 
           return Initializer;
@@ -879,7 +879,7 @@
         'use strict';
 
         Object.defineProperty(exports, '__esModule', {
-          value: true,
+          value: true
         });
         var defaults = {
           /**
@@ -890,7 +890,7 @@
             'These are the default values...',
             'You know what you should do?',
             'Use your own!',
-            'Have a great day!',
+            'Have a great day!'
           ],
           stringsElement: null,
 
@@ -1035,7 +1035,7 @@
            * After destroy
            * @param {Typed} self
            */
-          onDestroy: function onDestroy(self) {},
+          onDestroy: function onDestroy(self) {}
         };
 
         exports['default'] = defaults;
@@ -1053,7 +1053,7 @@
         'use strict';
 
         Object.defineProperty(exports, '__esModule', {
-          value: true,
+          value: true
         });
 
         var _createClass = (function () {
@@ -1116,7 +1116,7 @@
                   curStrPos++;
                 }
                 return curStrPos;
-              },
+              }
 
               /**
                * Backspace HTML tags and HTML Characters
@@ -1148,8 +1148,8 @@
                   curStrPos--;
                 }
                 return curStrPos;
-              },
-            },
+              }
+            }
           ]);
 
           return HTMLParser;
@@ -1160,7 +1160,7 @@
         exports.htmlParser = htmlParser;
 
         /***/
-      },
+      }
       /******/
     ]
   );

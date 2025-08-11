@@ -16,8 +16,8 @@ import { ToastComponent } from 'src/app/shared/component/toast/toast.component';
     ToastComponent,
     RouterOutlet,
     ScrollTopModule,
-    ButtonModule,
-  ],
+    ButtonModule
+  ]
 })
 export class LayoutComponent implements OnInit {
   constructor() {}

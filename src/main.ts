@@ -38,10 +38,10 @@ bootstrapApplication(AppComponent, {
         options: {
           cssLayer: {
             name: 'primeng',
-            order: 'theme, base, primeng',
-          },
-        },
-      },
+            order: 'theme, base, primeng'
+          }
+        }
+      }
     }),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
@@ -49,7 +49,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
-      theme: { preset: Aura },
+      theme: { preset: Aura }
     }),
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -57,7 +57,7 @@ bootstrapApplication(AppComponent, {
       useValue: () => {
         const config = inject(AppConfig);
         return config.load();
-      },
+      }
     },
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -65,7 +65,7 @@ bootstrapApplication(AppComponent, {
       useValue: () => {
         const resource = inject(AppResource);
         return resource.load();
-      },
-    },
-  ],
+      }
+    }
+  ]
 });

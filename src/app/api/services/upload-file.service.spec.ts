@@ -6,7 +6,7 @@ import { FileUploadService } from './upload-file.service';
 describe('Service: UploadFile', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FileUploadService],
+      providers: [FileUploadService]
     });
   });
 

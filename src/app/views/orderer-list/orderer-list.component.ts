@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-orderer-list',
   templateUrl: './orderer-list.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule]
 })
 export class OrdererListComponent implements OnInit {
   constructor() {}

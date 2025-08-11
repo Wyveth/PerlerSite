@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/api/services/auth.service';
@@ -17,7 +17,7 @@ import { UserService } from 'src/app/api/services/user.service';
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class ChangePasswordComponent implements OnInit {
   passwordForm!: UntypedFormGroup;
@@ -43,12 +43,12 @@ export class ChangePasswordComponent implements OnInit {
       {
         password: [
           '',
-          [Validators.required, Validators.minLength(6), Validators.pattern(/[0-9a-zA-Z]{6,}/)],
+          [Validators.required, Validators.minLength(6), Validators.pattern(/[0-9a-zA-Z]{6,}/)]
         ],
-        confirmPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
       },
       {
-        validator: MustMatch('password', 'confirmPassword'),
+        validator: MustMatch('password', 'confirmPassword')
       }
     );
   }
@@ -68,7 +68,7 @@ export class ChangePasswordComponent implements OnInit {
         this.toastService.show('Le mot de passe a bien été mis à jour.', {
           classname: 'bg-success text-light',
           delay: 3000,
-          autohide: true,
+          autohide: true
         });
       },
       (error: string) => {
@@ -78,7 +78,7 @@ export class ChangePasswordComponent implements OnInit {
           {
             classname: 'bg-danger text-light',
             delay: 3000,
-            autohide: true,
+            autohide: true
           }
         );
       }
@@ -89,7 +89,7 @@ export class ChangePasswordComponent implements OnInit {
     this.toastService.show(customTpl, {
       classname: 'bg-danger text-light',
       delay: 3000,
-      autohide: true,
+      autohide: true
     });
   }
 
@@ -97,7 +97,7 @@ export class ChangePasswordComponent implements OnInit {
     this.toastService.show(customTpl, {
       classname: 'bg-danger text-light',
       delay: 3000,
-      autohide: true,
+      autohide: true
     });
   }
 

@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
@@ -29,8 +29,8 @@ import { DividerModule } from 'primeng/divider';
     InputTextModule,
     PasswordModule,
     FloatLabelModule,
-    DividerModule,
-  ],
+    DividerModule
+  ]
 })
 export class SignupComponent implements OnInit {
   signupForm!: UntypedFormGroup;
@@ -54,20 +54,20 @@ export class SignupComponent implements OnInit {
         email: [
           '',
           [Validators.required, Validators.email],
-          this.userService.existingEmailValidator(),
+          this.userService.existingEmailValidator()
         ],
         password: [
           '',
           [
             Validators.required,
             Validators.minLength(6),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
-          ],
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)
+          ]
         ],
-        confirmPassword: ['', Validators.required],
+        confirmPassword: ['', Validators.required]
       },
       {
-        validator: MustMatch('password', 'confirmPassword'),
+        validator: MustMatch('password', 'confirmPassword')
       }
     );
   }

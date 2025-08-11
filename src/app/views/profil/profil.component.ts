@@ -14,8 +14,8 @@ import { OrdererListComponent } from '../orderer-list/orderer-list.component';
     BreadcrumbsComponent,
     UserFormComponent,
     ChangePasswordComponent,
-    OrdererListComponent,
-  ],
+    OrdererListComponent
+  ]
 })
 export class ProfilComponent implements OnInit {
   constructor() {}

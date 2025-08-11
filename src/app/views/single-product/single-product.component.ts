@@ -12,7 +12,7 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
   standalone: true,
-  imports: [CommonModule, BreadcrumbsComponent, CommentListComponent],
+  imports: [CommonModule, BreadcrumbsComponent, CommentListComponent]
 })
 export class SingleProductComponent implements OnInit {
   isAuth!: boolean;

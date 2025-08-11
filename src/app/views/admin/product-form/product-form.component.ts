@@ -5,7 +5,7 @@ import {
   UntypedFormGroup,
   Validators,
   FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,7 @@ import { FileUploadService } from 'src/app/api/services/upload-file.service';
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
 })
 export class ProductFormComponent implements OnInit {
   //Constante Form
@@ -76,7 +76,7 @@ export class ProductFormComponent implements OnInit {
         this.perlerTypes.forEach(item => {
           this.perlerTypeDDL.push({
             item_id: item.key,
-            item_text: item.reference + ' - ' + item.libelle,
+            item_text: item.reference + ' - ' + item.libelle
           });
           this.dropdownListPerlerTypes = this.perlerTypeDDL;
         });
@@ -92,7 +92,7 @@ export class ProductFormComponent implements OnInit {
       selectAllText: 'Tout sélectionner',
       unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
-      noDataAvailablePlaceholderText: "Aucun tag n'est disponible",
+      noDataAvailablePlaceholderText: "Aucun tag n'est disponible"
     };
 
     this.dropdownSettingsPerlerTypes = {
@@ -102,7 +102,7 @@ export class ProductFormComponent implements OnInit {
       selectAllText: 'Tout sélectionner',
       unSelectAllText: 'Tout désélectionner',
       allowSearchFilter: true,
-      noDataAvailablePlaceholderText: "Aucun type de perle n'est disponible",
+      noDataAvailablePlaceholderText: "Aucun type de perle n'est disponible"
     };
   }
 
@@ -116,7 +116,7 @@ export class ProductFormComponent implements OnInit {
       time: ['', Validators.required],
       date: ['', Validators.required],
       tagsKey: ['', Validators.required],
-      perlerTypesKey: ['', Validators.required],
+      perlerTypesKey: ['', Validators.required]
     });
 
     if (!this.isAddMode) {

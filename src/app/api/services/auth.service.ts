@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
-  User,
+  User
 } from 'firebase/auth';
 
 @Injectable({ providedIn: 'root' })

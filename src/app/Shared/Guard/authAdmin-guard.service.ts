@@ -6,7 +6,7 @@ import { User } from '../../api/models/class/user';
 import { UserService } from '../../api/services/user.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthAdminGuardService {
   user!: User;
