@@ -1,16 +1,30 @@
 <app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits"></app-breadcrumbs>
 
-<section class="inner-page">
-  <div class="container">
-    <div class="flex justify-center">
-      <div class="w-full lg:w-2/12">
-        <button class="btn btn-primary btn-sm" (click)="onNewProduct()">Nouveau Produit</button>
-      </div>
+<section class="py-6 space-y-6">
+  <div class="flex justify-center">
+    <div class="w-8/12 flex justify-center">
+      <button
+        class="w-10/12 md:w-4/12 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded hover:bg-blue-700 transition"
+        (click)="onNewProduct()"
+      >
+        Nouveau Produit
+      </button>
     </div>
-    <div class="flex flex-cols-1 flex-cols-sm-2 flex-cols-md-4 g-3" style="margin-top: 20px">
-      <div class="col" *ngFor="let product of products; let i = index">
-        <div class="card shadow-sm">
-          <div class="card-head">
+  </div>
+  <div class="flex justify-center">
+    <table class="table-auto border-collapse border border-gray-400 w-5/6 p-2 md:p-0">
+      <thead>
+        <tr>
+          <th class="w-2/12 border border-gray-300">Image</th>
+          <th class="w-3/12 border border-gray-300">Titre</th>
+          <th class="border border-gray-300">Description</th>
+          <th class="w-2/12 border border-gray-300">Auteur</th>
+          <th class="w-2/12 border border-gray-300">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td class="p-2 border border-gray-300">
             <img
               style="max-height: 50%"
               class="bd-placeholder-img card-img-top"
@@ -20,34 +34,37 @@
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
             />
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ product.title }}</p>
-            <p class="card-text">{{ product.content }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <a
-                  class="btn btn-sm btn-outline-light link-info"
-                  (click)="onViewProduct(product.key)"
-                >
-                  <i class="fas fa-search"></i>
-                </a>
-                <a
-                  class="btn btn-sm btn-outline-light link-warning"
-                  (click)="onEditProduct(product.key)"
-                >
-                  <i class="fas fa-edit"></i>
-                </a>
-                <a class="btn btn-sm btn-outline-light link-danger">
-                  <!-- [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer le produit: ' + product.title, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteProduct(product)" -->
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-              <small class="text-muted">{{ product.author }}</small>
+          </td>
+          <td class="p-2 border border-gray-300" [innerText]="product.title"></td>
+          <td class="p-2 border border-gray-300" [innerText]="ellipsis(product.content, 20)"></td>
+          <td class="p-2 border border-gray-300" [innerText]="product.author"></td>
+          <td class="p-2 border border-gray-300">
+            <div class="flex space-x-2 items-center justify-center">
+              <p-button
+                severity="info"
+                icon="pi pi-search"
+                [rounded]="true"
+                [outlined]="true"
+                (click)="onViewProduct(product.key)"
+              />
+              <p-button
+                severity="warn"
+                icon="pi pi-pen-to-square"
+                [rounded]="true"
+                [outlined]="true"
+                (click)="onEditProduct(product.key)"
+              />
+              <p-button
+                severity="danger"
+                icon="pi pi-trash"
+                [rounded]="true"
+                [outlined]="true"
+                (click)="onDeleteProduct($event, product)"
+              />
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>

@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ToastModule]
+  imports: [CommonModule, RouterOutlet, ToastModule, ConfirmDialog]
 })
 export class AppComponent implements AfterViewInit {
   constructor() {}

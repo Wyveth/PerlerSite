@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router, UrlTree } from '@angular/router';
+import { Observable, filter, map, take } from 'rxjs';
 import { User } from '../../api/models/class/user';
 import { UserService } from '../../api/services/user.service';
+import { AuthService } from 'src/app/api/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,28 +14,17 @@ export class AuthAdminGuardService {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private authService: AuthService
   ) {}
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(getAuth(), user => {
-        if (user) {
-          this.userService.getUserByEmail(user.email).then((user: any) => {
-            this.user = user as User;
-
-            if (this.user.admin === true && this.user.disabled === false) {
-              resolve(true);
-            } else {
-              this.router.navigate(['/auth', 'signin']);
-              resolve(false);
-            }
-          });
-        } else {
-          this.router.navigate(['/auth', 'signin']);
-          resolve(false);
-        }
-      });
-    });
+  canActivate(): Observable<boolean | UrlTree> {
+    return this.authService.isAdmin$.pipe(
+      filter(isAdmin => isAdmin !== null), // attend que Firebase ait répondu
+      take(1),
+      map(isAdmin => {
+        console.log('AuthAdminGuardService: isAdmin', isAdmin);
+        return isAdmin ? true : this.router.createUrlTree(['/signin']);
+      })
+    );
   }
 }

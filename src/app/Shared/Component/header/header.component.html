@@ -1,4 +1,4 @@
-<header id="header" class="header w-full fixed top-0 absolute">
+<header id="header" class="header w-full top-0" [ngClass]="{ absolute: isAbsolute() }">
   <div class="flex items-center justify-between">
     <a
       [routerLink]="resource.router.routes.home"
@@ -49,6 +49,18 @@
                     >
                       <span>{{ subItem.label }}</span>
                     </a>
+                    <ul *ngIf="subItem.items" class="ml-4">
+                      <li *ngFor="let subSubItem of subItem.items">
+                        <a
+                          *ngIf="subSubItem.visible !== false"
+                          (click)="executeCommand(subSubItem)"
+                          [routerLink]="subSubItem.routerLink"
+                          class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                        >
+                          <span>{{ subSubItem.label }}</span>
+                        </a>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </div>

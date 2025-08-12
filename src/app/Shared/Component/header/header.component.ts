@@ -10,14 +10,15 @@ import { AppResource } from 'src/app/shared/models/app.resource';
 import { Base } from '../base/base';
 import { Header } from '../../models/class/header';
 import { DrawerModule } from 'primeng/drawer';
-import { combineLatest } from 'rxjs';
+import { combineLatest, filter } from 'rxjs';
 import { severity } from '../../enum/severity';
+import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, MenubarModule, DrawerModule]
+  imports: [CommonModule, RouterModule, MenubarModule, DrawerModule, ThemeSwitchComponent]
 })
 export class HeaderComponent extends Base implements OnInit {
   isAuth: boolean = false;
@@ -50,13 +51,14 @@ export class HeaderComponent extends Base implements OnInit {
       this.user = user;
     });
 
-    combineLatest([this.authService.isAuth$, this.authService.isAdmin$]).subscribe(
-      ([isAuth, isAdmin]) => {
-        this.isAuth = isAuth;
-        this.isAdmin = isAdmin;
-        this.updateMenuItems();
-      }
-    );
+    combineLatest([
+      this.authService.isAuth$.pipe(filter((v): v is boolean => v !== null)),
+      this.authService.isAdmin$.pipe(filter((v): v is boolean => v !== null))
+    ]).subscribe(([isAuth, isAdmin]) => {
+      this.isAuth = isAuth;
+      this.isAdmin = isAdmin;
+      this.updateMenuItems();
+    });
   }
 
   toggleDropdown() {
@@ -127,9 +129,7 @@ export class HeaderComponent extends Base implements OnInit {
           {
             visible: this.isAuth,
             label: this.resource.layout.header.menu.profil,
-            command() {
-              this.onProfil(this.user.key);
-            }
+            command: () => this.onProfil(this.user?.key ?? '')
           },
           {
             visible: this.isAdmin,
@@ -166,6 +166,11 @@ export class HeaderComponent extends Base implements OnInit {
         ]
       }
     ];
+  }
+
+  isAbsolute(): boolean {
+    // Liste des pages où le menu doit être "absolute"
+    return ['/', '/home'].includes(this.router.url);
   }
 }
 

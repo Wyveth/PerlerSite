@@ -1,38 +1,34 @@
+import { AuthService } from 'src/app/api/services/auth.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { Observable } from 'rxjs';
+import { Observable, filter, map, take } from 'rxjs';
 import { User } from '../../api/models/class/user';
-import { UserService } from '../../api/services/user.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuardService {
   user!: User;
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private authService: AuthService
   ) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(getAuth(), user => {
-        if (user) {
-          this.userService.getUserByEmail(user.email).then((user: any) => {
-            this.user = user as User;
-
-            if (this.user.disabled === false) {
-              resolve(true);
-            } else {
-              this.router.navigate(['/auth', 'signin']);
-              resolve(false);
-            }
-          });
+    return this.authService.isAuth$.pipe(
+      filter(isAuth => isAuth !== null), // attend que Firebase ait répondu
+      take(1),
+      map(isAuth => {
+        console.log('AuthGuardService: isAuth', isAuth);
+        if (isAuth) {
+          return true; // Accès autorisé
         } else {
-          this.router.navigate(['/auth', 'signin']);
-          resolve(false);
+          // Redirection vers page de connexion ou d'erreur
+          this.router.navigate(['/signin']);
+          return false; // Accès refusé
         }
-      });
-    });
+      })
+    );
   }
 }

@@ -1,17 +1,15 @@
-<div class="mt-[96px]">
-  <p-breadcrumb [model]="items" [home]="home">
-    <ng-template #item let-item>
-      <a
-        class="cursor-pointer"
-        [routerLink]="item.routerLink"
-        [class.text-gray-400]="!item.routerLink"
-        [class.pointer-events-none]="!item.routerLink"
-        [class.no-underline]="!item.routerLink"
-        (click)="!item.routerLink && $event.preventDefault()"
-      >
-        <i [class]="item.icon"></i> {{ item.label }}
-      </a>
-    </ng-template>
-    <ng-template #separator><span class="text-[#8894f6]">/</span></ng-template>
-  </p-breadcrumb>
-</div>
+<p-breadcrumb [model]="items" [home]="home">
+  <ng-template #item let-item>
+    <a
+      class="cursor-pointer"
+      [routerLink]="item.routerLink"
+      [class.text-gray-400]="!item.routerLink"
+      [class.pointer-events-none]="!item.routerLink"
+      [class.no-underline]="!item.routerLink"
+      (click)="!item.routerLink && $event.preventDefault()"
+    >
+      <i [class]="item.icon"></i> {{ item.label }}
+    </a>
+  </ng-template>
+  <ng-template #separator><span class="text-[#8894f6]">/</span></ng-template>
+</p-breadcrumb>

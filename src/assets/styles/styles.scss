@@ -48,14 +48,15 @@ h6 {
 # Sections
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
   overflow: hidden;
+  padding-bottom: 40px;
 }
 
 .section-header {
   text-align: center;
-  padding-bottom: 40px;
+  padding: 20px 0 40px 0;
 }
+
 .section-header h2 {
   font-size: 13px;
   letter-spacing: 1px;
@@ -2407,4 +2408,9 @@ p-menubar > div.p-menubar {
 
 .menu-list li ul {
   padding-left: 1rem;
+}
+
+.p-menubar-submenu > .p-menubar-item-active .p-menubar-submenu {
+  left: auto !important;
+  right: 195px !important;
 }

@@ -18,12 +18,12 @@ import { UserService } from './user.service';
 export class AuthService {
   private auth = getAuth();
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  private isAuthSubject = new BehaviorSubject<boolean>(false);
-  private isAdminSubject = new BehaviorSubject<boolean>(false);
+  private isAuthSubject = new BehaviorSubject<boolean | null>(null);
+  private isAdminSubject = new BehaviorSubject<boolean | null>(null);
 
   currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
-  isAuth$: Observable<boolean> = this.isAuthSubject.asObservable();
-  isAdmin$: Observable<boolean> = this.isAdminSubject.asObservable();
+  isAuth$: Observable<boolean | null> = this.isAuthSubject.asObservable();
+  isAdmin$: Observable<boolean | null> = this.isAdminSubject.asObservable();
 
   constructor(private userService: UserService) {
     // Forcer la persistance locale (même après fermeture navigateur)
