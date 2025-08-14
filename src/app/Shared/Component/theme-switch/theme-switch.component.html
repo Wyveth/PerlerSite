@@ -1,13 +1,15 @@
-<div class="flex gap-2 bg-gray-200 dark:bg-zinc-700 rounded-full p-1">
-  <button
+<button
+  (click)="nextTheme()"
+  class="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 bg-gray-200 dark:bg-zinc-700 text-black dark:text-white text-xl"
+>
+  <span
     *ngFor="let opt of options"
-    (click)="setTheme(opt.value)"
-    class="px-3 py-1 rounded-full transition-colors"
-    [class.bg-white]="current === opt.value && current !== 'dark'"
-    [class.bg-zinc-900]="current === opt.value && current === 'dark'"
-    [class.text-black]="current === opt.value && current !== 'dark'"
-    [class.text-white]="current === opt.value && current === 'dark'"
+    class="absolute transition-all duration-300 ease-in-out"
+    [class.opacity-0]="current !== opt"
+    [class.translate-x-3]="current !== opt"
+    [class.opacity-100]="current === opt"
+    [class.translate-x-0]="current === opt"
   >
-    {{ opt.icon }}
-  </button>
-</div>
+    {{ icons[opt] }}
+  </span>
+</button>

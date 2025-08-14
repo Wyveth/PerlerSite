@@ -10,11 +10,12 @@ import { Theme, ThemeService } from 'src/app/api/services/theme.service';
   imports: [CommonModule, ButtonModule]
 })
 export class ThemeSwitchComponent {
-  options: { icon: string; value: Theme }[] = [
-    { icon: '☀️', value: 'light' },
-    { icon: '🌙', value: 'dark' },
-    { icon: '🖥️', value: 'auto' }
-  ];
+  options: Theme[] = ['light', 'dark', 'auto'];
+  icons: Record<Theme, string> = {
+    light: '☀️',
+    dark: '🌙',
+    auto: '🖥️'
+  };
 
   current: Theme;
 
@@ -22,8 +23,11 @@ export class ThemeSwitchComponent {
     this.current = this.themeService.getTheme();
   }
 
-  setTheme(theme: Theme) {
-    this.current = theme;
-    this.themeService.setTheme(theme);
+  /** Passe à l’option suivante avec animation */
+  nextTheme() {
+    const currentIndex = this.options.indexOf(this.current);
+    const nextIndex = (currentIndex + 1) % this.options.length;
+    this.current = this.options[nextIndex];
+    this.themeService.setTheme(this.current);
   }
 }
