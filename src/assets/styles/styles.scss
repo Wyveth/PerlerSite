@@ -1,6 +1,13 @@
 @import 'tailwindcss';
 @import 'primeicons/primeicons.css';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Animations douces sur les couleurs */
+html {
+  transition: color 0.3s, background-color 0.3s;
+}
+
 /**
 * Template Name: FlexStart - v1.7.0
 * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/

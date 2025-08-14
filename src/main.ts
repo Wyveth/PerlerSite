@@ -1,12 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
-import {
-  APP_INITIALIZER,
-  ENVIRONMENT_INITIALIZER,
-  importProvidersFrom,
-  inject
-} from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, importProvidersFrom, inject } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideStorage } from '@angular/fire/storage';
@@ -24,7 +19,6 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { AuthService } from './app/api/services/auth.service';
 
 bootstrapApplication(AppComponent, {
   providers: [

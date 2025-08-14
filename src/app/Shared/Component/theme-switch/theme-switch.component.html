@@ -1,0 +1,13 @@
+<div class="flex gap-2 bg-gray-200 dark:bg-zinc-700 rounded-full p-1">
+  <button
+    *ngFor="let opt of options"
+    (click)="setTheme(opt.value)"
+    class="px-3 py-1 rounded-full transition-colors"
+    [class.bg-white]="current === opt.value && current !== 'dark'"
+    [class.bg-zinc-900]="current === opt.value && current === 'dark'"
+    [class.text-black]="current === opt.value && current !== 'dark'"
+    [class.text-white]="current === opt.value && current === 'dark'"
+  >
+    {{ opt.label }}
+  </button>
+</div>

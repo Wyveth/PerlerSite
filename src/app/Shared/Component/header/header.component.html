@@ -7,12 +7,20 @@
     >
       <img [src]="resource.layout.header.logo" alt="Logo" class="h-[42px] object-contain" />
       <span
-        class="font-semibold leading-[1] lg:inline-block align-middle hidden"
+        class="font-semibold leading-[1] lg:inline-block align-middle hidden dark:!text-white"
         [innerHtml]="resource.layout.header.title"
       ></span>
     </a>
 
-    <p-menubar class="hidden md:block" [model]="menuItems" />
+    <div class="flex">
+      <p-menubar class="hidden md:block" [model]="menuItems" />
+
+      <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar = true">
+        <i class="pi pi-bars w-4 h-4"></i>
+      </button>
+
+      <app-theme-switch />
+    </div>
 
     <p-drawer
       [(visible)]="visibleSidebar"
@@ -69,9 +77,5 @@
         </ng-container>
       </ul>
     </p-drawer>
-
-    <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar = true">
-      <i class="pi pi-bars w-4 h-4"></i>
-    </button>
   </div>
 </header>
