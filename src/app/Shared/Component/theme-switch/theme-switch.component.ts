@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { ThemeService } from 'src/app/api/services/theme.service';
+import { Theme, ThemeService } from 'src/app/api/services/theme.service';
 
 @Component({
   selector: 'app-theme-switch',
@@ -10,20 +10,20 @@ import { ThemeService } from 'src/app/api/services/theme.service';
   imports: [CommonModule, ButtonModule]
 })
 export class ThemeSwitchComponent {
-  options: { label: string; value: 'light' | 'dark' | 'auto' }[] = [
-    { label: '☀️', value: 'light' },
-    { label: '🌙', value: 'dark' },
-    { label: '🖥️', value: 'auto' }
+  options: { icon: string; value: Theme }[] = [
+    { icon: '☀️', value: 'light' },
+    { icon: '🌙', value: 'dark' },
+    { icon: '🖥️', value: 'auto' }
   ];
 
-  current: 'light' | 'dark' | 'auto';
+  current: Theme;
 
   constructor(private themeService: ThemeService) {
     this.current = this.themeService.getTheme();
   }
 
-  setTheme(value: 'light' | 'dark' | 'auto') {
-    this.current = value;
-    this.themeService.setTheme(value);
+  setTheme(theme: Theme) {
+    this.current = theme;
+    this.themeService.setTheme(theme);
   }
 }

@@ -1,40 +1,45 @@
 import { Injectable } from '@angular/core';
 
+export type Theme = 'light' | 'dark' | 'auto';
+
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private themeKey = 'theme'; // localStorage key
-  private currentTheme: 'light' | 'dark' | 'auto' = 'auto';
+  private readonly themeKey = 'theme';
+  private currentTheme: Theme = 'auto';
 
   constructor() {
-    const saved = localStorage.getItem(this.themeKey) as 'light' | 'dark' | 'auto' | null;
+    const saved = localStorage.getItem(this.themeKey) as Theme | null;
     this.setTheme(saved || 'auto', false);
 
-    // Si en auto, écouter changements système
-    if (this.currentTheme === 'auto') {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    // Écoute les changements système si mode auto
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (this.currentTheme === 'auto') {
         this.applyTheme('auto');
-      });
-    }
+      }
+    });
   }
 
-  setTheme(theme: 'light' | 'dark' | 'auto', persist = true) {
+  setTheme(theme: Theme, persist = true) {
     this.currentTheme = theme;
     if (persist) localStorage.setItem(this.themeKey, theme);
     this.applyTheme(theme);
   }
 
-  getTheme() {
+  getTheme(): Theme {
     return this.currentTheme;
   }
 
-  private applyTheme(theme: 'light' | 'dark' | 'auto') {
+  private applyTheme(theme: Theme) {
     const html = document.documentElement;
+
     if (theme === 'light') {
       html.classList.remove('dark');
     } else if (theme === 'dark') {
       html.classList.add('dark');
     } else {
-      html.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+      // Auto → suivre le système
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.classList.toggle('dark', prefersDark);
     }
   }
 }
