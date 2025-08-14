@@ -73,7 +73,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       },
       reject: () => {
         this.messageService.add({
-          severity: 'severity',
+          severity: 'secondary',
           summary: 'Annulé',
           detail: 'La demande a bien été annulé'
         });

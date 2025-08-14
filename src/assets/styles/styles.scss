@@ -2421,3 +2421,44 @@ p-menubar > div.p-menubar {
   left: auto !important;
   right: 195px !important;
 }
+
+html.dark {
+  p-menubar > div.p-menubar {
+    background: transparent;
+    border: 0;
+    font-weight: 600;
+
+    a.p-menubar-item-link,
+    a.p-menubar-item-link > span.p-menubar-item-icon {
+      color: #ffffff !important;
+
+      :hover {
+        color: #4154f1;
+      }
+    }
+
+    .p-menubar-item-active > .p-menubar-item-content {
+      background: transparent;
+      color: #013289;
+    }
+
+    .p-menubar-submenu {
+      right: 5px;
+    }
+
+    .p-menubar-item:not(.p-disabled) > .p-menubar-item-content:hover,
+    .p-menubar-item.p-focus > .p-menubar-item-content {
+      background: transparent;
+      color: #4154f1;
+    }
+
+    a.p-menubar-item-active-color,
+    .p-menubar-item-content:hover {
+      color: #4154f1;
+    }
+  }
+
+  .portfolio #portfolio-filters li {
+    color: #ffffff;
+  }
+}
