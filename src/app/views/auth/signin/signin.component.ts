@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/api/services/auth.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
@@ -32,7 +32,7 @@ import { severity } from 'src/app/shared/enum/severity';
     FloatLabelModule
   ]
 })
-export class SigninComponent extends Base implements OnInit {
+export class SigninComponent extends BaseComponent implements OnInit {
   signinForm!: UntypedFormGroup;
   errorMessage!: string;
 

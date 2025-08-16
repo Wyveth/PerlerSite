@@ -7,8 +7,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { User } from 'src/app/api/models/class/user';
 import { AppResource } from 'src/app/shared/models/app.resource';
-import { Base } from '../base/base';
-import { Header } from '../../models/class/header';
+import { BaseComponent } from '../base/base.component';
 import { DrawerModule } from 'primeng/drawer';
 import { combineLatest, filter } from 'rxjs';
 import { severity } from '../../enum/severity';
@@ -20,7 +19,7 @@ import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
   standalone: true,
   imports: [CommonModule, RouterModule, MenubarModule, DrawerModule, ThemeSwitchComponent]
 })
-export class HeaderComponent extends Base implements OnInit {
+export class HeaderComponent extends BaseComponent implements OnInit {
   isAuth: boolean = false;
   isAdmin: boolean = false;
   user!: User | null;

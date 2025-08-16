@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { AccordionModule } from 'primeng/accordion';
 
@@ -10,7 +10,7 @@ import { AccordionModule } from 'primeng/accordion';
   standalone: true,
   imports: [CommonModule, AccordionModule]
 })
-export class SectionFaqComponent extends Base implements OnInit {
+export class SectionFaqComponent extends BaseComponent implements OnInit {
   constructor(resources: AppResource) {
     super(resources);
   }

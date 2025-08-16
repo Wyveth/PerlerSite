@@ -16,7 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 
 @Component({
@@ -34,7 +34,7 @@ import { AppResource } from 'src/app/shared/models/app.resource';
     DividerModule
   ]
 })
-export class SignupComponent extends Base implements OnInit {
+export class SignupComponent extends BaseComponent implements OnInit {
   signupForm!: UntypedFormGroup;
   errorMessage!: string;
 

@@ -11,10 +11,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { Contact } from 'src/app/api/models/class/contact';
 import { ContactService } from 'src/app/api/services/contact.service';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from './../../shared/models/app.resource';
 import { MessageService } from 'primeng/api';
 import { severity } from 'src/app/shared/enum/severity';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import AOS from 'aos';
 
 @Component({
   selector: 'app-section-contact',
@@ -22,7 +25,7 @@ import { severity } from 'src/app/shared/enum/severity';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule]
 })
-export class SectionContactComponent extends Base implements OnInit {
+export class SectionContactComponent extends BaseComponent implements OnInit {
   contactForm!: UntypedFormGroup;
   loading: boolean = false;
 
@@ -30,13 +33,19 @@ export class SectionContactComponent extends Base implements OnInit {
     resources: AppResource,
     private messageService: MessageService,
     private formBuilder: UntypedFormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private router: Router
   ) {
     super(resources);
   }
 
   ngOnInit() {
     this.initForm();
+
+    AOS.init();
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+      AOS.refresh();
+    });
   }
 
   initForm() {

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { GalleriaModule } from 'primeng/galleria';
 import { CardModule } from 'primeng/card';
 import { AppResource } from 'src/app/shared/models/app.resource';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 
 @Component({
   selector: 'app-section-welcome',
@@ -11,7 +11,7 @@ import { Base } from 'src/app/shared/component/base/base';
   standalone: true,
   imports: [CommonModule, GalleriaModule, CardModule]
 })
-export class SectionWelcomeComponent extends Base implements OnInit {
+export class SectionWelcomeComponent extends BaseComponent implements OnInit {
   images: string[] = [
     'assets/img/Perles-Atelier.jpg',
     'assets/img/PokemonGen1.jpg',

@@ -18,7 +18,7 @@ import { Tag } from 'src/app/api/models/class/tag';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
 import { ImageModule } from 'primeng/image';
-import { Base } from 'src/app/shared/component/base/base';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
 
@@ -28,7 +28,7 @@ import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
   standalone: true,
   imports: [CommonModule, RouterModule, ImageModule, FormatPipe]
 })
-export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy {
+export class SectionPortfolioComponent extends BaseComponent implements OnInit, OnDestroy {
   products = signal<Product[]>([]);
   productSubscription!: Subscription;
 
@@ -86,7 +86,7 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
     });
     this.tagService.emitTags();
 
-    this.productService.productsSubject.subscribe((products: Product[]) => {
+    this.productService.products$.subscribe((products: Product[]) => {
       // BEGIN:
       this.products.set(
         // Changement ici pour appeler la méthode set de signal
@@ -101,8 +101,6 @@ export class SectionPortfolioComponent extends Base implements OnInit, OnDestroy
           })
       );
     }); // END:
-
-    this.productService.emitProducts();
   }
 
   // Détermine si un produit est "New"

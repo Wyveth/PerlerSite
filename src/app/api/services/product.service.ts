@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Product } from '../models/class/product';
 import * as firebaseStorage from 'firebase/storage';
 import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -18,16 +18,15 @@ import { FileUploadService } from './upload-file.service';
 import { FileUpload } from '../models/class/file-upload';
 import { updateDoc } from '@firebase/firestore';
 import { formatDate } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private products: Product[] = [];
-  private product!: Product;
-  private db: any;
-  products$!: Observable<Product[]>;
-  productsSubject = new Subject<any[]>();
+  private db;
+  private productsSubject = new BehaviorSubject<Product[]>([]);
+  products$ = this.productsSubject.asObservable();
 
   constructor(
     private utilsService: UtilsService,
@@ -35,55 +34,33 @@ export class ProductService {
     private firestore: Firestore
   ) {
     this.db = collection(this.firestore, 'products');
-    this.getProducts();
+    this.listenToProducts();
   }
 
-  emitProducts() {
-    this.productsSubject.next(this.products.slice());
-  }
-
-  /// Get All Products /// OK
-  getProducts() {
-    this.products$ = collectionData(this.db) as Observable<Product[]>;
-
-    this.products$.subscribe(
-      (products: Product[]) => {
-        this.products = products.sort((a, b) => a.title.localeCompare(b.title));
-        this.emitProducts();
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        console.log('Produits Chargé!');
-      }
-    );
-  }
-
-  /// Get Single Product /// OK
-  getProduct(key: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('key', '==', key));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
-          querySnapshot.docs.forEach(element => {
-            this.product = element.data() as Product;
-          });
-          resolve(this.product);
-        } else {
-          // doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
+  /// 🔥 écoute Firestore en temps réel
+  private listenToProducts() {
+    collectionData(this.db, { idField: 'id' })
+      .pipe(map((products: any[]) => products.sort((a, b) => a.title.localeCompare(b.title))))
+      .subscribe({
+        next: (products: Product[]) => this.productsSubject.next(products),
+        error: err => console.error('Erreur chargement produits', err),
+        complete: () => console.log('Produits chargés !')
       });
-    });
   }
 
-  /// Create Product /// OK
+  /// Get Single Product
+  async getProduct(key: string): Promise<Product> {
+    const qry = query(this.db, where('key', '==', key));
+    const querySnapshot = await getDocs(qry);
+    if (querySnapshot.empty) {
+      throw new Error('No such document!');
+    }
+    return querySnapshot.docs[0].data() as Product;
+  }
+
+  /// Create Product
   createProduct(product: Product) {
-    addDoc(this.db, {
+    return addDoc(this.db, {
       key: this.utilsService.getKey(),
       title: product.title,
       titleContent: product.titleContent,
@@ -100,56 +77,43 @@ export class ProductService {
     });
   }
 
-  /// Update Product /// OK
+  /// Update Product
   updateProduct(key: string, product: Product) {
-    this.product.title = product.title;
-    this.product.titleContent = product.titleContent;
-    this.product.content = product.content;
-    this.product.author = product.author;
-    this.product.size = product.size;
-    this.product.time = product.time;
-    this.product.date = product.date;
-    this.product.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-
-    if (product.pictureUrl !== undefined) this.product.pictureUrl = product.pictureUrl;
-    this.product.tagsKey = product.tagsKey;
-    this.product.perlerTypesKey = product.perlerTypesKey;
-
     this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      updateDoc(doc.ref, this.product);
+      const updated: Product = {
+        ...product,
+        dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      };
+      updateDoc(doc.ref, updated);
     });
   }
 
-  /// Remove Product + Suppression de l'image /// OK
-  removeProduct(product: Product) {
+  /// Remove Product + Suppression de l'image
+  async removeProduct(product: Product) {
     if (product.pictureUrl) {
-      this.fileUploadService.getFileUpload(product.pictureUrl).then(fileUpload => {
-        return this.fileUploadService.deleteFile(fileUpload as FileUpload);
-      });
+      const fileUpload = await this.fileUploadService.getFileUpload(product.pictureUrl);
+      await this.fileUploadService.deleteFile(fileUpload as FileUpload);
     }
 
-    this.utilsService.getDocByKey(this.db, product.key).then((doc: any) => {
-      deleteDoc(doc.ref);
-    });
+    const doc = await this.utilsService.getDocByKey(this.db, product.key);
+    return deleteDoc(doc.ref);
   }
 
-  /// Upload File in Storage /// OK
-  uploadFile(file: File) {
+  /// Upload File in Storage
+  uploadFile(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
-      // Create a root reference
       const storage = getStorage();
-
-      // Create a reference to Files
       const almostUniqueFileName = Date.now().toString();
       const upload = firebaseStorage.ref(storage, file.name + '_' + almostUniqueFileName);
 
       uploadBytes(upload, file).then(
-        (data: any) => {
-          resolve(getDownloadURL(upload));
+        async () => {
+          const url = await getDownloadURL(upload);
           console.log('Chargement…');
+          resolve(url);
         },
         error => {
-          console.log('Erreur de chargement ! : ' + error);
+          console.error('Erreur de chargement ! : ' + error);
           reject(error);
         }
       );

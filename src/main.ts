@@ -1,12 +1,17 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ENVIRONMENT_INITIALIZER, importProvidersFrom, inject } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ENVIRONMENT_INITIALIZER,
+  importProvidersFrom,
+  inject
+} from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
 import { provideStorage } from '@angular/fire/storage';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -20,12 +25,19 @@ import Aura from '@primeng/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
+export function loadResources(resourceService: AppResource) {
+  return () => resourceService.load();
+}
+
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(ToastModule),
     MessageService, // <-- instance unique globale
     ConfirmationService, // <-- instance unique globale
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
+    ),
     provideFirebaseApp(() =>
       initializeApp(
         environment.firebase[
@@ -61,12 +73,10 @@ bootstrapApplication(AppComponent, {
       }
     },
     {
-      provide: ENVIRONMENT_INITIALIZER,
-      multi: true,
-      useValue: () => {
-        const resource = inject(AppResource);
-        return resource.load();
-      }
+      provide: APP_INITIALIZER,
+      useFactory: loadResources,
+      deps: [AppResource],
+      multi: true
     }
   ]
 });

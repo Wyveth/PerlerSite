@@ -948,7 +948,7 @@ p-breadcrumb {
   border-bottom: 0;
 }
 .faq .accordion-body {
-  padding: 0 0 25px 0;
+  padding: 15px 0 0px 0;
   border: 0;
 }
 
@@ -2109,7 +2109,6 @@ p-breadcrumb {
   text-decoration: underline;
   color: #012970;
   text-align: center;
-  margin-bottom: 2rem;
 }
 
 /* You can add global styles to this file, and also import other style files */
@@ -2460,5 +2459,27 @@ html.dark {
 
   .portfolio #portfolio-filters li {
     color: #ffffff;
+  }
+
+  .p-inputtext, .p-textarea, .p-inputnumber, .p-dropdown, .p-multiselect, .p-calendar, .p-selectbutton,.p-accordionheader, .p-accordioncontent-content, .p-menubar-submenu   {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    color: #ffffff; /* Tailwind white */
+    border: 1px solid #374151; /* Tailwind gray-700 */
+  }
+
+  .p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) > .p-accordionheader:hover {
+    background-color: #374151; /* Tailwind gray-700 */
+    color: #ffffff; /* Tailwind white */
+  }
+
+  .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    color: #ffffff; /* Tailwind white */
+  }
+
+  .styleTitle {
+    text-decoration: underline;
+    color: #ffffff;
+    text-align: center;
   }
 }

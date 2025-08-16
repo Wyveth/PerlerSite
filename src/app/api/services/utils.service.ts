@@ -11,7 +11,7 @@ export class UtilsService {
     return generateUUID();
   }
 
-  getDocByKey(db: CollectionReference<DocumentData>, key: string) {
+  getDocByKey(db: CollectionReference<DocumentData>, key: string): Promise<DocumentData> {
     return new Promise((resolve, reject) => {
       var qry = query(db, where('key', '==', key));
 

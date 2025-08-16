@@ -1,36 +1,67 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { Product } from 'src/app/api/models/class/product';
 import { ProductService } from 'src/app/api/services/product.service';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {
+  ImageOverlayComponent,
+  OverlayButton
+} from 'src/app/shared/component/image-overlay/image-overlay.component';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent, ButtonModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BreadcrumbsComponent,
+    ButtonModule,
+    ImageOverlayComponent
+  ]
 })
-export class ProductListComponent implements OnInit, OnDestroy {
-  products!: any[];
-  productSubscription!: Subscription;
+export class ProductListComponent {
+  productsWithButtons$: Observable<{ product: Product; buttons: OverlayButton[] }[]>;
 
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private productService: ProductService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
-    this.productSubscription = this.productService.productsSubject.subscribe((products: any[]) => {
-      this.products = products;
-    });
-    this.productService.emitProducts();
+  ) {
+    this.productsWithButtons$ = this.productService.products$.pipe(
+      map(products =>
+        products.map(product => ({
+          product,
+          buttons: [
+            {
+              icon: 'pi pi-eye',
+              label: 'Voir',
+              color: 'p-button-info',
+              command: () => this.onViewProduct(product.key)
+            },
+            {
+              icon: 'pi pi-pencil',
+              label: 'Modifier',
+              color: 'p-button-warn',
+              command: () => this.onEditProduct(product.key)
+            },
+            {
+              icon: 'pi pi-trash',
+              label: 'Supprimer',
+              color: 'p-button-danger',
+              command: (event?: Event) => this.onDeleteProduct(event, product)
+            }
+          ]
+        }))
+      )
+    );
   }
 
   ellipsis(text: string, maxLength: number): string {
@@ -39,16 +70,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onNewProduct() {
-    this.router.navigate(['/products', 'new']);
+    this.router.navigate(['products', 'new']);
   }
 
   onEditProduct(key: string) {
-    this.router.navigate(['/products', 'edit', key]);
+    this.router.navigate(['products', 'edit', key]);
   }
 
-  onDeleteProduct(event: Event, product: Product) {
+  onDeleteProduct(event: Event | undefined, product: Product) {
+    event?.stopPropagation();
     this.confirmationService.confirm({
-      target: event.target as EventTarget,
+      target: event?.target as EventTarget,
       message: 'Voulez vous vraiment supprimer le produit: ' + product.title,
       header: 'Attention!',
       icon: 'pi pi-exclamation-triangle',
@@ -82,10 +114,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onViewProduct(key: string) {
-    this.router.navigate(['/products', 'viewA', key]);
-  }
-
-  ngOnDestroy() {
-    this.productSubscription.unsubscribe();
+    this.router.navigate(['products', 'viewA', key]);
   }
 }

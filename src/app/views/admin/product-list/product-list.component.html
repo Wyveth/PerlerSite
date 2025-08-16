@@ -12,6 +12,16 @@
     </div>
   </div>
   <div class="flex justify-center">
+    <div class="grid grid-cols-3 gap-4">
+      <app-image-overlay
+        *ngFor="let item of productsWithButtons$ | async"
+        [title]="item.product.title"
+        [imageUrl]="item.product.pictureUrl"
+        [buttons]="item.buttons"
+      />
+    </div>
+  </div>
+  <div class="flex justify-center">
     <table
       class="table-auto border-collapse border border-gray-400 w-5/6 p-2 md:p-0 dark:!text-white"
     >
@@ -25,21 +35,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products; let i = index">
+        <tr *ngFor="let item of productsWithButtons$ | async; let i = index">
           <td class="p-2 border border-gray-300">
             <img
               style="max-height: 50%"
               class="bd-placeholder-img card-img-top"
-              src="{{ product.pictureUrl }}"
+              src="{{ item.product.pictureUrl }}"
               role="img"
               aria-label="Placeholder: Test"
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
             />
           </td>
-          <td class="p-2 border border-gray-300" [innerText]="product.title"></td>
-          <td class="p-2 border border-gray-300" [innerText]="ellipsis(product.content, 20)"></td>
-          <td class="p-2 border border-gray-300" [innerText]="product.author"></td>
+          <td class="p-2 border border-gray-300" [innerText]="item.product.title"></td>
+          <td
+            class="p-2 border border-gray-300"
+            [innerText]="ellipsis(item.product.content, 20)"
+          ></td>
+          <td class="p-2 border border-gray-300" [innerText]="item.product.author"></td>
           <td class="p-2 border border-gray-300">
             <div class="flex space-x-2 items-center justify-center">
               <p-button
@@ -47,21 +60,21 @@
                 icon="pi pi-search"
                 [rounded]="true"
                 [outlined]="true"
-                (click)="onViewProduct(product.key)"
+                (click)="onViewProduct(item.product.key)"
               />
               <p-button
                 severity="warn"
                 icon="pi pi-pen-to-square"
                 [rounded]="true"
                 [outlined]="true"
-                (click)="onEditProduct(product.key)"
+                (click)="onEditProduct(item.product.key)"
               />
               <p-button
                 severity="danger"
                 icon="pi pi-trash"
                 [rounded]="true"
                 [outlined]="true"
-                (click)="onDeleteProduct($event, product)"
+                (click)="onDeleteProduct($event, item.product)"
               />
             </div>
           </td>

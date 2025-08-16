@@ -1,0 +1,20 @@
+<div class="relative w-72 h-48 overflow-hidden rounded-xl group">
+  <img [src]="imageUrl" alt="Image" class="w-full h-full object-cover" />
+
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-black/50 opacity-0 flex justify-center items-end pb-4 gap-3 transition-all duration-300 group-hover:opacity-100 group-hover:pb-8"
+  >
+    <p-button
+      *ngFor="let button of buttons"
+      [icon]="button.icon"
+      [label]="button.label"
+      [styleClass]="
+        'p-button-rounded p-button-md p-button-outlined p-button-icon-only ' +
+        button.color +
+        ' hover:bg-gray-200 translate-y-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100'
+      "
+      (onClick)="button.command?.($event)"
+    ></p-button>
+  </div>
+</div>

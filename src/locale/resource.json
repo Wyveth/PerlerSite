@@ -99,10 +99,16 @@
               ],
               "links": [
                 {
-                  "label": "Système d'avis sur les pièces"
+                  "label": "V1.1: Mode Sombre"
                 },
                 {
-                  "label": "Mode Sombre + Mode Anglais"
+                  "label": "V1.2: Système d'avis sur les pièces"
+                },
+                {
+                  "label": "V1.3: Ajout des types de perles sur la description des pièces"
+                },
+                {
+                  "label": "V1.4: Mode Anglais"
                 }
               ]
             }
