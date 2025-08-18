@@ -173,23 +173,26 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   }
 }
 
-function scrollViewFragment(
+export function scrollViewFragment(
   router: Router,
   fragment: string,
   scrollType: 'smooth' | 'auto' = 'smooth'
 ) {
   const currentUrl = router.url.split('#')[0];
+
+  const scrollAndRefreshAOS = () => {
+    const el = document.getElementById(fragment);
+    if (el) {
+      el.scrollIntoView({ behavior: scrollType });
+    }
+    AOS.refresh(); // AOS est sûr car importé
+  };
+
   if (currentUrl !== '/') {
-    // Si on n’est pas sur la home, navigue d’abord, puis scroll après la navigation
     router.navigateByUrl('/').then(() => {
-      setTimeout(() => {
-        const el = document.getElementById(fragment);
-        if (el) el.scrollIntoView({ behavior: scrollType });
-      }, 100); // petit délai pour que la vue se charge
+      setTimeout(scrollAndRefreshAOS, 100);
     });
   } else {
-    // Sinon, scroll directement
-    const el = document.getElementById(fragment);
-    if (el) el.scrollIntoView({ behavior: scrollType });
+    setTimeout(scrollAndRefreshAOS, 50);
   }
 }

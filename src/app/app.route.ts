@@ -21,12 +21,6 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'home',
-        loadComponent() {
-          return import('./views/home/home.component').then(m => m.HomeComponent);
-        }
-      },
-      {
         path: 'tags',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
@@ -169,7 +163,7 @@ export const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'home'
+        redirectTo: ''
       }
     ]
   }

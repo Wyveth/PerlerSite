@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,10 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
   standalone: true,
   imports: [CommonModule, RouterOutlet, ToastModule, ConfirmDialog]
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   constructor() {}
 
-  ngAfterViewInit(): void {
-    //this.loadJsFile("assets/js/main.js");
-  }
-
-  public loadJsFile(url: string) {
-    let node = document.createElement('script');
-    node.src = url;
-    node.type = 'text/javascript';
-    document.getElementsByTagName('head')[0].appendChild(node);
+  ngOnInit() {
+    AOS.init();
   }
 }

@@ -10,10 +10,8 @@ import { AccordionModule } from 'primeng/accordion';
   standalone: true,
   imports: [CommonModule, AccordionModule]
 })
-export class SectionFaqComponent extends BaseComponent implements OnInit {
+export class SectionFaqComponent extends BaseComponent {
   constructor(resources: AppResource) {
     super(resources);
   }
-
-  ngOnInit() {}
 }

@@ -1,4 +1,4 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive } from '@angular/core';
 import { Resource } from 'src/app/resources/resource';
 import { AppResource } from '../../models/app.resource';
 

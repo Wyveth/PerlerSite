@@ -30,12 +30,9 @@
             "assets": ["src/favicon.ico", "src/assets", "src/locale", "src/environment"],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/aos/dist/aos.css",
               "src/assets/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js",
               "node_modules/glightbox/dist/js/glightbox.min.js",
               "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
               "node_modules/swiper/swiper-bundle.min.js",

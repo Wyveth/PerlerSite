@@ -15,9 +15,7 @@ import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from './../../shared/models/app.resource';
 import { MessageService } from 'primeng/api';
 import { severity } from 'src/app/shared/enum/severity';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
-import AOS from 'aos';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-section-contact',
@@ -41,11 +39,6 @@ export class SectionContactComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-
-    AOS.init();
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      AOS.refresh();
-    });
   }
 
   initForm() {

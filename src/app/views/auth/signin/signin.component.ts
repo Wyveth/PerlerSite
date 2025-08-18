@@ -68,7 +68,7 @@ export class SigninComponent extends BaseComponent implements OnInit {
 
     this.authService.login(email, password).then(
       () => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
         this.messageService.add({
           severity: severity.success,
           summary: this.resource.signin.signin_success_summary,
