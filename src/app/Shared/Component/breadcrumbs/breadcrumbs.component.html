@@ -6,6 +6,7 @@
       [class.text-gray-400]="!item.routerLink"
       [class.pointer-events-none]="!item.routerLink"
       [class.no-underline]="!item.routerLink"
+      [class.underline-line]="item.routerLink"
       (click)="!item.routerLink && $event.preventDefault()"
     >
       <i [class]="item.icon"></i> {{ item.label }}

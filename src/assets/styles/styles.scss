@@ -146,6 +146,10 @@ p-breadcrumb {
   }
 }
 
+.underline-line {
+  text-decoration: underline !important; /* !important pour écraser d’autres règles */
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
