@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 export interface OverlayButton {
@@ -19,4 +19,7 @@ export class ImageOverlayComponent {
   @Input() title!: string;
   @Input() imageUrl!: string;
   @Input() buttons: OverlayButton[] = [];
+  @Input() active = false;
+
+  @Output() toggleRequested = new EventEmitter<void>();
 }

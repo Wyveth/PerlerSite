@@ -15,67 +15,67 @@
     <div class="flex">
       <p-menubar class="hidden md:block" [model]="menuItems" />
 
+      <p-drawer
+        [(visible)]="visibleSidebar"
+        [modal]="true"
+        position="left"
+        class="md:hidden"
+        (onHide)="visibleSidebar = false"
+      >
+        <ul class="menu-list p-0 m-0">
+          <ng-container *ngFor="let item of menuItems">
+            <ng-container *ngIf="item.visible !== false">
+              <li>
+                <a
+                  *ngIf="!item.items"
+                  (click)="executeCommand(item)"
+                  [routerLink]="item.routerLink"
+                  class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                >
+                  <i *ngIf="item.icon" [class]="item.icon"></i>
+                  <span>{{ item.label }}</span>
+                </a>
+                <div *ngIf="item.items">
+                  <div class="flex items-center space-x-2 p-2 font-semibold">
+                    <i *ngIf="item.icon" [class]="item.icon"></i>
+                    <span>{{ item.label }}</span>
+                  </div>
+                  <ul class="ml-4">
+                    <li *ngFor="let subItem of item.items">
+                      <a
+                        *ngIf="subItem.visible !== false"
+                        (click)="executeCommand(subItem)"
+                        [routerLink]="subItem.routerLink"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                      >
+                        <span>{{ subItem.label }}</span>
+                      </a>
+                      <ul *ngIf="subItem.items" class="ml-4">
+                        <li *ngFor="let subSubItem of subItem.items">
+                          <a
+                            *ngIf="subSubItem.visible !== false"
+                            (click)="executeCommand(subSubItem)"
+                            [routerLink]="subSubItem.routerLink"
+                            class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                          >
+                            <span>{{ subSubItem.label }}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ng-container>
+          </ng-container>
+        </ul>
+      </p-drawer>
+
       <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar = true">
         <i class="pi pi-bars w-4 h-4"></i>
       </button>
 
       <app-theme-switch />
     </div>
-
-    <p-drawer
-      [(visible)]="visibleSidebar"
-      [modal]="true"
-      position="left"
-      class="md:hidden"
-      (onHide)="visibleSidebar = false"
-    >
-      <ul class="menu-list p-0 m-0">
-        <ng-container *ngFor="let item of menuItems">
-          <ng-container *ngIf="item.visible !== false">
-            <li>
-              <a
-                *ngIf="!item.items"
-                (click)="executeCommand(item)"
-                [routerLink]="item.routerLink"
-                class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-              >
-                <i *ngIf="item.icon" [class]="item.icon"></i>
-                <span>{{ item.label }}</span>
-              </a>
-              <div *ngIf="item.items">
-                <div class="flex items-center space-x-2 p-2 font-semibold">
-                  <i *ngIf="item.icon" [class]="item.icon"></i>
-                  <span>{{ item.label }}</span>
-                </div>
-                <ul class="ml-4">
-                  <li *ngFor="let subItem of item.items">
-                    <a
-                      *ngIf="subItem.visible !== false"
-                      (click)="executeCommand(subItem)"
-                      [routerLink]="subItem.routerLink"
-                      class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-                    >
-                      <span>{{ subItem.label }}</span>
-                    </a>
-                    <ul *ngIf="subItem.items" class="ml-4">
-                      <li *ngFor="let subSubItem of subItem.items">
-                        <a
-                          *ngIf="subSubItem.visible !== false"
-                          (click)="executeCommand(subSubItem)"
-                          [routerLink]="subSubItem.routerLink"
-                          class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-                        >
-                          <span>{{ subSubItem.label }}</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ng-container>
-        </ng-container>
-      </ul>
-    </p-drawer>
   </div>
 </header>

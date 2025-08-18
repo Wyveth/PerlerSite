@@ -1,4 +1,8 @@
-<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Produits"></app-breadcrumbs>
+<app-breadcrumbs
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.product.title"
+></app-breadcrumbs>
 
 <section class="py-6 space-y-6">
   <div class="flex justify-center">
@@ -6,80 +10,20 @@
       <button
         class="w-10/12 md:w-4/12 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded hover:bg-blue-700 transition"
         (click)="onNewProduct()"
-      >
-        Nouveau Produit
-      </button>
+        [innerText]="resource.generic.new_m | format: resource.product.title"
+      ></button>
     </div>
   </div>
   <div class="flex justify-center">
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <app-image-overlay
-        *ngFor="let item of productsWithButtons$ | async"
+        *ngFor="let item of productsWithButtons$ | async; let i = index"
         [title]="item.product.title"
         [imageUrl]="item.product.pictureUrl"
         [buttons]="item.buttons"
+        [active]="activeOverlayIndex === i"
+        (toggleRequested)="activeOverlayIndex = activeOverlayIndex === i ? null : i"
       />
     </div>
-  </div>
-  <div class="flex justify-center">
-    <table
-      class="table-auto border-collapse border border-gray-400 w-5/6 p-2 md:p-0 dark:!text-white"
-    >
-      <thead>
-        <tr>
-          <th class="w-2/12 border border-gray-300">Image</th>
-          <th class="w-3/12 border border-gray-300">Titre</th>
-          <th class="border border-gray-300">Description</th>
-          <th class="w-2/12 border border-gray-300">Auteur</th>
-          <th class="w-2/12 border border-gray-300">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of productsWithButtons$ | async; let i = index">
-          <td class="p-2 border border-gray-300">
-            <img
-              style="max-height: 50%"
-              class="bd-placeholder-img card-img-top"
-              src="{{ item.product.pictureUrl }}"
-              role="img"
-              aria-label="Placeholder: Test"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            />
-          </td>
-          <td class="p-2 border border-gray-300" [innerText]="item.product.title"></td>
-          <td
-            class="p-2 border border-gray-300"
-            [innerText]="ellipsis(item.product.content, 20)"
-          ></td>
-          <td class="p-2 border border-gray-300" [innerText]="item.product.author"></td>
-          <td class="p-2 border border-gray-300">
-            <div class="flex space-x-2 items-center justify-center">
-              <p-button
-                severity="info"
-                icon="pi pi-search"
-                [rounded]="true"
-                [outlined]="true"
-                (click)="onViewProduct(item.product.key)"
-              />
-              <p-button
-                severity="warn"
-                icon="pi pi-pen-to-square"
-                [rounded]="true"
-                [outlined]="true"
-                (click)="onEditProduct(item.product.key)"
-              />
-              <p-button
-                severity="danger"
-                icon="pi pi-trash"
-                [rounded]="true"
-                [outlined]="true"
-                (click)="onDeleteProduct($event, item.product)"
-              />
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </section>

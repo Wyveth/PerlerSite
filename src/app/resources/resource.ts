@@ -7,9 +7,12 @@ export interface Resource {
   contact: Contact;
   form: Form;
   error: Error;
+  generic: Generic;
+  button: Button;
   severity: Severity;
   signin: Signin;
   signup: Signup;
+  product: Product;
 }
 
 export interface Layout {
@@ -196,4 +199,27 @@ export interface Signup {
   signup_button: string;
   signup_success: string;
   signup_error: string;
+}
+
+export interface Product {
+  title: string;
+}
+
+export interface Generic {
+  new_m: string;
+  new_f: string;
+  edit: string;
+  delete: string;
+  view: string;
+  save_m: string;
+  save_f: string;
+  confirm: string;
+}
+
+export interface Button {
+  save: string;
+  cancel: string;
+  edit: string;
+  delete: string;
+  view: string;
 }

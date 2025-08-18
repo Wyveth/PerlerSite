@@ -12,6 +12,10 @@ import {
   ImageOverlayComponent,
   OverlayButton
 } from 'src/app/shared/component/image-overlay/image-overlay.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
   selector: 'app-product-list',
@@ -23,18 +27,22 @@ import {
     ReactiveFormsModule,
     BreadcrumbsComponent,
     ButtonModule,
-    ImageOverlayComponent
+    ImageOverlayComponent,
+    FormatPipe
   ]
 })
-export class ProductListComponent {
+export class ProductListComponent extends BaseComponent {
   productsWithButtons$: Observable<{ product: Product; buttons: OverlayButton[] }[]>;
 
   constructor(
+    resources: AppResource,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private productService: ProductService,
     private router: Router
   ) {
+    super(resources);
+
     this.productsWithButtons$ = this.productService.products$.pipe(
       map(products =>
         products.map(product => ({
@@ -42,19 +50,19 @@ export class ProductListComponent {
           buttons: [
             {
               icon: 'pi pi-eye',
-              label: 'Voir',
+              label: this.resource.button.view,
               color: 'p-button-info',
               command: () => this.onViewProduct(product.key)
             },
             {
               icon: 'pi pi-pencil',
-              label: 'Modifier',
+              label: this.resource.button.edit,
               color: 'p-button-warn',
               command: () => this.onEditProduct(product.key)
             },
             {
               icon: 'pi pi-trash',
-              label: 'Supprimer',
+              label: this.resource.button.delete,
               color: 'p-button-danger',
               command: (event?: Event) => this.onDeleteProduct(event, product)
             }
@@ -84,15 +92,15 @@ export class ProductListComponent {
       message: 'Voulez vous vraiment supprimer le produit: ' + product.title,
       header: 'Attention!',
       icon: 'pi pi-exclamation-triangle',
-      rejectLabel: 'Annuler',
+      rejectLabel: this.resource.button.cancel,
       rejectButtonProps: {
-        label: 'Annuler',
-        severity: 'secondary',
+        label: this.resource.button.cancel,
+        severity: severity.secondary,
         outlined: true
       },
       acceptButtonProps: {
-        label: 'Supprimer',
-        severity: 'danger'
+        label: this.resource.button.delete,
+        severity: severity.error
       },
 
       accept: () => {
@@ -115,5 +123,11 @@ export class ProductListComponent {
 
   onViewProduct(key: string) {
     this.router.navigate(['products', 'viewA', key]);
+  }
+
+  activeOverlayIndex: number | null = null;
+
+  toggleOverlay(index: number) {
+    this.activeOverlayIndex = this.activeOverlayIndex === index ? null : index;
   }
 }

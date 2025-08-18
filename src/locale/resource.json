@@ -213,6 +213,28 @@
     "medium_label": "Complexité moyenne",
     "strong_label": "Complexité forte"
   },
+  "generic": {
+    "new_m": "Nouveau {0}",
+    "new_f": "Nouvelle {0}",
+    "edit": "Modifier {0}",
+    "delete": "Supprimer {0}",
+    "view": "Voir {0}",
+    "save_m": "Enregistrer un {0}",
+    "save_f": "Enregistrer une {0}",
+    "confirm": "Confirmation",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer {0}?",
+    "delete_success": "{0} supprimé avec succès",
+    "delete_error": "Erreur lors de la suppression de {0}",
+    "save_success": "{0} enregistré avec succès",
+    "save_error": "Erreur lors de l'enregistrement de {0}"
+  },
+  "button": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir"
+  },
   "severity": {
     "info": "Info",
     "success": "Succès",
@@ -245,5 +267,8 @@
     "signup_button": "S'inscrire",
     "signup_success": "Inscription réussie, vous pouvez maintenant vous connecter!",
     "signup_error": "Erreur d'inscription, veuillez vérifier vos données"
+  },
+  "product": {
+    "title": "Produit"
   }
 }
