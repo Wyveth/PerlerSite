@@ -169,7 +169,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
   isAbsolute(): boolean {
     // Liste des pages où le menu doit être "absolute"
-    return ['/', '/home'].includes(this.router.url);
+    return ['/'].includes(this.router.url);
   }
 }
 

@@ -53,6 +53,6 @@ export class SingleProductComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 }
