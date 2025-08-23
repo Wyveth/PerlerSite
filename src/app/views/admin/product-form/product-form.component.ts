@@ -139,8 +139,6 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       });
 
       this.urlImg = product.pictureUrl || '';
-
-      console.log(typeof product.date);
     }
   }
 

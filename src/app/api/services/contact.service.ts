@@ -63,7 +63,6 @@ export class ContactService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
           querySnapshot.docs.forEach(element => {
             this.contact = element.data() as Contact;
           });

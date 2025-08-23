@@ -20,7 +20,6 @@ export class AuthGuardService {
       filter(isAuth => isAuth !== null), // attend que Firebase ait répondu
       take(1),
       map(isAuth => {
-        console.log('AuthGuardService: isAuth', isAuth);
         if (isAuth) {
           return true; // Accès autorisé
         } else {
