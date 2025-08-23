@@ -22,10 +22,9 @@ export class TagListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tagSubscription = this.tagService.tagsSubject.subscribe((tags: any[]) => {
+    this.tagSubscription = this.tagService.tags$.subscribe((tags: Tag[]) => {
       this.tags = tags;
     });
-    this.tagService.emitTags();
   }
 
   onNewTag() {

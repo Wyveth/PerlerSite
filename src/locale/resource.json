@@ -25,7 +25,7 @@
   "router": {
     "base": "/",
     "routes": {
-      "home": "home",
+      "home": "/",
       "welcome": "welcome",
       "achievements": "portfolio",
       "faq": "faq",
@@ -222,8 +222,14 @@
     "save_m": "Enregistrer un {0}",
     "save_f": "Enregistrer une {0}",
     "confirm": "Confirmation",
-    "delete_confirm": "Êtes-vous sûr de vouloir supprimer {0}?",
-    "delete_success": "{0} supprimé avec succès",
+    "cancel": "Annulé",
+    "attention": "Attention!",
+    "details": "Détails",
+    "delete_confirm_m": "Êtes-vous sûr de vouloir supprimer le {0}: {1}?",
+    "delete_confirm_f": "Êtes-vous sûr de vouloir supprimer la {0}: {1}?",
+    "delete_success_m": "Le {0} {1} supprimé avec succès",
+    "delete_success_f": "La {0} {1} supprimée avec succès",
+    "delete_cancelled": "Suppression annulée",
     "delete_error": "Erreur lors de la suppression de {0}",
     "save_success": "{0} enregistré avec succès",
     "save_error": "Erreur lors de l'enregistrement de {0}"
@@ -269,6 +275,7 @@
     "signup_error": "Erreur d'inscription, veuillez vérifier vos données"
   },
   "product": {
-    "title": "Produit"
+    "title": "Produit",
+    "title_plural": "Produits"
   }
 }

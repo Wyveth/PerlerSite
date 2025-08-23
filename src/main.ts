@@ -24,6 +24,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import './app/shared/extension/string.extension';
 
 export function loadResources(resourceService: AppResource) {
   return () => resourceService.load();
@@ -32,8 +33,8 @@ export function loadResources(resourceService: AppResource) {
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(ToastModule),
-    MessageService, // <-- instance unique globale
-    ConfirmationService, // <-- instance unique globale
+    MessageService,
+    ConfirmationService,
     provideRouter(
       routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
@@ -54,6 +55,43 @@ bootstrapApplication(AppComponent, {
             order: 'theme, base, primeng'
           }
         }
+      },
+      translation: {
+        firstDayOfWeek: 1,
+        dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+        dayNamesShort: ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
+        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+        monthNames: [
+          'janvier',
+          'février',
+          'mars',
+          'avril',
+          'mai',
+          'juin',
+          'juillet',
+          'août',
+          'septembre',
+          'octobre',
+          'novembre',
+          'décembre'
+        ],
+        monthNamesShort: [
+          'jan',
+          'fév',
+          'mar',
+          'avr',
+          'mai',
+          'jun',
+          'jul',
+          'aoû',
+          'sep',
+          'oct',
+          'nov',
+          'déc'
+        ],
+        today: "Aujourd'hui",
+        clear: 'Effacer',
+        weekHeader: 'Sem'
       }
     }),
     provideFirestore(() => getFirestore()),

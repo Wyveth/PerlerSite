@@ -1,89 +1,67 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, timer } from 'rxjs';
-import { PerlerType } from '../models/class/perler-type';
+import { BehaviorSubject, Observable, map, switchMap, timer } from 'rxjs';
 import {
   Firestore,
   collectionData,
   collection,
   addDoc,
-  where,
   query,
+  where,
   getDocs,
   deleteDoc,
   updateDoc
 } from '@angular/fire/firestore';
-import { UtilsService } from './utils.service';
 import { formatDate } from '@angular/common';
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import { PerlerType } from '../models/class/perler-type';
+import { UtilsService } from './utils.service';
+import { AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerlerTypeService {
-  private perlerTypes: PerlerType[] = [];
-  private perlerType!: PerlerType;
-  private db: any;
-  perlerTypes$!: Observable<PerlerType[]>;
-  perlerTypesSubject = new Subject<any[]>();
-
-  perlerTypeDDL: Array<{ key: string; code: string }> = [];
+  private db;
+  private perlerTypesSubject = new BehaviorSubject<PerlerType[]>([]);
+  perlerTypes$ = this.perlerTypesSubject.asObservable();
 
   constructor(
     private utilsService: UtilsService,
     private firestore: Firestore
   ) {
     this.db = collection(this.firestore, 'perlerTypes');
-    this.getPerlerTypes();
+    this.listenToPerlerTypes();
   }
 
-  emitPerlerTypes() {
-    this.perlerTypesSubject.next(this.perlerTypes);
-  }
-
-  /// Get All Perler Types /// OK
-  getPerlerTypes() {
-    this.perlerTypes$ = collectionData(this.db) as Observable<PerlerType[]>;
-
-    this.perlerTypes$.subscribe(
-      (perlerTypes: PerlerType[]) => {
-        this.perlerTypes = perlerTypes.sort((a, b) => a.reference.localeCompare(b.reference));
-
-        this.emitPerlerTypes();
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        console.log('Perler Types Chargé!');
-      }
-    );
-  }
-
-  /// Get Single Perler Types /// OK
-  getPerlerType(key: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('key', '==', key));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
-          querySnapshot.docs.forEach(element => {
-            this.perlerType = element.data() as PerlerType;
-          });
-          resolve(this.perlerType);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
+  /// 🔥 Écoute Firestore en temps réel
+  private listenToPerlerTypes() {
+    collectionData(this.db, { idField: 'id' })
+      .pipe(
+        map((perlerTypes: any[]) =>
+          perlerTypes.sort((a, b) => a.reference.localeCompare(b.reference))
+        )
+      )
+      .subscribe({
+        next: (perlerTypes: PerlerType[]) => {
+          this.perlerTypesSubject.next(perlerTypes);
+        },
+        error: err => console.error('Erreur chargement perler types', err),
+        complete: () => console.log('Perler Types chargés !')
       });
-    });
   }
 
-  /// Create Perler Type /// OK
+  /// Get Single Perler Type
+  async getPerlerType(key: string): Promise<PerlerType> {
+    const qry = query(this.db, where('key', '==', key));
+    const querySnapshot = await getDocs(qry);
+    if (querySnapshot.empty) {
+      throw new Error('No such document!');
+    }
+    return querySnapshot.docs[0].data() as PerlerType;
+  }
+
+  /// Create Perler Type
   createPerlerType(perlerType: PerlerType) {
-    addDoc(this.db, {
+    return addDoc(this.db, {
       key: this.utilsService.getKey(),
       reference: perlerType.reference,
       libelle: perlerType.libelle,
@@ -93,23 +71,39 @@ export class PerlerTypeService {
     });
   }
 
-  /// Update Perler Type /// OK
-  updatePerlerType(key: string, perlerType: PerlerType) {
-    this.perlerType.reference = perlerType.reference;
-    this.perlerType.libelle = perlerType.libelle;
-    this.perlerType.color = perlerType.color;
-    this.perlerType.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-
-    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      updateDoc(doc.ref, this.perlerType);
-    });
+  /// Update Perler Type
+  async updatePerlerType(key: string, perlerType: PerlerType) {
+    const doc = await this.utilsService.getDocByKey(this.db, key);
+    if (doc) {
+      const updated: PerlerType = {
+        ...perlerType,
+        dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      };
+      updateDoc(doc.ref, updated);
+    }
   }
 
-  /// Remove Perler Type /// OK
-  removePerlerType(perlerType: PerlerType) {
-    this.utilsService.getDocByKey(this.db, perlerType.key).then((doc: any) => {
-      deleteDoc(doc.ref);
-    });
+  /// Remove Perler Type
+  async removePerlerType(perlerType: PerlerType) {
+    const doc = await this.utilsService.getDocByKey(this.db, perlerType.key);
+    if (doc) {
+      await deleteDoc(doc.ref);
+    }
+  }
+
+  /// Vérifie si une référence existe
+  async isPerlerTypeRefAvailable(
+    value: string,
+    edit: boolean,
+    current?: PerlerType
+  ): Promise<boolean> {
+    const querySnapshot = await getDocs(query(this.db, where('reference', '==', value)));
+    if (!edit) {
+      if (current && value === current.reference) return true;
+      return querySnapshot.empty;
+    } else {
+      return querySnapshot.empty;
+    }
   }
 
   /// Validator Existing Perler Type Référence /// OK
@@ -126,25 +120,5 @@ export class PerlerTypeService {
         })
       );
     };
-  }
-
-  /// Async Validator Existing Perler Type Référence /// OK
-  async isPerlerTypeRefAvailable(value: string, edit: boolean): Promise<boolean> {
-    return getDocs(query(this.db, where('reference', '==', value)))
-      .then(documentSnapshot => {
-        if (!edit) {
-          if (value == this.perlerType.reference) {
-            return true;
-          } else {
-            return documentSnapshot.empty as boolean;
-          }
-        } else {
-          return documentSnapshot.empty as boolean;
-        }
-      })
-      .catch(error => {
-        console.log('Error getting documents: ', error);
-        return false;
-      });
   }
 }

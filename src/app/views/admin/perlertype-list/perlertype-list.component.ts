@@ -22,12 +22,11 @@ export class PerlertypeListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.perlerTypeSubscription = this.perlerTypeService.perlerTypesSubject.subscribe(
-      (perlerTypes: any[]) => {
+    this.perlerTypeSubscription = this.perlerTypeService.perlerTypes$.subscribe(
+      (perlerTypes: PerlerType[]) => {
         this.perlerTypes = perlerTypes;
       }
     );
-    this.perlerTypeService.emitPerlerTypes();
   }
 
   onNewPerlerType() {

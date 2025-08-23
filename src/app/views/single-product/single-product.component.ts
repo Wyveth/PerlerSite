@@ -7,6 +7,9 @@ import { Product } from 'src/app/api/models/class/product';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
 import { CommentListComponent } from '../comment-list/comment-list.component';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-single-product',
@@ -14,41 +17,26 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
   standalone: true,
   imports: [CommonModule, BreadcrumbsComponent, CommentListComponent]
 })
-export class SingleProductComponent implements OnInit {
-  isAuth!: boolean;
-  product!: Product;
+export class SingleProductComponent extends BaseComponent implements OnInit {
+  product$ = new BehaviorSubject<Product | null>(null);
   key!: string;
-  currentRate = 3.14;
 
   constructor(
+    resources: AppResource,
     private route: ActivatedRoute,
     private productService: ProductService,
     private tagService: TagService,
     private router: Router
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
-    onAuthStateChanged(getAuth(), user => {
-      if (user) {
-        this.isAuth = true;
-      } else {
-        this.isAuth = false;
-      }
-    });
-
-    this.product = new Product('', '', '', '', '', '', '');
     this.key = this.route.snapshot.params['id'];
-    this.productService.getProduct(this.key).then((product: any) => {
-      this.product = product;
-      let count = this.product.tagsKey.length;
-      let countGo = 0;
-      this.product.tagsVisu = '';
-
-      this.product.tagsKey.forEach((tag: any) => {
-        countGo++;
-        if (countGo == count) this.product.tagsVisu = this.product.tagsVisu + tag['item_text'];
-        else this.product.tagsVisu = this.product.tagsVisu + tag['item_text'] + ', ';
-      });
+    this.productService.getProduct(this.key).then((product: Product) => {
+      // enrichis le product comme tu le fais
+      this.product$.next(product);
+      product.tagsVisu = product.tagsKey.map(tag => tag['item_text']).join(', ');
     });
   }
 

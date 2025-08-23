@@ -15,159 +15,278 @@
   nodeChildChild="Modifier"
 ></app-breadcrumbs>
 
-<section class="h-full py-18">
-  <div class="container">
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="formStyle w-full space-y-8">
     <div class="flex justify-center">
-      <div class="col-sm-6 formStyle">
-        <div class="flex justify-center">
-          <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau produit</h2>
-          <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un produit</h2>
-        </div>
-        <form [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
-          <div class="form-group form-control-sm">
-            <label for="title">Titre</label>
-            <input
-              type="text"
-              id="title"
-              class="form-control"
-              formControlName="title"
-              [ngClass]="{ 'is-invalid': shouldShowTitleError() }"
-            />
-            <div *ngIf="f.title.errors" class="invalid-feedback">
+      <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau produit</h2>
+      <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un produit</h2>
+    </div>
+    <form
+      *ngIf="productForm"
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmitForm()"
+      class="space-y-8 flex flex-col"
+    >
+      <div class="flex flex-col space-y-7 md:grid md:grid-cols-2 md:gap-4 md:items-start">
+        <div class="flex flex-col justify-center space-y-7">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="title">Titre</label>
+              <input
+                type="text"
+                id="title"
+                pInputText
+                class="form-control"
+                formControlName="title"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowTitleError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.title.errors && (f.title.touched || f.title.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.title.errors.required">Le titre est obligatoire</div>
             </div>
           </div>
 
-          <div class="form-group form-control-sm">
-            <label for="titleContent">Titre de la Description</label>
-            <input
-              type="text"
-              id="titleContent"
-              class="form-control"
-              formControlName="titleContent"
-              [ngClass]="{ 'is-invalid': shouldShowTitleContentError() }"
-            />
-            <div *ngIf="f.titleContent.errors" class="invalid-feedback">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="titleContent">Titre de la Description</label>
+              <input
+                type="text"
+                id="titleContent"
+                class="form-control"
+                pInputText
+                formControlName="titleContent"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowTitleContentError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.titleContent.errors && (f.titleContent.touched || f.titleContent.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.titleContent.errors.required">
                 Le titre de la description est obligatoire
               </div>
             </div>
           </div>
 
-          <div class="form-group form-control-sm">
-            <label for="content">Description</label>
-            <textarea
-              id="content"
-              class="form-control"
-              formControlName="content"
-              [ngClass]="{ 'is-invalid': shouldShowContentError() }"
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="content">Description</label>
+              <textarea
+                id="content"
+                class="form-control"
+                pTextarea
+                rows="10"
+                formControlName="content"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowContentError() }"
+              >
+              </textarea>
+            </p-floatlabel>
+            <div
+              *ngIf="f.content.errors && (f.content.touched || f.content.dirty)"
+              class="text-red-600 text-sm mt-1"
             >
-            </textarea>
-            <div *ngIf="f.content.errors" class="invalid-feedback">
               <div *ngIf="f.content.errors.required">Le contenu est obligatoire</div>
             </div>
           </div>
 
-          <div class="form-group form-control-sm">
-            <label for="author">Auteur</label>
-            <input
-              type="text"
-              id="author"
-              class="form-control"
-              formControlName="author"
-              [ngClass]="{ 'is-invalid': shouldShowAuthorError() }"
-            />
-            <div *ngIf="f.author.errors" class="invalid-feedback">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="author">Auteur</label>
+              <input
+                type="text"
+                id="author"
+                class="form-control"
+                pInputText
+                formControlName="author"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowAuthorError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.author.errors && (f.author.touched || f.author.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.author.errors.required">L'auteur est obligatoire</div>
             </div>
           </div>
-
-          <div class="form-group form-control-sm">
-            <label for="size">Taille</label>
-            <input
-              type="text"
-              id="size"
-              class="form-control"
-              formControlName="size"
-              [ngClass]="{ 'is-invalid': shouldShowSizeError() }"
-            />
-            <div *ngIf="f.size.errors" class="invalid-feedback">
+          <div class="form-group">
+            <div class="flex flex-col flex gap-4 items-center">
+              <label class="dark:text-white">Dimensions</label>
+              <div class="flex gap-2">
+                <p-inputgroup>
+                  <p-inputgroup-addon>H</p-inputgroup-addon>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="size_h"
+                    [step]="0.1"
+                    placeholder="Hauteur"
+                  />
+                  <p-inputgroup-addon>cm</p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup>
+                  <p-inputgroup-addon>L</p-inputgroup-addon>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="size_w"
+                    [step]="0.1"
+                    placeholder="Largeur"
+                  />
+                  <p-inputgroup-addon>cm</p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+            <div
+              *ngIf="f.size.errors && (f.size.touched || f.size.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.size.errors.required">La taille est obligatoire</div>
             </div>
           </div>
 
-          <div class="form-group form-control-sm">
-            <label for="time">Temps</label>
-            <input
-              type="text"
-              id="time"
-              class="form-control"
-              formControlName="time"
-              [ngClass]="{ 'is-invalid': shouldShowTimeError() }"
-            />
-            <div *ngIf="f.time.errors" class="invalid-feedback">
+          <div class="form-group">
+            <div class="flex flex-col flex gap-4 items-center">
+              <label class="dark:text-white">Durée</label>
+              <div class="flex gap-2">
+                <p-inputgroup>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="time_h"
+                    [step]="1"
+                    placeholder="Heures"
+                  />
+                  <p-inputgroup-addon>h</p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="time_m"
+                    [min]="0"
+                    [max]="45"
+                    [step]="15"
+                    placeholder="Minutes"
+                  />
+                  <p-inputgroup-addon>min</p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+            <div
+              *ngIf="f.time.errors && (f.time.touched || f.time.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.time.errors.required">Le temps est obligatoire</div>
             </div>
           </div>
+        </div>
 
-          <div class="form-group form-control-sm">
-            <label for="date">Date</label>
-            <input
-              type="text"
-              id="date"
-              class="form-control"
-              formControlName="date"
-              [ngClass]="{ 'is-invalid': shouldShowDateError() }"
-            />
-            <div *ngIf="f.date.errors" class="invalid-feedback">
+        <div class="flex flex-col justify-center space-y-7">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <p-datepicker
+                id="date"
+                inputId="date"
+                class="form-control"
+                formControlName="date"
+                [showIcon]="true"
+                styleClass="w-full"
+                dateFormat="dd/mm/yy"
+                [ngClass]="{ 'is-invalid': shouldShowDateError() }"
+              />
+              <label for="date">Date</label>
+            </p-floatlabel>
+            <div
+              *ngIf="f.date.errors && (f.date.touched || f.date.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.date.errors.required">La date est obligatoire</div>
             </div>
           </div>
 
-          <div class="flex mb-3" style="margin-top: 2rem">
-            <label for="formFile" class="col-sm-3 col-form-label">Ajouter une photo</label>
-            <div class="col-sm-9">
-              <input
-                type="file"
-                (change)="detectFiles($event)"
-                class="form-control"
-                accept="image/*"
-              />
-              <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
-            </div>
+          <div class="flex items-center justify-center gap-4">
+            <label for="formFile" class="dark:text-white">Ajouter une photo</label>
+            <p-fileupload
+              mode="basic"
+              name="demo[]"
+              chooseIcon="pi pi-upload"
+              accept="image/*"
+              maxFileSize="10000000"
+              (onUpload)="detectFiles($event)"
+              [auto]="true"
+              chooseLabel="Parcourir"
+            />
           </div>
+          <img
+            *ngIf="urlImg && !fileUploaded"
+            [src]="urlImg"
+            alt="Image du produit"
+            class="w-full h-64 object-cover rounded-lg"
+          />
+          <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
 
-          <div class="form-group form-control-sm">
-            <!-- <ng-multiselect-dropdown formControlName="tagsKey" [placeholder]="'Sélectionner un ou plusieurs Tags'"
-              [settings]="dropdownSettingsTags" [data]="dropdownListTags"
-              [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }">
-            </ng-multiselect-dropdown> -->
-            <div *ngIf="f.tagsKey.errors" class="invalid-feedback">
+          <div class="form-group space-y-3">
+            <label class="flex justify-center dark:text-white" for="tagsKey">Tags</label>
+            <p-multiselect
+              formControlName="tagsKey"
+              [placeholder]="'Sélectionner un ou plusieurs Tags'"
+              [filter]="true"
+              optionValue="item_id"
+              optionLabel="item_text"
+              display="chip"
+              emptyFilterMessage="Aucun tag trouvé"
+              emptyMessage="Aucun tag n'est disponible"
+              selectedItemsLabel="{0} Tags sélectionnés"
+              [options]="dropdownListTags"
+              class="w-full"
+              [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }"
+            />
+
+            <div
+              *ngIf="f.tagsKey.errors && (f.tagsKey.touched || f.tagsKey.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.tagsKey.errors.required">Minimum un tag doit être sélectionné</div>
             </div>
           </div>
 
-          <div class="form-group form-control-sm">
-            <!-- <ng-multiselect-dropdown formControlName="perlerTypesKey" [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
-              [settings]="dropdownSettingsPerlerTypes" [data]="dropdownListPerlerTypes"
-              [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }">
-            </ng-multiselect-dropdown> -->
-            <div *ngIf="f.perlerTypesKey.errors" class="invalid-feedback">
+          <div class="form-group space-y-3">
+            <label class="flex justify-center dark:text-white" for="perlerTypesKey"
+              >Types Perler</label
+            >
+            <p-multiselect
+              formControlName="perlerTypesKey"
+              [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
+              [filter]="true"
+              optionValue="item_id"
+              optionLabel="item_text"
+              display="chip"
+              emptyFilterMessage="Aucun type de perle trouvé"
+              emptyMessage="Aucun type de perle n'est disponible"
+              selectedItemsLabel="{0} Types de perle sélectionnés"
+              [options]="dropdownListPerlerTypes"
+              class="w-full"
+              [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }"
+            />
+            <div
+              *ngIf="
+                f.perlerTypesKey.errors && (f.perlerTypesKey.touched || f.perlerTypesKey.dirty)
+              "
+              class="text-red-600 text-sm mt-1"
+            >
               <div *ngIf="f.perlerTypesKey.errors.required">
                 Minimum un type de perle doit être sélectionné
               </div>
             </div>
           </div>
-
-          <div class="flex" style="margin-top: 2rem">
-            <div class="col">
-              <button class="btn btn-success" type="submit" [disabled]="productForm.invalid">
-                Enregistrer
-              </button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
+      <div class="flex w-full justify-center">
+        <p-button type="submit" [disabled]="productForm.invalid"> Enregistrer </p-button>
+      </div>
+    </form>
   </div>
 </section>

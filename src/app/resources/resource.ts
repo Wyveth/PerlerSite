@@ -203,6 +203,7 @@ export interface Signup {
 
 export interface Product {
   title: string;
+  title_plural: string;
 }
 
 export interface Generic {
@@ -214,6 +215,17 @@ export interface Generic {
   save_m: string;
   save_f: string;
   confirm: string;
+  cancel: string;
+  attention: string;
+  details: string;
+  delete_confirm_m: string;
+  delete_confirm_f: string;
+  delete_success_m: string;
+  delete_success_f: string;
+  delete_cancelled: string;
+  delete_error: string;
+  save_success: string;
+  save_error: string;
 }
 
 export interface Button {

@@ -89,8 +89,11 @@ export class ProductListComponent extends BaseComponent {
     event?.stopPropagation();
     this.confirmationService.confirm({
       target: event?.target as EventTarget,
-      message: 'Voulez vous vraiment supprimer le produit: ' + product.title,
-      header: 'Attention!',
+      message: this.resource.generic.delete_confirm_m.format(
+        this.resource.product.title.toLowerCase(),
+        product.title
+      ),
+      header: this.resource.generic.attention,
       icon: 'pi pi-exclamation-triangle',
       rejectLabel: this.resource.button.cancel,
       rejectButtonProps: {
@@ -106,16 +109,19 @@ export class ProductListComponent extends BaseComponent {
       accept: () => {
         this.productService.removeProduct(product);
         this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmation',
-          detail: 'Le produit ' + product.title + 'a bien été supprimé'
+          severity: severity.info,
+          summary: this.resource.generic.confirm,
+          detail: this.resource.generic.delete_success_m.format(
+            this.resource.product.title.toLowerCase(),
+            product.title
+          )
         });
       },
       reject: () => {
         this.messageService.add({
-          severity: 'secondary',
-          summary: 'Annulé',
-          detail: 'La demande a bien été annulé'
+          severity: severity.secondary,
+          summary: this.resource.generic.cancel,
+          detail: this.resource.generic.delete_cancelled
         });
       }
     });

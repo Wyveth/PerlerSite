@@ -21,8 +21,7 @@
     <!-- Boutons -->
     <div
       class="flex gap-3"
-      [class.pointer-events-none]="!active"
-      [class.pointer-events-auto]="active"
+      [ngClass]="active ? 'pointer-events-auto' : 'pointer-events-none md:pointer-events-auto'"
     >
       <p-button
         *ngFor="let button of buttons"

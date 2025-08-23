@@ -1,73 +1,60 @@
 <app-breadcrumbs
-  *ngIf="isAuth"
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Produits"
-  nodeChildUrl="products"
-  nodeChildChild="Détails"
-></app-breadcrumbs>
-<app-breadcrumbs
-  *ngIf="!isAuth"
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Produits"
-  nodeChildChild="Détails"
+  *ngIf="product$ | async as product"
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.product.title_plural"
+  [nodeChildUrl]="this.resource.router.routes.products"
+  [nodeChildChild]="product.title"
 ></app-breadcrumbs>
 
 <!-- ======= Portfolio Details Section ======= -->
-<section id="portfolio-details" class="portfolio-details">
-  <div class="container">
-    <div class="flex my-4">
-      <div class="w-full lg:w-8/12">
-        <div class="portfolio-details-slider swiper">
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide">
-              <img *ngIf="product.pictureUrl" src="{{ product.pictureUrl }}" alt="" />
-            </div>
-            <!--<div class="swiper-slide">
-                <img src="assets/img/portfolio/portfolio-2.jpg" alt="">
-              </div>
-              <div class="swiper-slide">
-                <img src="assets/img/portfolio/portfolio-3.jpg" alt="">
-              </div>-->
+<section id="portfolio-details" class="portfolio-details" *ngIf="product$ | async as product">
+  <div class="flex md:flex-row flex-col w-10/12 mx-auto space-x-4">
+    <div class="w-full md:w-8/12">
+      <div class="portfolio-details-slider swiper">
+        <div class="swiper-wrapper align-items-center">
+          <div class="swiper-slide">
+            <img *ngIf="product.pictureUrl" src="{{ product.pictureUrl }}" alt="" />
           </div>
-          <div class="swiper-pagination"></div>
         </div>
+        <div class="swiper-pagination"></div>
       </div>
+    </div>
 
-      <div class="w-full lg:w-4/12">
-        <div class="portfolio-info">
-          <h3>{{ product.title }}</h3>
-          <ul>
-            <li><strong>Tags</strong>: {{ product.tagsVisu }}</li>
-            <li><strong>Créateur</strong>: {{ product.author }}</li>
-            <li><strong>Taille (H x L)</strong>: {{ product.size }} cm</li>
-            <li><strong>Temps</strong>: {{ product.time }}</li>
-            <li><strong>Date</strong>: {{ product.date }}</li>
-          </ul>
-        </div>
-        <div class="portfolio-description">
-          <h2>{{ product.titleContent }}</h2>
-          <p>
-            {{ product.content }}
-          </p>
-          <!--<p>
+    <div class="w-full lg:w-4/12 flex flex-col justify-between space-y-4">
+      <div class="portfolio-info dark:text-white dark:bg-zinc-700">
+        <h3>{{ product.title }}</h3>
+        <ul>
+          <li><strong>Tags</strong>: {{ product.tagsVisu }}</li>
+          <li><strong>Créateur</strong>: {{ product.author }}</li>
+          <li><strong>Taille (H x L)</strong>: {{ product.size }} cm</li>
+          <li><strong>Temps</strong>: {{ product.time }}</li>
+          <li><strong>Date</strong>: {{ product.date }}</li>
+        </ul>
+      </div>
+      <div
+        class="portfolio-description dark:text-white dark:bg-zinc-700 shadow-[0px_0_30px_rgba(1,41,112,0.08)]"
+      >
+        <h2>{{ product.titleContent }}</h2>
+        <p>
+          {{ product.content }}
+        </p>
+        <!--<p>
             <button class="btn btn-default" (click)="onBack()">Retour</button>
           </p>-->
-          <strong>Avis</strong>:<br />
+        <!-- <strong>Avis</strong>:<br />
           <ng-template #t let-fill="fill">
             <span class="star" [class.full]="fill === 100">
               <span class="half" [style.width.%]="fill">&starf;;</span>&starf;
             </span>
-          </ng-template>
-          <!-- <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating> -->
-          {{ currentRate }}
-        </div>
+          </ng-template> -->
+        <!-- <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating> -->
+        <!-- {{ currentRate }} -->
       </div>
     </div>
-    <div class="flex gy-4">
-      <app-comment-list></app-comment-list>
-    </div>
   </div>
+  <!-- <div class="flex gy-4">
+      <app-comment-list></app-comment-list>
+    </div> -->
 </section>
 <!-- End Portfolio Details Section -->

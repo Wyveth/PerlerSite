@@ -13,7 +13,7 @@ import {
 import { RouterModule } from '@angular/router';
 import imagesLoaded from 'imagesloaded';
 import { Subscription } from 'rxjs';
-import { Product, TagKey } from 'src/app/api/models/class/product';
+import { Product, KeyValue } from 'src/app/api/models/class/product';
 import { Tag } from 'src/app/api/models/class/tag';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
@@ -81,10 +81,9 @@ export class SectionPortfolioComponent extends BaseComponent implements OnInit, 
   }
 
   ngOnInit() {
-    this.tagSubscription = this.tagService.tagsSubject.subscribe((tags: Tag[]) => {
+    this.tagSubscription = this.tagService.tags$.subscribe((tags: Tag[]) => {
       this.tags = tags;
     });
-    this.tagService.emitTags();
 
     this.productService.products$.subscribe((products: Product[]) => {
       // BEGIN:
@@ -95,7 +94,7 @@ export class SectionPortfolioComponent extends BaseComponent implements OnInit, 
           .map(product => {
             const isNew = this.isNew(product.dateCreation);
             const filterClasses = product.tagsKey
-              .map((t: TagKey) => 'filter-' + t.item_text) // Changement ici pour utiliser 'libelle' de TagKey
+              .map((t: KeyValue) => 'filter-' + t.item_text) // Changement ici pour utiliser 'libelle' de TagKey
               .join(' ');
             return { ...product, isNew, filterClasses };
           })
