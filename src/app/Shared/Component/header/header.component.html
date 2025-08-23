@@ -12,7 +12,7 @@
       ></span>
     </a>
 
-    <div class="flex">
+    <div class="flex items-center">
       <p-menubar class="hidden md:block" [model]="menuItems" />
 
       <p-drawer
@@ -71,7 +71,10 @@
         </ul>
       </p-drawer>
 
-      <button class="block md:hidden w-10 h-10 text-black" (click)="visibleSidebar = true">
+      <button
+        class="block md:hidden w-10 h-10 text-black dark:!text-white"
+        (click)="visibleSidebar = true"
+      >
         <i class="pi pi-bars w-4 h-4"></i>
       </button>
 

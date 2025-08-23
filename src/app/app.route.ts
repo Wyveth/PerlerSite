@@ -24,46 +24,52 @@ export const routes: Routes = [
         path: 'tags',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/tag-list/tag-list.component').then(m => m.TagListComponent);
+          return import('./views/admin/tag/tag-list/tag-list.component').then(
+            m => m.TagListComponent
+          );
         }
       },
       {
         path: 'tags/new',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/tag-form/tag-form.component').then(m => m.TagFormComponent);
+          return import('./views/admin/tag/tag-form/tag-form.component').then(
+            m => m.TagFormComponent
+          );
         }
       },
       {
         path: 'tags/edit/:id',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/tag-form/tag-form.component').then(m => m.TagFormComponent);
+          return import('./views/admin/tag/tag-form/tag-form.component').then(
+            m => m.TagFormComponent
+          );
         }
       },
       {
-        path: 'perlerTypes',
+        path: 'perler-types',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/perlertype-list/perlertype-list.component').then(
+          return import('./views/admin/perlertype/perlertype-list/perlertype-list.component').then(
             m => m.PerlertypeListComponent
           );
         }
       },
       {
-        path: 'perlerTypes/new',
+        path: 'perler-types/new',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/perlertype-form/perlertype-form.component').then(
+          return import('./views/admin/perlertype/perlertype-form/perlertype-form.component').then(
             m => m.PerlertypeFormComponent
           );
         }
       },
       {
-        path: 'perlerTypes/edit/:id',
+        path: 'perler-types/edit/:id',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/perlertype-form/perlertype-form.component').then(
+          return import('./views/admin/perlertype/perlertype-form/perlertype-form.component').then(
             m => m.PerlertypeFormComponent
           );
         }
@@ -72,7 +78,7 @@ export const routes: Routes = [
         path: 'products',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/product-list/product-list.component').then(
+          return import('./views/admin/product/product-list/product-list.component').then(
             m => m.ProductListComponent
           );
         }
@@ -81,7 +87,7 @@ export const routes: Routes = [
         path: 'products/new',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/product-form/product-form.component').then(
+          return import('./views/admin/product/product-form/product-form.component').then(
             m => m.ProductFormComponent
           );
         }
@@ -90,17 +96,8 @@ export const routes: Routes = [
         path: 'products/edit/:id',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/product-form/product-form.component').then(
+          return import('./views/admin/product/product-form/product-form.component').then(
             m => m.ProductFormComponent
-          );
-        }
-      },
-      {
-        path: 'products/viewA/:id',
-        canActivate: [AuthAdminGuardService],
-        loadComponent() {
-          return import('./views/single-product/single-product.component').then(
-            m => m.SingleProductComponent
           );
         }
       },
@@ -116,7 +113,7 @@ export const routes: Routes = [
         path: 'contacts',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/contact-list/contact-list.component').then(
+          return import('./views/admin/contact/contact-list/contact-list.component').then(
             m => m.ContactListComponent
           );
         }
@@ -125,17 +122,8 @@ export const routes: Routes = [
         path: 'users',
         canActivate: [AuthAdminGuardService],
         loadComponent() {
-          return import('./views/admin/user-list/user-list.component').then(
+          return import('./views/admin/user/user-list/user-list.component').then(
             m => m.UserListComponent
-          );
-        }
-      },
-      {
-        path: 'users/editA/:id',
-        canActivate: [AuthAdminGuardService],
-        loadComponent() {
-          return import('./views/admin/user-edit/user-edit.component').then(
-            m => m.UserEditComponent
           );
         }
       },
@@ -143,7 +131,7 @@ export const routes: Routes = [
         path: 'users/edit/:id',
         canActivate: [AuthGuardService],
         loadComponent() {
-          return import('./views/admin/user-edit/user-edit.component').then(
+          return import('./views/admin/user/user-edit/user-edit.component').then(
             m => m.UserEditComponent
           );
         }

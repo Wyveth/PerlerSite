@@ -75,8 +75,6 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
   perlerTypeSubscription!: Subscription;
   perlerTypeDDL: any[] = [];
 
-  urlImg: string = '';
-
   constructor(
     resources: AppResource,
     private formBuilder: UntypedFormBuilder,
@@ -138,7 +136,7 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
         date: parseDate(product.date)
       });
 
-      this.urlImg = product.pictureUrl || '';
+      this.fileUrl = product.pictureUrl || '';
     }
   }
 

@@ -160,6 +160,7 @@
   },
   "contact": {
     "title": "Contact",
+    "title_plural": "Contacts",
     "subtitle": "Me contacter",
     "name_placeholder": "Votre nom",
     "email_placeholder": "Votre email",
@@ -277,5 +278,17 @@
   "product": {
     "title": "Produit",
     "title_plural": "Produits"
+  },
+  "tag": {
+    "title": "Tag",
+    "title_plural": "Tags"
+  },
+  "perler_type": {
+    "title": "Type de perle",
+    "title_plural": "Types de perle"
+  },
+  "user": {
+    "title": "Utilisateur",
+    "title_plural": "Utilisateurs"
   }
 }

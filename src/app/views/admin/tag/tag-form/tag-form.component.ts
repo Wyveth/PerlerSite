@@ -14,12 +14,25 @@ import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { Tag } from 'src/app/api/models/class/tag';
 import { TagService } from 'src/app/api/services/tag.service';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-tag-form',
   templateUrl: './tag-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BreadcrumbsComponent,
+    InputTextModule,
+    ButtonModule,
+    FloatLabelModule,
+    FileUploadModule
+  ]
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;
@@ -54,8 +67,10 @@ export class TagFormComponent implements OnInit {
     });
 
     if (!this.isAddMode) {
-      this.tagService.getTag(this.id).then((data: any) => {
-        this.tagForm.patchValue(data);
+      this.tagService.getTag(this.id).then((tag: Tag) => {
+        this.tagForm.patchValue(tag);
+
+        this.fileUrl = tag.pictureUrl || '';
       });
     }
   }

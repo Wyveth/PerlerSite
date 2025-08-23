@@ -1,18 +1,9 @@
 <app-breadcrumbs
-  *ngIf="isAddMode"
   nodeParent="Accueil"
   nodeParentUrl="home"
   nodeChild="Produits"
   nodeChildUrl="products"
-  nodeChildChild="Créer"
-></app-breadcrumbs>
-<app-breadcrumbs
-  *ngIf="!isAddMode"
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Produits"
-  nodeChildUrl="products"
-  nodeChildChild="Modifier"
+  [nodeChildChild]="isAddMode ? 'Créer' : 'Modifier'"
 ></app-breadcrumbs>
 
 <section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
@@ -221,8 +212,8 @@
             />
           </div>
           <img
-            *ngIf="urlImg && !fileUploaded"
-            [src]="urlImg"
+            *ngIf="fileUrl && !fileUploaded"
+            [src]="fileUrl"
             alt="Image du produit"
             class="w-full h-64 object-cover rounded-lg"
           />

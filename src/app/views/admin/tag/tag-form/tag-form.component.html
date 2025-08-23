@@ -1,0 +1,90 @@
+<app-breadcrumbs
+  nodeParent="Accueil"
+  nodeParentUrl="home"
+  nodeChild="Tags"
+  nodeChildUrl="tags"
+  [nodeChildChild]="isAddMode ? 'Créer' : 'Modifier'"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="formStyle w-full space-y-8">
+    <div class="flex justify-center">
+      <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau tag</h2>
+      <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un tag</h2>
+    </div>
+    <form [formGroup]="tagForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
+      <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 space-y-7 md:space-y-0">
+        <div class="space-y-7 flex flex-col justify-center">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="code">Code</label>
+              <input
+                type="text"
+                id="code"
+                class="form-control"
+                pInputText
+                formControlName="code"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowCodeError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.code.errors && (f.code.touched || f.code.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div *ngIf="f.code.errors.required">Le code est obligatoire</div>
+              <div *ngIf="f.code.errors.tagCodeExists">Le code doit être unique</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="libelle">Libelle</label>
+              <input
+                type="text"
+                id="libelle"
+                class="form-control"
+                pInputText
+                formControlName="libelle"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowLibelleError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.libelle.errors && (f.libelle.touched || f.libelle.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div *ngIf="f.libelle.errors.required">Le libelle est obligatoire</div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-4">
+            <label for="formFile" class="dark:text-white">Ajouter une photo</label>
+            <p-fileupload
+              mode="basic"
+              name="demo[]"
+              chooseIcon="pi pi-upload"
+              accept="image/*"
+              maxFileSize="10000000"
+              (onUpload)="detectFiles($event)"
+              [auto]="true"
+              chooseLabel="Parcourir"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-7">
+          <img
+            *ngIf="fileUrl && !fileUploaded"
+            [src]="fileUrl"
+            alt="Image du produit"
+            class="w-full h-64 object-cover rounded-lg"
+          />
+          <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
+        </div>
+      </div>
+
+      <div class="flex w-full justify-center">
+        <p-button type="submit" [disabled]="tagForm.invalid"> Enregistrer </p-button>
+      </div>
+    </form>
+  </div>
+</section>

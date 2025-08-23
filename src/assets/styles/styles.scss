@@ -2507,4 +2507,47 @@ html.dark {
     background-color: transparent;
     color: #94a3b8;
   }
+
+  .p-drawer {
+    background-color: #1f2937 !important; /* Tailwind gray-800 */
+    color: #ffffff !important; /* Tailwind white */
+
+    a {
+      color: #ffffff !important; /* Tailwind white */
+    }
+  }
+}
+
+/* Réduction de la largeur des toasts sur petits écrans */
+@media (max-width: 768px) {
+  .p-toast {
+    width: 90% !important;      /* occupe presque toute la largeur */
+    max-width: 320px !important; /* limite la taille */
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* centrage */
+  }
+
+  .p-toast-message {
+    font-size: 14px; /* texte plus lisible sans être énorme */
+    padding: 0.75rem;
+  }
+
+  .p-toast-message .p-toast-message-text {
+    word-break: break-word; /* évite que le texte déborde */
+  }
+
+  .p-dialog {
+    width: 90% !important;     /* occupe presque toute la largeur */
+    max-width: 400px !important; /* limite la taille max */
+  }
+
+  .p-dialog .p-dialog-content {
+    font-size: 14px; /* texte adapté pour mobile */
+    padding: 1rem;
+  }
+
+  .p-dialog .p-dialog-header {
+    font-size: 16px;
+    padding: 0.75rem 1rem;
+  }
 }

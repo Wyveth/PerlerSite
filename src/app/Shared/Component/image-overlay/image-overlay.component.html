@@ -3,8 +3,12 @@
   [class.group]="!active"
   (click)="toggleRequested.emit()"
 >
-  <img [src]="imageUrl" alt="Image" class="w-full h-full object-cover" />
-
+  <img *ngIf="imageUrl" [src]="imageUrl" alt="Image" class="w-full h-full object-cover" />
+  <div
+    *ngIf="background"
+    class="w-full h-full"
+    [ngStyle]="{ 'background-color': background }"
+  ></div>
   <!-- Overlay -->
   <div
     class="absolute inset-0 bg-black/50 opacity-0 flex flex-col items-center justify-center gap-4 transition-all duration-300 group-hover:opacity-100"

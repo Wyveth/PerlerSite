@@ -11,12 +11,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { PerlerType } from 'src/app/api/models/class/perler-type';
 import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-perlertype-form',
   templateUrl: './perlertype-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BreadcrumbsComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BreadcrumbsComponent,
+    InputTextModule,
+    ColorPickerModule,
+    FloatLabelModule,
+    ButtonModule
+  ]
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;

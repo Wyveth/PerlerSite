@@ -18,6 +18,7 @@ export interface OverlayButton {
 export class ImageOverlayComponent {
   @Input() title!: string;
   @Input() imageUrl!: string;
+  @Input() background!: string;
   @Input() buttons: OverlayButton[] = [];
   @Input() active = false;
 

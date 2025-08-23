@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
   }
 
   onEditUser(key: string) {
-    this.router.navigate(['/users', 'editA', key]);
+    this.router.navigate(['/users', 'edit', key]);
   }
 
   onDeleteUser(user: User) {

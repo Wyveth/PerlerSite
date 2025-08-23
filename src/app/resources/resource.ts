@@ -13,6 +13,9 @@ export interface Resource {
   signin: Signin;
   signup: Signup;
   product: Product;
+  tag: Tag;
+  perler_type: PerlerType;
+  user: User;
 }
 
 export interface Layout {
@@ -109,6 +112,7 @@ export interface FAQLink {
 
 export interface Contact {
   title: string;
+  title_plural: string;
   subtitle: string;
   name_placeholder: string;
   email_placeholder: string;
@@ -202,6 +206,21 @@ export interface Signup {
 }
 
 export interface Product {
+  title: string;
+  title_plural: string;
+}
+
+export interface Tag {
+  title: string;
+  title_plural: string;
+}
+
+export interface PerlerType {
+  title: string;
+  title_plural: string;
+}
+
+export interface User {
   title: string;
   title_plural: string;
 }

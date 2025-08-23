@@ -1,25 +1,25 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
-import { Product } from 'src/app/api/models/class/product';
-import { ProductService } from 'src/app/api/services/product.service';
+import { TagService } from 'src/app/api/services/tag.service';
+import { Tag } from 'src/app/api/models/class/tag';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import {
   ImageOverlayComponent,
   OverlayButton
 } from 'src/app/shared/component/image-overlay/image-overlay.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
+  selector: 'app-tag-list',
+  templateUrl: './tag-list.component.html',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,40 +31,34 @@ import { severity } from 'src/app/shared/enum/severity';
     FormatPipe
   ]
 })
-export class ProductListComponent extends BaseComponent {
-  productsWithButtons$: Observable<{ product: Product; buttons: OverlayButton[] }[]>;
+export class TagListComponent extends BaseComponent {
+  tagsWithButtons$: Observable<{ tag: Tag; buttons: OverlayButton[] }[]>;
 
   constructor(
-    resources: AppResource,
+    resource: AppResource,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private productService: ProductService,
+    private tagService: TagService,
     private router: Router
   ) {
-    super(resources);
+    super(resource);
 
-    this.productsWithButtons$ = this.productService.products$.pipe(
-      map(products =>
-        products.map(product => ({
-          product,
+    this.tagsWithButtons$ = this.tagService.tags$.pipe(
+      map(tags =>
+        tags.map(tag => ({
+          tag,
           buttons: [
-            {
-              icon: 'pi pi-eye',
-              label: this.resource.button.view,
-              color: 'p-button-info',
-              command: () => this.onViewProduct(product.key)
-            },
             {
               icon: 'pi pi-pencil',
               label: this.resource.button.edit,
               color: 'p-button-warn',
-              command: () => this.onEditProduct(product.key)
+              command: () => this.onEdit(tag.key)
             },
             {
               icon: 'pi pi-trash',
               label: this.resource.button.delete,
               color: 'p-button-danger',
-              command: (event?: Event) => this.onDeleteProduct(event, product)
+              command: (event?: Event) => this.onDelete(event, tag)
             }
           ]
         }))
@@ -72,26 +66,21 @@ export class ProductListComponent extends BaseComponent {
     );
   }
 
-  ellipsis(text: string, maxLength: number): string {
-    if (!text) return '';
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  onNew() {
+    this.router.navigate(['tags', 'new']);
   }
 
-  onNewProduct() {
-    this.router.navigate(['products', 'new']);
+  onEdit(key: string) {
+    this.router.navigate(['tags', 'edit', key]);
   }
 
-  onEditProduct(key: string) {
-    this.router.navigate(['products', 'edit', key]);
-  }
-
-  onDeleteProduct(event: Event | undefined, product: Product) {
+  onDelete(event: Event | undefined, tag: Tag) {
     event?.stopPropagation();
     this.confirmationService.confirm({
       target: event?.target as EventTarget,
       message: this.resource.generic.delete_confirm_m.format(
-        this.resource.product.title.toLowerCase(),
-        product.title
+        this.resource.tag.title.toLowerCase(),
+        tag.libelle
       ),
       header: this.resource.generic.attention,
       icon: 'pi pi-exclamation-triangle',
@@ -107,13 +96,13 @@ export class ProductListComponent extends BaseComponent {
       },
 
       accept: () => {
-        this.productService.removeProduct(product);
+        this.tagService.removeTag(tag);
         this.messageService.add({
           severity: severity.info,
           summary: this.resource.generic.confirm,
           detail: this.resource.generic.delete_success_m.format(
-            this.resource.product.title.toLowerCase(),
-            product.title
+            this.resource.tag.title.toLowerCase(),
+            tag.libelle
           )
         });
       },
@@ -125,10 +114,6 @@ export class ProductListComponent extends BaseComponent {
         });
       }
     });
-  }
-
-  onViewProduct(key: string) {
-    this.router.navigate(['products', 'viewA', key]);
   }
 
   activeOverlayIndex: number | null = null;
