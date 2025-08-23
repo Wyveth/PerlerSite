@@ -53,7 +53,7 @@ export class UserService {
         this.emitUsers();
       },
       error => {
-        console.log(error);
+        console.error(error);
       },
       () => {
         console.log('Users Chargé!');
@@ -68,7 +68,6 @@ export class UserService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
           querySnapshot.docs.forEach(element => {
             this.user = element.data() as User;
           });
@@ -89,7 +88,6 @@ export class UserService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
           querySnapshot.docs.forEach(element => {
             this.user = element.data() as User;
           });
@@ -198,14 +196,10 @@ export class UserService {
   async isDisplayNameAvailable(value: string): Promise<boolean> {
     return getDocs(query(this.db, where('displayName', '==', value)))
       .then(documentSnapshot => {
-        console.log('isDisplayNameAvailable');
-        console.log('Value: ' + value);
-        console.log('documentSnapshot: ' + documentSnapshot.empty);
-
         return documentSnapshot.empty as boolean;
       })
       .catch(error => {
-        console.log('Error getting documents: ', error);
+        console.error('Error getting documents: ', error);
         return false;
       });
   }
@@ -229,14 +223,10 @@ export class UserService {
   async isEmailAvailable(value: string): Promise<boolean> {
     return getDocs(query(this.db, where('email', '==', value)))
       .then(documentSnapshot => {
-        console.log('isDisplayNameAvailable');
-        console.log('Value: ' + value);
-        console.log('documentSnapshot: ' + documentSnapshot.empty);
-
         return documentSnapshot.empty as boolean;
       })
       .catch(error => {
-        console.log('Error getting documents: ', error);
+        console.error('Error getting documents: ', error);
         return false;
       });
   }

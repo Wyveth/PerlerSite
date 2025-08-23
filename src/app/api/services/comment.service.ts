@@ -47,7 +47,7 @@ export class CommentService {
         this.emitComments();
       },
       error => {
-        console.log(error);
+        console.error(error);
       },
       () => {
         console.log('Comments Chargé!');
@@ -62,7 +62,6 @@ export class CommentService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
           querySnapshot.docs.forEach(element => {
             this.comment = element.data() as Comment;
           });
@@ -83,7 +82,6 @@ export class CommentService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          console.log('Document data:', querySnapshot);
           querySnapshot.docs.forEach(element => {
             this.comments.push(element.data() as Comment);
           });

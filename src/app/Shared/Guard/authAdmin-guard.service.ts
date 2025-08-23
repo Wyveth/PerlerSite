@@ -22,7 +22,6 @@ export class AuthAdminGuardService {
       filter(isAdmin => isAdmin !== null), // attend que Firebase ait répondu
       take(1),
       map(isAdmin => {
-        console.log('AuthAdminGuardService: isAdmin', isAdmin);
         return isAdmin ? true : this.router.createUrlTree(['/signin']);
       })
     );

@@ -47,7 +47,7 @@ export class FileUploadService {
           fileUpload.name = fileUpload.file.name;
         },
         error => {
-          console.log('Erreur de chargement ! : ' + error);
+          console.error('Erreur de chargement ! : ' + error);
           reject(error);
         }
       );
@@ -70,7 +70,6 @@ export class FileUploadService {
 
       getDocs(qry).then(querySnapshot => {
         if (querySnapshot) {
-          //console.log("Document data:", querySnapshot);
           querySnapshot.docs.forEach(element => {
             resolve(element.data() as FileUpload);
           });
@@ -95,7 +94,7 @@ export class FileUploadService {
         console.log('Direction la suppression dans le storage');
         this.deleteFileStorage(fileUpload.url);
       })
-      .catch(error => console.log('Erreur: ' + error));
+      .catch(error => console.error('Erreur: ' + error));
   }
 
   private deleteFileDatabase(key: string): Promise<void> {
