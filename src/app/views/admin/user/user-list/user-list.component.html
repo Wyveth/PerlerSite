@@ -4,69 +4,75 @@
   nodeChild="Utilisateurs"
 ></app-breadcrumbs>
 
-<section class="h-full py-18">
-  <div class="container">
-    <table class="min-w-full border-collapse border border-gray-300">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="w-1/6 px-3 py-2 text-left border border-gray-300">Action</th>
-          <th class="w-2/6 px-3 py-2 text-left border border-gray-300">Email</th>
-          <th class="w-1/6 px-3 py-2 text-left border border-gray-300">Pseudo</th>
-          <th class="w-1/6 px-3 py-2 text-left border border-gray-300">Nom</th>
-          <th class="w-1/6 px-3 py-2 text-left border border-gray-300">Prenom</th>
-          <th class="w-1/12 px-3 py-2 text-left border border-gray-300">Admin</th>
-          <th class="w-1/12 px-3 py-2 text-left border border-gray-300">Compte</th>
+<section class="py-6 space-y-6">
+  <div class="flex flex-col w-10/12 mx-auto justify-center">
+    <p-table [value]="(usersWithButtons$ | async) ?? []" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+        <tr>
+          <th class="w-1/6">Action</th>
+          <th class="w-2/6">Email</th>
+          <th class="w-1/6">Pseudo</th>
+          <th class="w-1/6">Nom</th>
+          <th class="w-1/6">Prénom</th>
+          <th class="w-1/12">Admin</th>
+          <th class="w-1/12">Compte</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users; let i = index">
-          <td>
-            <!--(click)="onViewUser(user.key)"-->
-            <a class="btn btn-sm btn-outline-light link-info" (click)="open(content, user)">
+      </ng-template>
+      <ng-template #body let-user>
+        <tr>
+          <td class="border border-gray-300 !text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
+            <a (click)="onView($event, user.user)">
               <i class="fas fa-search"></i>
             </a>
-            <a class="btn btn-sm btn-outline-light link-warning" (click)="onEditUser(user.key)">
+            <a (click)="onEdit(user.user.key)">
               <i class="fas fa-edit"></i>
             </a>
-            <a class="btn btn-sm btn-outline-light link-danger">
-              <!-- [swal]="{ title: 'Attention!', text:'Voulez vous vraiment supprimer l\'utilisateur: ' + user.email, icon:'warning', cancelButtonText: 'Pas encore', showCancelButton: true }" (confirm)="onDeleteUser(user)"> -->
+            <a (click)="onDelete($event, user.user)">
               <i class="fas fa-trash"></i>
             </a>
           </td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.displayName }}</td>
-          <td>{{ user.surname }}</td>
-          <td>{{ user.name }}</td>
-          <td style="text-align: center">
-            <a *ngIf="user.admin === true" class="text-success" (click)="onUpdateAdmin(user.key)">
+          <td>{{ user.user.email }}</td>
+          <td>{{ user.user.displayName }}</td>
+          <td>{{ user.user.surname }}</td>
+          <td>{{ user.user.name }}</td>
+          <td class="!text-center">
+            <a
+              *ngIf="user.user.admin === true"
+              class="text-success"
+              (click)="onUpdateAdmin(user.user.key)"
+            >
               <i class="fas fa-toggle-on"></i>
             </a>
-            <a *ngIf="user.admin === false" class="text-danger" (click)="onUpdateAdmin(user.key)">
+            <a
+              *ngIf="user.user.admin === false"
+              class="text-danger"
+              (click)="onUpdateAdmin(user.user.key)"
+            >
               <i class="fas fa-toggle-off"></i>
             </a>
           </td>
-          <td style="text-align: center">
+          <td class="!text-center">
             <a
-              *ngIf="user.disabled === true"
+              *ngIf="user.user.disabled === true"
               class="text-danger"
-              (click)="onUpdateDisabled(user.key)"
+              (click)="onUpdateDisabled(user.user.key)"
             >
               <i class="fas fa-toggle-off"></i>
             </a>
             <a
-              *ngIf="user.disabled === false && user.admin !== true"
+              *ngIf="user.user.disabled === false && user.user.admin !== true"
               class="text-success"
-              (click)="onUpdateDisabled(user.key)"
+              (click)="onUpdateDisabled(user.user.key)"
             >
               <i class="fas fa-toggle-on"></i>
             </a>
           </td>
         </tr>
-      </tbody>
-    </table>
+      </ng-template>
+    </p-table>
   </div>
 </section>
-<ng-template #content let-c="close" let-d="dismiss">
+<!-- <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Utilisateur</h4>
     <button type="button" class="close" aria-label="Close" (click)="d()">
@@ -134,4 +140,4 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="c()">Fermer</button>
   </div>
-</ng-template>
+</ng-template> -->

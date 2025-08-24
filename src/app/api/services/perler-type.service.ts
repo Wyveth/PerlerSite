@@ -36,9 +36,7 @@ export class PerlerTypeService {
   private listenToPerlerTypes() {
     collectionData(this.db, { idField: 'id' })
       .pipe(
-        map((perlerTypes: any[]) =>
-          perlerTypes.sort((a, b) => a.reference.localeCompare(b.reference))
-        )
+        map((perlerTypes: any[]) => perlerTypes.sort((a, b) => a.libelle.localeCompare(b.libelle)))
       )
       .subscribe({
         next: (perlerTypes: PerlerType[]) => {

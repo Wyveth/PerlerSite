@@ -89,7 +89,7 @@ export class PerlertypeFormComponent implements OnInit {
     } else {
       this.perlerTypeService.updatePerlerType(this.id, perlerType);
     }
-    this.router.navigate(['/perlerTypes']);
+    this.router.navigate(['perler-types']);
   }
 
   public onChangeColor(color: string): void {

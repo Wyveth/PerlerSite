@@ -84,9 +84,9 @@ export class UserFormComponent implements OnInit {
     this.userService.updateUser(this.id, user);
 
     if (this.option == 'Profil') {
-      this.router.navigate(['/profil']);
+      this.router.navigate(['profil']);
     } else {
-      this.router.navigate(['/users']);
+      this.router.navigate(['users']);
     }
   }
 

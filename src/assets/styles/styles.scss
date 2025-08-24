@@ -2488,7 +2488,9 @@ html.dark {
     text-align: center;
   }
 
-  .p-floatlabel-on label {
+  .p-floatlabel-on label,
+  .p-datatable-thead > tr > th,
+  .p-datatable-tbody > tr > td  {
     background-color: #1f2937 !important;
     color: #ffffff !important;
   }
@@ -2498,7 +2500,9 @@ html.dark {
   .p-chip,
   .p-chip-remove-icon,
   .p-multiselect-overlay,
-  .p-multiselect-option {
+  .p-multiselect-option,
+  .p-datatable-table
+  {
     background-color: #374151 !important;
     color: #ffffff !important;
   }

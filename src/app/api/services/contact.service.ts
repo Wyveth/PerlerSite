@@ -11,7 +11,7 @@ import {
   updateDoc,
   where
 } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Contact } from '../models/class/contact';
 import { UtilsService } from './utils.service';
 
@@ -19,66 +19,44 @@ import { UtilsService } from './utils.service';
   providedIn: 'root'
 })
 export class ContactService {
-  private contacts: Contact[] = [];
-  private contact!: Contact;
-  private db: any;
-  contacts$!: Observable<Contact[]>;
-  contactsSubject = new Subject<any[]>();
+  private db;
+  private contactsSubject = new BehaviorSubject<Contact[]>([]);
+  contacts$ = this.contactsSubject.asObservable();
 
   constructor(
     private utilsService: UtilsService,
     private firestore: Firestore
   ) {
     this.db = collection(this.firestore, 'contacts');
-    this.getContacts();
+    this.listenToContacts();
   }
 
-  emitContacts() {
-    this.contactsSubject.next(this.contacts);
-  }
-
-  /// Get All Contacts /// OK
-  getContacts() {
-    this.contacts$ = collectionData(this.db) as Observable<Contact[]>;
-
-    this.contacts$.subscribe(
-      (contacts: Contact[]) => {
-        this.contacts = contacts;
-
-        this.emitContacts();
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        console.log('Contacts Chargé!');
-      }
-    );
-  }
-
-  /// Get Single Contact /// OK
-  getContact(key: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('key', '==', key));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            this.contact = element.data() as Contact;
-          });
-          resolve(this.contact);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
+  /// 🔥 Écoute Firestore en temps réel
+  private listenToContacts() {
+    collectionData(this.db, { idField: 'id' })
+      .pipe(map((contacts: any[]) => contacts.sort((a, b) => a.email.localeCompare(b.email))))
+      .subscribe({
+        next: (contacts: Contact[]) => {
+          this.contactsSubject.next(contacts);
+        },
+        error: err => console.error('Erreur chargement contacts', err),
+        complete: () => console.log('Contacts chargés !')
       });
-    });
+  }
+
+  /// Get Single Contact
+  async getContact(key: string): Promise<Contact> {
+    const qry = query(this.db, where('key', '==', key));
+    const querySnapshot = await getDocs(qry);
+    if (querySnapshot.empty) {
+      throw new Error('No such document!');
+    }
+    return querySnapshot.docs[0].data() as Contact;
   }
 
   /// Create Contact /// OK
   createContact(contact: Contact) {
-    addDoc(this.db, {
+    return addDoc(this.db, {
       key: this.utilsService.getKey(),
       name: contact.name,
       email: contact.email,
@@ -89,23 +67,23 @@ export class ContactService {
     });
   }
 
-  /// Update Contact /// OK
-  updateContact(key: string, contact: Contact) {
-    this.contact.name = contact.name;
-    this.contact.email = contact.email;
-    this.contact.subject = contact.subject;
-    this.contact.message = contact.message;
-    this.contact.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-
-    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      updateDoc(doc.ref, this.contact);
-    });
+  /// Update Contact
+  async updateContact(key: string, contact: Contact) {
+    const doc = await this.utilsService.getDocByKey(this.db, key);
+    if (doc) {
+      const updated: Contact = {
+        ...contact,
+        dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      };
+      updateDoc(doc.ref, updated);
+    }
   }
 
-  /// Remove Contact /// OK
-  removeContact(contact: Contact) {
-    this.utilsService.getDocByKey(this.db, contact.key).then((doc: any) => {
-      deleteDoc(doc.ref);
-    });
+  /// Remove Contact
+  async removeContact(contact: Contact) {
+    const doc = await this.utilsService.getDocByKey(this.db, contact.key);
+    if (doc) {
+      await deleteDoc(doc.ref);
+    }
   }
 }

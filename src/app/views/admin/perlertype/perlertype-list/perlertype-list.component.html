@@ -1,7 +1,7 @@
 <app-breadcrumbs
   [nodeParent]="this.resource.layout.header.menu.home"
   [nodeParentUrl]="this.resource.router.routes.home"
-  [nodeChild]="this.resource.tag.title"
+  [nodeChild]="this.resource.perler_type.title"
 ></app-breadcrumbs>
 
 <section class="py-6 space-y-6">
@@ -10,7 +10,7 @@
       <button
         class="w-10/12 md:w-4/12 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded hover:bg-blue-700 transition"
         (click)="onNew()"
-        [innerText]="resource.generic.new_m | format: resource.tag.title"
+        [innerText]="resource.generic.new_m | format: resource.perler_type.title"
       ></button>
     </div>
   </div>

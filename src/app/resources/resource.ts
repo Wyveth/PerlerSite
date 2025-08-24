@@ -239,8 +239,10 @@ export interface Generic {
   details: string;
   delete_confirm_m: string;
   delete_confirm_f: string;
+  delete_confirm_mf: string;
   delete_success_m: string;
   delete_success_f: string;
+  delete_success_mf: string;
   delete_cancelled: string;
   delete_error: string;
   save_success: string;

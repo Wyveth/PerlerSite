@@ -95,7 +95,7 @@ export class TagFormComponent implements OnInit {
     } else {
       this.tagService.updateTag(this.id, tag);
     }
-    this.router.navigate(['/tags']);
+    this.router.navigate(['tags']);
   }
 
   onUploadFile(file: File) {

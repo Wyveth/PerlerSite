@@ -67,11 +67,11 @@ export class PerlertypeListComponent extends BaseComponent {
   }
 
   onNew() {
-    this.router.navigate(['/perler-types', 'new']);
+    this.router.navigate(['perler-types', 'new']);
   }
 
   onEdit(key: string) {
-    this.router.navigate(['/perler-types', 'edit', key]);
+    this.router.navigate(['perler-types', 'edit', key]);
   }
 
   onDelete(event: Event | undefined, perlerType: PerlerType) {

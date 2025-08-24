@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, timer } from 'rxjs';
+import { BehaviorSubject, Observable, map, timer, switchMap } from 'rxjs';
 import {
   Firestore,
   collectionData,
@@ -12,7 +12,6 @@ import {
   updateDoc
 } from '@angular/fire/firestore';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
 import { UtilsService } from './utils.service';
 import { FileUploadService } from './upload-file.service';
 import { FileUpload } from '../models/class/file-upload';
@@ -23,11 +22,9 @@ import { User } from '../models/class/user';
   providedIn: 'root'
 })
 export class UserService {
-  private users: User[] = [];
-  private user!: User;
-  private db: any;
-  users$!: Observable<User[]>;
-  usersSubject = new Subject<any[]>();
+  private db;
+  private usersSubject = new BehaviorSubject<User[]>([]);
+  users$ = this.usersSubject.asObservable();
 
   constructor(
     private utilsService: UtilsService,
@@ -35,75 +32,45 @@ export class UserService {
     private firestore: Firestore
   ) {
     this.db = collection(this.firestore, 'users');
-    this.getUsers();
+    this.listenToUsers();
   }
 
-  emitUsers() {
-    this.usersSubject.next(this.users);
-  }
-
-  /// Get All User /// OK
-  getUsers() {
-    this.users$ = collectionData(this.db) as Observable<User[]>;
-
-    this.users$.subscribe(
-      (users: User[]) => {
-        this.users = users;
-
-        this.emitUsers();
-      },
-      error => {
-        console.error(error);
-      },
-      () => {
-        console.log('Users Chargé!');
-      }
-    );
-  }
-
-  /// Get Single User /// OK
-  getUser(key: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('key', '==', key));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            this.user = element.data() as User;
-          });
-          resolve(this.user);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
+  /// 🔥 Écoute Firestore en temps réel
+  private listenToUsers() {
+    collectionData(this.db, { idField: 'id' })
+      .pipe(map((user: any[]) => user.sort((a, b) => a.displayName.localeCompare(b.displayName))))
+      .subscribe({
+        next: (users: User[]) => {
+          this.usersSubject.next(users);
+        },
+        error: err => console.error('Erreur chargement Utilisateurs', err),
+        complete: () => console.log('Utilisateurs chargés !')
       });
-    });
   }
 
-  /// Get Single User By Email /// OK
-  getUserByEmail(email: string | null): Promise<User> {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('email', '==', email));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            this.user = element.data() as User;
-          });
-          resolve(this.user);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
-      });
-    });
+  /// Get Single User
+  async getUser(key: string): Promise<User> {
+    const qry = query(this.db, where('key', '==', key));
+    const querySnapshot = await getDocs(qry);
+    if (querySnapshot.empty) {
+      throw new Error('No such document!');
+    }
+    return querySnapshot.docs[0].data() as User;
   }
 
-  /// Create User /// OK
+  /// Get Single User By Email
+  async getUserByEmail(email: string | null): Promise<User> {
+    const qry = query(this.db, where('email', '==', email));
+    const querySnapshot = await getDocs(qry);
+    if (querySnapshot.empty) {
+      throw new Error('No such document!');
+    }
+    return querySnapshot.docs[0].data() as User;
+  }
+
+  /// Create User
   createUser(user: User) {
-    addDoc(this.db, {
+    return addDoc(this.db, {
       key: this.utilsService.getKey(),
       displayName: user.displayName,
       email: user.email,
@@ -114,21 +81,16 @@ export class UserService {
     });
   }
 
-  /// Update User /// OK
-  updateUser(key: string, user: User) {
-    this.user.surname = user.surname;
-    this.user.name = user.name;
-    this.user.adress = user.adress;
-    this.user.zipcode = user.zipcode;
-    this.user.city = user.city;
-    this.user.pictureUrl = user.pictureUrl;
-    this.user.email = user.email;
-    this.user.pictureUrl = user.pictureUrl;
-    this.user.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-
-    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      updateDoc(doc.ref, this.user);
-    });
+  /// Update User
+  async updateUser(key: string, user: User) {
+    const doc = await this.utilsService.getDocByKey(this.db, key);
+    if (doc) {
+      const updated: User = {
+        ...user,
+        dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      };
+      updateDoc(doc.ref, updated);
+    }
   }
 
   updateOffAdmin(user: User) {
@@ -163,17 +125,18 @@ export class UserService {
     });
   }
 
-  /// Remove User /// OK
-  removeUser(user: User) {
+  /// Remove User
+  async removeUser(user: User) {
     if (user.pictureUrl) {
       this.fileUploadService.getFileUpload(user.pictureUrl).then(fileUpload => {
         return this.fileUploadService.deleteFile(fileUpload as FileUpload);
       });
     }
 
-    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
-      deleteDoc(doc.ref);
-    });
+    const doc = await this.utilsService.getDocByKey(this.db, user.key);
+    if (doc) {
+      await deleteDoc(doc.ref);
+    }
   }
 
   /// Validator Existing DisplayName /// OK
