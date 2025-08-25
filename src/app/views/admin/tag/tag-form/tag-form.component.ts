@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -17,6 +17,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
 
 @Component({
   selector: 'app-tag-form',
@@ -33,7 +35,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     FileUploadModule
   ]
 })
-export class TagFormComponent implements OnInit {
+export class TagFormComponent extends BaseComponent implements OnInit {
   tagForm!: UntypedFormGroup;
 
   id!: string;
@@ -47,12 +49,15 @@ export class TagFormComponent implements OnInit {
   removedInitialKeys = new Set<string>(); // ce que l’utilisateur retire en édition
 
   constructor(
+    resources: AppResource,
     private formBuilder: UntypedFormBuilder,
     private tagService: TagService,
     private filesUploadService: FileUploadService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

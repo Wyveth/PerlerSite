@@ -14,7 +14,7 @@
     </div>
     <form [formGroup]="tagForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
       <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 space-y-7 md:space-y-0">
-        <div class="space-y-7 flex flex-col justify-center">
+        <div class="space-y-7 flex flex-col">
           <div class="form-group">
             <p-floatlabel variant="on">
               <label for="code">Code</label>
@@ -62,6 +62,7 @@
           <div class="flex flex-col items-center justify-center gap-4">
             <p-fileUpload
               #fileUpload
+              class="w-full"
               name="files"
               [auto]="false"
               customUpload="true"
@@ -75,7 +76,7 @@
               (onRemove)="onDeleteFile($event)"
             >
               <ng-template #empty>
-                <div class="text-gray-500">
+                <div class="text-gray-500 dark:text-white">
                   Glissez-déposez ou cliquez pour ajouter des fichiers
                 </div>
               </ng-template>

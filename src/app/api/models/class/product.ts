@@ -18,7 +18,7 @@ export class Product extends Base {
   time_h!: string;
   time_m!: string;
   date!: string;
-  pictureUrl!: string;
+  pictureUrl!: string | string[] | null;
   tagsKey!: KeyValue[];
   perlerTypesKey!: KeyValue[];
 

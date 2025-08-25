@@ -2494,6 +2494,15 @@ html.dark {
     text-align: center;
   }
 
+  .p-multiselect-label,
+  .p-multiselect-label.p-placeholder {
+    color: #ffffff !important; /* Tailwind gray-400 */
+  }
+
+  .p-multiselect-chip-item {
+    margin-right: 0.5rem;
+  }
+
   .p-floatlabel-on label,
   .p-datatable-thead > tr > th,
   .p-datatable-tbody > tr > td  {

@@ -5,7 +5,8 @@ import {
   UntypedFormGroup,
   Validators,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  FormGroup
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, filter, first, firstValueFrom } from 'rxjs';
@@ -62,11 +63,6 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
 
   dropdownListPerlerTypes!: Array<{ item_id: string; item_text: string }>;
 
-  fileIsUploading = false;
-  fileUploaded = false;
-  fileUrl!: string;
-  fileObject!: FileUpload;
-
   tags!: any[];
   tagSubscription!: Subscription;
   tagDDL: any[] = [];
@@ -74,6 +70,12 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
   perlerTypes!: any[];
   perlerTypeSubscription!: Subscription;
   perlerTypeDDL: any[] = [];
+
+  uploadedFiles: FileUpload[] = [];
+  initialFiles: FileUpload[] = [];
+
+  originalInitialFiles: FileUpload[] = []; // snapshot immuable de départ
+  removedInitialKeys = new Set<string>(); // ce que l’utilisateur retire en édition
 
   constructor(
     resources: AppResource,
@@ -111,33 +113,6 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
 
     // Initialiser le formulaire
     this.initForm();
-
-    // Si édition, récupérer le produit
-    if (!this.isAddMode) {
-      const product: Product = await this.productService.getProduct(this.id);
-
-      this.productForm.patchValue(product);
-
-      const size = parseSize(product.size);
-      this.productForm.patchValue({
-        size_h: size.height,
-        size_w: size.width
-      });
-
-      const time = parseTime(product.time);
-      this.productForm.patchValue({
-        time_h: time.hours,
-        time_m: time.minutes
-      });
-
-      this.productForm.patchValue({
-        tagsKey: product.tagsKey?.map(tag => tag.item_id),
-        perlerTypesKey: product.perlerTypesKey?.map(pt => pt.item_id),
-        date: parseDate(product.date)
-      });
-
-      this.fileUrl = product.pictureUrl || '';
-    }
   }
 
   initForm() {
@@ -147,14 +122,14 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       content: ['', Validators.required],
       author: ['', Validators.required],
       size: ['', Validators.required],
-      size_h: ['', Validators.required],
-      size_w: ['', Validators.required],
+      size_h: [0, Validators.required],
+      size_w: [0, Validators.required],
       time: ['', Validators.required],
-      time_h: ['', Validators.required],
-      time_m: ['', Validators.required],
+      time_h: [0, Validators.required],
+      time_m: [0, Validators.required],
       date: ['', Validators.required],
-      tagsKey: ['', Validators.required],
-      perlerTypesKey: ['']
+      tagsKey: [[], Validators.required],
+      perlerTypesKey: [[]]
     });
 
     // Synchroniser size_h + size_w -> size
@@ -164,6 +139,80 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
     // Synchroniser time_h + time_m -> time
     this.productForm.get('time_h')?.valueChanges.subscribe(() => this.updateTime());
     this.productForm.get('time_m')?.valueChanges.subscribe(() => this.updateTime());
+
+    // Si édition, récupérer le produit
+    if (!this.isAddMode) {
+      this.productService.getProduct(this.id).then((product: Product) => {
+        this.productForm.patchValue(product);
+
+        const size = parseSize(product.size);
+        this.productForm.patchValue({
+          size_h: size.height,
+          size_w: size.width
+        });
+
+        const time = parseTime(product.time);
+        this.productForm.patchValue({
+          time_h: time.hours,
+          time_m: time.minutes
+        });
+
+        this.productForm.patchValue({
+          tagsKey: product.tagsKey?.map(tag => tag.item_id),
+          perlerTypesKey: product.perlerTypesKey?.map(pt => pt.item_id),
+          date: parseDate(product.date)
+        });
+
+        if (product.pictureUrl) {
+          this.filesUploadService.getFilesUpload(product.pictureUrl).then(files => {
+            this.initialFiles = files;
+            this.uploadedFiles = files.map(f => ({
+              ...f,
+              isNew: false
+            }));
+            // snapshot immuable de départ
+            this.originalInitialFiles = [...this.initialFiles];
+          });
+        }
+      });
+    }
+  }
+
+  // ✅ Sélection des fichiers depuis p-fileUpload
+  onFilesSelected(event: any) {
+    const files: File[] = Array.isArray(event.currentFiles) ? event.currentFiles : [];
+    const newFiles = files
+      .filter(f => !this.uploadedFiles.some(uf => uf.file === f))
+      .map(file => {
+        const fUpload = new FileUpload(file);
+        fUpload.name = file.name;
+        fUpload.size = file.size.toString();
+        fUpload.type = file.type;
+        fUpload.isNew = true;
+        return fUpload;
+      });
+
+    //Si Multiple == true
+    this.uploadedFiles.push(...newFiles);
+    //Sinon
+    //this.uploadedFiles = newFiles;
+
+    // synchroniser avec PrimeNG
+    event.currentFiles = [...files];
+  }
+
+  onDeleteFile(event: any) {
+    // event.file contient le File sélectionné
+    const fileToRemove = event.file || event?.rawFile;
+    if (!fileToRemove) return;
+
+    // Supprimer de uploadedFiles
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.file !== fileToRemove);
+
+    // Supprimer côté PrimeNG
+    if (event.currentFiles) {
+      event.currentFiles = event.currentFiles.filter((f: File) => f !== fileToRemove);
+    }
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
@@ -171,57 +220,112 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
     return this.productForm.controls;
   }
 
-  onSubmitForm() {
-    const formValue = this.productForm.value;
-    const product = new Product(
-      formValue['title'],
-      formValue['titleContent'],
-      formValue['content'],
-      formValue['author'],
-      formValue['size'],
-      formValue['time'],
-      formValue['date']
-    );
+  removeExistingFile(file: FileUpload) {
+    if (file?.key) this.removedInitialKeys.add(file.key);
 
-    if (this.fileUrl && this.fileUrl !== '') {
-      product.pictureUrl = this.fileUrl;
-      product.file = this.fileObject;
-      this.filesUploadService.saveFileData(product.file);
-    }
-
-    if (formValue.tagsKey && formValue.tagsKey !== '') {
-      product.tagsKey = formValue.tagsKey;
-    }
-
-    if (formValue.perlerTypesKey && formValue.perlerTypesKey !== '') {
-      product.perlerTypesKey = formValue.perlerTypesKey;
-    }
-
-    if (this.isAddMode) {
-      this.productService.createProduct(product);
-    } else {
-      this.productService.updateProduct(this.id, product);
-    }
-
-    this.router.navigate(['/products']);
+    // mise à jour de l’UI (listes visibles)
+    this.initialFiles = this.initialFiles.filter(f => f.key !== file.key);
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.key !== file.key);
   }
 
-  onUploadFile(file: File) {
-    this.fileObject = new FileUpload(file);
+  logFormErrors(form: FormGroup) {
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
 
-    this.fileIsUploading = true;
-    this.filesUploadService.pushFileToStorage(this.fileObject).then((url: any) => {
-      this.fileUrl = url;
-      this.fileIsUploading = false;
-      this.fileUploaded = true;
+      if (control && control.errors) {
+        console.error(`❌ Erreur dans le champ "${field}":`, control.errors);
+      }
     });
   }
 
-  detectFiles(event: any) {
-    this.onUploadFile(event.target.files[0]);
+  async onSubmitForm() {
+    if (this.productForm.invalid) {
+      // force l’affichage des erreurs
+      this.productForm.markAllAsTouched();
+      this.logFormErrors(this.productForm);
+      return;
+    }
+
+    try {
+      // 1️⃣ Clés actuelles et initiales
+      const currentKeys = this.uploadedFiles
+        .filter(f => !f.isNew && !!f.key)
+        .map(f => f.key as string);
+
+      // 2️⃣ diff basé sur le SNAPSHOT immuable
+      const baselineKeys = this.originalInitialFiles.map(f => f.key as string);
+      const deletedByDiff = baselineKeys.filter(k => !currentKeys.includes(k));
+
+      // union: (ce que l’utilisateur a explicitement retiré) U (diff automatique)
+      const deletedKeys = Array.from(
+        new Set([...Array.from(this.removedInitialKeys), ...deletedByDiff])
+      );
+
+      // on prend les objets complets depuis le snapshot (il n’a pas été modifié)
+      const filesToDelete = this.originalInitialFiles.filter(f =>
+        deletedKeys.includes(f.key as string)
+      );
+
+      // 🔥 suppression Firestore + Storage
+      await Promise.all(filesToDelete.map(f => this.filesUploadService.deleteFile(f)));
+
+      // 3️⃣ Nouveaux fichiers à uploader
+      const newFiles = this.uploadedFiles.filter(f => f.isNew && f.file instanceof File);
+
+      // 🔥 Upload parallèle
+      const uploadedFiles: FileUpload[] = await Promise.all(
+        newFiles.map(f => this.filesUploadService.pushFileToStorage(f))
+      );
+
+      // 4️⃣ Mettre à jour uploadedFiles avec les infos complètes
+      uploadedFiles.forEach((uploaded, i) => {
+        const f = newFiles[i];
+        f.key = uploaded.key;
+        f.url = uploaded.url;
+        f.name = uploaded.name;
+        f.size = uploaded.size;
+        f.type = uploaded.type;
+        f.isNew = false;
+      });
+
+      const formValue = this.productForm.value;
+      const product = new Product(
+        formValue['title'],
+        formValue['titleContent'],
+        formValue['content'],
+        formValue['author'],
+        formValue['size'],
+        formValue['time'],
+        formValue['date']
+      );
+
+      if (formValue.tagsKey && formValue.tagsKey !== '') {
+        product.tagsKey = formValue.tagsKey;
+      }
+
+      if (formValue.perlerTypesKey && formValue.perlerTypesKey !== '') {
+        product.perlerTypesKey = formValue.perlerTypesKey;
+      }
+
+      // pictureUrl uniquement avec des URLs valides
+      product.pictureUrl = this.uploadedFiles
+        .filter(f => f.url) // prend uniquement les fichiers uploadés
+        .map(f => f.url);
+
+      // 6️⃣ Créer ou mettre à jour le Produit
+      if (this.isAddMode) {
+        this.productService.createProduct(product);
+      } else {
+        this.productService.updateProduct(this.id, product);
+      }
+      console.log('✅ Produit synchronisé avec Firebase');
+      this.router.navigate(['products']);
+    } catch (error) {
+      console.error('❌ Erreur lors du traitement des fichiers:', error);
+    }
   }
 
-  /* Validation Erreur */
+  //#region Validation Erreur
   shouldShowTitleError() {
     const title = this.productForm.controls.title;
     return title.touched && title.hasError('required');
@@ -266,7 +370,9 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
     const tagsKey = this.productForm.controls.tagsKey;
     return tagsKey.touched && tagsKey.hasError('required');
   }
+  //#endregion Validation Error
 
+  //#region Utils
   updateSize(): void {
     const hRaw = this.productForm.get('size_h')?.value;
     const wRaw = this.productForm.get('size_w')?.value;
@@ -287,5 +393,5 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       this.productForm.get('time')?.setValue(val, { emitEvent: false });
     }
   }
-  /* Fin Validation Error */
+  //#endregion Utils
 }

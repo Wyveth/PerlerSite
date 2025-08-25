@@ -133,7 +133,6 @@ export class HeaderComponent extends BaseComponent implements OnInit {
           {
             visible: this.isAdmin,
             label: this.resource.layout.header.menu.admin,
-            routerLink: this.resource.router.routes.admin,
             items: [
               {
                 label: this.resource.layout.header.menu.products,

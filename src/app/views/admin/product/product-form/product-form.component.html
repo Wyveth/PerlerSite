@@ -198,26 +198,41 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-center gap-4">
-            <label for="formFile" class="dark:text-white">Ajouter une photo</label>
-            <p-fileupload
-              mode="basic"
-              name="demo[]"
-              chooseIcon="pi pi-upload"
-              accept="image/*"
-              maxFileSize="10000000"
-              (onUpload)="detectFiles($event)"
-              [auto]="true"
-              chooseLabel="Parcourir"
-            />
+          <div class="space-y-7">
+            <div class="flex items-center justify-center gap-4">
+              <p-fileUpload
+                #fileUpload
+                class="w-full"
+                name="files"
+                [auto]="false"
+                customUpload="true"
+                [maxFileSize]="1000000"
+                [showUploadButton]="false"
+                [multiple]="true"
+                accept="image/*"
+                chooseLabel="Parcourir"
+                cancelLabel="Annuler"
+                (onSelect)="onFilesSelected($event)"
+                (onRemove)="onDeleteFile($event)"
+              >
+                <ng-template #empty>
+                  <div class="text-gray-500 dark:text-white">
+                    Glissez-déposez ou cliquez pour ajouter des fichiers
+                  </div>
+                </ng-template>
+              </p-fileUpload>
+            </div>
+            <div class="flex">
+              <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
+                <li *ngFor="let file of initialFiles">
+                  <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
+                  <button type="button" (click)="removeExistingFile(file)" class="dark:text-white">
+                    Supprimer
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
-          <img
-            *ngIf="fileUrl && !fileUploaded"
-            [src]="fileUrl"
-            alt="Image du produit"
-            class="w-full h-64 object-cover rounded-lg"
-          />
-          <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
 
           <div class="form-group space-y-3">
             <label class="flex justify-center dark:text-white" for="tagsKey">Tags</label>
@@ -225,6 +240,7 @@
               formControlName="tagsKey"
               [placeholder]="'Sélectionner un ou plusieurs Tags'"
               [filter]="true"
+              multiselect.list.gap="2"
               optionValue="item_id"
               optionLabel="item_text"
               display="chip"
@@ -276,7 +292,7 @@
         </div>
       </div>
       <div class="flex w-full justify-center">
-        <p-button type="submit" [disabled]="productForm.invalid"> Enregistrer </p-button>
+        <p-button type="submit"> Enregistrer </p-button>
       </div>
     </form>
   </div>
