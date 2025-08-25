@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  ValidatorFn,
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,14 +35,16 @@ import { FileUploadModule } from 'primeng/fileupload';
 })
 export class TagFormComponent implements OnInit {
   tagForm!: UntypedFormGroup;
-  fileIsUploading = false;
-  fileUploaded = false;
-  fileUrl!: string;
-  fileObject!: FileUpload;
 
   id!: string;
   isAddMode!: boolean;
   tag: Tag = new Tag('', '');
+
+  uploadedFiles: FileUpload[] = [];
+  initialFiles: FileUpload[] = [];
+
+  originalInitialFiles: FileUpload[] = []; // snapshot immuable de départ
+  removedInitialKeys = new Set<string>(); // ce que l’utilisateur retire en édition
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -62,7 +63,11 @@ export class TagFormComponent implements OnInit {
 
   initForm() {
     this.tagForm = this.formBuilder.group({
-      code: ['', Validators.required, this.tagService.existingTagCodeValidator(this.isAddMode)],
+      code: [
+        '',
+        [Validators.required],
+        [this.tagService.existingTagCodeValidator(!this.isAddMode)]
+      ],
       libelle: ['', Validators.required]
     });
 
@@ -70,47 +75,134 @@ export class TagFormComponent implements OnInit {
       this.tagService.getTag(this.id).then((tag: Tag) => {
         this.tagForm.patchValue(tag);
 
-        this.fileUrl = tag.pictureUrl || '';
+        if (tag.pictureUrl) {
+          this.filesUploadService.getFilesUpload(tag.pictureUrl).then(files => {
+            this.initialFiles = files;
+            this.uploadedFiles = files.map(f => ({
+              ...f,
+              isNew: false
+            }));
+            // snapshot immuable de départ
+            this.originalInitialFiles = [...this.initialFiles];
+          });
+        }
       });
     }
   }
 
-  /// Obtenir pour un accès facile aux champs de formulaire
+  // ✅ Sélection des fichiers depuis p-fileUpload
+  onFilesSelected(event: any) {
+    const files: File[] = Array.isArray(event.currentFiles) ? event.currentFiles : [];
+    const newFiles = files
+      .filter(f => !this.uploadedFiles.some(uf => uf.file === f))
+      .map(file => {
+        const fUpload = new FileUpload(file);
+        fUpload.name = file.name;
+        fUpload.size = file.size.toString();
+        fUpload.type = file.type;
+        fUpload.isNew = true;
+        return fUpload;
+      });
+
+    //Si Multiple == true
+    // this.uploadedFiles.push(...newFiles);
+    //Sinon
+    this.uploadedFiles = newFiles;
+
+    // synchroniser avec PrimeNG
+    event.currentFiles = [...files];
+  }
+
+  onDeleteFile(event: any) {
+    // event.file contient le File sélectionné
+    const fileToRemove = event.file || event?.rawFile;
+    if (!fileToRemove) return;
+
+    // Supprimer de uploadedFiles
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.file !== fileToRemove);
+
+    // Supprimer côté PrimeNG
+    if (event.currentFiles) {
+      event.currentFiles = event.currentFiles.filter((f: File) => f !== fileToRemove);
+    }
+  }
+
   get f() {
     return this.tagForm.controls;
   }
 
-  onSubmitForm() {
-    const formValue = this.tagForm.value;
-    const tag = new Tag(formValue['code'], formValue['libelle']);
+  removeExistingFile(file: FileUpload) {
+    if (file?.key) this.removedInitialKeys.add(file.key);
 
-    if (this.fileUrl && this.fileUrl !== '') {
-      tag.pictureUrl = this.fileUrl;
-      tag.file = this.fileObject;
-      this.filesUploadService.saveFileData(tag.file);
-    }
-
-    if (this.isAddMode) {
-      this.tagService.createTag(tag);
-    } else {
-      this.tagService.updateTag(this.id, tag);
-    }
-    this.router.navigate(['tags']);
+    // mise à jour de l’UI (listes visibles)
+    this.initialFiles = this.initialFiles.filter(f => f.key !== file.key);
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.key !== file.key);
   }
 
-  onUploadFile(file: File) {
-    this.fileObject = new FileUpload(file);
+  async onSubmitForm() {
+    try {
+      // 1️⃣ Clés actuelles et initiales
+      const currentKeys = this.uploadedFiles
+        .filter(f => !f.isNew && !!f.key)
+        .map(f => f.key as string);
 
-    this.fileIsUploading = true;
-    this.filesUploadService.pushFileToStorage(this.fileObject).then((url: any) => {
-      this.fileUrl = url;
-      this.fileIsUploading = false;
-      this.fileUploaded = true;
-    });
-  }
+      // 2️⃣ diff basé sur le SNAPSHOT immuable
+      const baselineKeys = this.originalInitialFiles.map(f => f.key as string);
+      const deletedByDiff = baselineKeys.filter(k => !currentKeys.includes(k));
 
-  detectFiles(event: any) {
-    this.onUploadFile(event.target.files[0]);
+      // union: (ce que l’utilisateur a explicitement retiré) U (diff automatique)
+      const deletedKeys = Array.from(
+        new Set([...Array.from(this.removedInitialKeys), ...deletedByDiff])
+      );
+
+      // on prend les objets complets depuis le snapshot (il n’a pas été modifié)
+      const filesToDelete = this.originalInitialFiles.filter(f =>
+        deletedKeys.includes(f.key as string)
+      );
+
+      // 🔥 suppression Firestore + Storage
+      await Promise.all(filesToDelete.map(f => this.filesUploadService.deleteFile(f)));
+
+      // 3️⃣ Nouveaux fichiers à uploader
+      const newFiles = this.uploadedFiles.filter(f => f.isNew && f.file instanceof File);
+
+      // 🔥 Upload parallèle
+      const uploadedFiles: FileUpload[] = await Promise.all(
+        newFiles.map(f => this.filesUploadService.pushFileToStorage(f))
+      );
+
+      // 4️⃣ Mettre à jour uploadedFiles avec les infos complètes
+      uploadedFiles.forEach((uploaded, i) => {
+        const f = newFiles[i];
+        f.key = uploaded.key;
+        f.url = uploaded.url;
+        f.name = uploaded.name;
+        f.size = uploaded.size;
+        f.type = uploaded.type;
+        f.isNew = false;
+      });
+
+      // 5️⃣ Construire le Tag
+      const formValue = this.tagForm.value;
+      const tag = new Tag(formValue['code'], formValue['libelle']);
+
+      // pictureUrl uniquement avec des URLs valides
+      tag.pictureUrl = this.uploadedFiles
+        .filter(f => f.url) // prend uniquement les fichiers uploadés
+        .map(f => f.url);
+
+      // 6️⃣ Créer ou mettre à jour le Tag
+      if (this.isAddMode) {
+        await this.tagService.createTag(tag);
+      } else {
+        await this.tagService.updateTag(this.id, tag);
+      }
+
+      console.log('✅ Tag synchronisé avec Firebase');
+      this.router.navigate(['tags']);
+    } catch (error) {
+      console.error('❌ Erreur lors du traitement des fichiers:', error);
+    }
   }
 
   /*Validation Erreur*/

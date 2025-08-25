@@ -56,29 +56,41 @@
               <div *ngIf="f.libelle.errors.required">Le libelle est obligatoire</div>
             </div>
           </div>
-          <div class="flex items-center justify-center gap-4">
-            <label for="formFile" class="dark:text-white">Ajouter une photo</label>
-            <p-fileupload
-              mode="basic"
-              name="demo[]"
-              chooseIcon="pi pi-upload"
-              accept="image/*"
-              maxFileSize="10000000"
-              (onUpload)="detectFiles($event)"
-              [auto]="true"
-              chooseLabel="Parcourir"
-            />
-          </div>
         </div>
 
         <div class="space-y-7">
-          <img
-            *ngIf="fileUrl && !fileUploaded"
-            [src]="fileUrl"
-            alt="Image du produit"
-            class="w-full h-64 object-cover rounded-lg"
-          />
-          <p class="text-success" *ngIf="fileUploaded">Fichier chargé !</p>
+          <div class="flex flex-col items-center justify-center gap-4">
+            <p-fileUpload
+              #fileUpload
+              name="files"
+              [auto]="false"
+              customUpload="true"
+              [maxFileSize]="1000000"
+              [showUploadButton]="false"
+              [multiple]="false"
+              accept="image/*"
+              chooseLabel="Parcourir"
+              cancelLabel="Annuler"
+              (onSelect)="onFilesSelected($event)"
+              (onRemove)="onDeleteFile($event)"
+            >
+              <ng-template #empty>
+                <div class="text-gray-500">
+                  Glissez-déposez ou cliquez pour ajouter des fichiers
+                </div>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+          <div class="flex">
+            <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
+              <li *ngFor="let file of initialFiles">
+                <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
+                <button type="button" (click)="removeExistingFile(file)" class="dark:text-white">
+                  Supprimer
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

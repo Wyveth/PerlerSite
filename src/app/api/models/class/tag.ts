@@ -6,9 +6,7 @@ export class Tag extends Base {
   key!: string;
   code!: string;
   libelle!: string;
-  pictureUrl!: string;
-
-  file!: FileUpload;
+  pictureUrl!: string | string[] | null;
 
   constructor(code: string, libelle: string) {
     super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));

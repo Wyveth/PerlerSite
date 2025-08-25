@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 export interface OverlayButton {
@@ -15,12 +15,20 @@ export interface OverlayButton {
   templateUrl: './image-overlay.component.html',
   standalone: true
 })
-export class ImageOverlayComponent {
+export class ImageOverlayComponent implements OnInit {
   @Input() title!: string;
-  @Input() imageUrl!: string;
+  @Input() imageUrl!: string | string[] | null;
   @Input() background!: string;
   @Input() buttons: OverlayButton[] = [];
   @Input() active = false;
 
+  url!: string;
+
   @Output() toggleRequested = new EventEmitter<void>();
+
+  ngOnInit(): void {
+    if (this.imageUrl != null)
+      this.url = Array.isArray(this.imageUrl) ? this.imageUrl[0] : this.imageUrl;
+    else this.url = '';
+  }
 }

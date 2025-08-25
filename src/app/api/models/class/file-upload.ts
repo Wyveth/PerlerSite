@@ -5,6 +5,7 @@ export class FileUpload {
   size!: string;
   type!: string;
   file: File;
+  isNew?: boolean;
 
   constructor(file: File) {
     this.file = file;

@@ -78,7 +78,7 @@ export class UserFormComponent implements OnInit {
     if (this.fileUrl && this.fileUrl !== '') {
       user.pictureUrl = this.fileUrl;
       user.file = this.fileObject;
-      if (user.file != undefined) this.filesUploadService.saveFileData(user.file);
+      if (user.file != undefined) this.filesUploadService.pushFileToStorage(user.file);
     }
 
     this.userService.updateUser(this.id, user);

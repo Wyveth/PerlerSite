@@ -3,7 +3,7 @@
   [class.group]="!active"
   (click)="toggleRequested.emit()"
 >
-  <img *ngIf="imageUrl" [src]="imageUrl" alt="Image" class="w-full h-full object-cover" />
+  <img *ngIf="url" [src]="url" alt="Image" class="w-full h-full object-cover" />
   <div
     *ngIf="background"
     class="w-full h-full"

@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentData, getDocs, query, where } from '@angular/fire/firestore';
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentSnapshot,
+  getDocs,
+  query,
+  where
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +18,19 @@ export class UtilsService {
     return generateUUID();
   }
 
-  getDocByKey(db: CollectionReference<DocumentData>, key: string): Promise<DocumentData> {
-    return new Promise((resolve, reject) => {
-      var qry = query(db, where('key', '==', key));
+  async getDocByKey(
+    db: CollectionReference<DocumentData>,
+    key: string
+  ): Promise<DocumentSnapshot<DocumentData>> {
+    const qry = query(db, where('key', '==', key));
+    const querySnapshot = await getDocs(qry);
 
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            resolve(element);
-          });
-        } else {
-          //doc.data() will be undefined in this case
-          reject('No such document!');
-        }
-      });
-    });
+    if (querySnapshot.empty) {
+      throw new Error('No document found with key: ' + key);
+    }
+
+    // Retourne le premier document correspondant
+    return querySnapshot.docs[0];
   }
 }
 

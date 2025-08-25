@@ -2472,6 +2472,12 @@ html.dark {
     border: 1px solid #374151; /* Tailwind gray-700 */
   }
 
+  .p-fileupload-advanced {
+    background: #1f2937; /* Tailwind gray-800 */
+    color: #ffffff; /* Tailwind white */
+    border: 1px solid #374151; /* Tailwind gray-700 */
+  }
+
   .p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) > .p-accordionheader:hover {
     background-color: #374151; /* Tailwind gray-700 */
     color: #ffffff; /* Tailwind white */
