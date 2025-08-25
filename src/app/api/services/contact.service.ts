@@ -75,7 +75,7 @@ export class ContactService {
         ...contact,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      updateDoc(doc.ref, updated);
+      updateDoc(doc.ref, updated as { [key: string]: any });
     }
   }
 
