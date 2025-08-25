@@ -78,45 +78,38 @@ export class ProductService {
   }
 
   /// Update Product
-  updateProduct(key: string, product: Product) {
-    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      const updated: Product = {
+  async updateProduct(key: string, product: Product) {
+    const doc = await this.utilsService.getDocByKey(this.db, key);
+    if (doc) {
+      const updated = {
         ...product,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      updateDoc(doc.ref, updated);
-    });
+      await updateDoc(doc.ref, updated as { [key: string]: any }); // Cast to the appropriate type
+    }
   }
 
   /// Remove Product + Suppression de l'image
   async removeProduct(product: Product) {
-    if (product.pictureUrl) {
-      const fileUpload = await this.fileUploadService.getFileUpload(product.pictureUrl);
-      await this.fileUploadService.deleteFile(fileUpload as FileUpload);
+    try {
+      if (product.pictureUrl && product.pictureUrl.length) {
+        // 1️⃣ Récupérer les fichiers Firestore correspondant aux URLs
+        const filesUpload = await this.fileUploadService.getFilesUpload(product.pictureUrl);
+        // 2️⃣ Supprimer tous les fichiers (Firestore + Storage) en parallèle
+        const deletePromises = filesUpload
+          .filter(f => f.key && f.url) // utiliser path pour Storage
+          .map(f => this.fileUploadService.deleteFile(f as FileUpload));
+
+        await Promise.all(deletePromises);
+      }
+
+      // 3️⃣ Supprimer le document Tag dans Firestore
+      const doc = await this.utilsService.getDocByKey(this.db, product.key);
+      await deleteDoc(doc.ref);
+
+      console.log('✅ Produit supprimé avec succès');
+    } catch (error) {
+      console.error('❌ Erreur lors de la suppression du Produit:', error);
     }
-
-    const doc = await this.utilsService.getDocByKey(this.db, product.key);
-    return deleteDoc(doc.ref);
-  }
-
-  /// Upload File in Storage
-  uploadFile(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage();
-      const almostUniqueFileName = Date.now().toString();
-      const upload = firebaseStorage.ref(storage, file.name + '_' + almostUniqueFileName);
-
-      uploadBytes(upload, file).then(
-        async () => {
-          const url = await getDownloadURL(upload);
-          console.log('Chargement…');
-          resolve(url);
-        },
-        error => {
-          console.error('Erreur de chargement ! : ' + error);
-          reject(error);
-        }
-      );
-    });
   }
 }
