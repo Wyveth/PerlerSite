@@ -9,7 +9,8 @@ import {
   where,
   query,
   getDocs,
-  deleteDoc
+  deleteDoc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { FileUploadService } from './upload-file.service';
