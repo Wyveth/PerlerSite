@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import {
   Firestore,
   collectionData,
@@ -19,109 +19,70 @@ import { Comment } from '../models/class/comment';
   providedIn: 'root'
 })
 export class CommentService {
-  private comments: Comment[] = [];
-  private comment!: Comment;
-  private db: any;
-  comments$!: Observable<Comment[]>;
-  commentsSubject = new Subject<any[]>();
+  private commentsRef = collection(this.firestore, 'comments');
 
   constructor(
     private utilsService: UtilsService,
     private firestore: Firestore
-  ) {
-    this.db = collection(this.firestore, 'comments');
-  }
+  ) {}
 
-  emitComments() {
-    this.commentsSubject.next(this.comments);
-  }
-
-  /// Get All Comments /// OK
-  getComments() {
-    this.comments$ = collectionData(this.db) as Observable<Comment[]>;
-
-    this.comments$.subscribe(
-      (comments: Comment[]) => {
-        this.comments = comments;
-
-        this.emitComments();
-      },
-      error => {
-        console.error(error);
-      },
-      () => {
-        console.log('Comments Chargé!');
-      }
+  /** 🔥 Flux en temps réel de tous les utilisateurs */
+  get comments$(): Observable<Comment[]> {
+    return collectionData(this.commentsRef, { idField: 'id' }).pipe(
+      map((users: any[]) => users.sort((a, b) => a.dateCreation.localeCompare(b.dateCreation)))
     );
   }
 
-  /// Get Single Comment /// OK
-  getComment(key: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('key', '==', key));
-
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            this.comment = element.data() as Comment;
-          });
-          resolve(this.comment);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
-      });
-    });
+  /// Get Single Comment By Key
+  async getComment(key: string): Promise<Comment> {
+    const qry = query(this.commentsRef, where('key', '==', key));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as Comment;
   }
 
   /// Get Comments By ProductKey /// OK
-  getCommentsByProductKey(productKey: string) {
-    return new Promise((resolve, reject) => {
-      var qry = query(this.db, where('productKey', '==', productKey));
+  async getCommentsByProductKey(productKey: string): Promise<Comment[]> {
+    const qry = query(this.commentsRef, where('productKey', '==', productKey));
+    const querySnapshot = await getDocs(qry);
 
-      getDocs(qry).then(querySnapshot => {
-        if (querySnapshot) {
-          querySnapshot.docs.forEach(element => {
-            this.comments.push(element.data() as Comment);
-          });
-          resolve(this.comment);
-        } else {
-          //doc.data() will be undefined in this case
-          console.error('No such document!');
-          reject('No such document!');
-        }
-      });
-    });
+    if (querySnapshot.empty) {
+      console.error('No comments found for this product!');
+      return []; // retourne un tableau vide si pas de commentaire
+    }
+
+    // Map tous les documents en objets Comment
+    const comments: Comment[] = querySnapshot.docs.map(doc => doc.data() as Comment);
+    return comments;
   }
 
   /// Create Comment /// OK
   createComment(comment: Comment) {
-    addDoc(this.db, {
+    addDoc(this.commentsRef, {
+      ...comment,
       key: this.utilsService.getKey(),
-      note: comment.note,
-      comment: comment.comment,
-      productKey: comment.productKey,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
   }
 
   /// Update Comment /// OK
-  updateComment(key: string, comment: Comment) {
-    this.comment.note = comment.note;
-    this.comment.comment = comment.comment;
-    this.comment.dateModification = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-
-    this.utilsService.getDocByKey(this.db, key).then((doc: any) => {
-      updateDoc(doc.ref, this.comment);
-    });
+  async updateComment(key: string, comment: Comment) {
+    const docSnap = await this.utilsService.getDocByKey(this.commentsRef, key);
+    if (docSnap) {
+      const updated = {
+        ...comment,
+        dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
+      };
+      await updateDoc(docSnap.ref, updated as any);
+    }
   }
 
   /// Remove Comment /// OK
-  removeComment(comment: Comment) {
-    this.utilsService.getDocByKey(this.db, comment.key).then((doc: any) => {
-      deleteDoc(doc.ref);
-    });
+  async removeComment(comment: Comment) {
+    const docSnap = await this.utilsService.getDocByKey(this.commentsRef, comment.key);
+    if (docSnap) {
+      await deleteDoc(docSnap.ref);
+    }
   }
 }

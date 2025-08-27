@@ -8,6 +8,10 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { User } from 'src/app/api/models/class/user';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
@@ -17,7 +21,15 @@ import { UserService } from 'src/app/api/services/user.service';
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    FloatLabelModule,
+    ButtonModule,
+    TextareaModule
+  ]
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;
@@ -75,11 +87,11 @@ export class UserFormComponent implements OnInit {
     user.zipcode = formValue['zipcode'];
     user.city = formValue['city'];
 
-    if (this.fileUrl && this.fileUrl !== '') {
-      user.pictureUrl = this.fileUrl;
-      user.file = this.fileObject;
-      if (user.file != undefined) this.filesUploadService.pushFileToStorage(user.file);
-    }
+    // if (this.fileUrl && this.fileUrl !== '') {
+    //   user.pictureUrl = this.fileUrl;
+    //   user.file = this.fileObject;
+    //   if (user.file != undefined) this.filesUploadService.pushFileToStorage(user.file);
+    // }
 
     this.userService.updateUser(this.id, user);
 

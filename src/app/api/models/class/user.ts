@@ -10,11 +10,10 @@ export class User extends Base {
   adress!: string;
   zipcode!: string;
   city!: string;
-  pictureUrl!: string;
+  pictureUrl!: string | string[] | null;
   email!: string;
   admin!: boolean;
   disabled!: boolean;
-  file!: FileUpload;
 
   constructor(displayName: string, email: string) {
     super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));

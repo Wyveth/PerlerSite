@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -32,6 +32,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { parseTime } from 'src/app/shared/utils/parseTime';
 import { parseSize } from 'src/app/shared/utils/parseSize';
 import { parseDate } from 'src/app/shared/utils/parseDate';
+import { Tag } from 'src/app/api/models/class/tag';
+import { PerlerType } from 'src/app/api/models/class/perler-type';
 
 @Component({
   selector: 'app-product-form',
@@ -98,6 +100,7 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       filter(tags => tags.length > 0),
       first()
     );
+
     const perlerTypes$ = this.perlerTypeService.perlerTypes$.pipe(
       filter(types => types.length > 0),
       first()
@@ -289,6 +292,14 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       });
 
       const formValue = this.productForm.value;
+
+      let date: Date;
+      if (formValue.date?.toDate) {
+        date = formValue.date.toDate();
+      } else {
+        date = formValue.date; // déjà une Date JS
+      }
+
       const product = new Product(
         formValue['title'],
         formValue['titleContent'],
@@ -296,15 +307,23 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
         formValue['author'],
         formValue['size'],
         formValue['time'],
-        formValue['date']
+        formatDate(date, 'dd/MM/yyyy', 'en')
       );
 
-      if (formValue.tagsKey && formValue.tagsKey !== '') {
-        product.tagsKey = formValue.tagsKey;
+      if (Array.isArray(formValue.tagsKey) && formValue.tagsKey.length > 0) {
+        product.tagsKey = formValue.tagsKey
+          .map((key: string) => this.dropdownListTags.find(t => t.item_id === key))
+          .filter((tag: Tag) => tag != null); // supprime les tags non trouvés
+      } else {
+        product.tagsKey = []; // ou undefined selon ton besoin
       }
 
-      if (formValue.perlerTypesKey && formValue.perlerTypesKey !== '') {
-        product.perlerTypesKey = formValue.perlerTypesKey;
+      if (Array.isArray(formValue.perlerTypesKey) && formValue.perlerTypesKey.length > 0) {
+        product.perlerTypesKey = formValue.perlerTypesKey
+          .map((key: string) => this.dropdownListPerlerTypes.find(t => t.item_id === key))
+          .filter((perlerType: PerlerType) => perlerType != null); // supprime les tags non trouvés
+      } else {
+        product.perlerTypesKey = []; // ou undefined selon ton besoin
       }
 
       // pictureUrl uniquement avec des URLs valides

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { getAuth, User } from '@angular/fire/auth';
+import { Component, OnInit } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -9,15 +8,24 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { PasswordModule } from 'primeng/password';
 import { AuthService } from 'src/app/api/services/auth.service';
-import { ToastService } from 'src/app/api/services/toast.service';
 import { UserService } from 'src/app/api/services/user.service';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PasswordModule,
+    ButtonModule,
+    FloatLabelModule
+  ]
 })
 export class ChangePasswordComponent implements OnInit {
   passwordForm!: UntypedFormGroup;
@@ -29,8 +37,7 @@ export class ChangePasswordComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
-    private toastService: ToastService
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -61,45 +68,45 @@ export class ChangePasswordComponent implements OnInit {
   onSubmitForm() {
     const formValue = this.passwordForm.value;
     const password = formValue['password'];
-    const user = getAuth().currentUser as User;
-    this.authService.updatePasswordUser(user, password).then(
-      () => {
-        //TODO Toast
-        this.toastService.show('Le mot de passe a bien été mis à jour.', {
-          classname: 'bg-success text-light',
-          delay: 3000,
-          autohide: true
-        });
-      },
-      (error: string) => {
-        //TODO Toast + error;
-        this.toastService.show(
-          'La mise à jour du mot de passe a échoué. Veuillez réessayer ultérieurement.',
-          {
-            classname: 'bg-danger text-light',
-            delay: 3000,
-            autohide: true
-          }
-        );
-      }
-    );
+    //const user = getAuth().currentUser as User;
+    // this.authService.updatePasswordUser(user, password).then(
+    //   () => {
+    //     //TODO Toast
+    //     this.toastService.show('Le mot de passe a bien été mis à jour.', {
+    //       classname: 'bg-success text-light',
+    //       delay: 3000,
+    //       autohide: true
+    //     });
+    //   },
+    //   (error: string) => {
+    //     //TODO Toast + error;
+    //     this.toastService.show(
+    //       'La mise à jour du mot de passe a échoué. Veuillez réessayer ultérieurement.',
+    //       {
+    //         classname: 'bg-danger text-light',
+    //         delay: 3000,
+    //         autohide: true
+    //       }
+    //     );
+    //   }
+    // );
   }
 
-  showCustomToastSuccess(customTpl: string | TemplateRef<any>) {
-    this.toastService.show(customTpl, {
-      classname: 'bg-danger text-light',
-      delay: 3000,
-      autohide: true
-    });
-  }
+  // showCustomToastSuccess(customTpl: string | TemplateRef<any>) {
+  //   this.toastService.show(customTpl, {
+  //     classname: 'bg-danger text-light',
+  //     delay: 3000,
+  //     autohide: true
+  //   });
+  // }
 
-  showCustomToastError(customTpl: string | TemplateRef<any>) {
-    this.toastService.show(customTpl, {
-      classname: 'bg-danger text-light',
-      delay: 3000,
-      autohide: true
-    });
-  }
+  // showCustomToastError(customTpl: string | TemplateRef<any>) {
+  //   this.toastService.show(customTpl, {
+  //     classname: 'bg-danger text-light',
+  //     delay: 3000,
+  //     autohide: true
+  //   });
+  // }
 
   shouldShowPasswordError() {
     const password = this.passwordForm.controls.password;

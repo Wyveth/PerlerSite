@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, timer, switchMap } from 'rxjs';
+import { Observable, map, timer, switchMap } from 'rxjs';
 import {
   Firestore,
   collectionData,
@@ -22,60 +22,42 @@ import { User } from '../models/class/user';
   providedIn: 'root'
 })
 export class UserService {
-  private db;
-  private usersSubject = new BehaviorSubject<User[]>([]);
-  users$ = this.usersSubject.asObservable();
+  private usersRef = collection(this.firestore, 'users');
 
   constructor(
     private utilsService: UtilsService,
     private fileUploadService: FileUploadService,
     private firestore: Firestore
-  ) {
-    this.db = collection(this.firestore, 'users');
-    this.listenToUsers();
+  ) {}
+
+  /** 🔥 Flux en temps réel de tous les utilisateurs */
+  get users$(): Observable<User[]> {
+    return collectionData(this.usersRef, { idField: 'id' }).pipe(
+      map((users: any[]) => users.sort((a, b) => a.displayName.localeCompare(b.displayName)))
+    );
   }
 
-  /// 🔥 Écoute Firestore en temps réel
-  private listenToUsers() {
-    collectionData(this.db, { idField: 'id' })
-      .pipe(map((user: any[]) => user.sort((a, b) => a.displayName.localeCompare(b.displayName))))
-      .subscribe({
-        next: (users: User[]) => {
-          this.usersSubject.next(users);
-        },
-        error: err => console.error('Erreur chargement Utilisateurs', err),
-        complete: () => console.log('Utilisateurs chargés !')
-      });
-  }
-
-  /// Get Single User
+  /// Get Single User By Key
   async getUser(key: string): Promise<User> {
-    const qry = query(this.db, where('key', '==', key));
-    const querySnapshot = await getDocs(qry);
-    if (querySnapshot.empty) {
-      throw new Error('No such document!');
-    }
-    return querySnapshot.docs[0].data() as User;
+    const qry = query(this.usersRef, where('key', '==', key));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as User;
   }
 
   /// Get Single User By Email
   async getUserByEmail(email: string | null): Promise<User> {
-    const qry = query(this.db, where('email', '==', email));
-    const querySnapshot = await getDocs(qry);
-    if (querySnapshot.empty) {
-      throw new Error('No such document!');
-    }
-    return querySnapshot.docs[0].data() as User;
+    const qry = query(this.usersRef, where('email', '==', email));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as User;
   }
 
   /// Create User
   createUser(user: User) {
-    return addDoc(this.db, {
+    return addDoc(this.usersRef, {
+      ...user,
       key: this.utilsService.getKey(),
-      displayName: user.displayName,
-      email: user.email,
-      admin: user.admin,
-      disabled: user.disabled,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -83,114 +65,66 @@ export class UserService {
 
   /// Update User
   async updateUser(key: string, user: User) {
-    const doc = await this.utilsService.getDocByKey(this.db, key);
-    if (doc) {
-      const updated: User = {
+    const docSnap = await this.utilsService.getDocByKey(this.usersRef, key);
+    if (docSnap) {
+      const updated = {
         ...user,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      updateDoc(doc.ref, updated);
+      await updateDoc(docSnap.ref, updated as any);
     }
   }
 
-  updateOffAdmin(user: User) {
-    user.admin = false;
-
-    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
-      updateDoc(doc.ref, user);
-    });
+  /** Mettre à jour un champ simple */
+  async updateField(key: string, field: keyof User, value: any) {
+    const docSnap = await this.utilsService.getDocByKey(this.usersRef, key);
+    if (docSnap) {
+      await updateDoc(docSnap.ref, { [field]: value });
+    }
   }
 
-  updateOnAdmin(user: User) {
-    user.admin = true;
-
-    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
-      updateDoc(doc.ref, user);
-    });
-  }
-
-  updateOffDisabled(user: User) {
-    user.disabled = false;
-
-    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
-      updateDoc(doc.ref, user);
-    });
-  }
-
-  updateOnDisabled(user: User) {
-    user.disabled = true;
-
-    this.utilsService.getDocByKey(this.db, user.key).then((doc: any) => {
-      updateDoc(doc.ref, user);
-    });
-  }
-
-  /// Remove User
+  /** Supprimer un utilisateur (et ses fichiers liés) */
   async removeUser(user: User) {
     if (user.pictureUrl) {
-      this.fileUploadService.getFileUpload(user.pictureUrl).then(fileUpload => {
-        return this.fileUploadService.deleteFile(fileUpload as FileUpload);
+      const filesUpload = await this.fileUploadService.getFilesUpload(user.pictureUrl);
+      filesUpload.forEach(fileUpload => {
+        if (fileUpload.url) {
+          this.fileUploadService.deleteFile(fileUpload as FileUpload);
+        }
       });
     }
 
-    const doc = await this.utilsService.getDocByKey(this.db, user.key);
-    if (doc) {
-      await deleteDoc(doc.ref);
+    const docSnap = await this.utilsService.getDocByKey(this.usersRef, user.key);
+    if (docSnap) {
+      await deleteDoc(docSnap.ref);
     }
   }
 
-  /// Validator Existing DisplayName /// OK
-  existingDisplayNameValidator(): AsyncValidatorFn {
-    return (
-      control: AbstractControl
-    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      const debounceTime = 10; //milliseconds
-      return timer(debounceTime).pipe(
-        switchMap(() => {
-          return this.isDisplayNameAvailable(control.value).then(result =>
-            result ? null : { displayNameExists: true }
-          );
-        })
+  // ---------------------
+  // ✅ VALIDATEURS
+  // ---------------------
+
+  /**
+   * Vérifie si une valeur existe déjà pour un champ donné
+   */
+  async isFieldAvailable(field: keyof User, value: any): Promise<boolean> {
+    const snap = await getDocs(query(this.usersRef, where(field, '==', value)));
+    return snap.empty;
+  }
+
+  /**
+   * Génère un AsyncValidatorFn pour n'importe quel champ
+   * Exemple : existingFieldValidator('email')
+   */
+  existingFieldValidator(field: keyof User): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return timer(300).pipe(
+        switchMap(() =>
+          this.isFieldAvailable(field, control.value).then(isAvailable =>
+            isAvailable ? null : { [`${field}Exists`]: true }
+          )
+        )
       );
     };
-  }
-
-  /// Async Validator Existing DisplayName /// OK
-  async isDisplayNameAvailable(value: string): Promise<boolean> {
-    return getDocs(query(this.db, where('displayName', '==', value)))
-      .then(documentSnapshot => {
-        return documentSnapshot.empty as boolean;
-      })
-      .catch(error => {
-        console.error('Error getting documents: ', error);
-        return false;
-      });
-  }
-
-  existingEmailValidator(): AsyncValidatorFn {
-    return (
-      control: AbstractControl
-    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      const debounceTime = 10; //milliseconds
-      return timer(debounceTime).pipe(
-        switchMap(() => {
-          return this.isEmailAvailable(control.value).then(result =>
-            result ? null : { emailExists: true }
-          );
-        })
-      );
-    };
-  }
-
-  /// Async Validator Existing Email /// OK
-  async isEmailAvailable(value: string): Promise<boolean> {
-    return getDocs(query(this.db, where('email', '==', value)))
-      .then(documentSnapshot => {
-        return documentSnapshot.empty as boolean;
-      })
-      .catch(error => {
-        console.error('Error getting documents: ', error);
-        return false;
-      });
   }
 }

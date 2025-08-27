@@ -55,11 +55,15 @@ export class SignupComponent extends BaseComponent implements OnInit {
   initForm() {
     this.signupForm = this.formBuilder.group(
       {
-        displayName: ['', Validators.required, this.userService.existingDisplayNameValidator()],
+        displayName: [
+          '',
+          Validators.required,
+          this.userService.existingFieldValidator('displayName')
+        ],
         email: [
           '',
           [Validators.required, Validators.email],
-          this.userService.existingEmailValidator()
+          this.userService.existingFieldValidator('email')
         ],
         password: [
           '',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, of, switchMap, timer } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, timer } from 'rxjs';
 import {
   Firestore,
   collectionData,
@@ -22,53 +22,34 @@ import { AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/fo
   providedIn: 'root'
 })
 export class TagService {
-  private db;
-  private tagsSubject = new BehaviorSubject<Tag[]>([]);
-  tags$ = this.tagsSubject.asObservable();
+  private tagsRef = collection(this.firestore, 'tags');
 
   constructor(
     private utilsService: UtilsService,
     private fileUploadService: FileUploadService,
     private firestore: Firestore
-  ) {
-    this.db = collection(this.firestore, 'tags');
-    this.listenToTags();
-  }
+  ) {}
 
-  /// 🔥 Écoute Firestore en temps réel
-  private listenToTags() {
-    collectionData(this.db, { idField: 'id' })
-      .pipe(
-        map((docs: any[]) =>
-          docs
-            .map(doc => doc as Tag) // caster correctement en Tag
-            .sort((a, b) => a.code.localeCompare(b.code))
-        )
-      )
-      .subscribe({
-        next: (tags: Tag[]) => this.tagsSubject.next(tags),
-        error: err => console.error('Erreur chargement tags', err),
-        complete: () => console.log('Tags chargés !')
-      });
+  /** 🔥 Flux en temps réel de tous les utilisateurs */
+  get tags$(): Observable<Tag[]> {
+    return collectionData(this.tagsRef, { idField: 'id' }).pipe(
+      map((tags: any[]) => tags.sort((a, b) => a.code.localeCompare(b.code)))
+    );
   }
 
   /// Get Single Tag
   async getTag(key: string): Promise<Tag> {
-    const qry = query(this.db, where('key', '==', key));
-    const querySnapshot = await getDocs(qry);
-    if (querySnapshot.empty) {
-      throw new Error('No such document!');
-    }
-    return querySnapshot.docs[0].data() as Tag;
+    const qry = query(this.tagsRef, where('key', '==', key));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as Tag;
   }
 
   /// Create Tag
   createTag(tag: Tag) {
-    return addDoc(this.db, {
+    return addDoc(this.tagsRef, {
+      ...tag,
       key: this.utilsService.getKey(),
-      code: tag.code,
-      libelle: tag.libelle,
-      pictureUrl: tag.pictureUrl,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -76,13 +57,13 @@ export class TagService {
 
   /// Update Tag
   async updateTag(key: string, tag: Tag) {
-    const doc = await this.utilsService.getDocByKey(this.db, key);
-    if (doc) {
+    const docSnap = await this.utilsService.getDocByKey(this.tagsRef, key);
+    if (docSnap) {
       const updated = {
         ...tag,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      await updateDoc(doc.ref, updated as { [key: string]: any }); // Cast to the appropriate type
+      await updateDoc(docSnap.ref, updated as any);
     }
   }
 
@@ -101,8 +82,10 @@ export class TagService {
       }
 
       // 3️⃣ Supprimer le document Tag dans Firestore
-      const doc = await this.utilsService.getDocByKey(this.db, tag.key);
-      await deleteDoc(doc.ref);
+      const docSnap = await this.utilsService.getDocByKey(this.tagsRef, tag.key);
+      if (docSnap) {
+        await deleteDoc(docSnap.ref);
+      }
 
       console.log('✅ Tag supprimé avec succès');
     } catch (error) {
@@ -112,7 +95,7 @@ export class TagService {
 
   /// Vérifie si un code existe
   async isTagCodeAvailable(value: string, edit: boolean, currentTag?: Tag): Promise<boolean> {
-    const querySnapshot = await getDocs(query(this.db, where('code', '==', value)));
+    const querySnapshot = await getDocs(query(this.tagsRef, where('code', '==', value)));
     if (!edit) {
       if (currentTag && value === currentTag.code) return true;
       return querySnapshot.empty;

@@ -20,50 +20,33 @@ import { AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/fo
   providedIn: 'root'
 })
 export class PerlerTypeService {
-  private db;
-  private perlerTypesSubject = new BehaviorSubject<PerlerType[]>([]);
-  perlerTypes$ = this.perlerTypesSubject.asObservable();
+  private perlerTypesRef = collection(this.firestore, 'perlerTypes');
 
   constructor(
     private utilsService: UtilsService,
     private firestore: Firestore
-  ) {
-    this.db = collection(this.firestore, 'perlerTypes');
-    this.listenToPerlerTypes();
-  }
+  ) {}
 
-  /// 🔥 Écoute Firestore en temps réel
-  private listenToPerlerTypes() {
-    collectionData(this.db, { idField: 'id' })
-      .pipe(
-        map((perlerTypes: any[]) => perlerTypes.sort((a, b) => a.libelle.localeCompare(b.libelle)))
-      )
-      .subscribe({
-        next: (perlerTypes: PerlerType[]) => {
-          this.perlerTypesSubject.next(perlerTypes);
-        },
-        error: err => console.error('Erreur chargement perler types', err),
-        complete: () => console.log('Perler Types chargés !')
-      });
+  /** 🔥 Flux en temps réel de tous les types de perle */
+  get perlerTypes$(): Observable<PerlerType[]> {
+    return collectionData(this.perlerTypesRef, { idField: 'id' }).pipe(
+      map((perlerTypes: any[]) => perlerTypes.sort((a, b) => a.libelle.localeCompare(b.libelle)))
+    );
   }
 
   /// Get Single Perler Type
   async getPerlerType(key: string): Promise<PerlerType> {
-    const qry = query(this.db, where('key', '==', key));
-    const querySnapshot = await getDocs(qry);
-    if (querySnapshot.empty) {
-      throw new Error('No such document!');
-    }
-    return querySnapshot.docs[0].data() as PerlerType;
+    const qry = query(this.perlerTypesRef, where('key', '==', key));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as PerlerType;
   }
 
   /// Create Perler Type
   createPerlerType(perlerType: PerlerType) {
-    return addDoc(this.db, {
+    return addDoc(this.perlerTypesRef, {
+      ...perlerType,
       key: this.utilsService.getKey(),
-      reference: perlerType.reference,
-      libelle: perlerType.libelle,
-      color: perlerType.color,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -71,21 +54,21 @@ export class PerlerTypeService {
 
   /// Update Perler Type
   async updatePerlerType(key: string, perlerType: PerlerType) {
-    const doc = await this.utilsService.getDocByKey(this.db, key);
-    if (doc) {
-      const updated: PerlerType = {
+    const docSnap = await this.utilsService.getDocByKey(this.perlerTypesRef, key);
+    if (docSnap) {
+      const updated = {
         ...perlerType,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      updateDoc(doc.ref, updated as { [key: string]: any });
+      await updateDoc(docSnap.ref, updated as any);
     }
   }
 
   /// Remove Perler Type
   async removePerlerType(perlerType: PerlerType) {
-    const doc = await this.utilsService.getDocByKey(this.db, perlerType.key);
-    if (doc) {
-      await deleteDoc(doc.ref);
+    const docSnap = await this.utilsService.getDocByKey(this.perlerTypesRef, perlerType.key);
+    if (docSnap) {
+      await deleteDoc(docSnap.ref);
     }
   }
 
@@ -95,7 +78,9 @@ export class PerlerTypeService {
     edit: boolean,
     current?: PerlerType
   ): Promise<boolean> {
-    const querySnapshot = await getDocs(query(this.db, where('reference', '==', value)));
+    const querySnapshot = await getDocs(
+      query(this.perlerTypesRef, where('reference', '==', value))
+    );
     if (!edit) {
       if (current && value === current.reference) return true;
       return querySnapshot.empty;

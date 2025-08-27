@@ -1,27 +1,14 @@
 <app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Profil"></app-breadcrumbs>
 
-<section class="h-full py-18">
-  <div class="container">
-    <div class="flex">
-      <div class="col">
-        <div class="flex" style="margin-bottom: 2rem">
-          <div class="col">
-            <app-user-form></app-user-form>
-          </div>
-        </div>
-        <div class="flex">
-          <div class="col">
-            <app-change-password></app-change-password>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="flex">
-          <div class="col">
-            <app-orderer-list></app-orderer-list>
-          </div>
-        </div>
-      </div>
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="md:grid md:grid-cols-2 flex flex-col space-y-7 md:space-y-0 w-full md:gap-4">
+    <div class="flex flex-col space-y-7">
+      <app-user-form></app-user-form>
+      <app-change-password></app-change-password>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <app-orderer-list></app-orderer-list>
     </div>
   </div>
 </section>

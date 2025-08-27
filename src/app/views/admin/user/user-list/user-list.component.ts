@@ -107,24 +107,12 @@ export class UserListComponent extends BaseComponent {
     });
   }
 
-  onUpdateAdmin(key: string) {
-    this.userService.getUser(key).then((user: any) => {
-      if (user.admin === true) {
-        this.userService.updateOffAdmin(user);
-      } else if (user.admin === false) {
-        this.userService.updateOnAdmin(user);
-      }
-    });
+  setAdmin(user: User) {
+    this.userService.updateField(user.key, 'admin', !user.admin);
   }
 
-  onUpdateDisabled(key: string) {
-    this.userService.getUser(key).then((user: any) => {
-      if (user.disabled === true) {
-        this.userService.updateOffDisabled(user);
-      } else if (user.disabled === false) {
-        this.userService.updateOnDisabled(user);
-      }
-    });
+  setDisabled(user: User) {
+    this.userService.updateField(user.key, 'disabled', !user.disabled);
   }
 
   onView(content: any, user: User) {

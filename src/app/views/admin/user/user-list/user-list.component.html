@@ -36,35 +36,13 @@
           <td>{{ user.user.surname }}</td>
           <td>{{ user.user.name }}</td>
           <td class="!text-center">
-            <a
-              *ngIf="user.user.admin === true"
-              class="text-success"
-              (click)="onUpdateAdmin(user.user.key)"
-            >
-              <i class="fas fa-toggle-on"></i>
-            </a>
-            <a
-              *ngIf="user.user.admin === false"
-              class="text-danger"
-              (click)="onUpdateAdmin(user.user.key)"
-            >
-              <i class="fas fa-toggle-off"></i>
+            <a (click)="setAdmin(user.user)">
+              <i class="fas" [ngClass]="user.user.admin ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
             </a>
           </td>
           <td class="!text-center">
-            <a
-              *ngIf="user.user.disabled === true"
-              class="text-danger"
-              (click)="onUpdateDisabled(user.user.key)"
-            >
-              <i class="fas fa-toggle-off"></i>
-            </a>
-            <a
-              *ngIf="user.user.disabled === false && user.user.admin !== true"
-              class="text-success"
-              (click)="onUpdateDisabled(user.user.key)"
-            >
-              <i class="fas fa-toggle-on"></i>
+            <a *ngIf="!user.user.admin" (click)="setDisabled(user.user)">
+              <i class="fas" [ngClass]="user.user.disabled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
             </a>
           </td>
         </tr>

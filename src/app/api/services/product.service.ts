@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Product } from '../models/class/product';
-import * as firebaseStorage from 'firebase/storage';
-import { getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   Firestore,
   collectionData,
@@ -16,62 +14,41 @@ import {
 import { UtilsService } from './utils.service';
 import { FileUploadService } from './upload-file.service';
 import { FileUpload } from '../models/class/file-upload';
-import { updateDoc } from '@firebase/firestore';
 import { formatDate } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private db;
-  private productsSubject = new BehaviorSubject<Product[]>([]);
-  products$ = this.productsSubject.asObservable();
+  private productsRef = collection(this.firestore, 'products');
 
   constructor(
     private utilsService: UtilsService,
     private fileUploadService: FileUploadService,
     private firestore: Firestore
-  ) {
-    this.db = collection(this.firestore, 'products');
-    this.listenToProducts();
-  }
+  ) {}
 
-  /// 🔥 écoute Firestore en temps réel
-  private listenToProducts() {
-    collectionData(this.db, { idField: 'id' })
-      .pipe(map((products: any[]) => products.sort((a, b) => a.title.localeCompare(b.title))))
-      .subscribe({
-        next: (products: Product[]) => this.productsSubject.next(products),
-        error: err => console.error('Erreur chargement produits', err),
-        complete: () => console.log('Produits chargés !')
-      });
+  /** 🔥 Flux en temps réel de tous les utilisateurs */
+  get products$(): Observable<Product[]> {
+    return collectionData(this.productsRef, { idField: 'id' }).pipe(
+      map((products: any[]) => products.sort((a, b) => a.title.localeCompare(b.title)))
+    );
   }
 
   /// Get Single Product
   async getProduct(key: string): Promise<Product> {
-    const qry = query(this.db, where('key', '==', key));
-    const querySnapshot = await getDocs(qry);
-    if (querySnapshot.empty) {
-      throw new Error('No such document!');
-    }
-    return querySnapshot.docs[0].data() as Product;
+    const qry = query(this.productsRef, where('key', '==', key));
+    const snap = await getDocs(qry);
+    if (snap.empty) throw new Error('No such document!');
+    return snap.docs[0].data() as Product;
   }
 
   /// Create Product
   createProduct(product: Product) {
-    return addDoc(this.db, {
+    return addDoc(this.productsRef, {
+      ...product,
       key: this.utilsService.getKey(),
-      title: product.title,
-      titleContent: product.titleContent,
-      content: product.content,
-      author: product.author,
-      size: product.size,
-      time: product.time,
-      date: product.date,
-      pictureUrl: product.pictureUrl,
-      tagsKey: product.tagsKey,
-      perlerTypesKey: product.perlerTypesKey,
       dateCreation: formatDate(new Date(), 'dd/MM/yyyy', 'en'),
       dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
     });
@@ -79,13 +56,13 @@ export class ProductService {
 
   /// Update Product
   async updateProduct(key: string, product: Product) {
-    const doc = await this.utilsService.getDocByKey(this.db, key);
-    if (doc) {
+    const docSnap = await this.utilsService.getDocByKey(this.productsRef, key);
+    if (docSnap) {
       const updated = {
         ...product,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      await updateDoc(doc.ref, updated as { [key: string]: any }); // Cast to the appropriate type
+      await updateDoc(docSnap.ref, updated as any);
     }
   }
 
@@ -104,8 +81,10 @@ export class ProductService {
       }
 
       // 3️⃣ Supprimer le document Tag dans Firestore
-      const doc = await this.utilsService.getDocByKey(this.db, product.key);
-      await deleteDoc(doc.ref);
+      const docSnap = await this.utilsService.getDocByKey(this.productsRef, product.key);
+      if (docSnap) {
+        await deleteDoc(docSnap.ref);
+      }
 
       console.log('✅ Produit supprimé avec succès');
     } catch (error) {

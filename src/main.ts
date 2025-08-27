@@ -7,16 +7,12 @@ import {
   importProvidersFrom,
   inject
 } from '@angular/core';
-import { provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore } from '@angular/fire/firestore';
-import { provideStorage } from '@angular/fire/storage';
+import { provideFirebaseApp, initializeApp, FirebaseOptions } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { initializeApp, FirebaseOptions } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-import { AppConfig } from './app/shared/models/app.config';
-import { AppResource } from './app/shared/models/app.resource';
 import { routes } from './app/app.route';
 import { environment } from './environments/environment';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -24,6 +20,8 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { AppResource } from './app/shared/models/app.resource';
+import { AppConfig } from './app/shared/models/app.config';
 import './app/shared/extension/string.extension';
 
 export function loadResources(resourceService: AppResource) {
@@ -46,6 +44,9 @@ bootstrapApplication(AppComponent, {
         ] as FirebaseOptions
       )
     ),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     providePrimeNG({
       theme: {
         preset: Aura,
@@ -94,14 +95,9 @@ bootstrapApplication(AppComponent, {
         weekHeader: 'Sem'
       }
     }),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
     provideAnimations(),
     provideHttpClient(),
     provideAnimationsAsync(),
-    providePrimeNG({
-      theme: { preset: Aura }
-    }),
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as firebaseStorage from '@angular/fire/storage';
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { FileUpload } from '../models/class/file-upload';
 import {
