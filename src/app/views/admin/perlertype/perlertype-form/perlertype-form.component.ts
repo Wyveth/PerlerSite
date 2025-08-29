@@ -33,8 +33,6 @@ import { ButtonModule } from 'primeng/button';
 })
 export class PerlertypeFormComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;
-  color!: string;
-
   id!: string;
   isAddMode!: boolean;
   perlerType: PerlerType = new PerlerType('', '', '');
@@ -90,11 +88,6 @@ export class PerlertypeFormComponent implements OnInit {
       this.perlerTypeService.updatePerlerType(this.id, perlerType);
     }
     this.router.navigate(['perler-types']);
-  }
-
-  public onChangeColor(color: string): void {
-    this.f.color.setValue(color);
-    this.color = color;
   }
 
   /*Validation Erreur*/

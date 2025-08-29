@@ -2426,6 +2426,21 @@ p-menubar > div.p-menubar {
   right: 195px !important;
 }
 
+.hidden-choose .p-button {
+  display: none !important; /* cache totalement le bouton natif */
+}
+
+.hidden-choose .p-fileupload-header {
+  display: none;
+}
+
+.hidden-choose .p-fileupload-content {
+  padding: 0;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 html.dark {
   p-menubar > div.p-menubar {
     background: transparent;

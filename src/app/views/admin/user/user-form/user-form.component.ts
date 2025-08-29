@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
@@ -9,6 +10,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
@@ -28,17 +30,19 @@ import { UserService } from 'src/app/api/services/user.service';
     InputTextModule,
     FloatLabelModule,
     ButtonModule,
-    TextareaModule
+    TextareaModule,
+    FileUploadModule
   ]
 })
 export class UserFormComponent implements OnInit {
   userForm!: UntypedFormGroup;
-  pictureUrl!: string;
   id!: string;
-  fileIsUploading = false;
-  fileUploaded = false;
-  fileUrl!: string;
-  fileObject!: FileUpload;
+
+  uploadedFiles: FileUpload[] = [];
+  initialFiles: FileUpload[] = [];
+
+  originalInitialFiles: FileUpload[] = []; // snapshot immuable de départ
+  removedInitialKeys = new Set<string>(); // ce que l’utilisateur retire en édition
 
   @Input() option: string = 'Admin';
 
@@ -46,6 +50,7 @@ export class UserFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private filesUploadService: FileUploadService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -66,10 +71,59 @@ export class UserFormComponent implements OnInit {
       city: ['', Validators.required]
     });
 
-    this.userService.getUser(this.id).then((data: any) => {
-      this.fileUrl = data.pictureUrl;
-      this.userForm.patchValue(data);
+    this.userService.getUser(this.id).then((user: User) => {
+      this.userForm.patchValue(user);
+
+      if (user.pictureUrl) {
+        this.filesUploadService.getFilesUpload(user.pictureUrl).then(files => {
+          this.initialFiles = files;
+          this.uploadedFiles = files.map(f => ({
+            ...f,
+            isNew: false
+          }));
+          // snapshot immuable de départ
+          this.originalInitialFiles = [...this.initialFiles];
+        });
+      }
     });
+  }
+
+  // ✅ Sélection des fichiers depuis p-fileUpload
+  onFilesSelected(event: any) {
+    const files: File[] = Array.isArray(event.currentFiles) ? event.currentFiles : [];
+    const newFiles = files
+      .filter(f => !this.uploadedFiles.some(uf => uf.file === f))
+      .map(file => {
+        const fUpload = new FileUpload(file);
+        fUpload.name = file.name;
+        fUpload.size = file.size.toString();
+        fUpload.type = file.type;
+        fUpload.isNew = true;
+        fUpload.url = URL.createObjectURL(file); // Aperçu local
+        return fUpload;
+      });
+
+    //Si Multiple == true
+    // this.uploadedFiles.push(...newFiles);
+    //Sinon
+    this.uploadedFiles = newFiles;
+
+    // synchroniser avec PrimeNG
+    event.currentFiles = [...files];
+  }
+
+  onDeleteFile(event: any) {
+    // event.file contient le File sélectionné
+    const fileToRemove = event.file || event?.rawFile;
+    if (!fileToRemove) return;
+
+    // Supprimer de uploadedFiles
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.file !== fileToRemove);
+
+    // Supprimer côté PrimeNG
+    if (event.currentFiles) {
+      event.currentFiles = event.currentFiles.filter((f: File) => f !== fileToRemove);
+    }
   }
 
   /// Obtenir pour un accès facile aux champs de formulaire
@@ -77,44 +131,84 @@ export class UserFormComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  onSubmitForm() {
-    const formValue = this.userForm.value;
-    const user = new User(formValue['displayName'], formValue['email']);
+  removeExistingFile(file: FileUpload) {
+    if (file?.key) this.removedInitialKeys.add(file.key);
 
-    user.surname = formValue['surname'];
-    user.name = formValue['name'];
-    user.adress = formValue['adress'];
-    user.zipcode = formValue['zipcode'];
-    user.city = formValue['city'];
+    // mise à jour de l’UI (listes visibles)
+    this.initialFiles = this.initialFiles.filter(f => f.key !== file.key);
+    this.uploadedFiles = this.uploadedFiles.filter(f => f.key !== file.key);
+  }
 
-    // if (this.fileUrl && this.fileUrl !== '') {
-    //   user.pictureUrl = this.fileUrl;
-    //   user.file = this.fileObject;
-    //   if (user.file != undefined) this.filesUploadService.pushFileToStorage(user.file);
-    // }
+  async onSubmitForm() {
+    try {
+      // 1️⃣ Clés actuelles et initiales
+      const currentKeys = this.uploadedFiles
+        .filter(f => !f.isNew && !!f.key)
+        .map(f => f.key as string);
 
-    this.userService.updateUser(this.id, user);
+      // 2️⃣ diff basé sur le SNAPSHOT immuable
+      const baselineKeys = this.originalInitialFiles.map(f => f.key as string);
+      const deletedByDiff = baselineKeys.filter(k => !currentKeys.includes(k));
 
-    if (this.option == 'Profil') {
-      this.router.navigate(['profil']);
-    } else {
-      this.router.navigate(['users']);
+      // union: (ce que l’utilisateur a explicitement retiré) U (diff automatique)
+      const deletedKeys = Array.from(
+        new Set([...Array.from(this.removedInitialKeys), ...deletedByDiff])
+      );
+
+      // on prend les objets complets depuis le snapshot (il n’a pas été modifié)
+      const filesToDelete = this.originalInitialFiles.filter(f =>
+        deletedKeys.includes(f.key as string)
+      );
+
+      // 🔥 suppression Firestore + Storage
+      await Promise.all(filesToDelete.map(f => this.filesUploadService.deleteFile(f)));
+
+      // 3️⃣ Nouveaux fichiers à uploader
+      const newFiles = this.uploadedFiles.filter(f => f.isNew && f.file instanceof File);
+
+      // 🔥 Upload parallèle
+      const uploadedFiles: FileUpload[] = await Promise.all(
+        newFiles.map(f => this.filesUploadService.pushFileToStorage(f))
+      );
+
+      // 4️⃣ Mettre à jour uploadedFiles avec les infos complètes
+      uploadedFiles.forEach((uploaded, i) => {
+        const f = newFiles[i];
+        f.key = uploaded.key;
+        f.url = uploaded.url;
+        f.name = uploaded.name;
+        f.size = uploaded.size;
+        f.type = uploaded.type;
+        f.isNew = false;
+      });
+
+      const formValue = this.userForm.value as User;
+      const user = new User(
+        formValue['displayName'],
+        formValue['email'],
+        formValue['surname'],
+        formValue['name'],
+        formValue['adress'],
+        formValue['zipcode'],
+        formValue['city']
+      );
+
+      // pictureUrl uniquement avec des URLs valides
+      user.pictureUrl = this.uploadedFiles
+        .filter(f => f.url) // prend uniquement les fichiers uploadés
+        .map(f => f.url);
+
+      this.userService.updateUser(this.id, user).then(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Succès',
+          detail: 'Utilisateur mis à jour avec succès'
+        });
+        console.log('✅ User synchronisé avec Firebase');
+      });
+    } catch (error) {
+      console.error('❌ Erreur lors du traitement des fichiers:', error);
     }
-  }
-
-  onUploadFile(file: File) {
-    this.fileObject = new FileUpload(file);
-
-    this.fileIsUploading = true;
-    this.filesUploadService.pushFileToStorage(this.fileObject).then((url: any) => {
-      this.fileUrl = url;
-      this.fileIsUploading = false;
-      this.fileUploaded = true;
-    });
-  }
-
-  detectFiles(event: any) {
-    this.onUploadFile(event.target.files[0]);
   }
 
   /* Validation Erreur */

@@ -6,57 +6,90 @@
     <div
       class="md:grid md:grid-cols-2 md:items-center flex flex-col w-11/12 space-y-7 md:space-y-0 md:space-x-4 space-x-0 mx-auto"
     >
-      <div class="flex justify-center">
-        <div
-          class="bd-placeholder-img rounded-circle"
-          style="background-color: #ccc; width: 140px; height: 140px"
-        >
-          <img
-            *ngIf="fileUrl"
-            class="rounded-circle"
-            src="{{ fileUrl }}"
-            style="width: 140px; height: 140px; position: absolute"
-          />
-          <img
-            class="rounded-circle"
-            src="{{ fileUrl }}"
-            style="width: 140px; height: 140px; position: absolute"
-          />
-          <label for="file-upload" class="custom-file-upload rounded-circle">
-            <i class="fas fa-upload"></i>
-          </label>
-        </div>
-        <input
-          id="file-upload"
-          type="file"
-          class="profil"
-          (change)="detectFiles($event)"
-          accept="image/*"
+      <div
+        class="relative w-[140px] h-[140px] rounded-full overflow-hidden group border border-black dark:border-white mx-auto"
+      >
+        <!-- Image ou fond gris -->
+        <img
+          *ngIf="this.uploadedFiles[0]; else defaultAvatar"
+          [src]="this.uploadedFiles[0].url"
+          class="object-contain w-full h-full"
+          alt="Avatar"
         />
+        <ng-template #defaultAvatar>
+          <div class="bg-gray-300 w-full h-full"></div>
+        </ng-template>
+
+        <!-- Overlay transparent au hover -->
+        <div
+          class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-70 transition-opacity duration-300 z-10"
+        >
+          <!-- FileUpload avec custom template -->
+          <p-fileUpload
+            name="avatar"
+            [auto]="false"
+            [customUpload]="true"
+            [multiple]="false"
+            accept="image/*"
+            (onSelect)="onFilesSelected($event)"
+            (onRemove)="onDeleteFile($event)"
+            [showUploadButton]="false"
+            [showCancelButton]="false"
+            [chooseLabel]="''"
+            styleClass="hidden-choose w-[140px] h-[140px] rounded-full justify-center items-center mx-auto"
+          >
+            <ng-template #content let-chooseCallback="chooseCallback">
+              <!-- Petit bouton rond blanc -->
+              <button
+                type="button"
+                (click)="chooseCallback($event)"
+                class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 opacity-100 transition"
+              >
+                <i class="fas fa-upload text-gray-700 text-lg"></i>
+              </button>
+            </ng-template>
+          </p-fileUpload>
+        </div>
       </div>
       <div class="flex flex-col space-y-7">
-        <p-floatlabel variant="on">
-          <label for="displayName">Pseudo</label>
-          <input
-            type="text"
-            id="displayName"
-            pInputText
-            class="form-control w-full"
-            formControlName="displayName"
-            readonly
-          />
-        </p-floatlabel>
-        <p-floatlabel variant="on">
-          <label for="email">Email</label>
-          <input
-            type="text"
-            pInputText
-            id="email"
-            class="form-control w-full"
-            formControlName="email"
-            readonly
-          />
-        </p-floatlabel>
+        <div>
+          <p-floatlabel variant="on">
+            <label for="displayName">Pseudo</label>
+            <input
+              type="text"
+              id="displayName"
+              pInputText
+              class="form-control w-full"
+              formControlName="displayName"
+              readonly
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div *ngIf="f.displayName.errors.required">Le pseudo est obligatoire</div>
+          </div>
+        </div>
+        <div>
+          <p-floatlabel variant="on">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              pInputText
+              id="email"
+              class="form-control w-full"
+              formControlName="email"
+              readonly
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="flex flex-col md:w-7/12 w-11/12 mx-auto jutify-center space-y-7">
@@ -72,7 +105,10 @@
             [ngClass]="{ 'is-invalid': shouldShowSurnameError() }"
           />
         </p-floatlabel>
-        <div *ngIf="f.surname.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.surname.errors && (f.surname.touched || f.surname.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
           <div *ngIf="f.surname.errors.required">Le nom est obligatoire</div>
         </div>
       </div>
@@ -88,7 +124,10 @@
             [ngClass]="{ 'is-invalid': shouldShowNameError() }"
           />
         </p-floatlabel>
-        <div *ngIf="f.name.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.name.errors && (f.name.touched || f.name.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
           <div *ngIf="f.name.errors.required">Le prénom est obligatoire</div>
         </div>
       </div>
@@ -105,7 +144,10 @@
           >
           </textarea>
         </p-floatlabel>
-        <div *ngIf="f.adress.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.adress.errors && (f.adress.touched || f.adress.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
           <div *ngIf="f.adress.errors.required">L'adresse est obligatoire</div>
         </div>
       </div>
@@ -121,7 +163,10 @@
             [ngClass]="{ 'is-invalid': shouldShowZipCodeError() }"
           />
         </p-floatlabel>
-        <div *ngIf="f.zipcode.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.zipcode.errors && (f.zipcode.touched || f.zipcode.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
           <div *ngIf="f.zipcode.errors.required">Le code postal est obligatoire</div>
         </div>
       </div>
@@ -137,7 +182,10 @@
             [ngClass]="{ 'is-invalid': shouldShowCityError() }"
           />
         </p-floatlabel>
-        <div *ngIf="f.city.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.city.errors && (f.city.touched || f.city.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
           <div *ngIf="f.city.errors.required">La ville est obligatoire</div>
         </div>
       </div>

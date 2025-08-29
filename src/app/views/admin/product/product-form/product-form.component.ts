@@ -57,21 +57,12 @@ import { PerlerType } from 'src/app/api/models/class/perler-type';
   ]
 })
 export class ProductFormComponent extends BaseComponent implements OnInit {
-  //Constante Form
   productForm!: UntypedFormGroup;
   id!: string;
   isAddMode!: boolean;
+
   dropdownListTags!: Array<{ item_id: string; item_text: string }>;
-
   dropdownListPerlerTypes!: Array<{ item_id: string; item_text: string }>;
-
-  tags!: any[];
-  tagSubscription!: Subscription;
-  tagDDL: any[] = [];
-
-  perlerTypes!: any[];
-  perlerTypeSubscription!: Subscription;
-  perlerTypeDDL: any[] = [];
 
   uploadedFiles: FileUpload[] = [];
   initialFiles: FileUpload[] = [];
