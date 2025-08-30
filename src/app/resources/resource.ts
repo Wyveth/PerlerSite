@@ -16,6 +16,7 @@ export interface Resource {
   tag: Tag;
   perler_type: PerlerType;
   user: User;
+  table: Table;
 }
 
 export interface Layout {
@@ -255,4 +256,12 @@ export interface Button {
   edit: string;
   delete: string;
   view: string;
+}
+
+export interface Table {
+  actions: string;
+  identity: string;
+  email: string;
+  subject: string;
+  message: string;
 }

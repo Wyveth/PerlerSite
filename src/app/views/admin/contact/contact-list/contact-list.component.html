@@ -5,33 +5,27 @@
     <p-table [value]="(contactsWithButtons$ | async) ?? []" [tableStyle]="{ 'min-width': '50rem' }">
       <ng-template #header>
         <tr>
-          <th class="w-1/12 !text-center">Action</th>
-          <th class="w-2/12">Identité</th>
-          <th class="w-2/12">Email</th>
-          <th class="w-2/12">Sujet</th>
-          <th class="w-3/12">Message</th>
+          <th class="w-1/12 !text-center" [innerText]="resource.table.actions">Action</th>
+          <th class="w-2/12" [innerText]="resource.table.identity">Identité</th>
+          <th class="w-2/12" [innerText]="resource.table.email">Email</th>
+          <th class="w-2/12" [innerText]="resource.table.subject">Sujet</th>
+          <th class="w-3/12" [innerText]="resource.table.message">Message</th>
         </tr>
       </ng-template>
-      <ng-template #body let-contact>
+      <ng-template #body let-item>
         <tr class="!text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
           <td class="border border-gray-300 !text-center space-x-4 p-2">
-            <!-- <a
-              class="btn btn-sm btn-outline-light link-warning"
-              (click)="onEdit(contact.contact.key)"
-            >
-              <i class="fas fa-edit"></i>
-            </a> -->
             <a
               class="btn btn-sm btn-outline-light link-danger"
-              (click)="onDelete($event, contact.contact)"
+              (click)="onDelete($event, item.contact)"
             >
               <i class="fas fa-trash"></i>
             </a>
           </td>
-          <td class="border border-gray-300 p-2">{{ contact.contact.name }}</td>
-          <td class="border border-gray-300 p-2">{{ contact.contact.email }}</td>
-          <td class="border border-gray-300 p-2">{{ contact.contact.subject }}</td>
-          <td class="border border-gray-300 p-2">{{ contact.contact.message }}</td>
+          <td class="border border-gray-300 p-2">{{ item.contact.name }}</td>
+          <td class="border border-gray-300 p-2">{{ item.contact.email }}</td>
+          <td class="border border-gray-300 p-2">{{ item.contact.subject }}</td>
+          <td class="border border-gray-300 p-2">{{ item.contact.message }}</td>
         </tr>
       </ng-template>
     </p-table>

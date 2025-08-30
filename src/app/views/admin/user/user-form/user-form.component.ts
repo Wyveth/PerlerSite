@@ -51,8 +51,7 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     private filesUploadService: FileUploadService,
     private messageService: MessageService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {

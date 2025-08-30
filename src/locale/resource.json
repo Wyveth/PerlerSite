@@ -292,5 +292,12 @@
   "user": {
     "title": "Utilisateur",
     "title_plural": "Utilisateurs"
+  },
+  "table": {
+    "actions": "Actions",
+    "identity": "Identité",
+    "email": "Email",
+    "subject": "Sujet",
+    "message": "Message"
   }
 }
