@@ -279,7 +279,12 @@
   },
   "product": {
     "title": "Produit",
-    "title_plural": "Produits"
+    "title_plural": "Produits",
+    "details_tags": "<strong>Tags</strong>: {0}",
+    "details_creator": "<strong>Créateur</strong>: {0}",
+    "details_dimensions": "<strong>Taille (H x L)</strong>: {0} cm",
+    "details_time": "<strong>Temps</strong>: {0}",
+    "details_date": "<strong>Date</strong>: {0}"
   },
   "tag": {
     "title": "Tag",

@@ -209,6 +209,11 @@ export interface Signup {
 export interface Product {
   title: string;
   title_plural: string;
+  details_tags: string;
+  details_creator: string;
+  details_dimensions: string;
+  details_time: string;
+  details_date: string;
 }
 
 export interface Tag {

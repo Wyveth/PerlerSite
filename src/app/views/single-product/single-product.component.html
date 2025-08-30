@@ -25,11 +25,11 @@
       <div class="portfolio-info dark:text-white dark:bg-zinc-700">
         <h3>{{ product.title }}</h3>
         <ul>
-          <li><strong>Tags</strong>: {{ product.tagsVisu }}</li>
-          <li><strong>Créateur</strong>: {{ product.author }}</li>
-          <li><strong>Taille (H x L)</strong>: {{ product.size }} cm</li>
-          <li><strong>Temps</strong>: {{ product.time }}</li>
-          <li><strong>Date</strong>: {{ product.date }}</li>
+          <li [innerHTML]="resource.product.details_tags.format(product.tagsVisu)"></li>
+          <li [innerHTML]="resource.product.details_creator.format(product.author)"></li>
+          <li [innerHTML]="resource.product.details_dimensions.format(product.size)"></li>
+          <li [innerHTML]="resource.product.details_time.format(product.time)"></li>
+          <li [innerHTML]="resource.product.details_date.format(product.date)"></li>
         </ul>
       </div>
       <div
