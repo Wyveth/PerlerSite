@@ -1,9 +1,9 @@
 <app-breadcrumbs
-  nodeParent="Accueil"
-  nodeParentUrl="home"
-  nodeChild="Tags"
-  nodeChildUrl="tags"
-  [nodeChildChild]="isAddMode ? 'Créer' : 'Modifier'"
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.tags"
+  [nodeChildUrl]="resource.router.routes.tags"
+  [nodeChildChild]="isAddMode ? resource.generic.create_g : resource.generic.edit_g"
 ></app-breadcrumbs>
 
 <section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">

@@ -1,4 +1,8 @@
-<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Profil"></app-breadcrumbs>
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.profile"
+></app-breadcrumbs>
 
 <section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
   <div class="md:grid md:grid-cols-2 flex flex-col space-y-7 md:space-y-0 w-full md:gap-4">

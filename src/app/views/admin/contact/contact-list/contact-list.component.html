@@ -1,15 +1,19 @@
-<app-breadcrumbs nodeParent="Accueil" nodeParentUrl="home" nodeChild="Contacts"></app-breadcrumbs>
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.contacts"
+></app-breadcrumbs>
 
 <section class="py-6 space-y-6">
   <div class="flex flex-col w-10/12 mx-auto justify-center">
     <p-table [value]="(contactsWithButtons$ | async) ?? []" [tableStyle]="{ 'min-width': '50rem' }">
       <ng-template #header>
         <tr>
-          <th class="w-1/12 !text-center" [innerText]="resource.table.actions">Action</th>
-          <th class="w-2/12" [innerText]="resource.table.identity">Identité</th>
-          <th class="w-2/12" [innerText]="resource.table.email">Email</th>
-          <th class="w-2/12" [innerText]="resource.table.subject">Sujet</th>
-          <th class="w-3/12" [innerText]="resource.table.message">Message</th>
+          <th class="w-1/12 !text-center" [innerText]="resource.table.actions"></th>
+          <th class="w-2/12" [innerText]="resource.table.identity"></th>
+          <th class="w-2/12" [innerText]="resource.table.email"></th>
+          <th class="w-2/12" [innerText]="resource.table.subject"></th>
+          <th class="w-3/12" [innerText]="resource.table.message"></th>
         </tr>
       </ng-template>
       <ng-template #body let-item>

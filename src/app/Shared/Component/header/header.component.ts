@@ -127,7 +127,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
           },
           {
             visible: this.isAuth,
-            label: this.resource.layout.header.menu.profil,
+            label: this.resource.layout.header.menu.profile,
             command: () => this.onProfil(this.user?.key ?? '')
           },
           {

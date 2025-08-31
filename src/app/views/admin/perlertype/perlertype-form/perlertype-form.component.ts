@@ -15,6 +15,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
 
 @Component({
   selector: 'app-perlertype-form',
@@ -31,18 +33,21 @@ import { ButtonModule } from 'primeng/button';
     ButtonModule
   ]
 })
-export class PerlertypeFormComponent implements OnInit {
+export class PerlertypeFormComponent extends BaseComponent implements OnInit {
   perlerTypeForm!: UntypedFormGroup;
   id!: string;
   isAddMode!: boolean;
   perlerType: PerlerType = new PerlerType('', '', '');
 
   constructor(
+    resources: AppResource,
     private formBuilder: UntypedFormBuilder,
     private perlerTypeService: PerlerTypeService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];

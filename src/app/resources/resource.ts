@@ -37,7 +37,7 @@ export interface Menu {
   faq: string;
   contact: string;
   signin: string;
-  profil: string;
+  profile: string;
   admin: string;
   products: string;
   tags: string;
@@ -59,7 +59,7 @@ export interface Routes {
   faq: string;
   contact: string;
   signin: string;
-  profil: string;
+  profile: string;
   admin: string;
   products: string;
   tags: string;
@@ -253,6 +253,12 @@ export interface Generic {
   delete_error: string;
   save_success: string;
   save_error: string;
+  create_g: string;
+  create_m: string;
+  create_f: string;
+  edit_g: string;
+  edit_m: string;
+  edit_f: string;
 }
 
 export interface Button {

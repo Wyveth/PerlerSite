@@ -9,7 +9,7 @@
         "faq": "F.A.Q.",
         "contact": "Contact",
         "signin": "Connexion",
-        "profil": "Profil",
+        "profile": "Profil",
         "admin": "Administration",
         "products": "Produits",
         "tags": "Tags",
@@ -31,7 +31,7 @@
       "faq": "faq",
       "contact": "contact",
       "signin": "auth/signin",
-      "profil": "profil",
+      "profile": "profil",
       "admin": "#",
       "products": "products",
       "tags": "tags",
@@ -235,7 +235,13 @@
     "delete_cancelled": "Suppression annulée",
     "delete_error": "Erreur lors de la suppression de {0}",
     "save_success": "{0} enregistré avec succès",
-    "save_error": "Erreur lors de l'enregistrement de {0}"
+    "save_error": "Erreur lors de l'enregistrement de {0}",
+    "create_g": "Créer",
+    "create_m": "Créer un {0}",
+    "create_f": "Créer une {0}",
+    "edit_g": "Modifier",
+    "edit_m": "Modifier un {0}",
+    "edit_f": "Modifier une {0}"
   },
   "button": {
     "save": "Enregistrer",
