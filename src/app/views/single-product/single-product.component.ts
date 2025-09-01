@@ -38,6 +38,6 @@ export class SingleProductComponent extends BaseComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/']);
+    this.router.navigate([this.resource.router.routes.home]);
   }
 }

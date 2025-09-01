@@ -99,7 +99,7 @@ export class SignupComponent extends BaseComponent implements OnInit {
     this.authService.createNewUser(email, password).then(
       () => {
         this.userService.createUser(user);
-        this.router.navigate(['/product-list']);
+        this.router.navigate([this.resource.router.routes.product_list]);
       },
       (error: string) => {
         this.errorMessage = error;

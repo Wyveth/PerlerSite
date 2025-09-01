@@ -9,15 +9,22 @@
 <section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
   <div class="formStyle w-full space-y-8">
     <div class="flex justify-center">
-      <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau tag</h2>
-      <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un tag</h2>
+      <h2
+        *ngIf="isAddMode"
+        class="styleTitle"
+        [innerText]="
+          isAddMode
+            ? resource.generic.create_m.format(resource.tag.title.toLowerCase())
+            : resource.generic.edit_m.format(resource.tag.title.toLowerCase())
+        "
+      ></h2>
     </div>
     <form [formGroup]="tagForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
       <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 space-y-7 md:space-y-0">
         <div class="space-y-7 flex flex-col">
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="code">Code</label>
+              <label for="code" [innerText]="resource.form.code"></label>
               <input
                 type="text"
                 id="code"
@@ -32,13 +39,16 @@
               *ngIf="f.code.errors && (f.code.touched || f.code.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.code.errors.required">Le code est obligatoire</div>
-              <div *ngIf="f.code.errors.tagCodeExists">Le code doit être unique</div>
+              <div *ngIf="f.code.errors.required" [innerText]="resource.error.code_mandatory"></div>
+              <div
+                *ngIf="f.code.errors.tagCodeExists"
+                [innerText]="resource.error.code_unique"
+              ></div>
             </div>
           </div>
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="libelle">Libelle</label>
+              <label for="libelle" [innerText]="resource.form.libelle"></label>
               <input
                 type="text"
                 id="libelle"
@@ -53,7 +63,10 @@
               *ngIf="f.libelle.errors && (f.libelle.touched || f.libelle.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.libelle.errors.required">Le libelle est obligatoire</div>
+              <div
+                *ngIf="f.libelle.errors.required"
+                [innerText]="resource.error.libelle_mandatory"
+              ></div>
             </div>
           </div>
         </div>
@@ -76,9 +89,10 @@
               (onRemove)="onDeleteFile($event)"
             >
               <ng-template #empty>
-                <div class="text-gray-500 dark:text-white">
-                  Glissez-déposez ou cliquez pour ajouter des fichiers
-                </div>
+                <div
+                  class="text-gray-500 dark:text-white"
+                  [innerText]="resource.form.drag_drop"
+                ></div>
               </ng-template>
             </p-fileUpload>
           </div>
@@ -86,9 +100,12 @@
             <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
               <li *ngFor="let file of initialFiles">
                 <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
-                <button type="button" (click)="removeExistingFile(file)" class="dark:text-white">
-                  Supprimer
-                </button>
+                <button
+                  type="button"
+                  (click)="removeExistingFile(file)"
+                  class="dark:text-white"
+                  [innerText]="resource.button.delete"
+                ></button>
               </li>
             </ul>
           </div>
@@ -96,7 +113,12 @@
       </div>
 
       <div class="flex w-full justify-center">
-        <p-button type="submit" [disabled]="tagForm.invalid"> Enregistrer </p-button>
+        <button
+          pButton
+          type="submit"
+          [disabled]="tagForm.invalid"
+          [innerText]="resource.button.save"
+        ></button>
       </div>
     </form>
   </div>

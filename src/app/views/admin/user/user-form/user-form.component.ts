@@ -18,6 +18,9 @@ import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { User } from 'src/app/api/models/class/user';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
 import { UserService } from 'src/app/api/services/user.service';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
   selector: 'app-user-form',
@@ -34,7 +37,7 @@ import { UserService } from 'src/app/api/services/user.service';
     FileUploadModule
   ]
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent extends BaseComponent implements OnInit {
   userForm!: UntypedFormGroup;
   id!: string;
 
@@ -47,12 +50,15 @@ export class UserFormComponent implements OnInit {
   @Input() option: string = 'Admin';
 
   constructor(
+    resources: AppResource,
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private filesUploadService: FileUploadService,
     private messageService: MessageService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -199,13 +205,22 @@ export class UserFormComponent implements OnInit {
 
       this.userService.updateUser(this.id, user).then(() => {
         this.messageService.add({
-          severity: 'success',
-          summary: 'Succès',
-          detail: 'Utilisateur mis à jour avec succès'
+          severity: severity.success,
+          summary: this.resource.generic.success,
+          detail: this.resource.generic.edit_success_m.format(
+            this.resource.user.title.toLowerCase(),
+            user.displayName
+          )
         });
+
         console.log('✅ User synchronisé avec Firebase');
       });
     } catch (error) {
+      this.messageService.add({
+        severity: severity.error,
+        summary: this.resource.generic.error,
+        detail: this.resource.error.default
+      });
       console.error('❌ Erreur lors du traitement des fichiers:', error);
     }
   }

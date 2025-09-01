@@ -49,6 +49,9 @@ export interface Menu {
 
 export interface Router {
   base: string;
+  new: string;
+  edit: string;
+  view: string;
   routes: Routes;
 }
 
@@ -62,6 +65,7 @@ export interface Routes {
   profile: string;
   admin: string;
   products: string;
+  product_list: string;
   tags: string;
   perlertypes: string;
   contacts: string;
@@ -125,18 +129,26 @@ export interface Contact {
 }
 
 export interface Form {
-  name: string;
   email: string;
   subject: string;
   message: string;
   password: string;
   confirm_password: string;
-  pseudo: string;
   prompt_password: string;
+  display_name: string;
+  surname: string;
+  name: string;
+  address: string;
+  postal_code: string;
+  city: string;
+  code: string;
+  libelle: string;
+  drag_drop: string;
+  reference: string;
+  color: string;
 }
 
 export interface Error {
-  name_mandatory: string;
   email_mandatory: string;
   email_invalid: string;
   subject_mandatory: string;
@@ -146,10 +158,21 @@ export interface Error {
   password_minlength: string;
   confirm_password_mandatory: string;
   confirm_password_required: string;
-  pseudo_mandatory: string;
-  pseudo_invalid: string;
-  pseudo_required: string;
-  pseudo_already_exists: string;
+  display_name_mandatory: string;
+  display_name_invalid: string;
+  display_name_required: string;
+  display_name_already_exists: string;
+  surname_mandatory: string;
+  name_mandatory: string;
+  address_mandatory: string;
+  postal_code_mandatory: string;
+  city_mandatory: string;
+  code_mandatory: string;
+  code_unique: string;
+  libelle_mandatory: string;
+  reference_mandatory: string;
+  reference_unique: string;
+  color_mandatory: string;
   default: string;
   unauthorized: string;
   forbidden: string;
@@ -243,6 +266,14 @@ export interface Generic {
   cancel: string;
   attention: string;
   details: string;
+  success: string;
+  error: string;
+  create_success_m: string;
+  create_success_f: string;
+  create_success_mf: string;
+  edit_success_m: string;
+  edit_success_f: string;
+  edit_success_mf: string;
   delete_confirm_m: string;
   delete_confirm_f: string;
   delete_confirm_mf: string;
@@ -275,4 +306,9 @@ export interface Table {
   email: string;
   subject: string;
   message: string;
+  display_name: string;
+  surname: string;
+  name: string;
+  admin: string;
+  account: string;
 }

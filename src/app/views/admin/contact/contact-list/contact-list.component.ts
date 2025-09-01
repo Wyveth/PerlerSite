@@ -96,6 +96,6 @@ export class ContactListComponent extends BaseComponent {
   }
 
   onEdit(key: string) {
-    this.router.navigate(['contacts', 'edit', key]);
+    this.router.navigate([this.resource.router.routes.contacts, this.resource.router.edit, key]);
   }
 }

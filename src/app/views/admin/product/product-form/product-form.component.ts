@@ -34,6 +34,8 @@ import { parseSize } from 'src/app/shared/utils/parseSize';
 import { parseDate } from 'src/app/shared/utils/parseDate';
 import { Tag } from 'src/app/api/models/class/tag';
 import { PerlerType } from 'src/app/api/models/class/perler-type';
+import { severity } from 'src/app/shared/enum/severity';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-form',
@@ -77,6 +79,7 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
     private tagService: TagService,
     private perlerTypeService: PerlerTypeService,
     private filesUploadService: FileUploadService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -233,6 +236,7 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
   }
 
   async onSubmitForm() {
+    console.log('🔔 Soumission du formulaire', this.productForm.value);
     if (this.productForm.invalid) {
       // force l’affichage des erreurs
       this.productForm.markAllAsTouched();
@@ -329,8 +333,28 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
         this.productService.updateProduct(this.id, product);
       }
       console.log('✅ Produit synchronisé avec Firebase');
-      this.router.navigate(['products']);
+
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.generic.success,
+        detail: this.isAddMode
+          ? this.resource.generic.create_success_m.format(
+              this.resource.tag.title.toLowerCase(),
+              product.title
+            )
+          : this.resource.generic.edit_success_m.format(
+              this.resource.tag.title.toLowerCase(),
+              product.title
+            )
+      });
+
+      this.router.navigate([this.resource.router.routes.products]);
     } catch (error) {
+      this.messageService.add({
+        severity: severity.error,
+        summary: this.resource.generic.error,
+        detail: this.resource.error.default
+      });
       console.error('❌ Erreur lors du traitement des fichiers:', error);
     }
   }

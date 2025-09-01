@@ -65,7 +65,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   }
 
   onProfil(key: string) {
-    this.router.navigate(['/profil', key]);
+    this.router.navigate([this.resource.router.routes.profile, key]);
   }
 
   onSignOut() {
@@ -75,7 +75,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
         summary: this.resource.layout.header.signout_success_summary,
         detail: this.resource.layout.header.signout_success_detail
       });
-      this.router.navigate(['/']);
+      this.router.navigate([this.resource.router.routes.home]);
     });
   }
 

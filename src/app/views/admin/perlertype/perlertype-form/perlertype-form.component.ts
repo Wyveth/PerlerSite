@@ -17,6 +17,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
+import { severity } from 'src/app/shared/enum/severity';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-perlertype-form',
@@ -43,6 +45,7 @@ export class PerlertypeFormComponent extends BaseComponent implements OnInit {
     resources: AppResource,
     private formBuilder: UntypedFormBuilder,
     private perlerTypeService: PerlerTypeService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -87,12 +90,36 @@ export class PerlertypeFormComponent extends BaseComponent implements OnInit {
       formValue['color']
     );
 
-    if (this.isAddMode) {
-      this.perlerTypeService.createPerlerType(perlerType);
-    } else {
-      this.perlerTypeService.updatePerlerType(this.id, perlerType);
+    try {
+      if (this.isAddMode) {
+        this.perlerTypeService.createPerlerType(perlerType);
+      } else {
+        this.perlerTypeService.updatePerlerType(this.id, perlerType);
+      }
+
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.generic.success,
+        detail: this.isAddMode
+          ? this.resource.generic.create_success_m.format(
+              this.resource.perler_type.title.toLowerCase(),
+              perlerType.reference + ' - ' + perlerType.libelle
+            )
+          : this.resource.generic.edit_success_m.format(
+              this.resource.perler_type.title.toLowerCase(),
+              perlerType.reference + ' - ' + perlerType.libelle
+            )
+      });
+
+      this.router.navigate([this.resource.router.routes.perlertypes]);
+    } catch (error) {
+      this.messageService.add({
+        severity: severity.error,
+        summary: this.resource.generic.error,
+        detail: this.resource.error.default
+      });
+      console.error('❌ Erreur lors de la création/modification du type de perle:', error);
     }
-    this.router.navigate(['perler-types']);
   }
 
   /*Validation Erreur*/

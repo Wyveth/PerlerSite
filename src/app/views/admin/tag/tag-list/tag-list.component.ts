@@ -67,11 +67,11 @@ export class TagListComponent extends BaseComponent {
   }
 
   onNew() {
-    this.router.navigate(['tags', 'new']);
+    this.router.navigate([this.resource.router.routes.tags, this.resource.router.new]);
   }
 
   onEdit(key: string) {
-    this.router.navigate(['tags', 'edit', key]);
+    this.router.navigate([this.resource.router.routes.tags, this.resource.router.edit, key]);
   }
 
   onDelete(event: Event | undefined, tag: Tag) {

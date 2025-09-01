@@ -1,6 +1,9 @@
 <div class="flex flex-col space-y-8 justify-center formStyle">
   <div class="flex justify-center">
-    <h2 class="styleTitle">Modifier le profil</h2>
+    <h2
+      class="styleTitle"
+      [innerText]="resource.generic.edit.format(resource.layout.header.menu.profile.toLowerCase())"
+    ></h2>
   </div>
   <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
     <div
@@ -54,7 +57,7 @@
       <div class="flex flex-col space-y-7">
         <div>
           <p-floatlabel variant="on">
-            <label for="displayName">Pseudo</label>
+            <label for="displayName" [innerText]="resource.form.display_name"></label>
             <input
               type="text"
               id="displayName"
@@ -68,12 +71,15 @@
             *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
             class="text-red-600 text-sm mt-1"
           >
-            <div *ngIf="f.displayName.errors.required">Le pseudo est obligatoire</div>
+            <div
+              *ngIf="f.displayName.errors.required"
+              [innerText]="resource.error.display_name_mandatory"
+            ></div>
           </div>
         </div>
         <div>
           <p-floatlabel variant="on">
-            <label for="email">Email</label>
+            <label for="email" [innerText]="resource.form.email"></label>
             <input
               type="text"
               pInputText
@@ -87,7 +93,7 @@
             *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
             class="text-red-600 text-sm mt-1"
           >
-            <div *ngIf="f.email.errors.required">L'email est obligatoire</div>
+            <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
           </div>
         </div>
       </div>
@@ -95,7 +101,7 @@
     <div class="flex flex-col md:w-7/12 w-11/12 mx-auto jutify-center space-y-7">
       <div class="form-group">
         <p-floatlabel variant="on">
-          <label for="surname">Nom</label>
+          <label for="surname" [innerText]="resource.form.surname"></label>
           <input
             type="text"
             id="surname"
@@ -109,12 +115,15 @@
           *ngIf="f.surname.errors && (f.surname.touched || f.surname.dirty)"
           class="text-red-600 text-sm mt-1"
         >
-          <div *ngIf="f.surname.errors.required">Le nom est obligatoire</div>
+          <div
+            *ngIf="f.surname.errors.required"
+            [innerText]="resource.error.surname_mandatory"
+          ></div>
         </div>
       </div>
       <div class="form-group">
         <p-floatlabel variant="on">
-          <label for="name">Prénom</label>
+          <label for="name" [innerText]="resource.form.name"></label>
           <input
             type="text"
             id="name"
@@ -128,12 +137,12 @@
           *ngIf="f.name.errors && (f.name.touched || f.name.dirty)"
           class="text-red-600 text-sm mt-1"
         >
-          <div *ngIf="f.name.errors.required">Le prénom est obligatoire</div>
+          <div *ngIf="f.name.errors.required" [innerText]="resource.error.name_mandatory"></div>
         </div>
       </div>
       <div class="form-group">
         <p-floatlabel variant="on">
-          <label for="adress">Adresse</label>
+          <label for="adress" [innerText]="resource.form.address"></label>
           <textarea
             id="adress"
             class="form-control w-full"
@@ -148,12 +157,15 @@
           *ngIf="f.adress.errors && (f.adress.touched || f.adress.dirty)"
           class="text-red-600 text-sm mt-1"
         >
-          <div *ngIf="f.adress.errors.required">L'adresse est obligatoire</div>
+          <div
+            *ngIf="f.adress.errors.required"
+            [innerText]="resource.error.address_mandatory"
+          ></div>
         </div>
       </div>
       <div class="form-group">
         <p-floatlabel variant="on">
-          <label for="zipcode">Code Postal</label>
+          <label for="zipcode" [innerText]="resource.form.postal_code"></label>
           <input
             type="text"
             id="zipcode"
@@ -167,12 +179,15 @@
           *ngIf="f.zipcode.errors && (f.zipcode.touched || f.zipcode.dirty)"
           class="text-red-600 text-sm mt-1"
         >
-          <div *ngIf="f.zipcode.errors.required">Le code postal est obligatoire</div>
+          <div
+            *ngIf="f.zipcode.errors.required"
+            [innerText]="resource.error.postal_code_mandatory"
+          ></div>
         </div>
       </div>
       <div class="form-group">
         <p-floatlabel variant="on">
-          <label for="city">Ville</label>
+          <label for="city" [innerText]="resource.form.city"></label>
           <input
             type="text"
             id="city"
@@ -186,12 +201,17 @@
           *ngIf="f.city.errors && (f.city.touched || f.city.dirty)"
           class="text-red-600 text-sm mt-1"
         >
-          <div *ngIf="f.city.errors.required">La ville est obligatoire</div>
+          <div *ngIf="f.city.errors.required" [innerText]="resource.error.city_mandatory"></div>
         </div>
       </div>
     </div>
     <div class="flex w-full justify-center">
-      <p-button type="submit" [disabled]="userForm.invalid"> Enregistrer </p-button>
+      <button
+        pButton
+        type="submit"
+        [disabled]="userForm.invalid"
+        [innerText]="resource.button.save"
+      ></button>
     </div>
   </form>
 </div>

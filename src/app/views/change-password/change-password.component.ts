@@ -34,10 +34,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private authService: AuthService,
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -50,7 +47,11 @@ export class ChangePasswordComponent implements OnInit {
       {
         password: [
           '',
-          [Validators.required, Validators.minLength(6), Validators.pattern(/[0-9a-zA-Z]{6,}/)]
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)
+          ]
         ],
         confirmPassword: ['', Validators.required]
       },

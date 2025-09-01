@@ -19,6 +19,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
+import { severity } from 'src/app/shared/enum/severity';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-tag-form',
@@ -53,6 +55,7 @@ export class TagFormComponent extends BaseComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private tagService: TagService,
     private filesUploadService: FileUploadService,
+    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -204,8 +207,28 @@ export class TagFormComponent extends BaseComponent implements OnInit {
       }
 
       console.log('✅ Tag synchronisé avec Firebase');
-      this.router.navigate(['tags']);
+
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.generic.success,
+        detail: this.isAddMode
+          ? this.resource.generic.create_success_m.format(
+              this.resource.tag.title.toLowerCase(),
+              tag.libelle
+            )
+          : this.resource.generic.edit_success_m.format(
+              this.resource.tag.title.toLowerCase(),
+              tag.libelle
+            )
+      });
+
+      this.router.navigate([this.resource.router.routes.tags]);
     } catch (error) {
+      this.messageService.add({
+        severity: severity.error,
+        summary: this.resource.generic.error,
+        detail: this.resource.error.default
+      });
       console.error('❌ Erreur lors du traitement des fichiers:', error);
     }
   }

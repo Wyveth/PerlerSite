@@ -73,11 +73,11 @@ export class ProductListComponent extends BaseComponent {
   }
 
   onNew() {
-    this.router.navigate(['products', 'new']);
+    this.router.navigate([this.resource.router.routes.products, this.resource.router.new]);
   }
 
   onEdit(key: string) {
-    this.router.navigate(['products', 'edit', key]);
+    this.router.navigate([this.resource.router.routes.products, this.resource.router.edit, key]);
   }
 
   onDelete(event: Event | undefined, product: Product) {
@@ -123,7 +123,7 @@ export class ProductListComponent extends BaseComponent {
   }
 
   onView(key: string) {
-    this.router.navigate(['products', 'view', key]);
+    this.router.navigate([this.resource.router.routes.products, this.resource.router.view, key]);
   }
 
   activeOverlayIndex: number | null = null;

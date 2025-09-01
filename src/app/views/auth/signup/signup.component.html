@@ -13,7 +13,7 @@
       <form class="flex flex-col space-y-8" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="space-y-2">
           <p-floatlabel class="flex w-1/2 mx-auto">
-            <label [innerText]="resource.form.pseudo"></label>
+            <label [innerText]="resource.form.display_name"></label>
             <input type="text" pInputText formControlName="displayName" class="w-full" />
           </p-floatlabel>
           <div
@@ -22,14 +22,14 @@
           >
             <div
               *ngIf="f.displayName.errors.required"
-              [innerText]="resource.error.pseudo_mandatory"
+              [innerText]="resource.error.display_name_mandatory"
             ></div>
             <div
               *ngIf="
                 f.displayName.errors.displayNameExists &&
                 (f.displayName.dirty || f.displayName.touched)
               "
-              [innerText]="resource.error.pseudo_already_exists"
+              [innerText]="resource.error.display_name_already_exists"
             ></div>
           </div>
         </div>

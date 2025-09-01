@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap, timer } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, timer } from 'rxjs';
 import {
   Firestore,
   collectionData,
@@ -90,17 +90,26 @@ export class PerlerTypeService {
   }
 
   /// Validator Existing Perler Type Référence /// OK
-  existingPerlerTypeRefValidator(edit: boolean): AsyncValidatorFn {
-    return (
-      control: AbstractControl
-    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      const debounceTime = 10; //milliseconds
-      return timer(debounceTime).pipe(
-        switchMap(() => {
-          return this.isPerlerTypeRefAvailable(control.value, edit).then(result =>
-            result ? null : { perlerTypeRefExists: true }
-          );
-        })
+  existingPerlerTypeRefValidator(editMode: boolean): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      // si pas de valeur → pas d’erreur
+      if (!control.value) {
+        return of(null);
+      }
+
+      // si mode édition et le code n’a pas changé → pas d’erreur
+      if (editMode && control.pristine) {
+        return of(null);
+      }
+
+      // debounce de 300ms pour éviter les requêtes à chaque frappe
+      return timer(300).pipe(
+        switchMap(() =>
+          this.isPerlerTypeRefAvailable(control.value, editMode).then(isAvailable =>
+            isAvailable ? null : { perlerTypeRefExists: true }
+          )
+        ),
+        catchError(() => of(null)) // en cas d’erreur API → on ne bloque pas le formulaire
       );
     };
   }

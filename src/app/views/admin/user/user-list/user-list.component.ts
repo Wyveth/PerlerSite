@@ -62,7 +62,7 @@ export class UserListComponent extends BaseComponent {
   }
 
   onEdit(key: string) {
-    this.router.navigate(['users', 'edit', key]);
+    this.router.navigate([this.resource.router.routes.users, this.resource.router.edit, key]);
   }
 
   onDelete(event: Event | undefined, user: User) {

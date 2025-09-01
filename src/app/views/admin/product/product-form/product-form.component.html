@@ -9,8 +9,15 @@
 <section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
   <div class="formStyle w-full space-y-8">
     <div class="flex justify-center">
-      <h2 *ngIf="isAddMode" class="styleTitle">Enregistrer un nouveau produit</h2>
-      <h2 *ngIf="!isAddMode" class="styleTitle">Modifier un produit</h2>
+      <h2
+        *ngIf="isAddMode"
+        class="styleTitle"
+        [innerText]="
+          isAddMode
+            ? resource.generic.create_m.format(resource.product.title.toLowerCase())
+            : resource.generic.edit_m.format(resource.product.title.toLowerCase())
+        "
+      ></h2>
     </div>
     <form
       *ngIf="productForm"
@@ -216,9 +223,10 @@
                 (onRemove)="onDeleteFile($event)"
               >
                 <ng-template #empty>
-                  <div class="text-gray-500 dark:text-white">
-                    Glissez-déposez ou cliquez pour ajouter des fichiers
-                  </div>
+                  <div
+                    class="text-gray-500 dark:text-white"
+                    [innerText]="resource.form.drag_drop"
+                  ></div>
                 </ng-template>
               </p-fileUpload>
             </div>
@@ -226,16 +234,23 @@
               <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
                 <li *ngFor="let file of initialFiles">
                   <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
-                  <button type="button" (click)="removeExistingFile(file)" class="dark:text-white">
-                    Supprimer
-                  </button>
+                  <button
+                    type="button"
+                    (click)="removeExistingFile(file)"
+                    class="dark:text-white"
+                    [innerText]="resource.button.delete"
+                  ></button>
                 </li>
               </ul>
             </div>
           </div>
 
           <div class="form-group space-y-3">
-            <label class="flex justify-center dark:text-white" for="tagsKey">Tags</label>
+            <label
+              class="flex justify-center dark:text-white"
+              for="tagsKey"
+              [innerText]="resource.tag.title_plural"
+            ></label>
             <p-multiselect
               formControlName="tagsKey"
               [placeholder]="'Sélectionner un ou plusieurs Tags'"
@@ -261,9 +276,11 @@
           </div>
 
           <div class="form-group space-y-3">
-            <label class="flex justify-center dark:text-white" for="perlerTypesKey"
-              >Types Perler</label
-            >
+            <label
+              class="flex justify-center dark:text-white"
+              for="perlerTypesKey"
+              [innerText]="resource.perler_type.title_plural"
+            ></label>
             <p-multiselect
               formControlName="perlerTypesKey"
               [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
@@ -292,7 +309,7 @@
         </div>
       </div>
       <div class="flex w-full justify-center">
-        <p-button type="submit"> Enregistrer </p-button>
+        <button pButton type="submit" [innerText]="resource.button.save"></button>
       </div>
     </form>
   </div>
