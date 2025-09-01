@@ -116,7 +116,7 @@
         <button
           pButton
           type="submit"
-          [disabled]="tagForm.invalid"
+          [disabled]="tagForm.invalid || tagForm.pending"
           [innerText]="resource.button.save"
         ></button>
       </div>

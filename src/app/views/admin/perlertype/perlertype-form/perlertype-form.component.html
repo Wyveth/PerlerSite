@@ -70,9 +70,13 @@
           </div>
         </div>
 
-        <div class="form-group md:flex md:w-full md:justify-center md:items-center space-x-4">
-          <label class="dark:text-white" for="color" [innerText]="resource.form.color"></label>
-          <p-color-picker formControlName="color"></p-color-picker>
+        <div
+          class="form-group md:flex md:flex-col md:w-full md:justify-center md:items-center space-x-4 space-y-4"
+        >
+          <div class="flex flex-row space-x-4">
+            <label class="dark:text-white" for="color" [innerText]="resource.form.color"></label>
+            <p-color-picker formControlName="color"></p-color-picker>
+          </div>
           <div
             *ngIf="f.color.errors && (f.color.touched || f.color.dirty)"
             class="text-red-600 text-sm mt-1"
@@ -86,7 +90,7 @@
         <button
           pButton
           type="submit"
-          [disabled]="perlerTypeForm.invalid"
+          [disabled]="perlerTypeForm.invalid || perlerTypeForm.pending"
           [innerText]="resource.button.save"
         ></button>
       </div>
