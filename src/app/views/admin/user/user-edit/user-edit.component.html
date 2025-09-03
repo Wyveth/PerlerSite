@@ -1,0 +1,13 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.users"
+  [nodeChildUrl]="resource.router.routes.profile"
+  [nodeChildChild]="resource.generic.edit_m.format(resource.layout.header.menu.profile)"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="w-full space-y-8">
+    <app-user-form></app-user-form>
+  </div>
+</section>

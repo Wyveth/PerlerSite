@@ -18,33 +18,28 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/PerlerWyveth",
+            "outputPath": {
+              "base": "dist/PerlerWyveth"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/locale", "src/environment"],
             "styles": [
-              "src/styles.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/aos/dist/aos.css"
+              "src/assets/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/aos/dist/aos.js",
               "node_modules/glightbox/dist/js/glightbox.min.js",
               "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
               "node_modules/swiper/swiper-bundle.min.js",
-              "node_modules/typed.js/lib/typed.min.js",
+
               "node_modules/waypoints/lib/noframework.waypoints.js"
-            ]
+            ],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -69,9 +64,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -80,37 +73,35 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "PerlerWyveth:build:production"
+              "buildTarget": "PerlerWyveth:build:production"
             },
             "development": {
-              "browserTarget": "PerlerWyveth:build:development"
+              "buildTarget": "PerlerWyveth:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
-            "browserTarget": "PerlerWyveth:build"
+            "buildTarget": "PerlerWyveth:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/locale", "src/environment"],
             "styles": [
-              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "src/assets/styles/styles.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/aos/dist/aos.css"
@@ -121,7 +112,6 @@
               "node_modules/glightbox/dist/js/glightbox.min.js",
               "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
               "node_modules/swiper/swiper-bundle.min.js",
-              "node_modules/typed.js/lib/typed.min.js",
               "node_modules/waypoints/lib/noframework.waypoints.js"
             ]
           }
@@ -139,5 +129,30 @@
       }
     }
   },
-  "defaultProject": "PerlerWyveth"
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
+  }
 }

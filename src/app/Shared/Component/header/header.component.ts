@@ -1,22 +1,42 @@
+import { MenubarModule } from 'primeng/menubar';
 import { Component, OnInit } from '@angular/core';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { AuthService } from '../../Services/auth.service';
 import * as AOS from 'aos';
-import { UserService } from '../../Services/user.service';
-import { User } from '../../Models/User.Model';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MenuItem, MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/api/services/auth.service';
+import { User } from 'src/app/api/models/class/user';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from '../base/base.component';
+import { DrawerModule } from 'primeng/drawer';
+import { combineLatest, filter } from 'rxjs';
+import { severity } from '../../enum/severity';
+import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  standalone: true,
+  imports: [CommonModule, RouterModule, MenubarModule, DrawerModule, ThemeSwitchComponent]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent extends BaseComponent implements OnInit {
   isAuth: boolean = false;
-  isAuthA: boolean = false;
-  user!: User;
+  isAdmin: boolean = false;
+  user!: User | null;
+  visibleSidebar = false;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  menuItems: MenuItem[] = [];
+
+  isDropdownOpen = false;
+
+  constructor(
+    resources: AppResource,
+    private messageService: MessageService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     AOS.init({
@@ -26,31 +46,152 @@ export class HeaderComponent implements OnInit {
       mirror: false
     });
 
-    onAuthStateChanged(getAuth(), (user) => {
-      if (user) {
-        this.userService.getUserByEmail(user.email).then(
-          (user: any) => {
-            this.user = user as User;
-            if(this.user.admin === true){
-              this.isAuthA = true;
-            }
-            else{
-              this.isAuthA = false;
-            }
-          });
-        this.isAuth = true;
-      } else {
-        this.isAuth = false;
-      }
-    }
-    );
+    this.authService.currentUser$.subscribe(user => {
+      this.user = user;
+    });
+
+    combineLatest([
+      this.authService.isAuth$.pipe(filter((v): v is boolean => v !== null)),
+      this.authService.isAdmin$.pipe(filter((v): v is boolean => v !== null))
+    ]).subscribe(([isAuth, isAdmin]) => {
+      this.isAuth = isAuth;
+      this.isAdmin = isAdmin;
+      this.updateMenuItems();
+    });
   }
 
-  onProfil(key: string){
-    this.router.navigate(['/profil', key]);
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  onProfil(key: string) {
+    this.router.navigate([this.resource.router.routes.profile, key]);
   }
 
   onSignOut() {
-    this.authService.signOutUser();
+    this.authService.logout().then(() => {
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.layout.header.signout_success_summary,
+        detail: this.resource.layout.header.signout_success_detail
+      });
+      this.router.navigate([this.resource.router.routes.home]);
+    });
+  }
+
+  hasChildren(item: any): boolean {
+    return Array.isArray(item?.items) && item.items.length > 0;
+  }
+
+  executeCommand(item: MenuItem) {
+    if (item.command) {
+      item.command({ originalEvent: undefined, item: item });
+      this.visibleSidebar = false;
+    }
+  }
+
+  updateMenuItems() {
+    this.menuItems = [
+      {
+        label: this.resource.layout.header.menu.home,
+        icon: 'ri-home-4-line',
+        command: () => {
+          scrollViewFragment(this.router, this.resource.router.routes.welcome);
+        }
+      },
+      {
+        label: this.resource.layout.header.menu.achievements,
+        command: () => {
+          scrollViewFragment(this.router, this.resource.router.routes.achievements);
+        }
+      },
+      {
+        label: this.resource.layout.header.menu.faq,
+        command: () => {
+          scrollViewFragment(this.router, this.resource.router.routes.faq);
+        }
+      },
+      {
+        label: this.resource.layout.header.menu.contact,
+        command: () => {
+          scrollViewFragment(this.router, this.resource.router.routes.contact);
+        }
+      },
+      {
+        icon: 'ri-account-circle-line',
+        items: [
+          {
+            label: this.resource.layout.header.menu.signin,
+            visible: !this.isAuth,
+            routerLink: this.resource.router.routes.signin
+          },
+          {
+            visible: this.isAuth,
+            label: this.resource.layout.header.menu.profile,
+            command: () => this.onProfil(this.user?.key ?? '')
+          },
+          {
+            visible: this.isAdmin,
+            label: this.resource.layout.header.menu.admin,
+            items: [
+              {
+                label: this.resource.layout.header.menu.products,
+                routerLink: this.resource.router.routes.products
+              },
+              {
+                label: this.resource.layout.header.menu.tags,
+                routerLink: this.resource.router.routes.tags
+              },
+              {
+                label: this.resource.layout.header.menu.perlertypes,
+                routerLink: this.resource.router.routes.perlertypes
+              },
+              {
+                label: this.resource.layout.header.menu.contacts,
+                routerLink: this.resource.router.routes.contacts
+              },
+              {
+                label: this.resource.layout.header.menu.users,
+                routerLink: this.resource.router.routes.users
+              }
+            ]
+          },
+          {
+            visible: this.isAuth,
+            label: this.resource.layout.header.menu.signout,
+            command: () => this.onSignOut()
+          }
+        ]
+      }
+    ];
+  }
+
+  isAbsolute(): boolean {
+    // Liste des pages où le menu doit être "absolute"
+    return ['/'].includes(this.router.url);
+  }
+}
+
+export function scrollViewFragment(
+  router: Router,
+  fragment: string,
+  scrollType: 'smooth' | 'auto' = 'smooth'
+) {
+  const currentUrl = router.url.split('#')[0];
+
+  const scrollAndRefreshAOS = () => {
+    const el = document.getElementById(fragment);
+    if (el) {
+      el.scrollIntoView({ behavior: scrollType });
+    }
+    AOS.refresh(); // AOS est sûr car importé
+  };
+
+  if (currentUrl !== '/') {
+    router.navigateByUrl('/').then(() => {
+      setTimeout(scrollAndRefreshAOS, 100);
+    });
+  } else {
+    setTimeout(scrollAndRefreshAOS, 50);
   }
 }

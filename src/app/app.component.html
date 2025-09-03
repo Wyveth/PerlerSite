@@ -1,4 +1,8 @@
-<app-header></app-header>
 <router-outlet></router-outlet>
-<app-toasts></app-toasts>
-
+<p-toast
+  [showTransitionOptions]="'250ms'"
+  [showTransformOptions]="'translateX(100%)'"
+  [hideTransitionOptions]="'150ms'"
+  [hideTransformOptions]="'translateX(100%)'"
+/>
+<p-confirmdialog />

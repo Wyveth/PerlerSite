@@ -1,0 +1,60 @@
+<app-breadcrumbs
+  *ngIf="product$ | async as product"
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.product.title_plural"
+  [nodeChildUrl]="this.resource.router.routes.products"
+  [nodeChildChild]="product.title"
+></app-breadcrumbs>
+
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details" *ngIf="product$ | async as product">
+  <div class="flex md:flex-row flex-col w-10/12 mx-auto space-x-4">
+    <div class="w-full md:w-8/12">
+      <div class="portfolio-details-slider swiper">
+        <div class="swiper-wrapper align-items-center">
+          <div class="swiper-slide">
+            <img *ngIf="product.pictureUrl" src="{{ product.pictureUrl }}" alt="" />
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-4/12 flex flex-col justify-between space-y-4">
+      <div class="portfolio-info dark:text-white dark:bg-zinc-700">
+        <h3>{{ product.title }}</h3>
+        <ul>
+          <li [innerHTML]="resource.product.details_tags.format(product.tagsVisu)"></li>
+          <li [innerHTML]="resource.product.details_creator.format(product.author)"></li>
+          <li [innerHTML]="resource.product.details_dimensions.format(product.size)"></li>
+          <li [innerHTML]="resource.product.details_time.format(product.time)"></li>
+          <li [innerHTML]="resource.product.details_date.format(product.date)"></li>
+        </ul>
+      </div>
+      <div
+        class="portfolio-description dark:text-white dark:bg-zinc-700 shadow-[0px_0_30px_rgba(1,41,112,0.08)]"
+      >
+        <h2>{{ product.titleContent }}</h2>
+        <p>
+          {{ product.content }}
+        </p>
+        <!--<p>
+            <button class="btn btn-default" (click)="onBack()">Retour</button>
+          </p>-->
+        <!-- <strong>Avis</strong>:<br />
+          <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&starf;;</span>&starf;
+            </span>
+          </ng-template> -->
+        <!-- <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating> -->
+        <!-- {{ currentRate }} -->
+      </div>
+    </div>
+  </div>
+  <!-- <div class="flex gy-4">
+      <app-comment-list></app-comment-list>
+    </div> -->
+</section>
+<!-- End Portfolio Details Section -->

@@ -1,45 +1,84 @@
-<!-- ======= Header ======= -->
-<header id="header" class="header fixed-top">
-  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-    <a href="index.html" class="logo d-flex align-items-center nav-link">
-      <img src="assets/img/LogoHome.png" alt="" style="margin-right: 0px; max-height: 42px;">
-      <span>yveth Perler</span>
+<header id="header" class="header w-full top-0" [ngClass]="{ absolute: isAbsolute() }">
+  <div class="flex items-center justify-between">
+    <a
+      [routerLink]="resource.router.routes.home"
+      routerLinkActive="router-link-active"
+      class="flex logo items-center nav-link"
+    >
+      <img [src]="resource.layout.header.logo" alt="Logo" class="h-[42px] object-contain" />
+      <span
+        class="font-semibold leading-[1] lg:inline-block align-middle hidden dark:!text-white"
+        [innerHtml]="resource.layout.header.title"
+      ></span>
     </a>
 
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero"><i class="ri-home-4-line"></i>Accueil</a></li>
-        <li><a class="nav-link scrollto" href="#portfolio">Mes réalisations</a></li>
-        <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
-        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-        <li class="dropdown"><a href="#" class="nav-link"><span><i class="ri-account-circle-line"></i></span><i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <!--<li routerLinkActive="active" *ngIf="!isAuth">
-              <a routerLink="auth/signup" class="nav-link">Créer un compte</a>
-            </li>-->
-            <li routerLinkActive="active" *ngIf="!isAuth">
-              <a routerLink="auth/signin" class="nav-link">Connexion</a>
-            </li>
-            <li *ngIf="isAuth"><a routerLink="profil" class="nav-link" (click)="onProfil(user.key)">Profil</a></li>
-            <li class="dropdown"><a href="#" class="nav-link"><span>Administration</span><i class="bi bi-chevron-right"></i></a>
-              <ul>
-                <li *ngIf="isAuthA"><a routerLink="products" class="nav-link">Produits</a></li>
-                <li *ngIf="isAuthA"><a routerLink="tags" class="nav-link">Tags</a></li>
-                <li *ngIf="isAuthA"><a routerLink="perlerTypes" class="nav-link">Types Perles</a></li>
-                <li *ngIf="isAuthA"><a routerLink="contacts" class="nav-link">Contacts</a></li>
-                <li *ngIf="isAuthA"><a routerLink="users" class="nav-link">Utilisateurs</a></li>
-              </ul>
-            </li>
-            <li>
-              <a (click)="onSignOut()" style="cursor:pointer" class="nav-link" *ngIf="isAuth">Déconnexion</a>
-            </li>
-          </ul>
-        </li>
-        
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
+    <div class="flex items-center">
+      <p-menubar class="hidden md:block" [model]="menuItems" />
 
+      <p-drawer
+        [(visible)]="visibleSidebar"
+        [modal]="true"
+        position="left"
+        class="md:hidden"
+        (onHide)="visibleSidebar = false"
+      >
+        <ul class="menu-list p-0 m-0">
+          <ng-container *ngFor="let item of menuItems">
+            <ng-container *ngIf="item.visible !== false">
+              <li>
+                <a
+                  *ngIf="!item.items"
+                  (click)="executeCommand(item)"
+                  [routerLink]="item.routerLink"
+                  class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                >
+                  <i *ngIf="item.icon" [class]="item.icon"></i>
+                  <span>{{ item.label }}</span>
+                </a>
+                <div *ngIf="item.items">
+                  <div class="flex items-center space-x-2 p-2 font-semibold">
+                    <i *ngIf="item.icon" [class]="item.icon"></i>
+                    <span>{{ item.label }}</span>
+                  </div>
+                  <ul class="ml-4">
+                    <li *ngFor="let subItem of item.items">
+                      <a
+                        *ngIf="subItem.visible !== false"
+                        (click)="executeCommand(subItem)"
+                        [routerLink]="subItem.routerLink"
+                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                      >
+                        <span>{{ subItem.label }}</span>
+                      </a>
+                      <ul *ngIf="subItem.items" class="ml-4">
+                        <li *ngFor="let subSubItem of subItem.items">
+                          <a
+                            *ngIf="subSubItem.visible !== false"
+                            (click)="executeCommand(subSubItem)"
+                            [routerLink]="subSubItem.routerLink"
+                            class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
+                          >
+                            <span>{{ subSubItem.label }}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ng-container>
+          </ng-container>
+        </ul>
+      </p-drawer>
+
+      <button
+        class="block md:hidden w-10 h-10 text-black dark:!text-white"
+        (click)="visibleSidebar = true"
+      >
+        <i class="pi pi-bars w-4 h-4"></i>
+      </button>
+
+      <app-theme-switch />
+    </div>
   </div>
-</header><!-- End Header -->
+</header>

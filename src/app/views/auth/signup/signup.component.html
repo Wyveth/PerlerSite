@@ -1,0 +1,131 @@
+<app-breadcrumbs
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.signup.title"
+></app-breadcrumbs>
+
+<section class="h-full py-18">
+  <div class="flex justify-center">
+    <div class="w-1/2 formStyle space-y-6">
+      <div class="flex justify-center">
+        <h2 class="styleTitle" [innerText]="this.resource.signup.title"></h2>
+      </div>
+      <form class="flex flex-col space-y-8" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label [innerText]="resource.form.display_name"></label>
+            <input type="text" pInputText formControlName="displayName" class="w-full" />
+          </p-floatlabel>
+          <div
+            *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div
+              *ngIf="f.displayName.errors.required"
+              [innerText]="resource.error.display_name_mandatory"
+            ></div>
+            <div
+              *ngIf="
+                f.displayName.errors.displayNameExists &&
+                (f.displayName.dirty || f.displayName.touched)
+              "
+              [innerText]="resource.error.display_name_already_exists"
+            ></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label [innerText]="resource.form.email"></label>
+            <input type="text" pInputText formControlName="email" class="w-full" />
+          </p-floatlabel>
+          <div
+            *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
+            <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
+            <div
+              *ngIf="f.email.errors.emailExists"
+              [innerText]="resource.error.email_already_exists"
+            ></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label class="z-1" [innerText]="resource.form.password"></label>
+            <p-password
+              type="password"
+              formControlName="password"
+              [inputStyleClass]="'w-full'"
+              [promptLabel]="resource.form.prompt_password"
+              class="w-full"
+              [styleClass]="'w-full'"
+              [toggleMask]="true"
+              [weakLabel]="resource.error.weak_label"
+              [mediumLabel]="resource.error.medium_label"
+              [strongLabel]="resource.error.strong_label"
+            >
+              <ng-template #footer>
+                <p-divider />
+                <ul class="pl-2 my-0 leading-normal">
+                  <li [innerText]="resource.signup.at_least_one_lowercase"></li>
+                  <li [innerText]="resource.signup.at_least_one_uppercase"></li>
+                  <li [innerText]="resource.signup.at_least_one_numeric"></li>
+                  <li [innerText]="resource.signup.minimum_characters"></li>
+                </ul>
+              </ng-template>
+            </p-password>
+          </p-floatlabel>
+          <div
+            *ngIf="f.password.errors && (f.password.touched || f.password.dirty)"
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div
+              *ngIf="f.password.errors.required"
+              [innerText]="resource.error.password_required"
+            ></div>
+            <div
+              *ngIf="f.password.errors.minlength"
+              [innerText]="resource.error.password_minlength"
+            ></div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <p-floatlabel class="flex w-1/2 mx-auto">
+            <label class="z-1" [innerText]="resource.form.confirm_password"></label>
+            <p-password
+              type="password"
+              formControlName="confirmPassword"
+              [inputStyleClass]="'w-full'"
+              class="w-full"
+              [styleClass]="'w-full'"
+              [toggleMask]="true"
+              [feedback]="false"
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="
+              f.confirmPassword.errors && (f.confirmPassword.touched || f.confirmPassword.dirty)
+            "
+            class="text-red-600 text-sm mt-1 text-center"
+          >
+            <div
+              *ngIf="f.confirmPassword.errors.required"
+              [innerText]="resource.error.confirm_password_required"
+            ></div>
+            <div
+              *ngIf="f.confirmPassword.errors.mustMatch"
+              [innerText]="resource.error.password_mismatch"
+            ></div>
+          </div>
+        </div>
+        <button
+          class="w-1/2 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
+          type="submit"
+          [disabled]="signupForm.invalid"
+          [innerText]="resource.signup.signup_button"
+        ></button>
+      </form>
+    </div>
+  </div>
+</section>

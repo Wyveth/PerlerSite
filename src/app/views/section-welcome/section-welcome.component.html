@@ -1,0 +1,43 @@
+<section id="welcome">
+  <div id="heroCarousel" class="carousel slide carousel-fade">
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <p-galleria
+          class="welcome"
+          [value]="images"
+          [numVisible]="5"
+          [circular]="true"
+          [autoPlay]="true"
+          [showItemNavigators]="true"
+          [showThumbnails]="false"
+          [responsiveOptions]="responsiveOptions"
+          [indicatorsPosition]="'bottom'"
+          [showIndicators]="true"
+          [showIndicatorsOnItem]="true"
+          [containerStyle]="{ width: '100%', height: '100vh' }"
+        >
+          <ng-template #item let-item>
+            <img [src]="item" class="w-screen h-screen object-cover block" />
+          </ng-template>
+          <ng-template #caption let-item>
+            <div
+              class="bg-white border-t-4 border-[#012970] p-3 w-7/8 opacity-90 flex justify-center mx-auto"
+            >
+              <div class="flex-col space-x-4 my-4 text-center">
+                <h2 [innerHTML]="resource.welcome.title"></h2>
+                <p [innerHTML]="resource.welcome.subtitle"></p>
+                <a
+                  href="#portfolio"
+                  class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                >
+                  <span>{{ resource.welcome.button }}</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </ng-template>
+        </p-galleria>
+      </div>
+    </div>
+  </div>
+</section>

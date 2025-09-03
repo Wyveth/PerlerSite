@@ -1,0 +1,356 @@
+export interface Resource {
+  layout: Layout;
+  router: Router;
+  welcome: Welcome;
+  portfolio: Portfolio;
+  faq: FAQ;
+  contact: Contact;
+  form: Form;
+  error: Error;
+  generic: Generic;
+  button: Button;
+  severity: Severity;
+  signin: Signin;
+  signup: Signup;
+  product: Product;
+  tag: Tag;
+  perler_type: PerlerType;
+  user: User;
+  change_password: ChangePassword;
+  table: Table;
+}
+
+export interface Layout {
+  header: Header;
+}
+
+export interface Header {
+  logo: string;
+  title: string;
+  menu: Menu;
+  signout_success_summary: string;
+  signout_success_detail: string;
+}
+
+export interface Menu {
+  home: string;
+  achievements: string;
+  faq: string;
+  contact: string;
+  signin: string;
+  profile: string;
+  admin: string;
+  products: string;
+  tags: string;
+  perlertypes: string;
+  contacts: string;
+  users: string;
+  signout: string;
+}
+
+export interface Router {
+  base: string;
+  new: string;
+  edit: string;
+  view: string;
+  routes: Routes;
+}
+
+export interface Routes {
+  home: string;
+  welcome: string;
+  achievements: string;
+  faq: string;
+  contact: string;
+  signin: string;
+  profile: string;
+  admin: string;
+  products: string;
+  product_list: string;
+  tags: string;
+  perlertypes: string;
+  contacts: string;
+  users: string;
+}
+
+export interface Welcome {
+  title: string;
+  subtitle: string;
+  button: string;
+}
+
+export interface Portfolio {
+  title: string;
+  subtitle: string;
+  all: string;
+  new: string;
+  measure: string;
+  details: string;
+  redirect_product_view: string;
+}
+
+export interface FAQ {
+  title: string;
+  subtitle: string;
+  tabs: FAQTabs[];
+}
+
+export interface FAQTabs {
+  items: FAQItem[];
+}
+
+export interface FAQItem {
+  question: string;
+  answer: FAQAnswer;
+}
+
+export interface FAQAnswer {
+  paragraphs: string[];
+  links: FAQLink[];
+}
+
+export interface FAQLink {
+  label: string;
+  url: string;
+  link: string;
+  note: string;
+}
+
+export interface Contact {
+  title: string;
+  title_plural: string;
+  subtitle: string;
+  name_placeholder: string;
+  email_placeholder: string;
+  subject_placeholder: string;
+  message_placeholder: string;
+  loading: string;
+  send_message: string;
+  send_message_success: string;
+}
+
+export interface Form {
+  email: string;
+  subject: string;
+  message: string;
+  password: string;
+  old_password: string;
+  confirm_password: string;
+  prompt_password: string;
+  display_name: string;
+  surname: string;
+  name: string;
+  address: string;
+  postal_code: string;
+  city: string;
+  code: string;
+  libelle: string;
+  drag_drop: string;
+  reference: string;
+  color: string;
+  title: string;
+  title_desc: string;
+  description: string;
+  author: string;
+  dimensions: string;
+  height: string;
+  width: string;
+  duration: string;
+  hours: string;
+  minutes: string;
+  date: string;
+}
+
+export interface Error {
+  email_mandatory: string;
+  email_invalid: string;
+  subject_mandatory: string;
+  message_mandatory: string;
+  password_mandatory: string;
+  password_required: string;
+  password_minlength: string;
+  confirm_password_mandatory: string;
+  confirm_password_required: string;
+  display_name_mandatory: string;
+  display_name_invalid: string;
+  display_name_required: string;
+  display_name_already_exists: string;
+  surname_mandatory: string;
+  name_mandatory: string;
+  address_mandatory: string;
+  postal_code_mandatory: string;
+  city_mandatory: string;
+  code_mandatory: string;
+  code_unique: string;
+  libelle_mandatory: string;
+  reference_mandatory: string;
+  reference_unique: string;
+  color_mandatory: string;
+  title_mandatory: string;
+  title_desc_mandatory: string;
+  description_mandatory: string;
+  author_mandatory: string;
+  dimensions_mandatory: string;
+  duration_mandatory: string;
+  date_mandatory: string;
+  minimum_tag_selected: string;
+  default: string;
+  unauthorized: string;
+  forbidden: string;
+  not_found: string;
+  server_error: string;
+  bad_request: string;
+  network_error: string;
+  validation_error: string;
+  form_error: string;
+  login_error: string;
+  signup_error: string;
+  email_already_exists: string;
+  password_mismatch: string;
+  password_too_short: string;
+  password_too_weak: string;
+  weak_label: string;
+  medium_label: string;
+  strong_label: string;
+}
+
+export interface Severity {
+  success: string;
+  info: string;
+  warn: string;
+  error: string;
+  secondary: string;
+  contrast: string;
+}
+
+export interface Signin {
+  title: string;
+  remember_me: string;
+  forgot_password: string;
+  signin_button: string;
+  signin_success_summary: string;
+  signin_success_detail: string;
+  error: string;
+  signin_required: string;
+  signin_required_admin: string;
+  signin_required_user: string;
+  email_password_false: string;
+  user_desactivated: string;
+  user_not_found: string;
+}
+
+export interface Signup {
+  title: string;
+  at_least_one_lowercase: string;
+  at_least_one_uppercase: string;
+  at_least_one_numeric: string;
+  minimum_characters: string;
+  signup_button: string;
+  signup_success: string;
+  signup_error: string;
+}
+
+export interface Product {
+  title: string;
+  title_plural: string;
+  details_tags: string;
+  details_creator: string;
+  details_dimensions: string;
+  details_time: string;
+  details_date: string;
+}
+
+export interface Tag {
+  title: string;
+  title_plural: string;
+  selected_item: string;
+}
+
+export interface PerlerType {
+  title: string;
+  title_plural: string;
+  selected_item: string;
+}
+
+export interface User {
+  title: string;
+  title_plural: string;
+}
+
+export interface Generic {
+  new_m: string;
+  new_f: string;
+  edit: string;
+  delete: string;
+  view: string;
+  save_m: string;
+  save_f: string;
+  confirm: string;
+  cancel: string;
+  attention: string;
+  details: string;
+  success: string;
+  error: string;
+  create_success_m: string;
+  create_success_f: string;
+  create_success_mf: string;
+  edit_success_m: string;
+  edit_success_f: string;
+  edit_success_mf: string;
+  delete_confirm_m: string;
+  delete_confirm_f: string;
+  delete_confirm_mf: string;
+  delete_success_m: string;
+  delete_success_f: string;
+  delete_success_mf: string;
+  delete_cancelled: string;
+  delete_error: string;
+  save_success: string;
+  save_error: string;
+  create_g: string;
+  create_m: string;
+  create_f: string;
+  edit_g: string;
+  edit_m: string;
+  edit_f: string;
+  placeholder_m: string;
+  placeholder_f: string;
+  empty_m: string;
+  empty_f: string;
+  empty_filter_m: string;
+  empty_filter_f: string;
+  height: string;
+  width: string;
+  measure: string;
+}
+
+export interface Button {
+  save: string;
+  cancel: string;
+  edit: string;
+  delete: string;
+  view: string;
+  browse: string;
+}
+
+export interface ChangePassword {
+  title: string;
+  button: string;
+  success: string;
+  error: string;
+  no_connected: string;
+  reconnect_b: string;
+}
+
+export interface Table {
+  actions: string;
+  identity: string;
+  email: string;
+  subject: string;
+  message: string;
+  display_name: string;
+  surname: string;
+  name: string;
+  admin: string;
+  account: string;
+}

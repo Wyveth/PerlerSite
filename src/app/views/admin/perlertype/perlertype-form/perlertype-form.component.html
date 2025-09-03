@@ -1,0 +1,99 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.perlertypes"
+  [nodeChildUrl]="resource.router.routes.perlertypes"
+  [nodeChildChild]="isAddMode ? resource.generic.create_g : resource.generic.edit_g"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="formStyle w-full space-y-8">
+    <div class="flex justify-center">
+      <h2
+        *ngIf="isAddMode"
+        class="styleTitle"
+        [innerText]="
+          isAddMode
+            ? resource.generic.create_m.format(resource.perler_type.title.toLowerCase())
+            : resource.generic.edit_m.format(resource.perler_type.title.toLowerCase())
+        "
+      ></h2>
+    </div>
+    <form [formGroup]="perlerTypeForm" (ngSubmit)="onSubmitForm()" class="space-y-8 flex flex-col">
+      <div class="flex md:grid md:grid-cols-3 md:gap-4 md:space-y-0 flex-col space-y-7">
+        <div class="form-group">
+          <p-floatlabel variant="on">
+            <label for="reference" [innerText]="resource.form.reference"></label>
+            <input
+              type="text"
+              id="reference"
+              class="form-control w-full"
+              pInputText
+              formControlName="reference"
+              [ngClass]="{ 'is-invalid': shouldShowReferenceError() }"
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.reference.errors && (f.reference.touched || f.reference.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div
+              *ngIf="f.reference.errors.required"
+              [innerText]="resource.error.reference_mandatory"
+            ></div>
+            <div
+              *ngIf="f.reference.errors.perlerTypeRefExists"
+              [innerText]="resource.error.reference_unique"
+            ></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <p-floatlabel variant="on">
+            <label for="libelle" [innerText]="resource.form.libelle"></label>
+            <input
+              type="text"
+              id="libelle"
+              class="form-control w-full"
+              pInputText
+              formControlName="libelle"
+              [ngClass]="{ 'is-invalid': shouldShowLibelleError() }"
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.libelle.errors && (f.libelle.touched || f.libelle.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div
+              *ngIf="f.libelle.errors.required"
+              [innerText]="resource.error.libelle_mandatory"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          class="form-group md:flex md:flex-col md:w-full md:justify-center md:items-center space-x-4 space-y-4"
+        >
+          <div class="flex flex-row space-x-4">
+            <label class="dark:text-white" for="color" [innerText]="resource.form.color"></label>
+            <p-color-picker formControlName="color"></p-color-picker>
+          </div>
+          <div
+            *ngIf="f.color.errors && (f.color.touched || f.color.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div *ngIf="f.color.errors.required" [innerText]="resource.error.color_mandatory"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-full justify-center">
+        <button
+          pButton
+          type="submit"
+          [disabled]="perlerTypeForm.invalid || perlerTypeForm.pending"
+          [innerText]="resource.button.save"
+        ></button>
+      </div>
+    </form>
+  </div>
+</section>

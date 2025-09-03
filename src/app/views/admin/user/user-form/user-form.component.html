@@ -1,0 +1,219 @@
+<div class="flex flex-col space-y-8 justify-center formStyle">
+  <div class="flex justify-center">
+    <h2
+      class="styleTitle"
+      [innerText]="resource.generic.edit.format(resource.layout.header.menu.profile.toLowerCase())"
+    ></h2>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
+    <div
+      class="md:grid md:grid-cols-2 md:items-center flex flex-col w-11/12 space-y-7 md:space-y-0 md:space-x-4 space-x-0 mx-auto"
+    >
+      <div
+        class="relative w-[140px] h-[140px] rounded-full overflow-hidden group border border-black dark:border-white mx-auto"
+      >
+        <!-- Image ou fond gris -->
+        <img
+          *ngIf="this.uploadedFiles[0]; else defaultAvatar"
+          [src]="this.uploadedFiles[0].url"
+          class="object-contain w-full h-full"
+          alt="Avatar"
+        />
+        <ng-template #defaultAvatar>
+          <div class="bg-gray-300 w-full h-full"></div>
+        </ng-template>
+
+        <!-- Overlay transparent au hover -->
+        <div
+          class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-70 transition-opacity duration-300 z-10"
+        >
+          <!-- FileUpload avec custom template -->
+          <p-fileUpload
+            name="avatar"
+            [auto]="false"
+            [customUpload]="true"
+            [multiple]="false"
+            accept="image/*"
+            (onSelect)="onFilesSelected($event)"
+            (onRemove)="onDeleteFile($event)"
+            [showUploadButton]="false"
+            [showCancelButton]="false"
+            [chooseLabel]="''"
+            styleClass="hidden-choose w-[140px] h-[140px] rounded-full justify-center items-center mx-auto"
+          >
+            <ng-template #content let-chooseCallback="chooseCallback">
+              <!-- Petit bouton rond blanc -->
+              <button
+                type="button"
+                (click)="chooseCallback($event)"
+                class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 opacity-100 transition"
+              >
+                <i class="fas fa-upload text-gray-700 text-lg"></i>
+              </button>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+      </div>
+      <div class="flex flex-col space-y-7">
+        <div>
+          <p-floatlabel variant="on">
+            <label for="displayName" [innerText]="resource.form.display_name"></label>
+            <input
+              type="text"
+              id="displayName"
+              pInputText
+              class="form-control w-full"
+              formControlName="displayName"
+              readonly
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div
+              *ngIf="f.displayName.errors.required"
+              [innerText]="resource.error.display_name_mandatory"
+            ></div>
+          </div>
+        </div>
+        <div>
+          <p-floatlabel variant="on">
+            <label for="email" [innerText]="resource.form.email"></label>
+            <input
+              type="text"
+              pInputText
+              id="email"
+              class="form-control w-full"
+              formControlName="email"
+              autocomplete="username"
+              readonly
+            />
+          </p-floatlabel>
+          <div
+            *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
+            class="text-red-600 text-sm mt-1"
+          >
+            <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
+            <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col md:w-7/12 w-11/12 mx-auto jutify-center space-y-7">
+      <div class="form-group">
+        <p-floatlabel variant="on">
+          <label for="surname" [innerText]="resource.form.surname"></label>
+          <input
+            type="text"
+            id="surname"
+            class="form-control w-full"
+            pInputText
+            formControlName="surname"
+            [ngClass]="{ 'is-invalid': shouldShowSurnameError() }"
+          />
+        </p-floatlabel>
+        <div
+          *ngIf="f.surname.errors && (f.surname.touched || f.surname.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
+          <div
+            *ngIf="f.surname.errors.required"
+            [innerText]="resource.error.surname_mandatory"
+          ></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-floatlabel variant="on">
+          <label for="name" [innerText]="resource.form.name"></label>
+          <input
+            type="text"
+            id="name"
+            class="form-control w-full"
+            pInputText
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': shouldShowNameError() }"
+          />
+        </p-floatlabel>
+        <div
+          *ngIf="f.name.errors && (f.name.touched || f.name.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
+          <div *ngIf="f.name.errors.required" [innerText]="resource.error.name_mandatory"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-floatlabel variant="on">
+          <label for="adress" [innerText]="resource.form.address"></label>
+          <textarea
+            id="adress"
+            class="form-control w-full"
+            pTextarea
+            rows="6"
+            formControlName="adress"
+            [ngClass]="{ 'is-invalid': shouldShowAdresseError() }"
+          >
+          </textarea>
+        </p-floatlabel>
+        <div
+          *ngIf="f.adress.errors && (f.adress.touched || f.adress.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
+          <div
+            *ngIf="f.adress.errors.required"
+            [innerText]="resource.error.address_mandatory"
+          ></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-floatlabel variant="on">
+          <label for="zipcode" [innerText]="resource.form.postal_code"></label>
+          <input
+            type="text"
+            id="zipcode"
+            class="form-control w-full"
+            pInputText
+            formControlName="zipcode"
+            [ngClass]="{ 'is-invalid': shouldShowZipCodeError() }"
+          />
+        </p-floatlabel>
+        <div
+          *ngIf="f.zipcode.errors && (f.zipcode.touched || f.zipcode.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
+          <div
+            *ngIf="f.zipcode.errors.required"
+            [innerText]="resource.error.postal_code_mandatory"
+          ></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-floatlabel variant="on">
+          <label for="city" [innerText]="resource.form.city"></label>
+          <input
+            type="text"
+            id="city"
+            class="form-control w-full"
+            pInputText
+            formControlName="city"
+            [ngClass]="{ 'is-invalid': shouldShowCityError() }"
+          />
+        </p-floatlabel>
+        <div
+          *ngIf="f.city.errors && (f.city.touched || f.city.dirty)"
+          class="text-red-600 text-sm mt-1"
+        >
+          <div *ngIf="f.city.errors.required" [innerText]="resource.error.city_mandatory"></div>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full justify-center">
+      <button
+        pButton
+        type="submit"
+        [disabled]="userForm.invalid"
+        [innerText]="resource.button.save"
+      ></button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<app-breadcrumbs
+  [nodeParent]="this.resource.layout.header.menu.home"
+  [nodeParentUrl]="this.resource.router.routes.home"
+  [nodeChild]="this.resource.perler_type.title"
+></app-breadcrumbs>
+
+<section class="py-6 space-y-6">
+  <div class="flex justify-center">
+    <div class="w-8/12 flex justify-center">
+      <button
+        class="w-10/12 md:w-4/12 mx-auto bg-blue-600 text-white font-semibold px-6 py-2 rounded hover:bg-blue-700 transition"
+        (click)="onNew()"
+        [innerText]="resource.generic.new_m | format: resource.perler_type.title"
+      ></button>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <app-image-overlay
+        *ngFor="let item of perlerTypesWithButtons$ | async; let i = index"
+        [title]="item.perlerType.libelle"
+        [buttons]="item.buttons"
+        [background]="item.perlerType.color"
+        [active]="activeOverlayIndex === i"
+        (toggleRequested)="activeOverlayIndex = activeOverlayIndex === i ? null : i"
+      />
+    </div>
+  </div>
+</section>

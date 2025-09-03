@@ -1,0 +1,329 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.products"
+  [nodeChildUrl]="resource.router.routes.products"
+  [nodeChildChild]="isAddMode ? resource.generic.create_g : resource.generic.edit_g"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="formStyle w-full space-y-8">
+    <div class="flex justify-center">
+      <h2
+        *ngIf="isAddMode"
+        class="styleTitle"
+        [innerText]="
+          isAddMode
+            ? resource.generic.create_m.format(resource.product.title.toLowerCase())
+            : resource.generic.edit_m.format(resource.product.title.toLowerCase())
+        "
+      ></h2>
+    </div>
+    <form
+      *ngIf="productForm"
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmitForm()"
+      class="space-y-8 flex flex-col"
+    >
+      <div class="flex flex-col space-y-7 md:grid md:grid-cols-2 md:gap-4 md:items-start">
+        <div class="flex flex-col justify-center space-y-7">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="title" [innerText]="resource.form.title"></label>
+              <input
+                type="text"
+                id="title"
+                pInputText
+                class="form-control"
+                formControlName="title"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowTitleError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.title.errors && (f.title.touched || f.title.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.title.errors.required"
+                [innerText]="resource.error.title_mandatory"
+              ></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="titleContent" [innerText]="resource.form.title_desc"></label>
+              <input
+                type="text"
+                id="titleContent"
+                class="form-control"
+                pInputText
+                formControlName="titleContent"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowTitleContentError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.titleContent.errors && (f.titleContent.touched || f.titleContent.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.titleContent.errors.required"
+                [innerText]="resource.error.title_desc_mandatory"
+              ></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="content" [innerText]="resource.form.description"></label>
+              <textarea
+                id="content"
+                class="form-control"
+                pTextarea
+                rows="10"
+                formControlName="content"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowContentError() }"
+              >
+              </textarea>
+            </p-floatlabel>
+            <div
+              *ngIf="f.content.errors && (f.content.touched || f.content.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.content.errors.required"
+                [innerText]="resource.error.description_mandatory"
+              ></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="author" [innerText]="resource.form.author"></label>
+              <input
+                type="text"
+                id="author"
+                class="form-control"
+                pInputText
+                formControlName="author"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowAuthorError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.author.errors && (f.author.touched || f.author.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.author.errors.required"
+                [innerText]="resource.error.author_mandatory"
+              ></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="flex flex-col flex gap-4 items-center">
+              <label class="dark:text-white" [innerText]="resource.form.dimensions"></label>
+              <div class="flex gap-2">
+                <p-inputgroup>
+                  <p-inputgroup-addon [innerText]="resource.generic.height"></p-inputgroup-addon>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="size_h"
+                    [step]="0.1"
+                    [placeholder]="resource.form.height"
+                  />
+                  <p-inputgroup-addon [innerText]="resource.generic.measure"></p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup>
+                  <p-inputgroup-addon [innerText]="resource.generic.width"></p-inputgroup-addon>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="size_w"
+                    [step]="0.1"
+                    [placeholder]="resource.form.width"
+                  />
+                  <p-inputgroup-addon [innerText]="resource.generic.measure"></p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+            <div
+              *ngIf="f.size.errors && (f.size.touched || f.size.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.size.errors.required"
+                [innerText]="resource.error.dimensions_mandatory"
+              ></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="flex flex-col flex gap-4 items-center">
+              <label class="dark:text-white" [innerText]="resource.form.duration"></label>
+              <div class="flex gap-2">
+                <p-inputgroup>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="time_h"
+                    [step]="1"
+                    [placeholder]="resource.form.hours"
+                  />
+                  <p-inputgroup-addon>h</p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup>
+                  <p-inputnumber
+                    [showButtons]="true"
+                    formControlName="time_m"
+                    [min]="0"
+                    [max]="45"
+                    [step]="15"
+                    [placeholder]="resource.form.minutes"
+                  />
+                  <p-inputgroup-addon>min</p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+            <div
+              *ngIf="f.time.errors && (f.time.touched || f.time.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.time.errors.required"
+                [innerText]="resource.error.duration_mandatory"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-center space-y-7">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <p-datepicker
+                id="date"
+                inputId="date"
+                class="form-control"
+                formControlName="date"
+                [showIcon]="true"
+                styleClass="w-full"
+                dateFormat="dd/mm/yy"
+                [ngClass]="{ 'ng-invalid ng-dirty': shouldShowDateError() }"
+              />
+              <label for="date" [innerText]="resource.form.date"></label>
+            </p-floatlabel>
+            <div
+              *ngIf="f.date.errors && (f.date.touched || f.date.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div *ngIf="f.date.errors.required" [innerText]="resource.error.date_mandatory"></div>
+            </div>
+          </div>
+
+          <div class="space-y-7">
+            <div class="flex items-center justify-center gap-4">
+              <p-fileUpload
+                #fileUpload
+                class="w-full"
+                name="files"
+                [auto]="false"
+                customUpload="true"
+                [maxFileSize]="1000000"
+                [showUploadButton]="false"
+                [multiple]="true"
+                accept="image/*"
+                [chooseLabel]="resource.button.browse"
+                [cancelLabel]="resource.button.cancel"
+                (onSelect)="onFilesSelected($event)"
+                (onRemove)="onDeleteFile($event)"
+              >
+                <ng-template #empty>
+                  <div
+                    class="text-gray-500 dark:text-white"
+                    [innerText]="resource.form.drag_drop"
+                  ></div>
+                </ng-template>
+              </p-fileUpload>
+            </div>
+            <div class="flex">
+              <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
+                <li *ngFor="let file of initialFiles">
+                  <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
+                  <button
+                    type="button"
+                    (click)="removeExistingFile(file)"
+                    class="dark:text-white"
+                    [innerText]="resource.button.delete"
+                  ></button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group space-y-3">
+            <label
+              class="flex justify-center dark:text-white"
+              for="tagsKey"
+              [innerText]="resource.tag.title_plural"
+            ></label>
+            <p-multiselect
+              formControlName="tagsKey"
+              [placeholder]="resource.generic.placeholder_m.format(resource.tag.title)"
+              [filter]="true"
+              multiselect.list.gap="2"
+              optionValue="item_id"
+              optionLabel="item_text"
+              display="chip"
+              [emptyFilterMessage]="resource.generic.empty_filter_m.format(resource.tag.title)"
+              [emptyMessage]="resource.generic.empty_m.format(resource.tag.title.toLowerCase())"
+              [selectedItemsLabel]="resource.tag.selected_item"
+              [options]="dropdownListTags"
+              class="w-full"
+              [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }"
+            />
+
+            <div
+              *ngIf="f.tagsKey.errors && (f.tagsKey.touched || f.tagsKey.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.tagsKey.errors.required"
+                [innerText]="resource.error.minimum_tag_selected"
+              ></div>
+            </div>
+          </div>
+
+          <div class="form-group space-y-3">
+            <label
+              class="flex justify-center dark:text-white"
+              for="perlerTypesKey"
+              [innerText]="resource.perler_type.title_plural"
+            ></label>
+            <p-multiselect
+              formControlName="perlerTypesKey"
+              [placeholder]="resource.generic.placeholder_m.format(resource.perler_type.title)"
+              [filter]="true"
+              optionValue="item_id"
+              optionLabel="item_text"
+              display="chip"
+              [emptyFilterMessage]="
+                resource.generic.empty_filter_m.format(resource.perler_type.title.toLowerCase())
+              "
+              [emptyMessage]="
+                resource.generic.empty_m.format(resource.perler_type.title.toLowerCase())
+              "
+              [selectedItemsLabel]="resource.perler_type.selected_item"
+              [options]="dropdownListPerlerTypes"
+              class="w-full"
+              [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex w-full justify-center">
+        <button pButton type="submit" [innerText]="resource.button.save"></button>
+      </div>
+    </form>
+  </div>
+</section>

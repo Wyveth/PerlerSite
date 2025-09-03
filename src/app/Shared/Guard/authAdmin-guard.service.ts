@@ -1,45 +1,27 @@
 import { Injectable } from '@angular/core';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { User } from '../Models/User.Model';
-import { UserService } from '../Services/user.service';
+import { Router, UrlTree } from '@angular/router';
+import { Observable, filter, map, take } from 'rxjs';
+import { User } from '../../api/models/class/user';
+import { AuthService } from 'src/app/api/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthAdminGuardService implements CanActivate {
+export class AuthAdminGuardService {
   user!: User;
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return new Promise(
-      (resolve, reject) => {
-        onAuthStateChanged(getAuth(),
-          (user) => {
-            if(user) {
-              console.log('Auth Admin: ' + user.email);
-              this.userService.getUserByEmail(user.email).then(
-                (user: any) => {
-                  this.user = user as User;
-
-                  if(this.user.admin === true 
-                    && this.user.disabled === false){
-                    resolve(true);
-                  }
-                  else{
-                    this.router.navigate(['/auth', 'signin']);
-                    resolve(false);
-                  }
-              });
-            } else {
-              this.router.navigate(['/auth', 'signin']);
-              resolve(false);
-            }
-          }
-        );
-      }
+  canActivate(): Observable<boolean | UrlTree> {
+    return this.authService.isAdmin$.pipe(
+      filter(isAdmin => isAdmin !== null),
+      take(1),
+      map(isAdmin => {
+        return isAdmin ? true : this.router.createUrlTree(['/signin']);
+      })
     );
   }
 }

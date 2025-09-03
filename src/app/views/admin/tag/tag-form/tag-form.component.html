@@ -1,0 +1,125 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.tags"
+  [nodeChildUrl]="resource.router.routes.tags"
+  [nodeChildChild]="isAddMode ? resource.generic.create_g : resource.generic.edit_g"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="formStyle w-full space-y-8">
+    <div class="flex justify-center">
+      <h2
+        *ngIf="isAddMode"
+        class="styleTitle"
+        [innerText]="
+          isAddMode
+            ? resource.generic.create_m.format(resource.tag.title.toLowerCase())
+            : resource.generic.edit_m.format(resource.tag.title.toLowerCase())
+        "
+      ></h2>
+    </div>
+    <form [formGroup]="tagForm" (ngSubmit)="onSubmitForm()" class="space-y-7">
+      <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 space-y-7 md:space-y-0">
+        <div class="space-y-7 flex flex-col">
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="code" [innerText]="resource.form.code"></label>
+              <input
+                type="text"
+                id="code"
+                class="form-control"
+                pInputText
+                formControlName="code"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowCodeError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.code.errors && (f.code.touched || f.code.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div *ngIf="f.code.errors.required" [innerText]="resource.error.code_mandatory"></div>
+              <div
+                *ngIf="f.code.errors.tagCodeExists"
+                [innerText]="resource.error.code_unique"
+              ></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <p-floatlabel variant="on">
+              <label for="libelle" [innerText]="resource.form.libelle"></label>
+              <input
+                type="text"
+                id="libelle"
+                class="form-control"
+                pInputText
+                formControlName="libelle"
+                class="w-full"
+                [ngClass]="{ 'is-invalid': shouldShowLibelleError() }"
+              />
+            </p-floatlabel>
+            <div
+              *ngIf="f.libelle.errors && (f.libelle.touched || f.libelle.dirty)"
+              class="text-red-600 text-sm mt-1"
+            >
+              <div
+                *ngIf="f.libelle.errors.required"
+                [innerText]="resource.error.libelle_mandatory"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-7">
+          <div class="flex flex-col items-center justify-center gap-4">
+            <p-fileUpload
+              #fileUpload
+              class="w-full"
+              name="files"
+              [auto]="false"
+              customUpload="true"
+              [maxFileSize]="1000000"
+              [showUploadButton]="false"
+              [multiple]="false"
+              accept="image/*"
+              [chooseLabel]="resource.button.browse"
+              [cancelLabel]="resource.button.cancel"
+              (onSelect)="onFilesSelected($event)"
+              (onRemove)="onDeleteFile($event)"
+            >
+              <ng-template #empty>
+                <div
+                  class="text-gray-500 dark:text-white"
+                  [innerText]="resource.form.drag_drop"
+                ></div>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+          <div class="flex">
+            <ul *ngIf="initialFiles.length" class="grid grid-cols-3 md:grid-cols-4 gap-4">
+              <li *ngFor="let file of initialFiles">
+                <img [src]="file.url" alt="Fichier" class="w-20 h-20 object-cover mb-2" />
+                <button
+                  type="button"
+                  (click)="removeExistingFile(file)"
+                  class="dark:text-white"
+                  [innerText]="resource.button.delete"
+                ></button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-full justify-center">
+        <button
+          pButton
+          type="submit"
+          [disabled]="tagForm.invalid || tagForm.pending"
+          [innerText]="resource.button.save"
+        ></button>
+      </div>
+    </form>
+  </div>
+</section>

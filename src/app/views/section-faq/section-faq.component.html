@@ -1,0 +1,36 @@
+<!-- ======= F.A.Q Section ======= -->
+<section id="faq" class="faq flex justify-center mx-5 md:mx-auto">
+  <div class="container" data-aos="flip-down" data-aos-delay="300">
+    <header class="section-header">
+      <h2 [innerHTML]="resource.faq.title"></h2>
+      <p class="dark:!text-white" [innerHTML]="resource.faq.subtitle"></p>
+    </header>
+
+    <div class="flex">
+      <div class="grid grid-cols-2 gap-4" data-aos="fade-right" data-aos-delay="500">
+        <p-accordion *ngFor="let tab of resource.faq.tabs">
+          <p-accordion-panel *ngFor="let item of tab.items; let index = index" [value]="index">
+            <p-accordion-header>{{ item.question }}</p-accordion-header>
+            <p-accordion-content>
+              <div class="accordion-body">
+                <p *ngFor="let paragraph of item.answer.paragraphs" [innerText]="paragraph"></p>
+                <ul>
+                  <li *ngFor="let item of item.answer.links">
+                    {{ item.label }}
+                    <a
+                      *ngIf="item.link !== undefined"
+                      [href]="item.url"
+                      [innerText]="item.link"
+                    ></a>
+                    {{ item.note }}
+                  </li>
+                </ul>
+              </div>
+            </p-accordion-content>
+          </p-accordion-panel>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End F.A.Q Section -->

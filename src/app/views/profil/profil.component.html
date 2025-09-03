@@ -1,0 +1,18 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.profile"
+></app-breadcrumbs>
+
+<section class="md:py-14 py-6 flex w-10/12 mx-auto justify-center">
+  <div class="md:grid md:grid-cols-2 flex flex-col space-y-7 md:space-y-0 w-full md:gap-4">
+    <div class="flex flex-col space-y-7">
+      <app-user-form></app-user-form>
+      <app-change-password></app-change-password>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <app-orderer-list></app-orderer-list>
+    </div>
+  </div>
+</section>

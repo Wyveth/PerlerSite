@@ -1,0 +1,49 @@
+<div
+  class="relative w-72 h-48 overflow-hidden rounded-xl"
+  [class.group]="!active"
+  (click)="toggleRequested.emit()"
+>
+  <img *ngIf="url" [src]="url" alt="Image" class="w-full h-full object-cover" />
+  <div
+    *ngIf="background"
+    class="w-full h-full"
+    [ngStyle]="{ 'background-color': background }"
+  ></div>
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-black/50 opacity-0 flex flex-col items-center justify-center gap-4 transition-all duration-300 group-hover:opacity-100"
+    [class.opacity-100]="active"
+  >
+    <!-- Titre -->
+    <h3
+      class="text-white text-lg font-semibold opacity-0 translate-y-4 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+      [ngClass]="active ? ['opacity-100', 'translate-y-0'] : []"
+    >
+      {{ title }}
+    </h3>
+
+    <!-- Boutons -->
+    <div
+      class="flex gap-3"
+      [ngClass]="active ? 'pointer-events-auto' : 'pointer-events-none md:pointer-events-auto'"
+    >
+      <p-button
+        *ngFor="let button of buttons"
+        [icon]="button.icon"
+        [label]="button.label"
+        (onClick)="button.command?.($event)"
+        [styleClass]="
+          'p-button-rounded p-button-md p-button-outlined p-button-icon-only ' +
+          button.color +
+          ' hover:bg-gray-200'
+        "
+        class="transition-all duration-300 translate-y-6 opacity-0"
+        [ngClass]="
+          active
+            ? ['translate-y-0', 'opacity-100']
+            : ['group-hover:translate-y-0', 'group-hover:opacity-100']
+        "
+      ></p-button>
+    </div>
+  </div>
+</div>

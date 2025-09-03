@@ -1,0 +1,390 @@
+{
+  "layout": {
+    "header": {
+      "logo": "assets/img/LogoHome.png",
+      "title": "yveth Perler",
+      "menu": {
+        "home": "Accueil",
+        "achievements": "Mes réalisations",
+        "faq": "F.A.Q.",
+        "contact": "Contact",
+        "signin": "Connexion",
+        "profile": "Profil",
+        "admin": "Administration",
+        "products": "Produits",
+        "tags": "Tags",
+        "perlertypes": "Types Perles",
+        "contacts": "Contacts",
+        "users": "Utilisateurs",
+        "signout": "Déconnexion"
+      },
+      "signout_success_summary": "Déconnexion réussie",
+      "signout_success_detail": "Au revoir!"
+    }
+  },
+  "router": {
+    "base": "/",
+    "new": "new",
+    "edit": "edit",
+    "view": "view",
+    "routes": {
+      "home": "/",
+      "welcome": "welcome",
+      "achievements": "portfolio",
+      "faq": "faq",
+      "contact": "contact",
+      "signin": "auth/signin",
+      "profile": "profil",
+      "admin": "#",
+      "products": "products",
+      "product_list": "product-list",
+      "tags": "tags",
+      "perlertypes": "perler-types",
+      "contacts": "contacts",
+      "users": "users"
+    }
+  },
+  "welcome": {
+    "title": "Wyveth <span>Pixel Art</span>",
+    "subtitle": "Et si les perles à chauffer n'était pas que pour les enfants?",
+    "button": "Découvrir"
+  },
+  "portfolio": {
+    "title": "Mes réalisations",
+    "subtitle": "Mes dernières pièces",
+    "all": "Toutes",
+    "new": "New",
+    "measure": "{0} cm",
+    "details": "Détails",
+    "redirect_product_view": "/products/view/{0}"
+  },
+  "faq": {
+    "title": "F.A.Q.",
+    "subtitle": "Foire Aux Questions",
+    "tabs": [
+      {
+        "items": [
+          {
+            "question": "Quel type de perle?",
+            "answer": {
+              "paragraphs": [
+                "Les pièces sont fabriquées avec les perles HAMA MIDI (Ø5 mm) ou HAMA MINI (Ø2.5 mm).",
+                "Pour en acheter aux moins cher:"
+              ],
+              "links": [
+                {
+                  "label": "Megacréa: ",
+                  "url": "https://www.megacrea.com/activites-enfant-40000/perle-a-repasser-hama-40400/",
+                  "link": "Cliquer ici",
+                  "note": "Bon rapport qualité/prix mais pas toutes les couleurs du nuancier HAMA"
+                },
+                {
+                  "label": "RittoHobby: ",
+                  "url": "https://ritohobby.fr/45_hama",
+                  "link": "Cliquer ici",
+                  "note": "Le moins cher, mais frais de port élevé sur les petites commandes"
+                }
+              ]
+            }
+          },
+          {
+            "question": "La fabrication est-elle longue?",
+            "answer": {
+              "paragraphs": [
+                "Ça dépend des pièces, les plus petites prennent environ 1h et pour les plus grosses, ça peut monter jusqu'à 20h de travail."
+              ]
+            }
+          },
+          {
+            "question": "Evolution du site? ",
+            "answer": {
+              "paragraphs": [
+                "Pour le futur, le site aura de nouvelles fonctionnalités: (Développé par mes soins en Angular 20 avec FireBase)"
+              ],
+              "links": [
+                {
+                  "label": "V1.1: Mode Sombre"
+                },
+                {
+                  "label": "V1.2: Système d'avis sur les pièces"
+                },
+                {
+                  "label": "V1.3: Ajout des types de perles sur la description des pièces"
+                },
+                {
+                  "label": "V1.4: Mode Anglais"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "items": [
+          {
+            "question": "Quels matériels?",
+            "answer": {
+              "paragraphs": ["il vous faut:"],
+              "links": [
+                {
+                  "label": "Des plaques pour perle MIDI. Pour en acheter: ",
+                  "url": "https://www.megacrea.com/plaque-carre-transp-assemblable-pour-perles-a-repasser-dia5mm-33749.html",
+                  "link": "Cliquer ici"
+                },
+                {
+                  "label": "RittoHobby: ",
+                  "url": "https://www.megacrea.com/pince-attrape-perles-a-repasser-27868.html",
+                  "link": "Cliquer ici"
+                },
+                {
+                  "label": "Du papier cuisson et un fer à repasser."
+                }
+              ]
+            }
+          },
+          {
+            "question": "Peut on les acheter?",
+            "answer": {
+              "paragraphs": [
+                "Vous pouvez prendre contact avec moi via le formulaire en bas de page pour connaître les modalités."
+              ]
+            }
+          },
+          {
+            "question": "Je suis peut être en Live sur twitch!",
+            "answer": {
+              "paragraphs": [
+                "Si vous avez la moindre question, ne pas hésiter à me contacter par le formulaire de contact ou venir me voir en live sur twitch"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "title_plural": "Contacts",
+    "subtitle": "Me contacter",
+    "name_placeholder": "Votre nom",
+    "email_placeholder": "Votre email",
+    "subject_placeholder": "Objet",
+    "message_placeholder": "Votre message",
+    "loading": "Chargement",
+    "send_message": "Envoyer le message",
+    "send_message_success": "Votre message a bien été envoyé!"
+  },
+  "form": {
+    "email": "Email",
+    "subject": "Objet",
+    "message": "Message",
+    "password": "Mot de passe",
+    "old_password": "Ancien mot de passe",
+    "confirm_password": "Confirmer le mot de passe",
+    "prompt_password": "Saisir un mot de passe",
+    "display_name": "Pseudo",
+    "surname":"Nom",
+    "name": "Prénom",
+    "address": "Adresse",
+    "postal_code": "Code Postal",
+    "city": "Ville",
+    "code": "Code",
+    "libelle": "Libellé",
+    "drag_drop": "Glissez-déposez ou cliquez pour ajouter des fichiers",
+    "reference": "Référence",
+    "color": "Couleur",
+    "title": "Titre",
+    "title_desc": "Titre de la Description",
+    "description": "Description",
+    "author": "Auteur",
+    "dimensions": "Dimensions",
+    "height": "Hauteur",
+    "width": "Largeur",
+    "duration": "Durée",
+    "hours": "Heures",
+    "minutes": "Minutes",
+    "date": "Date"
+  },
+  "error": {
+    "email_mandatory": "L'email est obligatoire",
+    "email_invalid": "L'email n'est pas valide",
+    "subject_mandatory": "L'objet est obligatoire",
+    "message_mandatory": "Le message est obligatoire",
+    "password_mandatory": "Le mot de passe est obligatoire",
+    "password_required": "Le mot de passe est requis",
+    "password_minlength": "Le mot de passe doit contenir au moins 8 caractères",
+    "confirm_password_mandatory": "La confirmation du mot de passe est obligatoire",
+    "confirm_password_required": "La confirmation du mot de passe est requise",
+    "display_name_mandatory": "Le pseudo est obligatoire",
+    "display_name_invalid": "Le pseudo n'est pas valide",
+    "display_name_required": "Le pseudo est requis",
+    "display_name_already_exists": "Le pseudo existe déjà, veuillez en choisir un autre",
+    "surname_mandatory": "Le nom est obligatoire",
+    "name_mandatory": "Le prénom est obligatoire",
+    "address_mandatory": "L'adresse est obligatoire",
+    "postal_code_mandatory": "Le code postal est obligatoire",
+    "city_mandatory": "La ville est obligatoire",
+    "code_mandatory": "Le code est obligatoire",
+    "code_unique": "Le code doit être unique",
+    "libelle_mandatory": "Le libellé est obligatoire",
+    "reference_mandatory": "La référence est obligatoire",
+    "reference_unique": "La référence doit être unique",
+    "color_mandatory": "La couleur est obligatoire",
+    "title_mandatory": "Le titre est obligatoire",
+    "title_desc_mandatory": "Le titre de la description est obligatoire",
+    "description_mandatory": "La description est obligatoire",
+    "author_mandatory": "L'auteur est obligatoire",
+    "dimensions_mandatory": "Les dimensions sont obligatoires",
+    "duration_mandatory": "La durée est obligatoire",
+    "date_mandatory": "La date est obligatoire",
+    "minimum_tag_selected": "Minimum un tag doit être sélectionné",
+    "default": "Une erreur est survenue, veuillez réessayer plus tard",
+    "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page",
+    "forbidden": "Accès interdit",
+    "not_found": "Ressource non trouvée",
+    "server_error": "Erreur du serveur",
+    "bad_request": "Requête incorrecte",
+    "network_error": "Erreur réseau, veuillez vérifier votre connexion",
+    "validation_error": "Erreur de validation, veuillez vérifier vos données",
+    "form_error": "Erreur dans le formulaire, veuillez vérifier vos entrées",
+    "login_error": "Erreur de connexion, veuillez vérifier vos identifiants",
+    "signup_error": "Erreur d'inscription, veuillez vérifier vos données",
+    "email_already_exists": "L'email existe déjà, veuillez en utiliser un autre",
+    "password_mismatch": "Les mots de passe ne correspondent pas, veuillez les vérifier",
+    "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+    "password_too_weak": "Le mot de passe est trop faible, veuillez en choisir un plus fort",
+    "weak_label": "Complexité simple",
+    "medium_label": "Complexité moyenne",
+    "strong_label": "Complexité forte"
+  },
+  "generic": {
+    "new_m": "Nouveau {0}",
+    "new_f": "Nouvelle {0}",
+    "edit": "Modifier {0}",
+    "delete": "Supprimer {0}",
+    "view": "Voir {0}",
+    "save_m": "Enregistrer un {0}",
+    "save_f": "Enregistrer une {0}",
+    "confirm": "Confirmation",
+    "cancel": "Annulé",
+    "attention": "Attention!",
+    "details": "Détails",
+    "success": "Succès",
+    "error": "Erreur",
+    "create_success_m": "Le {0} {1} a été créé avec succès",
+    "create_success_f": "La {0} {1} a été créée avec succès",
+    "create_success_mf": "L'{0} {1} a été créé(e) avec succès",
+    "edit_success_m": "Le {0} {1} a été modifié avec succès",
+    "edit_success_f": "La {0} {1} a été modifiée avec succès",
+    "edit_success_mf": "L'{0} {1} a été modifié(e) avec succès",
+    "delete_confirm_m": "Êtes-vous sûr de vouloir supprimer le {0}: {1}?",
+    "delete_confirm_f": "Êtes-vous sûr de vouloir supprimer la {0}: {1}?",
+    "delete_confirm_mf": "Êtes-vous sûr de vouloir supprimer l'{0}: {1}?",
+    "delete_success_m": "Le {0} {1} supprimé avec succès",
+    "delete_success_f": "La {0} {1} supprimée avec succès",
+    "delete_success_mf": "L'{0} {1} supprimé(e) avec succès",
+    "delete_cancelled": "Suppression annulée",
+    "delete_error": "Erreur lors de la suppression de {0}",
+    "save_success": "{0} enregistré avec succès",
+    "save_error": "Erreur lors de l'enregistrement de {0}",
+    "create_g": "Créer",
+    "create_m": "Créer un {0}",
+    "create_f": "Créer une {0}",
+    "edit_g": "Modifier",
+    "edit_m": "Modifier un {0}",
+    "edit_f": "Modifier une {0}",
+    "placeholder_m": "Sélectionner un ou plusieurs {0}",
+    "placeholder_f": "Sélectionner une ou plusieurs {0}",
+    "empty_m": "Aucun {0} n'est disponible",
+    "empty_f": "Aucune {0} n'est disponible",
+    "empty_filter_m": "Aucun {0} trouvé",
+    "empty_filter_f": "Aucune {0} trouvée",
+    "height": "H",
+    "width": "L",
+    "measure": "cm"
+  },
+  "button": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir",
+    "browse": "Parcourir"
+  },
+  "severity": {
+    "info": "Info",
+    "success": "Succès",
+    "warn": "Attention",
+    "error": "Erreur",
+    "secondary": "Secondaire",
+    "contrast": "Contraste"
+  },
+  "signin": {
+    "title": "Connexion",
+    "remember_me": "Se souvenir de moi",
+    "forgot_password": "Mot de passe oublié?",
+    "signin_button": "Se connecter",
+    "signin_success_summary": "Connexion réussie",
+    "signin_success_detail": "Bienvenue!",
+    "error": "Erreur de connexion",
+    "signin_required": "Vous devez être connecté pour accéder à cette page",
+    "signin_required_admin": "Vous devez être connecté en tant qu'administrateur pour accéder à cette page",
+    "signin_required_user": "Vous devez être connecté en tant qu'utilisateur pour accéder à cette page",
+    "email_password_false": "L'email ou le mot de passe est incorrect, veuillez réessayer",
+    "user_desactivated": "Votre compte est désactivé, veuillez contacter l'administrateur",
+    "user_not_found": "Utilisateur non trouvé, veuillez vérifier vos identifiants"
+  },
+  "signup": {
+    "title": "Inscription",
+    "at_least_one_lowercase": "Au moins une minuscule",
+    "at_least_one_uppercase": "Au moins une majuscule",
+    "at_least_one_numeric": "Au moins un chiffre",
+    "minimum_characters": "8 caractères minimum",
+    "signup_button": "S'inscrire",
+    "signup_success": "Inscription réussie, vous pouvez maintenant vous connecter!",
+    "signup_error": "Erreur d'inscription, veuillez vérifier vos données"
+  },
+  "product": {
+    "title": "Produit",
+    "title_plural": "Produits",
+    "details_tags": "<strong>Tags</strong>: {0}",
+    "details_creator": "<strong>Créateur</strong>: {0}",
+    "details_dimensions": "<strong>Taille (H x L)</strong>: {0} cm",
+    "details_time": "<strong>Temps</strong>: {0}",
+    "details_date": "<strong>Date</strong>: {0}"
+  },
+  "tag": {
+    "title": "Tag",
+    "title_plural": "Tags",
+    "selected_item": "{0} Tags sélectionnés"
+  },
+  "perler_type": {
+    "title": "Type de perle",
+    "title_plural": "Types de perle",
+    "selected_item": "{0} Types de perle sélectionnés"
+  },
+  "user": {
+    "title": "Utilisateur",
+    "title_plural": "Utilisateurs"
+  },
+  "change_password": {
+    "title": "Changement de mot de passe",
+    "button": "Mettre à jour",
+    "success": "Mot de passe changé avec succès",
+    "error": "Erreur lors du changement de mot de passe",
+    "no_connected": "Non connecté",
+    "reconnect_b": "Veuillez vous reconnecter avant de changer le mot de passe"
+  },
+  "table": {
+    "actions": "Actions",
+    "identity": "Identité",
+    "email": "Email",
+    "subject": "Sujet",
+    "message": "Message",
+    "display_name": "Pseudo",
+    "surname":"Nom",
+    "name": "Prénom",
+    "admin": "Admin",
+    "account": "Compte"
+  }
+}

@@ -1,0 +1,52 @@
+<app-breadcrumbs
+  [nodeParent]="resource.layout.header.menu.home"
+  [nodeParentUrl]="resource.router.routes.home"
+  [nodeChild]="resource.layout.header.menu.users"
+></app-breadcrumbs>
+
+<section class="py-6 space-y-6">
+  <div class="flex flex-col w-10/12 mx-auto justify-center">
+    <p-table [value]="(usersWithButtons$ | async) ?? []" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+        <tr>
+          <th class="w-1/6" [innerText]="resource.table.actions"></th>
+          <th class="w-2/6" [innerText]="resource.table.email"></th>
+          <th class="w-1/6" [innerText]="resource.table.display_name"></th>
+          <th class="w-1/6" [innerText]="resource.table.surname"></th>
+          <th class="w-1/6" [innerText]="resource.table.name"></th>
+          <th class="w-1/12" [innerText]="resource.table.admin"></th>
+          <th class="w-1/12" [innerText]="resource.table.account"></th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr>
+          <td class="border border-gray-300 !text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
+            <a (click)="onView($event, item.user)">
+              <i class="fas fa-search"></i>
+            </a>
+            <a (click)="onEdit(item.user.key)">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a (click)="onDelete($event, item.user)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+          <td>{{ item.user.email }}</td>
+          <td>{{ item.user.displayName }}</td>
+          <td>{{ item.user.surname }}</td>
+          <td>{{ item.user.name }}</td>
+          <td class="!text-center">
+            <a (click)="setAdmin(item.user)">
+              <i class="fas" [ngClass]="item.user.admin ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
+            </a>
+          </td>
+          <td class="!text-center">
+            <a *ngIf="!item.user.admin" (click)="setDisabled(item.user)">
+              <i class="fas" [ngClass]="item.user.disabled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
+            </a>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
