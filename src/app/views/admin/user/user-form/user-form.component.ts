@@ -68,7 +68,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   initForm() {
     this.userForm = this.formBuilder.group({
       displayName: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       surname: ['', Validators.required],
       name: ['', Validators.required],
       adress: ['', Validators.required],

@@ -179,6 +179,7 @@
     "subject": "Objet",
     "message": "Message",
     "password": "Mot de passe",
+    "old_password": "Ancien mot de passe",
     "confirm_password": "Confirmer le mot de passe",
     "prompt_password": "Saisir un mot de passe",
     "display_name": "Pseudo",
@@ -191,7 +192,18 @@
     "libelle": "Libellé",
     "drag_drop": "Glissez-déposez ou cliquez pour ajouter des fichiers",
     "reference": "Référence",
-    "color": "Couleur"
+    "color": "Couleur",
+    "title": "Titre",
+    "title_desc": "Titre de la Description",
+    "description": "Description",
+    "author": "Auteur",
+    "dimensions": "Dimensions",
+    "height": "Hauteur",
+    "width": "Largeur",
+    "duration": "Durée",
+    "hours": "Heures",
+    "minutes": "Minutes",
+    "date": "Date"
   },
   "error": {
     "email_mandatory": "L'email est obligatoire",
@@ -218,6 +230,14 @@
     "reference_mandatory": "La référence est obligatoire",
     "reference_unique": "La référence doit être unique",
     "color_mandatory": "La couleur est obligatoire",
+    "title_mandatory": "Le titre est obligatoire",
+    "title_desc_mandatory": "Le titre de la description est obligatoire",
+    "description_mandatory": "La description est obligatoire",
+    "author_mandatory": "L'auteur est obligatoire",
+    "dimensions_mandatory": "Les dimensions sont obligatoires",
+    "duration_mandatory": "La durée est obligatoire",
+    "date_mandatory": "La date est obligatoire",
+    "minimum_tag_selected": "Minimum un tag doit être sélectionné",
     "default": "Une erreur est survenue, veuillez réessayer plus tard",
     "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page",
     "forbidden": "Accès interdit",
@@ -272,14 +292,24 @@
     "create_f": "Créer une {0}",
     "edit_g": "Modifier",
     "edit_m": "Modifier un {0}",
-    "edit_f": "Modifier une {0}"
+    "edit_f": "Modifier une {0}",
+    "placeholder_m": "Sélectionner un ou plusieurs {0}",
+    "placeholder_f": "Sélectionner une ou plusieurs {0}",
+    "empty_m": "Aucun {0} n'est disponible",
+    "empty_f": "Aucune {0} n'est disponible",
+    "empty_filter_m": "Aucun {0} trouvé",
+    "empty_filter_f": "Aucune {0} trouvée",
+    "height": "H",
+    "width": "L",
+    "measure": "cm"
   },
   "button": {
     "save": "Enregistrer",
     "cancel": "Annuler",
     "edit": "Modifier",
     "delete": "Supprimer",
-    "view": "Voir"
+    "view": "Voir",
+    "browse": "Parcourir"
   },
   "severity": {
     "info": "Info",
@@ -325,15 +355,25 @@
   },
   "tag": {
     "title": "Tag",
-    "title_plural": "Tags"
+    "title_plural": "Tags",
+    "selected_item": "{0} Tags sélectionnés"
   },
   "perler_type": {
     "title": "Type de perle",
-    "title_plural": "Types de perle"
+    "title_plural": "Types de perle",
+    "selected_item": "{0} Types de perle sélectionnés"
   },
   "user": {
     "title": "Utilisateur",
     "title_plural": "Utilisateurs"
+  },
+  "change_password": {
+    "title": "Changement de mot de passe",
+    "button": "Mettre à jour",
+    "success": "Mot de passe changé avec succès",
+    "error": "Erreur lors du changement de mot de passe",
+    "no_connected": "Non connecté",
+    "reconnect_b": "Veuillez vous reconnecter avant de changer le mot de passe"
   },
   "table": {
     "actions": "Actions",
@@ -346,6 +386,5 @@
     "name": "Prénom",
     "admin": "Admin",
     "account": "Compte"
-
   }
 }

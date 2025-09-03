@@ -29,7 +29,7 @@
         <div class="flex flex-col justify-center space-y-7">
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="title">Titre</label>
+              <label for="title" [innerText]="resource.form.title"></label>
               <input
                 type="text"
                 id="title"
@@ -44,13 +44,16 @@
               *ngIf="f.title.errors && (f.title.touched || f.title.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.title.errors.required">Le titre est obligatoire</div>
+              <div
+                *ngIf="f.title.errors.required"
+                [innerText]="resource.error.title_mandatory"
+              ></div>
             </div>
           </div>
 
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="titleContent">Titre de la Description</label>
+              <label for="titleContent" [innerText]="resource.form.title_desc"></label>
               <input
                 type="text"
                 id="titleContent"
@@ -65,15 +68,16 @@
               *ngIf="f.titleContent.errors && (f.titleContent.touched || f.titleContent.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.titleContent.errors.required">
-                Le titre de la description est obligatoire
-              </div>
+              <div
+                *ngIf="f.titleContent.errors.required"
+                [innerText]="resource.error.title_desc_mandatory"
+              ></div>
             </div>
           </div>
 
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="content">Description</label>
+              <label for="content" [innerText]="resource.form.description"></label>
               <textarea
                 id="content"
                 class="form-control"
@@ -89,13 +93,16 @@
               *ngIf="f.content.errors && (f.content.touched || f.content.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.content.errors.required">Le contenu est obligatoire</div>
+              <div
+                *ngIf="f.content.errors.required"
+                [innerText]="resource.error.description_mandatory"
+              ></div>
             </div>
           </div>
 
           <div class="form-group">
             <p-floatlabel variant="on">
-              <label for="author">Auteur</label>
+              <label for="author" [innerText]="resource.form.author"></label>
               <input
                 type="text"
                 id="author"
@@ -110,32 +117,35 @@
               *ngIf="f.author.errors && (f.author.touched || f.author.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.author.errors.required">L'auteur est obligatoire</div>
+              <div
+                *ngIf="f.author.errors.required"
+                [innerText]="resource.error.author_mandatory"
+              ></div>
             </div>
           </div>
           <div class="form-group">
             <div class="flex flex-col flex gap-4 items-center">
-              <label class="dark:text-white">Dimensions</label>
+              <label class="dark:text-white" [innerText]="resource.form.dimensions"></label>
               <div class="flex gap-2">
                 <p-inputgroup>
-                  <p-inputgroup-addon>H</p-inputgroup-addon>
+                  <p-inputgroup-addon [innerText]="resource.generic.height"></p-inputgroup-addon>
                   <p-inputnumber
                     [showButtons]="true"
                     formControlName="size_h"
                     [step]="0.1"
-                    placeholder="Hauteur"
+                    [placeholder]="resource.form.height"
                   />
-                  <p-inputgroup-addon>cm</p-inputgroup-addon>
+                  <p-inputgroup-addon [innerText]="resource.generic.measure"></p-inputgroup-addon>
                 </p-inputgroup>
                 <p-inputgroup>
-                  <p-inputgroup-addon>L</p-inputgroup-addon>
+                  <p-inputgroup-addon [innerText]="resource.generic.width"></p-inputgroup-addon>
                   <p-inputnumber
                     [showButtons]="true"
                     formControlName="size_w"
                     [step]="0.1"
-                    placeholder="Largeur"
+                    [placeholder]="resource.form.width"
                   />
-                  <p-inputgroup-addon>cm</p-inputgroup-addon>
+                  <p-inputgroup-addon [innerText]="resource.generic.measure"></p-inputgroup-addon>
                 </p-inputgroup>
               </div>
             </div>
@@ -143,20 +153,23 @@
               *ngIf="f.size.errors && (f.size.touched || f.size.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.size.errors.required">La taille est obligatoire</div>
+              <div
+                *ngIf="f.size.errors.required"
+                [innerText]="resource.error.dimensions_mandatory"
+              ></div>
             </div>
           </div>
 
           <div class="form-group">
             <div class="flex flex-col flex gap-4 items-center">
-              <label class="dark:text-white">Durée</label>
+              <label class="dark:text-white" [innerText]="resource.form.duration"></label>
               <div class="flex gap-2">
                 <p-inputgroup>
                   <p-inputnumber
                     [showButtons]="true"
                     formControlName="time_h"
                     [step]="1"
-                    placeholder="Heures"
+                    [placeholder]="resource.form.hours"
                   />
                   <p-inputgroup-addon>h</p-inputgroup-addon>
                 </p-inputgroup>
@@ -167,7 +180,7 @@
                     [min]="0"
                     [max]="45"
                     [step]="15"
-                    placeholder="Minutes"
+                    [placeholder]="resource.form.minutes"
                   />
                   <p-inputgroup-addon>min</p-inputgroup-addon>
                 </p-inputgroup>
@@ -177,7 +190,10 @@
               *ngIf="f.time.errors && (f.time.touched || f.time.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.time.errors.required">Le temps est obligatoire</div>
+              <div
+                *ngIf="f.time.errors.required"
+                [innerText]="resource.error.duration_mandatory"
+              ></div>
             </div>
           </div>
         </div>
@@ -193,15 +209,15 @@
                 [showIcon]="true"
                 styleClass="w-full"
                 dateFormat="dd/mm/yy"
-                [ngClass]="{ 'is-invalid': shouldShowDateError() }"
+                [ngClass]="{ 'ng-invalid ng-dirty': shouldShowDateError() }"
               />
-              <label for="date">Date</label>
+              <label for="date" [innerText]="resource.form.date"></label>
             </p-floatlabel>
             <div
               *ngIf="f.date.errors && (f.date.touched || f.date.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.date.errors.required">La date est obligatoire</div>
+              <div *ngIf="f.date.errors.required" [innerText]="resource.error.date_mandatory"></div>
             </div>
           </div>
 
@@ -217,8 +233,8 @@
                 [showUploadButton]="false"
                 [multiple]="true"
                 accept="image/*"
-                chooseLabel="Parcourir"
-                cancelLabel="Annuler"
+                [chooseLabel]="resource.button.browse"
+                [cancelLabel]="resource.button.cancel"
                 (onSelect)="onFilesSelected($event)"
                 (onRemove)="onDeleteFile($event)"
               >
@@ -253,15 +269,15 @@
             ></label>
             <p-multiselect
               formControlName="tagsKey"
-              [placeholder]="'Sélectionner un ou plusieurs Tags'"
+              [placeholder]="resource.generic.placeholder_m.format(resource.tag.title)"
               [filter]="true"
               multiselect.list.gap="2"
               optionValue="item_id"
               optionLabel="item_text"
               display="chip"
-              emptyFilterMessage="Aucun tag trouvé"
-              emptyMessage="Aucun tag n'est disponible"
-              selectedItemsLabel="{0} Tags sélectionnés"
+              [emptyFilterMessage]="resource.generic.empty_filter_m.format(resource.tag.title)"
+              [emptyMessage]="resource.generic.empty_m.format(resource.tag.title.toLowerCase())"
+              [selectedItemsLabel]="resource.tag.selected_item"
               [options]="dropdownListTags"
               class="w-full"
               [ngClass]="{ 'is-invalid': shouldShowTagsKeyError() }"
@@ -271,7 +287,10 @@
               *ngIf="f.tagsKey.errors && (f.tagsKey.touched || f.tagsKey.dirty)"
               class="text-red-600 text-sm mt-1"
             >
-              <div *ngIf="f.tagsKey.errors.required">Minimum un tag doit être sélectionné</div>
+              <div
+                *ngIf="f.tagsKey.errors.required"
+                [innerText]="resource.error.minimum_tag_selected"
+              ></div>
             </div>
           </div>
 
@@ -283,28 +302,22 @@
             ></label>
             <p-multiselect
               formControlName="perlerTypesKey"
-              [placeholder]="'Sélectionner un ou plusieurs Type de Perle utilisés'"
+              [placeholder]="resource.generic.placeholder_m.format(resource.perler_type.title)"
               [filter]="true"
               optionValue="item_id"
               optionLabel="item_text"
               display="chip"
-              emptyFilterMessage="Aucun type de perle trouvé"
-              emptyMessage="Aucun type de perle n'est disponible"
-              selectedItemsLabel="{0} Types de perle sélectionnés"
+              [emptyFilterMessage]="
+                resource.generic.empty_filter_m.format(resource.perler_type.title.toLowerCase())
+              "
+              [emptyMessage]="
+                resource.generic.empty_m.format(resource.perler_type.title.toLowerCase())
+              "
+              [selectedItemsLabel]="resource.perler_type.selected_item"
               [options]="dropdownListPerlerTypes"
               class="w-full"
               [ngClass]="{ 'is-invalid': shouldShowPerlerTypesKeyError() }"
             />
-            <div
-              *ngIf="
-                f.perlerTypesKey.errors && (f.perlerTypesKey.touched || f.perlerTypesKey.dirty)
-              "
-              class="text-red-600 text-sm mt-1"
-            >
-              <div *ngIf="f.perlerTypesKey.errors.required">
-                Minimum un type de perle doit être sélectionné
-              </div>
-            </div>
           </div>
         </div>
       </div>

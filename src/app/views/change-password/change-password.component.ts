@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/api/services/auth.service';
+import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -7,12 +9,15 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
-import { AuthService } from 'src/app/api/services/auth.service';
-import { UserService } from 'src/app/api/services/user.service';
+import { BaseComponent } from 'src/app/shared/component/base/base.component';
+import { AppResource } from 'src/app/shared/models/app.resource';
+import { getAuth } from '@angular/fire/auth';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
   selector: 'app-change-password',
@@ -24,18 +29,24 @@ import { UserService } from 'src/app/api/services/user.service';
     ReactiveFormsModule,
     PasswordModule,
     ButtonModule,
-    FloatLabelModule
+    FloatLabelModule,
+    DividerModule
   ]
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent extends BaseComponent implements OnInit {
   passwordForm!: UntypedFormGroup;
   id!: string;
   toasts: any[] = [];
 
   constructor(
+    resources: AppResource,
+    private messageService: MessageService,
     private formBuilder: UntypedFormBuilder,
+    private authService: AuthService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super(resources);
+  }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -45,11 +56,19 @@ export class ChangePasswordComponent implements OnInit {
   initForm() {
     this.passwordForm = this.formBuilder.group(
       {
+        oldPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)
+          ]
+        ],
         password: [
           '',
           [
             Validators.required,
-            Validators.minLength(6),
+            Validators.minLength(8),
             Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)
           ]
         ],
@@ -66,55 +85,58 @@ export class ChangePasswordComponent implements OnInit {
     return this.passwordForm.controls;
   }
 
-  onSubmitForm() {
-    const formValue = this.passwordForm.value;
-    const password = formValue['password'];
-    //const user = getAuth().currentUser as User;
-    // this.authService.updatePasswordUser(user, password).then(
-    //   () => {
-    //     //TODO Toast
-    //     this.toastService.show('Le mot de passe a bien été mis à jour.', {
-    //       classname: 'bg-success text-light',
-    //       delay: 3000,
-    //       autohide: true
-    //     });
-    //   },
-    //   (error: string) => {
-    //     //TODO Toast + error;
-    //     this.toastService.show(
-    //       'La mise à jour du mot de passe a échoué. Veuillez réessayer ultérieurement.',
-    //       {
-    //         classname: 'bg-danger text-light',
-    //         delay: 3000,
-    //         autohide: true
-    //       }
-    //     );
-    //   }
-    // );
+  async onSubmitForm() {
+    const user = getAuth().currentUser;
+    if (!user) {
+      this.messageService.add({
+        severity: severity.warn,
+        summary: this.resource.change_password.no_connected,
+        detail: this.resource.change_password.reconnect_b
+      });
+      return;
+    }
+
+    try {
+      await this.authService.updatePasswordUser(
+        user,
+        this.f.oldPassword.value,
+        this.f.password.value
+      );
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.generic.success,
+        detail: this.resource.change_password.success
+      });
+    } catch (err: any) {
+      this.messageService.add({
+        severity: severity.error,
+        summary: this.resource.generic.error,
+        detail: this.resource.change_password.error
+      });
+    }
   }
 
-  // showCustomToastSuccess(customTpl: string | TemplateRef<any>) {
-  //   this.toastService.show(customTpl, {
-  //     classname: 'bg-danger text-light',
-  //     delay: 3000,
-  //     autohide: true
-  //   });
-  // }
+  shouldShowOldPasswordErrors() {
+    const password = this.passwordForm.controls.oldPassword;
+    return (
+      password.touched &&
+      (password.hasError('required') ||
+        password.hasError('minlength') ||
+        password.hasError('pattern'))
+    );
+  }
 
-  // showCustomToastError(customTpl: string | TemplateRef<any>) {
-  //   this.toastService.show(customTpl, {
-  //     classname: 'bg-danger text-light',
-  //     delay: 3000,
-  //     autohide: true
-  //   });
-  // }
-
-  shouldShowPasswordError() {
+  shouldShowPasswordErrors() {
     const password = this.passwordForm.controls.password;
-    return password.touched && password.hasError('required');
+    return (
+      password.touched &&
+      (password.hasError('required') ||
+        password.hasError('minlength') ||
+        password.hasError('pattern'))
+    );
   }
 
-  shouldShowConfirmPasswordError() {
+  shouldShowConfirmPasswordErrors() {
     const confirmPassword = this.passwordForm.controls.confirmPassword;
     return (
       confirmPassword.touched &&

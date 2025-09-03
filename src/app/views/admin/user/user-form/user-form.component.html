@@ -86,6 +86,7 @@
               id="email"
               class="form-control w-full"
               formControlName="email"
+              autocomplete="username"
               readonly
             />
           </p-floatlabel>
@@ -94,6 +95,7 @@
             class="text-red-600 text-sm mt-1"
           >
             <div *ngIf="f.email.errors.required" [innerText]="resource.error.email_mandatory"></div>
+            <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
           </div>
         </div>
       </div>

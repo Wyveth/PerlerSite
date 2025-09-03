@@ -16,6 +16,7 @@ export interface Resource {
   tag: Tag;
   perler_type: PerlerType;
   user: User;
+  change_password: ChangePassword;
   table: Table;
 }
 
@@ -133,6 +134,7 @@ export interface Form {
   subject: string;
   message: string;
   password: string;
+  old_password: string;
   confirm_password: string;
   prompt_password: string;
   display_name: string;
@@ -146,6 +148,17 @@ export interface Form {
   drag_drop: string;
   reference: string;
   color: string;
+  title: string;
+  title_desc: string;
+  description: string;
+  author: string;
+  dimensions: string;
+  height: string;
+  width: string;
+  duration: string;
+  hours: string;
+  minutes: string;
+  date: string;
 }
 
 export interface Error {
@@ -173,6 +186,14 @@ export interface Error {
   reference_mandatory: string;
   reference_unique: string;
   color_mandatory: string;
+  title_mandatory: string;
+  title_desc_mandatory: string;
+  description_mandatory: string;
+  author_mandatory: string;
+  dimensions_mandatory: string;
+  duration_mandatory: string;
+  date_mandatory: string;
+  minimum_tag_selected: string;
   default: string;
   unauthorized: string;
   forbidden: string;
@@ -242,11 +263,13 @@ export interface Product {
 export interface Tag {
   title: string;
   title_plural: string;
+  selected_item: string;
 }
 
 export interface PerlerType {
   title: string;
   title_plural: string;
+  selected_item: string;
 }
 
 export interface User {
@@ -290,6 +313,15 @@ export interface Generic {
   edit_g: string;
   edit_m: string;
   edit_f: string;
+  placeholder_m: string;
+  placeholder_f: string;
+  empty_m: string;
+  empty_f: string;
+  empty_filter_m: string;
+  empty_filter_f: string;
+  height: string;
+  width: string;
+  measure: string;
 }
 
 export interface Button {
@@ -298,6 +330,16 @@ export interface Button {
   edit: string;
   delete: string;
   view: string;
+  browse: string;
+}
+
+export interface ChangePassword {
+  title: string;
+  button: string;
+  success: string;
+  error: string;
+  no_connected: string;
+  reconnect_b: string;
 }
 
 export interface Table {

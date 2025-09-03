@@ -83,8 +83,8 @@
               [showUploadButton]="false"
               [multiple]="false"
               accept="image/*"
-              chooseLabel="Parcourir"
-              cancelLabel="Annuler"
+              [chooseLabel]="resource.button.browse"
+              [cancelLabel]="resource.button.cancel"
               (onSelect)="onFilesSelected($event)"
               (onRemove)="onDeleteFile($event)"
             >

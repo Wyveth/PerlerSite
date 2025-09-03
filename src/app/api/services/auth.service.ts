@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
+  EmailAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  updatePassword,
+  User as FirebaseUser
 } from '@angular/fire/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from '../models/class/user';
 
@@ -65,16 +69,28 @@ export class AuthService {
     return signOut(this.auth);
   }
 
-  // updatePasswordUser(user: FirebaseUser, newPassword: string) {
-  //   return new Promise<void>((resolve, reject) => {
-  //     updatePassword(user, newPassword).then(
-  //       () => {
-  //         resolve();
-  //       },
-  //       error => {
-  //         reject(error.code);
-  //       }
-  //     );
-  //   });
-  // }
+  /** 🔑 Mise à jour du mot de passe utilisateur */
+  async updatePasswordUser(
+    user: FirebaseUser,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    try {
+      // tentative directe
+      await updatePassword(user, newPassword);
+    } catch (error: any) {
+      if (error.code === 'auth/requires-recent-login') {
+        // besoin de réauthentification
+        if (!user.email) throw new Error('Email introuvable pour réauthentification');
+
+        const credential = EmailAuthProvider.credential(user.email, oldPassword);
+        await reauthenticateWithCredential(user, credential);
+
+        // retry
+        await updatePassword(user, newPassword);
+      } else {
+        throw error;
+      }
+    }
+  }
 }
