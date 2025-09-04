@@ -75,6 +75,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
         summary: this.resource.layout.header.signout_success_summary,
         detail: this.resource.layout.header.signout_success_detail
       });
+      this.updateMenuItems();
       this.router.navigate([this.resource.router.routes.home]);
     });
   }
@@ -131,26 +132,31 @@ export class HeaderComponent extends BaseComponent implements OnInit {
             command: () => this.onProfil(this.user?.key ?? '')
           },
           {
-            visible: this.isAdmin,
+            visible: this.isAdmin && this.isAuth,
             label: this.resource.layout.header.menu.admin,
             items: [
               {
+                visible: this.isAdmin && this.isAuth,
                 label: this.resource.layout.header.menu.products,
                 routerLink: this.resource.router.routes.products
               },
               {
+                visible: this.isAdmin && this.isAuth,
                 label: this.resource.layout.header.menu.tags,
                 routerLink: this.resource.router.routes.tags
               },
               {
+                visible: this.isAdmin && this.isAuth,
                 label: this.resource.layout.header.menu.perlertypes,
                 routerLink: this.resource.router.routes.perlertypes
               },
               {
+                visible: this.isAdmin && this.isAuth,
                 label: this.resource.layout.header.menu.contacts,
                 routerLink: this.resource.router.routes.contacts
               },
               {
+                visible: this.isAdmin && this.isAuth,
                 label: this.resource.layout.header.menu.users,
                 routerLink: this.resource.router.routes.users
               }

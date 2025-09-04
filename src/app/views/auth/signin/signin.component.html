@@ -6,14 +6,14 @@
 
 <section class="h-full py-18">
   <div class="flex justify-center">
-    <div class="w-1/2 formStyle space-y-6">
+    <div class="md:w-1/2 w-11/12 formStyle space-y-6">
       <div class="flex justify-center">
         <h2 class="styleTitle" [innerText]="resource.signin.title"></h2>
       </div>
 
       <form class="flex flex-col space-y-8" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
         <div class="space-y-2">
-          <p-floatlabel class="flex w-1/2 mx-auto">
+          <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
             <label for="email" [innerText]="resource.form.email"></label>
             <input type="text" pInputText id="email" formControlName="email" class="w-full" />
           </p-floatlabel>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="space-y-2">
-          <p-floatlabel class="flex w-1/2 mx-auto">
+          <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
             <label class="z-1" for="password" [innerText]="resource.form.password"></label>
             <p-password
               type="password"
