@@ -30,7 +30,7 @@ export class AppConfig {
 
       this.config = await lastValueFrom(this.httpClient.get(`./assets/env/env.${this.env}.json`));
 
-      console.log('✅ Configuration chargée :', this.config);
+      console.log('✅ Configuration chargée :');
     } catch (error) {
       console.error('❌ Erreur lors du chargement de la configuration :', error);
       throw error;

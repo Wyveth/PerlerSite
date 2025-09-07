@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, map } from 'rxjs';
 import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/api/models/class/user';
@@ -27,8 +26,7 @@ export class UserListComponent extends BaseComponent {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private userService: UserService,
-    private router: Router,
-    private modalService: NgbModal
+    private router: Router
   ) {
     super(resource);
 
@@ -37,12 +35,6 @@ export class UserListComponent extends BaseComponent {
         users.map(user => ({
           user,
           buttons: [
-            {
-              icon: 'pi pi-eye',
-              label: this.resource.button.view,
-              color: 'p-button-info',
-              command: () => this.onView('', user)
-            },
             {
               icon: 'pi pi-pencil',
               label: this.resource.button.edit,
@@ -113,10 +105,5 @@ export class UserListComponent extends BaseComponent {
 
   setDisabled(user: User) {
     this.userService.updateField(user.key, 'disabled', !user.disabled);
-  }
-
-  onView(content: any, user: User) {
-    //this.user = user;
-    this.modalService.open(content);
   }
 }

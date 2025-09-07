@@ -21,9 +21,6 @@
       <ng-template #body let-item>
         <tr>
           <td class="border border-gray-300 !text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
-            <a (click)="onView($event, item.user)">
-              <i class="fas fa-search"></i>
-            </a>
             <a (click)="onEdit(item.user.key)">
               <i class="fas fa-edit"></i>
             </a>
