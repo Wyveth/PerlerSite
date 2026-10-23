@@ -205,7 +205,10 @@
     "duration": "Durée",
     "hours": "Heures",
     "minutes": "Minutes",
-    "date": "Date"
+    "date": "Date",
+    "availability": "Disponibilité",
+    "stock": "Quantité disponible",
+    "on_demand": "Fabrication sur demande"
   },
   "error": {
     "email_mandatory": "L'email est obligatoire",
@@ -410,6 +413,8 @@
     "show_more": "Afficher plus de pièces · {0} sur {1}",
     "empty": "Aucune pièce ne correspond à votre recherche.",
     "new": "Nouveau",
+    "badge_available": "Disponible",
+    "badge_on_demand": "Sur demande",
     "mini": "Mini · Ø 2,5 mm",
     "midi": "Midi · Ø 5 mm",
     "piece_alt": "{0} en perles à repasser",
@@ -453,6 +458,11 @@
     "related": "Dans le même univers",
     "photo": "Photo {0}",
     "loading": "Chargement…",
-    "not_found": "Cette pièce est introuvable."
+    "not_found": "Cette pièce est introuvable.",
+    "availability": "Disponibilité",
+    "stock_one": "1 disponible",
+    "stock_many": "{0} disponibles",
+    "on_demand": "Sur demande",
+    "unavailable": "Non disponible"
   }
 }

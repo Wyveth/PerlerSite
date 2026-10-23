@@ -22,6 +22,12 @@ export class Product extends Base {
   tagsKey!: KeyValue[];
   perlerTypesKey!: KeyValue[];
 
+  /** Disponibilité : quantité en stock et fabrication sur demande, par taille de perle */
+  stockMidi?: number;
+  stockMini?: number;
+  onDemandMidi?: boolean;
+  onDemandMini?: boolean;
+
   tagsVisu!: string;
   tags!: Tag[];
   file!: FileUpload;

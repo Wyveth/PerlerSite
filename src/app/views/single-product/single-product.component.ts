@@ -12,9 +12,17 @@ import { scrollViewFragment } from 'src/app/shared/component/header/header.compo
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
 import { allPictures, firstPicture } from 'src/app/shared/utils/picture';
+import { AvailabilityStatus, hasAvailability, sizeAvailability } from 'src/app/shared/utils/availability';
 import { formatSize, toMiniSize } from 'src/app/shared/utils/parseSize';
 
 type Bead = 'mini' | 'midi';
+
+interface AvailabilityRow {
+  bead: Bead;
+  label: string;
+  status: AvailabilityStatus;
+  text: string;
+}
 
 interface RelatedItem {
   key: string;
@@ -44,6 +52,8 @@ export class SingleProductComponent extends BaseComponent implements OnInit {
   bead: Bead = 'mini';
 
   related: RelatedItem[] = [];
+  /** Disponibilité Mini / Midi (vide si jamais renseignée dans l'admin) */
+  availability: AvailabilityRow[] = [];
 
   private destroyRef = inject(DestroyRef);
 
@@ -91,6 +101,12 @@ export class SingleProductComponent extends BaseComponent implements OnInit {
         this.tagLabels = codes.map(c => labels.get(c) ?? c);
         this.midi = formatSize(product.size);
         this.mini = formatSize(toMiniSize(product.size));
+        this.availability = hasAvailability(product)
+          ? [
+              this.availabilityRow('mini', this.resource.home.mini, product.stockMini, product.onDemandMini),
+              this.availabilityRow('midi', this.resource.home.midi, product.stockMidi, product.onDemandMidi)
+            ]
+          : [];
 
         this.related = products
           .filter(
@@ -107,6 +123,25 @@ export class SingleProductComponent extends BaseComponent implements OnInit {
             midi: formatSize(p.size)
           }));
       });
+  }
+
+  private availabilityRow(
+    bead: Bead,
+    label: string,
+    stock: number | undefined,
+    onDemand: boolean | undefined
+  ): AvailabilityRow {
+    const { status, quantity } = sizeAvailability(stock, onDemand);
+    const page = this.resource.product_page;
+    const text =
+      status === 'stock'
+        ? quantity === 1
+          ? page.stock_one
+          : page.stock_many.format(quantity)
+        : status === 'demand'
+          ? page.on_demand
+          : page.unavailable;
+    return { bead, label, status, text };
   }
 
   get currentSize(): string {

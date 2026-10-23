@@ -11,6 +11,7 @@ import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
 import { firstPicture } from 'src/app/shared/utils/picture';
+import { AvailabilityStatus, availabilityBadge } from 'src/app/shared/utils/availability';
 import { formatSize, toMiniSize } from 'src/app/shared/utils/parseSize';
 
 /** Pièce prête à l'affichage dans la galerie */
@@ -23,6 +24,7 @@ export interface GalleryItem {
   midi: string;
   mini: string;
   isNew: boolean;
+  availability: AvailabilityStatus | null;
 }
 
 @Component({
@@ -85,7 +87,8 @@ export class SectionPortfolioComponent extends BaseComponent implements OnInit {
                 tagLabel: codes.map(c => labels.get(c) ?? c).join(', '),
                 midi: formatSize(product.size),
                 mini: formatSize(toMiniSize(product.size)),
-                isNew: this.isNew(product.dateCreation)
+                isNew: this.isNew(product.dateCreation),
+                availability: availabilityBadge(product)
               };
             })
         );

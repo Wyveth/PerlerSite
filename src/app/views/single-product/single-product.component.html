@@ -130,6 +130,35 @@
           </div>
         </div>
 
+        <!-- Disponibilité -->
+        @if (availability.length) {
+          <div class="flex flex-col gap-3 rounded-[22px] border border-line p-5 md:rounded-3xl md:p-6 dark:border-night-line">
+            <span class="text-[15px] font-semibold">{{ resource.product_page.availability }}</span>
+            <ul class="m-0 flex list-none flex-col gap-2.5 p-0">
+              @for (row of availability; track row.bead) {
+                <li class="flex items-center justify-between gap-3">
+                  <span class="text-sm" [ngClass]="bead === row.bead ? 'font-semibold text-ink dark:text-white' : 'text-[#4a4a52] dark:text-zinc-300'">
+                    {{ row.label }}
+                  </span>
+                  <span
+                    class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-semibold whitespace-nowrap"
+                    [ngClass]="{
+                      'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400': row.status === 'stock',
+                      'bg-accent-soft text-accent-hover dark:bg-[#1e2450] dark:text-[#b6c2ff]': row.status === 'demand',
+                      'bg-paper text-muted dark:bg-night-2 dark:text-zinc-400': row.status === 'none'
+                    }"
+                  >
+                    @if (row.status === 'stock') {
+                      <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                    }
+                    {{ row.text }}
+                  </span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
         <!-- Caractéristiques -->
         <dl class="m-0 grid grid-cols-3 gap-2 md:gap-3">
           <div class="flex flex-col gap-1.5 rounded-2xl bg-paper p-3.5 md:rounded-[18px] md:p-[18px] dark:bg-night-2">

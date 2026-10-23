@@ -163,6 +163,9 @@ export interface Form {
   hours: string;
   minutes: string;
   date: string;
+  availability: string;
+  stock: string;
+  on_demand: string;
 }
 
 export interface Error {
@@ -380,6 +383,8 @@ export interface Home {
   show_more: string;
   empty: string;
   new: string;
+  badge_available: string;
+  badge_on_demand: string;
   mini: string;
   midi: string;
   piece_alt: string;
@@ -425,4 +430,9 @@ export interface ProductPage {
   photo: string;
   loading: string;
   not_found: string;
+  availability: string;
+  stock_one: string;
+  stock_many: string;
+  on_demand: string;
+  unavailable: string;
 }

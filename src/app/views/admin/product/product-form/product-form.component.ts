@@ -29,6 +29,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { parseTime } from 'src/app/shared/utils/parseTime';
 import { parseSize } from 'src/app/shared/utils/parseSize';
 import { parseDate } from 'src/app/shared/utils/parseDate';
@@ -55,7 +56,8 @@ import { MessageService } from 'primeng/api';
     FloatLabelModule,
     InputGroupModule,
     InputGroupAddonModule,
-    InputNumberModule
+    InputNumberModule,
+    ToggleSwitchModule
   ]
 })
 export class ProductFormComponent extends BaseComponent implements OnInit {
@@ -126,7 +128,12 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       time_m: [0, Validators.required],
       date: ['', Validators.required],
       tagsKey: [[], Validators.required],
-      perlerTypesKey: [[]]
+      perlerTypesKey: [[]],
+      // Disponibilité par taille de perle
+      stockMidi: [0, [Validators.min(0)]],
+      stockMini: [0, [Validators.min(0)]],
+      onDemandMidi: [false],
+      onDemandMini: [false]
     });
 
     // Synchroniser size_h + size_w -> size
@@ -155,6 +162,10 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
         });
 
         this.productForm.patchValue({
+          stockMidi: product.stockMidi ?? 0,
+          stockMini: product.stockMini ?? 0,
+          onDemandMidi: product.onDemandMidi ?? false,
+          onDemandMini: product.onDemandMini ?? false,
           tagsKey: product.tagsKey?.map(tag => tag.item_id),
           perlerTypesKey: product.perlerTypesKey?.map(pt => pt.item_id),
           date: parseDate(product.date)
@@ -320,6 +331,12 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
       } else {
         product.perlerTypesKey = []; // ou undefined selon ton besoin
       }
+
+      // Disponibilité
+      product.stockMidi = Math.max(0, Math.floor(Number(formValue.stockMidi) || 0));
+      product.stockMini = Math.max(0, Math.floor(Number(formValue.stockMini) || 0));
+      product.onDemandMidi = !!formValue.onDemandMidi;
+      product.onDemandMini = !!formValue.onDemandMini;
 
       // pictureUrl uniquement avec des URLs valides
       product.pictureUrl = this.uploadedFiles
