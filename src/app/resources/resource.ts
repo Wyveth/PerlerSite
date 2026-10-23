@@ -18,6 +18,8 @@ export interface Resource {
   user: User;
   change_password: ChangePassword;
   table: Table;
+  home: Home;
+  product_page: ProductPage;
 }
 
 export interface Layout {
@@ -108,14 +110,14 @@ export interface FAQItem {
 
 export interface FAQAnswer {
   paragraphs: string[];
-  links: FAQLink[];
+  links?: FAQLink[];
 }
 
 export interface FAQLink {
   label: string;
-  url: string;
-  link: string;
-  note: string;
+  url?: string;
+  link?: string;
+  note?: string;
 }
 
 export interface Contact {
@@ -357,4 +359,70 @@ export interface Table {
   name: string;
   admin: string;
   account: string;
+}
+
+export interface Home {
+  eyebrow: string;
+  hero_title: string;
+  hero_subtitle: string;
+  hero_alt: string;
+  cta_gallery: string;
+  cta_contact: string;
+  stat_pieces: string;
+  stat_universes: string;
+  stat_time_value: string;
+  stat_time: string;
+  biggest_piece: string;
+  gallery_eyebrow: string;
+  gallery_title: string;
+  search_label: string;
+  search_placeholder: string;
+  show_more: string;
+  empty: string;
+  new: string;
+  mini: string;
+  midi: string;
+  piece_alt: string;
+  sizes_eyebrow: string;
+  sizes_title: string;
+  sizes_text: string;
+  sizes_example: string;
+  atelier_alt: string;
+  faq_eyebrow: string;
+  faq_title: string;
+  faq_subtitle: string;
+  contact_eyebrow: string;
+  contact_title: string;
+  contact_text: string;
+  label_name: string;
+  label_email: string;
+  label_subject: string;
+  label_message: string;
+  footer: string;
+  menu_sizes: string;
+  open_menu: string;
+  close_menu: string;
+  account: string;
+  theme: string;
+  theme_light: string;
+  theme_dark: string;
+  theme_auto: string;
+}
+
+export interface ProductPage {
+  back: string;
+  size: string;
+  bead_type: string;
+  mini_short: string;
+  midi_short: string;
+  mini_caption: string;
+  midi_caption: string;
+  time: string;
+  date: string;
+  creator: string;
+  ask: string;
+  related: string;
+  photo: string;
+  loading: string;
+  not_found: string;
 }

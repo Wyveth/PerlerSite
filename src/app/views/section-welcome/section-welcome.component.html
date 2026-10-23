@@ -1,43 +1,79 @@
-<section id="welcome">
-  <div id="heroCarousel" class="carousel slide carousel-fade">
-    <div class="carousel-inner" role="listbox">
-      <div class="carousel-item active">
-        <p-galleria
-          class="welcome"
-          [value]="images"
-          [numVisible]="5"
-          [circular]="true"
-          [autoPlay]="true"
-          [showItemNavigators]="true"
-          [showThumbnails]="false"
-          [responsiveOptions]="responsiveOptions"
-          [indicatorsPosition]="'bottom'"
-          [showIndicators]="true"
-          [showIndicatorsOnItem]="true"
-          [containerStyle]="{ width: '100%', height: '100vh' }"
-        >
-          <ng-template #item let-item>
-            <img [src]="item" class="w-screen h-screen object-cover block" />
-          </ng-template>
-          <ng-template #caption let-item>
-            <div
-              class="bg-white border-t-4 border-[#012970] p-3 w-7/8 opacity-90 flex justify-center mx-auto"
-            >
-              <div class="flex-col space-x-4 my-4 text-center">
-                <h2 [innerHTML]="resource.welcome.title"></h2>
-                <p [innerHTML]="resource.welcome.subtitle"></p>
-                <a
-                  href="#portfolio"
-                  class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
-                >
-                  <span>{{ resource.welcome.button }}</span>
-                  <i class="pi pi-arrow-right ml-2"></i>
-                </a>
-              </div>
-            </div>
-          </ng-template>
-        </p-galleria>
-      </div>
+<section id="accueil" class="mx-auto flex max-w-7xl flex-wrap items-center gap-10 px-4 pt-10 pb-16 md:px-8 md:pt-16 md:pb-24 lg:gap-14">
+  <!-- Texte -->
+  <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6 md:gap-7">
+    <div class="flex items-center gap-3">
+      <span aria-hidden="true" class="flex gap-1.5">
+        <span class="h-3 w-3 rounded-full border-[3px] border-[#e6372e]"></span>
+        <span class="h-3 w-3 rounded-full border-[3px] border-[#f5a524]"></span>
+        <span class="h-3 w-3 rounded-full border-[3px] border-[#2db04b]"></span>
+        <span class="h-3 w-3 rounded-full border-[3px] border-accent"></span>
+      </span>
+      <span class="eyebrow text-muted dark:text-zinc-400">{{ resource.home.eyebrow }}</span>
     </div>
+
+    <h1 class="m-0 font-display text-[44px] leading-[0.98] font-extrabold tracking-[-0.035em] text-balance md:text-[64px] xl:text-[80px]">
+      {{ resource.home.hero_title }}
+    </h1>
+
+    <p class="m-0 max-w-[480px] text-base leading-relaxed text-[#4a4a52] md:text-[19px] dark:text-zinc-300">
+      {{ resource.home.hero_subtitle }}
+    </p>
+
+    <div class="flex flex-wrap gap-3">
+      <a
+        href="#portfolio"
+        (click)="$event.preventDefault(); goTo(resource.router.routes.achievements)"
+        class="inline-flex h-[52px] items-center gap-2.5 rounded-full bg-accent px-6 font-semibold text-white no-underline transition-colors hover:bg-accent-hover hover:text-white"
+      >
+        {{ resource.home.cta_gallery }}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+      </a>
+      <a
+        href="#contact"
+        (click)="$event.preventDefault(); goTo(resource.router.routes.contact)"
+        class="inline-flex h-[52px] items-center rounded-full border border-[#d9d9d5] px-6 font-semibold text-ink no-underline transition-colors hover:border-ink hover:text-ink dark:border-night-line dark:text-white dark:hover:border-zinc-400 dark:hover:text-white"
+      >
+        {{ resource.home.cta_contact }}
+      </a>
+    </div>
+
+    <dl class="m-0 mt-2 grid grid-cols-3 gap-4 border-t border-line pt-6 sm:flex sm:gap-10 dark:border-night-line">
+      <div class="flex flex-col-reverse justify-end gap-0.5">
+        <dt class="text-sm text-muted dark:text-zinc-400">{{ resource.home.stat_pieces }}</dt>
+        <dd class="m-0 font-display text-2xl font-extrabold tracking-tight md:text-[32px]">{{ productCount ?? '–' }}</dd>
+      </div>
+      <div class="flex flex-col-reverse justify-end gap-0.5">
+        <dt class="text-sm text-muted dark:text-zinc-400">{{ resource.home.stat_universes }}</dt>
+        <dd class="m-0 font-display text-2xl font-extrabold tracking-tight md:text-[32px]">{{ universeCount ?? '–' }}</dd>
+      </div>
+      <div class="flex flex-col-reverse justify-end gap-0.5">
+        <dt class="text-sm text-muted dark:text-zinc-400">{{ resource.home.stat_time }}</dt>
+        <dd class="m-0 font-display text-2xl font-extrabold tracking-tight whitespace-nowrap md:text-[32px]">{{ resource.home.stat_time_value }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- Visuel -->
+  <div class="relative min-w-0 flex-[1.3_1_520px]">
+    <img
+      [src]="heroImage"
+      [alt]="resource.home.hero_alt"
+      width="1400"
+      height="1032"
+      fetchpriority="high"
+      class="block h-[300px] w-full rounded-[22px] object-cover md:h-[600px] md:rounded-[28px]"
+    />
+
+    @if (biggest) {
+      <div class="absolute bottom-4 left-4 flex items-center gap-3 rounded-2xl bg-white py-2.5 pr-4 pl-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.18)] md:bottom-5 md:left-5 dark:bg-night-2">
+        @if (biggest.picture) {
+          <img [src]="biggest.picture" alt="" class="h-12 w-12 rounded-xl object-cover" />
+        }
+        <div class="flex flex-col gap-0.5">
+          <span class="text-xs text-muted dark:text-zinc-400">{{ resource.home.biggest_piece }}</span>
+          <span class="text-[15px] font-semibold">{{ biggest.title }} · {{ biggest.size }} cm</span>
+        </div>
+      </div>
+    }
   </div>
 </section>

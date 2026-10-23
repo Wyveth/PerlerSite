@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SectionWelcomeComponent } from '../section-welcome/section-welcome.component';
 import { SectionPortfolioComponent } from '../section-portfolio/section-portfolio.component';
 import { SectionContactComponent } from '../section-contact/section-contact.component';
+import { SectionSizesComponent } from '../section-sizes/section-sizes.component';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { SectionContactComponent } from '../section-contact/section-contact.comp
     CommonModule,
     SectionWelcomeComponent,
     SectionPortfolioComponent,
+    SectionSizesComponent,
     SectionFaqComponent,
     SectionContactComponent
   ]

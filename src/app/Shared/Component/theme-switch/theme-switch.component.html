@@ -1,15 +1,19 @@
 <button
+  type="button"
   (click)="nextTheme()"
-  class="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 bg-gray-200 dark:bg-zinc-700 text-black dark:text-white text-xl"
+  [attr.aria-label]="label"
+  [title]="label"
+  class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-ink transition-colors hover:border-ink dark:border-night-line dark:bg-night-2 dark:text-white dark:hover:border-zinc-400"
 >
-  <span
-    *ngFor="let opt of options"
-    class="absolute transition-all duration-300 ease-in-out"
-    [class.opacity-0]="current !== opt"
-    [class.translate-x-3]="current !== opt"
-    [class.opacity-100]="current === opt"
-    [class.translate-x-0]="current === opt"
-  >
-    {{ icons[opt] }}
-  </span>
+  @switch (current) {
+    @case ('light') {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+    }
+    @case ('dark') {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+    }
+    @default {
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg>
+    }
+  }
 </button>

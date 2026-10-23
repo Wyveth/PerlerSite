@@ -1,0 +1,13 @@
+<footer class="border-t border-line dark:border-night-line">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-8 text-sm text-muted md:px-8 dark:text-zinc-400">
+    <div class="flex items-center gap-2.5">
+      <img [src]="resource.layout.header.logo" alt="" class="h-7 w-7 object-contain" />
+      <span>{{ resource.home.footer.format(year) }}</span>
+    </div>
+    <nav class="flex flex-wrap gap-6" [attr.aria-label]="resource.layout.header.menu.home">
+      <a href="#portfolio" (click)="$event.preventDefault(); goTo(resource.router.routes.achievements)" class="text-muted no-underline hover:text-ink dark:text-zinc-400 dark:hover:text-white">{{ resource.layout.header.menu.achievements }}</a>
+      <a href="#faq" (click)="$event.preventDefault(); goTo(resource.router.routes.faq)" class="text-muted no-underline hover:text-ink dark:text-zinc-400 dark:hover:text-white">{{ resource.layout.header.menu.faq }}</a>
+      <a href="#contact" (click)="$event.preventDefault(); goTo(resource.router.routes.contact)" class="text-muted no-underline hover:text-ink dark:text-zinc-400 dark:hover:text-white">{{ resource.layout.header.menu.contact }}</a>
+    </nav>
+  </div>
+</footer>
