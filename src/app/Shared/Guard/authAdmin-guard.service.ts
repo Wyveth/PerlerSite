@@ -20,7 +20,7 @@ export class AuthAdminGuardService {
       filter(isAdmin => isAdmin !== null),
       take(1),
       map(isAdmin => {
-        return isAdmin ? true : this.router.createUrlTree(['/signin']);
+        return isAdmin ? true : this.router.createUrlTree(['/auth/signin']);
       })
     );
   }

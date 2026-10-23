@@ -21,6 +21,7 @@ import { ImageModule } from 'primeng/image';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
+import { toMiniSize } from 'src/app/shared/utils/parseSize';
 
 @Component({
   selector: 'app-section-portfolio',
@@ -37,6 +38,7 @@ export class SectionPortfolioComponent extends BaseComponent implements OnInit, 
 
   class!: string;
   activeFilter: string = '*';
+  toMiniSize = toMiniSize;
 
   private isotope: any;
   private injector = inject(EnvironmentInjector);

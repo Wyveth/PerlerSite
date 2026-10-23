@@ -56,7 +56,11 @@
             </div>
             <p
               class="text-gray-600"
-              [innerText]="resource.portfolio.measure | format: product.size"
+              [innerText]="resource.portfolio.measure_mini | format: toMiniSize(product.size)"
+            ></p>
+            <p
+              class="text-gray-600"
+              [innerText]="resource.portfolio.measure_midi | format: product.size"
             ></p>
             <div class="portfolio-links mt-3 flex space-x-4">
               <a

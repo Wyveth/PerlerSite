@@ -59,8 +59,10 @@ export class TagService {
   async updateTag(key: string, tag: Tag) {
     const docSnap = await this.utilsService.getDocByKey(this.tagsRef, key);
     if (docSnap) {
+      // On conserve la date de création et la clé d'origine
+      const { dateCreation, key: _key, ...fields } = tag as any;
       const updated = {
-        ...tag,
+        ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
       await updateDoc(docSnap.ref, updated as any);

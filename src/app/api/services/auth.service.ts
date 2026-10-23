@@ -14,9 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from '../models/class/user';
 
-@Injectable({
-  providedIn: 'root'
-})
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -29,6 +26,9 @@ export class AuthService {
   private isAdminSubject = new BehaviorSubject<boolean | null>(null);
   isAdmin$ = this.isAdminSubject.asObservable();
 
+  /** Vrai pendant une inscription : le document Firestore n'existe pas encore */
+  private registering = false;
+
   constructor(
     private auth: Auth,
     private userService: UserService
@@ -38,12 +38,12 @@ export class AuthService {
 
   private initAuthListener() {
     onAuthStateChanged(this.auth, async firebaseUser => {
+      // Pendant l'inscription, c'est register() qui charge l'utilisateur
+      if (this.registering) return;
+
       if (firebaseUser?.email) {
         try {
-          const user = await this.userService.getUserByEmail(firebaseUser.email);
-          this.currentUserSubject.next(user);
-          this.isAuthSubject.next(true);
-          this.isAdminSubject.next(user.admin === true);
+          await this.loadUser(firebaseUser.email);
         } catch (err) {
           console.error('Erreur récupération utilisateur', err);
           this.logout();
@@ -54,8 +54,27 @@ export class AuthService {
     });
   }
 
+  private async loadUser(email: string) {
+    const user = await this.userService.getUserByEmail(email);
+    this.currentUserSubject.next(user);
+    this.isAuthSubject.next(true);
+    this.isAdminSubject.next(user.admin === true);
+  }
+
   createNewUser(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
+  /** Crée le compte Auth puis le document Firestore, et seulement ensuite charge l'utilisateur */
+  async register(user: User, password: string): Promise<void> {
+    this.registering = true;
+    try {
+      await createUserWithEmailAndPassword(this.auth, user.email, password);
+      await this.userService.createUser(user);
+      await this.loadUser(user.email);
+    } finally {
+      this.registering = false;
+    }
   }
 
   login(email: string, password: string) {

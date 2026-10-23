@@ -27,7 +27,8 @@
         <ul>
           <li [innerHTML]="resource.product.details_tags.format(product.tagsVisu)"></li>
           <li [innerHTML]="resource.product.details_creator.format(product.author)"></li>
-          <li [innerHTML]="resource.product.details_dimensions.format(product.size)"></li>
+          <li [innerHTML]="resource.product.details_dimensions_mini.format(toMiniSize(product.size))"></li>
+          <li [innerHTML]="resource.product.details_dimensions_midi.format(product.size)"></li>
           <li [innerHTML]="resource.product.details_time.format(product.time)"></li>
           <li [innerHTML]="resource.product.details_date.format(product.date)"></li>
         </ul>

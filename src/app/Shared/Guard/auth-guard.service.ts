@@ -17,7 +17,7 @@ export class AuthGuardService {
       filter(isAuth => isAuth !== null),
       take(1),
       map(isAuth => {
-        return isAuth ? true : this.router.createUrlTree(['/signin']);
+        return isAuth ? true : this.router.createUrlTree(['/auth/signin']);
       })
     );
   }

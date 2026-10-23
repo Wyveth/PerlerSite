@@ -95,7 +95,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.menuItems = [
       {
         label: this.resource.layout.header.menu.home,
-        icon: 'ri-home-4-line',
+        icon: 'pi pi-home',
         command: () => {
           scrollViewFragment(this.router, this.resource.router.routes.welcome);
         }
@@ -119,7 +119,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
         }
       },
       {
-        icon: 'ri-account-circle-line',
+        icon: 'pi pi-user',
         items: [
           {
             label: this.resource.layout.header.menu.signin,

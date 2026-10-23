@@ -85,6 +85,8 @@ export interface Portfolio {
   all: string;
   new: string;
   measure: string;
+  measure_mini: string;
+  measure_midi: string;
   details: string;
   redirect_product_view: string;
 }
@@ -256,6 +258,8 @@ export interface Product {
   details_tags: string;
   details_creator: string;
   details_dimensions: string;
+  details_dimensions_mini: string;
+  details_dimensions_midi: string;
   details_time: string;
   details_date: string;
 }

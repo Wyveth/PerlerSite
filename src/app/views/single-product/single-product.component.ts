@@ -8,6 +8,7 @@ import { CommentListComponent } from '../comment-list/comment-list.component';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
 import { BehaviorSubject } from 'rxjs';
+import { toMiniSize } from 'src/app/shared/utils/parseSize';
 
 @Component({
   selector: 'app-single-product',
@@ -18,6 +19,7 @@ import { BehaviorSubject } from 'rxjs';
 export class SingleProductComponent extends BaseComponent implements OnInit {
   product$ = new BehaviorSubject<Product | null>(null);
   key!: string;
+  toMiniSize = toMiniSize;
 
   constructor(
     resources: AppResource,

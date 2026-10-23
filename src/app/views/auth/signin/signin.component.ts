@@ -75,15 +75,23 @@ export class SigninComponent extends BaseComponent implements OnInit {
           detail: this.resource.signin.signin_success_detail
         });
       },
-      (error: string) => {
-        if (error == 'auth/invalid-email') {
-          this.errorMessage = this.resource.signin.email_password_false;
-        } else if (error == 'auth/user-disabled') {
-          this.errorMessage = this.resource.signin.user_desactivated;
-        } else if (error == 'auth/user-not-found') {
-          this.errorMessage = this.resource.signin.user_not_found;
-        } else if (error == 'auth/wrong-password') {
-          this.errorMessage = this.resource.signin.email_password_false;
+      (error: any) => {
+        // Firebase renvoie un objet FirebaseError : le code est dans error.code
+        switch (error?.code) {
+          case 'auth/user-disabled':
+            this.errorMessage = this.resource.signin.user_desactivated;
+            break;
+          case 'auth/user-not-found':
+            this.errorMessage = this.resource.signin.user_not_found;
+            break;
+          case 'auth/network-request-failed':
+            this.errorMessage = this.resource.error.network_error;
+            break;
+          case 'auth/invalid-email':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+          default:
+            this.errorMessage = this.resource.signin.email_password_false;
         }
 
         this.messageService.add({

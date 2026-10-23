@@ -55,11 +55,12 @@ export class ContactService {
   async updateContact(key: string, contact: Contact) {
     const docSnap = await this.utilsService.getDocByKey(this.contactsRef, key);
     if (docSnap) {
-      const updated: Contact = {
-        ...contact,
+      const { dateCreation, key: _key, ...fields } = contact as any;
+      const updated = {
+        ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')
       };
-      updateDoc(docSnap.ref, updated as { [key: string]: any });
+      await updateDoc(docSnap.ref, updated as { [key: string]: any });
     }
   }
 

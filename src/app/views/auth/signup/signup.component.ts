@@ -18,6 +18,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
 import { AppResource } from 'src/app/shared/models/app.resource';
+import { MessageService } from 'primeng/api';
+import { severity } from 'src/app/shared/enum/severity';
 
 @Component({
   selector: 'app-signup',
@@ -43,7 +45,8 @@ export class SignupComponent extends BaseComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) {
     super(resources);
   }
@@ -96,15 +99,27 @@ export class SignupComponent extends BaseComponent implements OnInit {
     user.admin = false;
     user.disabled = false;
 
-    this.authService.createNewUser(email, password).then(
-      () => {
-        this.userService.createUser(user);
-        this.router.navigate([this.resource.router.routes.product_list]);
-      },
-      (error: string) => {
-        this.errorMessage = error;
-      }
-    );
+    this.authService
+      .register(user, password)
+      .then(() => {
+        this.router.navigate([this.resource.router.routes.home]);
+        this.messageService.add({
+          severity: severity.success,
+          summary: this.resource.signup.title,
+          detail: this.resource.signin.signin_success_detail
+        });
+      })
+      .catch((error: any) => {
+        this.errorMessage =
+          error?.code === 'auth/email-already-in-use'
+            ? this.resource.error.email_already_exists
+            : this.resource.signup.signup_error;
+        this.messageService.add({
+          severity: severity.error,
+          summary: this.resource.signup.title,
+          detail: this.errorMessage
+        });
+      });
   }
 
   /*Validation Erreur*/
