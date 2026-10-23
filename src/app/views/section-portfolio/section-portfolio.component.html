@@ -1,88 +1,116 @@
-<!-- ======= Portfolio Section ======= -->
-<section id="portfolio" class="portfolio flex justify-center mx-5 md:mx-auto">
-  <div class="container" data-aos="fade-up">
-    <header class="section-header">
-      <h2 [innerText]="resource.portfolio.title"></h2>
-      <p class="dark:!text-white" [innerText]="resource.portfolio.subtitle"></p>
-    </header>
-
-    <div class="flex" data-aos="fade-up" data-aos-delay="100">
-      <div class="w-full flex justify-center">
-        <ul id="portfolio-filters">
-          <li
-            data-filter="*"
-            [class.filter-active]="activeFilter === '*'"
-            (click)="setActiveFilter('*')"
-            [innerText]="resource.portfolio.all"
-          ></li>
-
-          <li
-            *ngFor="let tag of tags"
-            [attr.data-filter]="'.filter-' + tag.code"
-            [class.filter-active]="activeFilter === '.filter-' + tag.code"
-            (click)="setActiveFilter('.filter-' + tag.code)"
-          >
-            {{ tag.libelle }}
-          </li>
-        </ul>
+<section id="portfolio" class="bg-paper py-16 md:py-24 dark:bg-night-2/60">
+  <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:gap-8 md:px-8">
+    <!-- En-tête -->
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div class="flex flex-col gap-2.5">
+        <span class="eyebrow text-accent dark:text-[#8ea2ff]">{{ resource.home.gallery_eyebrow }}</span>
+        <h2 class="m-0 font-display text-4xl leading-none font-extrabold tracking-[-0.03em] md:text-[52px]">
+          {{ resource.home.gallery_title }}
+        </h2>
       </div>
+
+      <label class="flex h-12 w-full items-center gap-2.5 rounded-full border border-[#e2e2de] bg-white px-4 text-muted sm:w-auto sm:min-w-[300px] dark:border-night-line dark:bg-night-2 dark:text-zinc-400">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <span class="sr-only">{{ resource.home.search_label }}</span>
+        <input
+          type="search"
+          [value]="search()"
+          (input)="onSearch($any($event.target).value)"
+          [placeholder]="resource.home.search_placeholder"
+          class="min-w-0 flex-1 border-0 bg-transparent text-[15px] text-ink outline-none dark:text-white"
+        />
+      </label>
     </div>
 
-    <div
-      id="portfolio-container"
-      class="portfolio-container relative"
-      data-aos="fade-up"
-      data-aos-delay="200"
-    >
-      <div
-        *ngFor="let product of products()"
-        [ngClass]="product.filterClasses"
-        class="portfolio-item px-3 mb-6 w-full md:w-1/2 lg:w-1/3"
+    <!-- Filtres -->
+    <div class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0" role="group" [attr.aria-label]="resource.portfolio.title">
+      <button
+        type="button"
+        (click)="setActiveTag('*')"
+        [attr.aria-pressed]="activeTag() === '*'"
+        class="h-10 shrink-0 cursor-pointer rounded-full border px-4 text-sm font-medium transition-colors"
+        [ngClass]="activeTag() === '*'
+          ? 'border-ink bg-ink text-white dark:border-white dark:bg-white dark:text-ink'
+          : 'border-[#e2e2de] bg-white text-ink hover:border-ink dark:border-night-line dark:bg-night-2 dark:text-zinc-200 dark:hover:border-zinc-400'"
       >
-        <div class="portfolio-wrap">
-          <img
-            [src]="product.pictureUrl"
-            alt="{{ product.content }}"
-            class="w-full h-auto rounded"
-          />
-          <div class="portfolio-info p-4">
-            <div>
-              <span
-                *ngIf="product.isNew"
-                class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded"
-                [innerText]="resource.portfolio.new"
-              ></span>
-              <h4 class="mt-5 text-lg font-semibold">{{ product.title }}</h4>
-            </div>
-            <p
-              class="text-gray-600"
-              [innerText]="resource.portfolio.measure_mini | format: toMiniSize(product.size)"
-            ></p>
-            <p
-              class="text-gray-600"
-              [innerText]="resource.portfolio.measure_midi | format: product.size"
-            ></p>
-            <div class="portfolio-links mt-3 flex space-x-4">
-              <a
-                [href]="product.pictureUrl"
-                class="text-blue-600 hover:text-blue-800"
-                data-gallery="portfolioGallery"
-                [title]="product.title"
-              >
-                <i class="pi pi-plus" style="font-size: 0.8rem"></i>
-              </a>
-              <a
-                [routerLink]="resource.portfolio.redirect_product_view | format: product.key"
-                class="text-blue-600 hover:text-blue-800"
-                [title]="resource.portfolio.details"
-              >
-                <i class="pi pi-link" style="font-size: 0.8rem"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+        {{ resource.portfolio.all }}
+      </button>
+      @for (tag of tags(); track tag.code) {
+        <button
+          type="button"
+          (click)="setActiveTag(tag.code)"
+          [attr.aria-pressed]="activeTag() === tag.code"
+          class="h-10 shrink-0 cursor-pointer rounded-full border px-4 text-sm font-medium transition-colors"
+          [ngClass]="activeTag() === tag.code
+            ? 'border-ink bg-ink text-white dark:border-white dark:bg-white dark:text-ink'
+            : 'border-[#e2e2de] bg-white text-ink hover:border-ink dark:border-night-line dark:bg-night-2 dark:text-zinc-200 dark:hover:border-zinc-400'"
+        >
+          {{ tag.libelle }}
+        </button>
+      }
     </div>
+
+    <!-- Grille -->
+    @if (visible().length) {
+      <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6">
+        @for (item of visible(); track item.key) {
+          <a
+            [routerLink]="resource.portfolio.redirect_product_view | format: item.key"
+            class="group flex flex-col overflow-hidden rounded-[18px] bg-white text-ink no-underline shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-shadow hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] hover:text-ink md:rounded-[22px] dark:bg-night-2 dark:text-white dark:hover:text-white"
+          >
+            <div class="relative aspect-square overflow-hidden bg-[#ededea] dark:bg-night-line">
+              @if (item.picture) {
+                <img
+                  [src]="item.picture"
+                  [alt]="resource.home.piece_alt.format(item.title)"
+                  loading="lazy"
+                  decoding="async"
+                  class="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                />
+              }
+              @if (item.isNew) {
+                <span class="absolute top-3 left-3 rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-white">
+                  {{ resource.home.new }}
+                </span>
+              }
+            </div>
+            <div class="flex flex-col gap-2 px-3 pt-3 pb-3.5 md:gap-2.5 md:px-5 md:pt-4 md:pb-5">
+              <div class="flex flex-col gap-0.5 md:flex-row md:items-baseline md:justify-between md:gap-3">
+                <span class="font-display text-base leading-tight font-bold tracking-tight md:text-[19px]">{{ item.title }}</span>
+                @if (item.tagLabel) {
+                  <span class="text-xs text-muted md:whitespace-nowrap dark:text-zinc-400">{{ item.tagLabel }}</span>
+                }
+              </div>
+              <div class="flex flex-col gap-1 text-xs text-[#4a4a52] md:text-[13px] dark:text-zinc-300">
+                <div class="flex justify-between gap-2">
+                  <span><span class="md:hidden">Mini</span><span class="hidden md:inline">{{ resource.home.mini }}</span></span>
+                  <span class="font-semibold whitespace-nowrap text-ink dark:text-white">{{ item.mini }} cm</span>
+                </div>
+                <div class="flex justify-between gap-2">
+                  <span><span class="md:hidden">Midi</span><span class="hidden md:inline">{{ resource.home.midi }}</span></span>
+                  <span class="font-semibold whitespace-nowrap text-ink dark:text-white">{{ item.midi }} cm</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    } @else if (items().length) {
+      <div class="rounded-[22px] border border-dashed border-[#d2d2cd] px-6 py-16 text-center text-muted dark:border-night-line dark:text-zinc-400">
+        {{ resource.home.empty }}
+      </div>
+    }
+
+    @if (filtered().length > visible().length) {
+      <div class="flex justify-center pt-2">
+        <button
+          type="button"
+          (click)="showMore()"
+          class="h-[52px] cursor-pointer rounded-full border border-ink bg-transparent px-7 text-[15px] font-semibold text-ink transition-colors hover:bg-ink hover:text-white dark:border-zinc-300 dark:text-white dark:hover:bg-white dark:hover:text-ink"
+        >
+          {{ resource.home.show_more | format: visible().length : filtered().length }}
+        </button>
+      </div>
+    }
   </div>
 </section>
-<!-- End Portfolio Section -->

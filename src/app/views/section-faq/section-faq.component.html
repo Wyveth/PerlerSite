@@ -1,36 +1,64 @@
-<!-- ======= F.A.Q Section ======= -->
-<section id="faq" class="faq flex justify-center mx-5 md:mx-auto">
-  <div class="container" data-aos="flip-down" data-aos-delay="300">
-    <header class="section-header">
-      <h2 [innerHTML]="resource.faq.title"></h2>
-      <p class="dark:!text-white" [innerHTML]="resource.faq.subtitle"></p>
-    </header>
+<section id="faq" class="bg-ink py-16 text-white md:py-28 dark:bg-night-2">
+  <div class="mx-auto flex max-w-7xl flex-wrap gap-10 px-4 md:gap-16 md:px-8">
+    <div class="flex flex-[1_1_320px] flex-col gap-4">
+      <span class="eyebrow text-[#9daeff]">{{ resource.home.faq_eyebrow }}</span>
+      <h2 class="m-0 font-display text-[32px] leading-[1.04] font-extrabold tracking-[-0.03em] text-white md:text-5xl">
+        {{ resource.home.faq_title }}
+      </h2>
+      <p class="m-0 text-base leading-relaxed text-[#b9b9c0]">{{ resource.home.faq_subtitle }}</p>
+    </div>
 
-    <div class="flex">
-      <div class="grid grid-cols-2 gap-4" data-aos="fade-right" data-aos-delay="500">
-        <p-accordion *ngFor="let tab of resource.faq.tabs">
-          <p-accordion-panel *ngFor="let item of tab.items; let index = index" [value]="index">
-            <p-accordion-header>{{ item.question }}</p-accordion-header>
-            <p-accordion-content>
-              <div class="accordion-body">
-                <p *ngFor="let paragraph of item.answer.paragraphs" [innerText]="paragraph"></p>
-                <ul>
-                  <li *ngFor="let item of item.answer.links">
-                    {{ item.label }}
-                    <a
-                      *ngIf="item.link !== undefined"
-                      [href]="item.url"
-                      [innerText]="item.link"
-                    ></a>
-                    {{ item.note }}
-                  </li>
+    <div class="flex min-w-0 flex-[2_1_560px] flex-col">
+      @for (item of items; track $index; let i = $index) {
+        <div class="border-t border-[#2e2e34]">
+          <h3 class="m-0">
+            <button
+              type="button"
+              (click)="toggle(i)"
+              [attr.aria-expanded]="open === i"
+              [attr.aria-controls]="'faq-panel-' + i"
+              [id]="'faq-button-' + i"
+              class="flex w-full cursor-pointer items-center justify-between gap-6 border-0 bg-transparent py-5 text-left text-base font-semibold text-white md:py-6 md:text-[19px]"
+            >
+              <span>{{ item.question }}</span>
+              <span
+                aria-hidden="true"
+                class="text-[28px] leading-none font-light transition-transform duration-200"
+                [class.rotate-45]="open === i"
+                >+</span
+              >
+            </button>
+          </h3>
+          @if (open === i) {
+            <div
+              [id]="'faq-panel-' + i"
+              role="region"
+              [attr.aria-labelledby]="'faq-button-' + i"
+              class="max-w-2xl pb-6 text-[15px] leading-relaxed text-[#c9c9cf] md:text-base"
+            >
+              @for (paragraph of item.answer.paragraphs; track $index) {
+                <p class="m-0 mb-2">{{ paragraph }}</p>
+              }
+              @if (item.answer.links?.length) {
+                <ul class="m-0 mt-2 flex list-disc flex-col gap-1.5 pl-5">
+                  @for (link of item.answer.links; track $index) {
+                    <li>
+                      {{ link.label }}
+                      @if (link.url && link.link) {
+                        <a [href]="link.url" target="_blank" rel="noopener" class="font-semibold text-[#9daeff] underline underline-offset-2 hover:text-white">{{ link.link }}</a>
+                      }
+                      @if (link.note) {
+                        <span class="text-[#9a9aa2]"> — {{ link.note }}</span>
+                      }
+                    </li>
+                  }
                 </ul>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
-        </p-accordion>
-      </div>
+              }
+            </div>
+          }
+        </div>
+      }
+      <div class="border-t border-[#2e2e34]"></div>
     </div>
   </div>
 </section>
-<!-- End F.A.Q Section -->

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { Product } from '../models/class/product';
 import {
   Firestore,
@@ -35,6 +35,15 @@ export class ProductService {
     return collectionData(this.productsRef, { idField: 'id' }).pipe(
       map((products: any[]) => products.sort((a, b) => a.title.localeCompare(b.title)))
     );
+  }
+
+  /** Flux partagé entre les sections de l'accueil (une seule écoute Firestore) */
+  private readonly sharedProducts$: Observable<Product[]> = this.products$.pipe(
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
+
+  get productsShared$(): Observable<Product[]> {
+    return this.sharedProducts$;
   }
 
   /// Get Single Product

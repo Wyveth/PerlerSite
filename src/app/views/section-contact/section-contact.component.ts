@@ -7,8 +7,6 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
 import { Contact } from 'src/app/api/models/class/contact';
 import { ContactService } from 'src/app/api/services/contact.service';
 import { BaseComponent } from 'src/app/shared/component/base/base.component';
@@ -21,7 +19,7 @@ import { Router } from '@angular/router';
   selector: 'app-section-contact',
   templateUrl: './section-contact.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, TextareaModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class SectionContactComponent extends BaseComponent implements OnInit {
   contactForm!: UntypedFormGroup;
@@ -55,10 +53,14 @@ export class SectionContactComponent extends BaseComponent implements OnInit {
     return this.contactForm.controls;
   }
 
-  onSubmitForm() {
+  async onSubmitForm() {
+    if (this.contactForm.invalid || this.loading) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+
     this.loading = true;
     const formValue = this.contactForm.value;
-
     const contact = new Contact(
       formValue['name'],
       formValue['email'],
@@ -66,28 +68,24 @@ export class SectionContactComponent extends BaseComponent implements OnInit {
       formValue['message']
     );
 
-    setTimeout(() => {
-      this.loading = false;
-    }, 2000);
-
     try {
-      this.contactService.createContact(contact);
-
-      setTimeout(() => {
-        this.loading = false;
-        this.messageService.add({
-          severity: severity.success,
-          summary: this.resource.severity.success,
-          detail: this.resource.contact.send_message_success
-        });
-      }, 2000);
+      // On attend vraiment l'écriture Firestore avant d'annoncer le succès
+      await this.contactService.createContact(contact);
+      this.contactForm.reset();
+      this.messageService.add({
+        severity: severity.success,
+        summary: this.resource.severity.success,
+        detail: this.resource.contact.send_message_success
+      });
     } catch (error) {
-      this.loading = false;
+      console.error('Erreur envoi contact', error);
       this.messageService.add({
         severity: severity.error,
         summary: this.resource.severity.error,
         detail: this.resource.error.server_error
       });
+    } finally {
+      this.loading = false;
     }
   }
 

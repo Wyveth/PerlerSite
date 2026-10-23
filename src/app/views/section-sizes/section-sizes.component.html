@@ -1,0 +1,43 @@
+<section id="atelier" class="mx-auto flex max-w-7xl flex-wrap items-center gap-10 px-4 py-16 md:gap-16 md:px-8 md:py-28">
+  <div class="min-w-0 flex-[1_1_460px]" data-aos="fade-up">
+    <img
+      [src]="atelierImage"
+      [alt]="resource.home.atelier_alt"
+      loading="lazy"
+      width="1400"
+      height="1050"
+      class="block h-[240px] w-full rounded-[22px] object-cover md:h-[520px] md:rounded-[28px]"
+    />
+  </div>
+
+  <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-5 md:gap-6" data-aos="fade-up" data-aos-delay="100">
+    <span class="eyebrow text-accent dark:text-[#8ea2ff]">{{ resource.home.sizes_eyebrow }}</span>
+    <h2 class="m-0 font-display text-[32px] leading-[1.04] font-extrabold tracking-[-0.03em] md:text-5xl">
+      {{ resource.home.sizes_title }}
+    </h2>
+    <p class="m-0 text-[15px] leading-relaxed text-[#4a4a52] md:text-[17px] dark:text-zinc-300">
+      {{ resource.home.sizes_text }}
+    </p>
+
+    @if (example) {
+      <div class="grid grid-cols-2 gap-3 md:gap-4">
+        <div class="flex min-w-0 flex-col gap-3 rounded-[18px] bg-paper p-3.5 md:rounded-[20px] md:p-6 dark:bg-night-2">
+          <div class="flex items-center gap-2 md:gap-3">
+            <span aria-hidden="true" class="h-4 w-4 shrink-0 rounded-full border-[5px] border-accent md:h-[22px] md:w-[22px] md:border-[7px]"></span>
+            <span class="text-[13px] font-semibold whitespace-nowrap md:text-base">{{ resource.home.mini }}</span>
+          </div>
+          <span class="font-display text-lg font-extrabold tracking-tight whitespace-nowrap md:text-[28px]">{{ example.mini }} cm</span>
+          <span class="text-xs text-muted md:text-[13px] dark:text-zinc-400">{{ resource.home.sizes_example.format(example.title, 'Mini') }}</span>
+        </div>
+        <div class="flex min-w-0 flex-col gap-3 rounded-[18px] bg-paper p-3.5 md:rounded-[20px] md:p-6 dark:bg-night-2">
+          <div class="flex items-center gap-2 md:gap-3">
+            <span aria-hidden="true" class="h-7 w-7 shrink-0 rounded-full border-[9px] border-ink md:h-10 md:w-10 md:border-[13px] dark:border-white"></span>
+            <span class="text-[13px] font-semibold whitespace-nowrap md:text-base">{{ resource.home.midi }}</span>
+          </div>
+          <span class="font-display text-lg font-extrabold tracking-tight whitespace-nowrap md:text-[28px]">{{ example.midi }} cm</span>
+          <span class="text-xs text-muted md:text-[13px] dark:text-zinc-400">{{ resource.home.sizes_example.format(example.title, 'Midi') }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>

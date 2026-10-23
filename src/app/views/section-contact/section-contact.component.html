@@ -1,120 +1,91 @@
-<!-- ======= Contact Section ======= -->
-<section id="contact" class="contact flex justify-center mx-5 md:mx-auto">
-  <div class="container" data-aos="fade-up">
-    <header class="section-header">
-      <h2 [innerText]="resource.contact.title"></h2>
-      <p class="dark:!text-white" [innerText]="resource.contact.subtitle"></p>
-    </header>
-
-    <div class="flex justify-center">
-      <div class="w-full lg:w-1/2">
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmitForm()">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <input
-                type="text"
-                pInputText
-                id="name"
-                formControlName="name"
-                [placeholder]="resource.contact.name_placeholder"
-                [ngClass]="{ 'border-red-500': shouldShowNameError() }"
-                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div
-                *ngIf="f.name.errors && (f.name.touched || f.name.dirty)"
-                class="text-red-600 text-sm mt-1"
-              >
-                <div
-                  *ngIf="f.name.errors.required"
-                  [innerText]="resource.error.surname_mandatory"
-                ></div>
-              </div>
-            </div>
-
-            <div>
-              <input
-                type="email"
-                pInputText
-                id="email"
-                formControlName="email"
-                [placeholder]="resource.contact.email_placeholder"
-                [ngClass]="{ 'border-red-500': shouldShowMailError() }"
-                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div
-                *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
-                class="text-red-600 text-sm mt-1"
-              >
-                <div
-                  *ngIf="f.email.errors.required"
-                  [innerText]="resource.error.email_mandatory"
-                ></div>
-                <div *ngIf="f.email.errors.email" [innerText]="resource.error.email_invalid"></div>
-              </div>
-            </div>
-
-            <div class="md:col-span-2">
-              <input
-                type="text"
-                pInputText
-                id="subject"
-                formControlName="subject"
-                [placeholder]="resource.contact.subject_placeholder"
-                [ngClass]="{ 'border-red-500': shouldShowSubjectError() }"
-                class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div
-                *ngIf="f.subject.errors && (f.subject.touched || f.subject.dirty)"
-                class="text-red-600 text-sm mt-1"
-              >
-                <div
-                  *ngIf="f.subject.errors.required"
-                  [innerText]="resource.error.subject_mandatory"
-                ></div>
-              </div>
-            </div>
-
-            <div class="md:col-span-2">
-              <textarea
-                pTextarea
-                id="message"
-                formControlName="message"
-                rows="6"
-                [placeholder]="resource.contact.message_placeholder"
-                [ngClass]="{ 'border-red-500': shouldShowMessageError() }"
-                class="w-full border rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-              ></textarea>
-              <div
-                *ngIf="f.message.errors && (f.message.touched || f.message.dirty)"
-                class="text-red-600 text-sm mt-1"
-              >
-                <div
-                  *ngIf="f.message.errors.required"
-                  [innerText]="resource.error.message_mandatory"
-                ></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="md:col-span-2 text-center mt-6">
-            <div
-              *ngIf="loading"
-              class="mb-3 text-blue-600 font-semibold flex justify-center items-center space-x-2"
-            >
-              <span [innerText]="resource.contact.loading"></span>
-              <i class="fas fa-spinner fa-pulse"></i>
-            </div>
-
-            <button
-              type="submit"
-              [disabled]="contactForm.invalid"
-              class="bg-blue-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
-              [innerText]="resource.contact.send_message"
-            ></button>
-          </div>
-        </form>
-      </div>
-    </div>
+<section id="contact" class="mx-auto flex max-w-7xl flex-wrap gap-10 px-4 py-16 md:gap-16 md:px-8 md:py-28">
+  <div class="flex flex-[1_1_320px] flex-col gap-4">
+    <span class="eyebrow text-accent dark:text-[#8ea2ff]">{{ resource.home.contact_eyebrow }}</span>
+    <h2 class="m-0 font-display text-[32px] leading-[1.04] font-extrabold tracking-[-0.03em] md:text-5xl">
+      {{ resource.home.contact_title }}
+    </h2>
+    <p class="m-0 max-w-sm text-base leading-relaxed text-[#4a4a52] dark:text-zinc-300">{{ resource.home.contact_text }}</p>
   </div>
+
+  <form
+    [formGroup]="contactForm"
+    (ngSubmit)="onSubmitForm()"
+    novalidate
+    class="grid min-w-0 flex-[2_1_560px] grid-cols-1 gap-4 md:grid-cols-2"
+  >
+    <label class="flex flex-col gap-2 text-sm font-semibold">
+      {{ resource.home.label_name }}
+      <input
+        type="text"
+        formControlName="name"
+        autocomplete="name"
+        [placeholder]="resource.contact.name_placeholder"
+        class="field font-normal"
+        [class.is-invalid]="shouldShowNameError()"
+      />
+      @if (shouldShowNameError()) {
+        <span class="text-[13px] font-normal text-red-600 dark:text-red-400">{{ resource.error.surname_mandatory }}</span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm font-semibold">
+      {{ resource.home.label_email }}
+      <input
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [placeholder]="resource.contact.email_placeholder"
+        class="field font-normal"
+        [class.is-invalid]="shouldShowMailError()"
+      />
+      @if (shouldShowMailError()) {
+        <span class="text-[13px] font-normal text-red-600 dark:text-red-400">
+          {{ f.email.errors?.['email'] ? resource.error.email_invalid : resource.error.email_mandatory }}
+        </span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm font-semibold md:col-span-2">
+      {{ resource.home.label_subject }}
+      <input
+        type="text"
+        formControlName="subject"
+        [placeholder]="resource.contact.subject_placeholder"
+        class="field font-normal"
+        [class.is-invalid]="shouldShowSubjectError()"
+      />
+      @if (shouldShowSubjectError()) {
+        <span class="text-[13px] font-normal text-red-600 dark:text-red-400">{{ resource.error.subject_mandatory }}</span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm font-semibold md:col-span-2">
+      {{ resource.home.label_message }}
+      <textarea
+        formControlName="message"
+        rows="5"
+        [placeholder]="resource.contact.message_placeholder"
+        class="field font-normal"
+        [class.is-invalid]="shouldShowMessageError()"
+      ></textarea>
+      @if (shouldShowMessageError()) {
+        <span class="text-[13px] font-normal text-red-600 dark:text-red-400">{{ resource.error.message_mandatory }}</span>
+      }
+    </label>
+
+    <div class="flex justify-end md:col-span-2">
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="inline-flex h-[52px] w-full cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-accent px-8 text-base font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-wait disabled:opacity-70 md:w-auto"
+      >
+        @if (loading) {
+          <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+          {{ resource.contact.loading }}
+        } @else {
+          {{ resource.contact.send_message }}
+        }
+      </button>
+    </div>
+  </form>
 </section>
-<!-- End Contact Section -->

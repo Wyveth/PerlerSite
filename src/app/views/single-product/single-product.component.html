@@ -1,61 +1,188 @@
-<app-breadcrumbs
-  *ngIf="product$ | async as product"
-  [nodeParent]="this.resource.layout.header.menu.home"
-  [nodeParentUrl]="this.resource.router.routes.home"
-  [nodeChild]="this.resource.product.title_plural"
-  [nodeChildUrl]="this.resource.router.routes.products"
-  [nodeChildChild]="product.title"
-></app-breadcrumbs>
+<main class="mx-auto flex max-w-7xl flex-col gap-6 px-4 pt-6 pb-16 md:gap-8 md:px-8 md:pt-8 md:pb-24">
+  <!-- Fil d'Ariane -->
+  <nav [attr.aria-label]="resource.product.title" class="flex flex-wrap items-center gap-2.5 text-sm text-muted dark:text-zinc-400">
+    <a
+      href="#portfolio"
+      (click)="$event.preventDefault(); backToGallery()"
+      class="inline-flex items-center gap-1.5 text-muted no-underline hover:text-ink dark:text-zinc-400 dark:hover:text-white"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7"></path></svg>
+      {{ resource.product_page.back }}
+    </a>
+    @if (product) {
+      @for (label of tagLabels; track label) {
+        <span aria-hidden="true">/</span>
+        <span>{{ label }}</span>
+      }
+      <span aria-hidden="true">/</span>
+      <span class="font-medium text-ink dark:text-white">{{ product.title }}</span>
+    }
+  </nav>
 
-<!-- ======= Portfolio Details Section ======= -->
-<section id="portfolio-details" class="portfolio-details" *ngIf="product$ | async as product">
-  <div class="flex md:flex-row flex-col w-10/12 mx-auto space-x-4">
-    <div class="w-full md:w-8/12">
-      <div class="portfolio-details-slider swiper">
-        <div class="swiper-wrapper align-items-center">
-          <div class="swiper-slide">
-            <img *ngIf="product.pictureUrl" src="{{ product.pictureUrl }}" alt="" />
+  @if (loading) {
+    <div class="flex flex-wrap gap-10 md:gap-14" aria-busy="true">
+      <div class="aspect-square min-w-0 flex-[1.25_1_520px] animate-pulse rounded-[24px] bg-paper md:rounded-[28px] dark:bg-night-2"></div>
+      <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-4">
+        <div class="h-6 w-24 animate-pulse rounded-full bg-paper dark:bg-night-2"></div>
+        <div class="h-14 w-3/4 animate-pulse rounded-xl bg-paper dark:bg-night-2"></div>
+        <div class="h-40 animate-pulse rounded-3xl bg-paper dark:bg-night-2"></div>
+      </div>
+      <span class="sr-only">{{ resource.product_page.loading }}</span>
+    </div>
+  } @else if (notFound || !product) {
+    <div class="rounded-[22px] border border-dashed border-[#d2d2cd] px-6 py-20 text-center text-muted dark:border-night-line dark:text-zinc-400">
+      {{ resource.product_page.not_found }}
+    </div>
+  } @else {
+    <div class="flex flex-wrap items-start gap-8 md:gap-14">
+      <!-- Photos -->
+      <div class="flex min-w-0 flex-[1.25_1_520px] flex-col gap-3.5">
+        <div class="aspect-square overflow-hidden rounded-[24px] bg-paper md:rounded-[28px] dark:bg-night-2">
+          @if (pictures.length) {
+            <img
+              [src]="pictures[selectedPicture]"
+              [alt]="resource.home.piece_alt.format(product.title)"
+              class="block h-full w-full object-cover"
+            />
+          }
+        </div>
+        @if (pictures.length > 1) {
+          <div class="grid grid-cols-4 gap-3.5">
+            @for (pic of pictures; track pic; let i = $index) {
+              <button
+                type="button"
+                (click)="selectedPicture = i"
+                [attr.aria-label]="resource.product_page.photo.format(i + 1)"
+                [attr.aria-pressed]="selectedPicture === i"
+                class="aspect-square cursor-pointer overflow-hidden rounded-2xl border-2 bg-paper p-0 dark:bg-night-2"
+                [ngClass]="selectedPicture === i ? 'border-ink dark:border-white' : 'border-transparent'"
+              >
+                <img [src]="pic" alt="" loading="lazy" class="block h-full w-full object-cover" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Infos -->
+      <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6 md:sticky md:top-28 md:gap-7">
+        <div class="flex flex-col gap-3.5">
+          @if (tagLabels.length) {
+            <div class="flex flex-wrap gap-2">
+              @for (label of tagLabels; track label) {
+                <span class="rounded-full bg-accent-soft px-3 py-1.5 text-[13px] font-semibold text-accent-hover dark:bg-[#1e2450] dark:text-[#b6c2ff]">{{ label }}</span>
+              }
+            </div>
+          }
+          <h1 class="m-0 font-display text-[40px] leading-none font-extrabold tracking-[-0.035em] text-balance md:text-[64px]">
+            {{ product.title }}
+          </h1>
+          @if (product.titleContent || product.content) {
+            <div class="flex flex-col gap-1.5 text-[15px] leading-relaxed text-[#4a4a52] md:text-[17px] dark:text-zinc-300">
+              @if (product.titleContent) {
+                <span class="font-semibold text-ink dark:text-white">{{ product.titleContent }}</span>
+              }
+              @if (product.content) {
+                <p class="m-0">{{ product.content }}</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Taille Mini / Midi -->
+        <div class="flex flex-col gap-4 rounded-[22px] border border-line p-5 md:gap-5 md:rounded-3xl md:p-6 dark:border-night-line">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span class="text-[15px] font-semibold">{{ resource.product_page.size }}</span>
+            <div role="group" [attr.aria-label]="resource.product_page.bead_type" class="flex rounded-full bg-[#f2f2ef] p-1 dark:bg-night-2">
+              <button
+                type="button"
+                (click)="setBead('mini')"
+                [attr.aria-pressed]="bead === 'mini'"
+                class="h-9 cursor-pointer rounded-full border-0 px-4 text-sm font-semibold transition-colors"
+                [ngClass]="bead === 'mini' ? 'bg-white text-ink shadow-sm dark:bg-night-line dark:text-white' : 'bg-transparent text-muted dark:text-zinc-400'"
+              >
+                {{ resource.product_page.mini_short }}
+              </button>
+              <button
+                type="button"
+                (click)="setBead('midi')"
+                [attr.aria-pressed]="bead === 'midi'"
+                class="h-9 cursor-pointer rounded-full border-0 px-4 text-sm font-semibold transition-colors"
+                [ngClass]="bead === 'midi' ? 'bg-white text-ink shadow-sm dark:bg-night-line dark:text-white' : 'bg-transparent text-muted dark:text-zinc-400'"
+              >
+                {{ resource.product_page.midi_short }}
+              </button>
+            </div>
+          </div>
+          <div class="flex items-end justify-between gap-4">
+            <div class="flex flex-col gap-1.5" aria-live="polite">
+              <span class="font-display text-[38px] leading-none font-extrabold tracking-[-0.03em] md:text-5xl">{{ currentSize }} cm</span>
+              <span class="text-sm text-muted dark:text-zinc-400">
+                {{ bead === 'mini' ? resource.product_page.mini_caption : resource.product_page.midi_caption }}
+              </span>
+            </div>
+            <div aria-hidden="true" class="hidden h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-paper sm:flex dark:bg-night-2">
+              <div
+                class="rounded-md bg-accent transition-all duration-300"
+                [ngClass]="bead === 'mini' ? 'h-9 w-[34px]' : 'h-[72px] w-[68px]'"
+              ></div>
+            </div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
 
-    <div class="w-full lg:w-4/12 flex flex-col justify-between space-y-4">
-      <div class="portfolio-info dark:text-white dark:bg-zinc-700">
-        <h3>{{ product.title }}</h3>
-        <ul>
-          <li [innerHTML]="resource.product.details_tags.format(product.tagsVisu)"></li>
-          <li [innerHTML]="resource.product.details_creator.format(product.author)"></li>
-          <li [innerHTML]="resource.product.details_dimensions_mini.format(toMiniSize(product.size))"></li>
-          <li [innerHTML]="resource.product.details_dimensions_midi.format(product.size)"></li>
-          <li [innerHTML]="resource.product.details_time.format(product.time)"></li>
-          <li [innerHTML]="resource.product.details_date.format(product.date)"></li>
-        </ul>
-      </div>
-      <div
-        class="portfolio-description dark:text-white dark:bg-zinc-700 shadow-[0px_0_30px_rgba(1,41,112,0.08)]"
-      >
-        <h2>{{ product.titleContent }}</h2>
-        <p>
-          {{ product.content }}
-        </p>
-        <!--<p>
-            <button class="btn btn-default" (click)="onBack()">Retour</button>
-          </p>-->
-        <!-- <strong>Avis</strong>:<br />
-          <ng-template #t let-fill="fill">
-            <span class="star" [class.full]="fill === 100">
-              <span class="half" [style.width.%]="fill">&starf;;</span>&starf;
-            </span>
-          </ng-template> -->
-        <!-- <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating> -->
-        <!-- {{ currentRate }} -->
+        <!-- Caractéristiques -->
+        <dl class="m-0 grid grid-cols-3 gap-2 md:gap-3">
+          <div class="flex flex-col gap-1.5 rounded-2xl bg-paper p-3.5 md:rounded-[18px] md:p-[18px] dark:bg-night-2">
+            <dt class="text-xs text-muted md:text-[13px] dark:text-zinc-400">{{ resource.product_page.time }}</dt>
+            <dd class="m-0 text-base font-bold md:text-xl">{{ product.time || '–' }}</dd>
+          </div>
+          <div class="flex flex-col gap-1.5 rounded-2xl bg-paper p-3.5 md:rounded-[18px] md:p-[18px] dark:bg-night-2">
+            <dt class="text-xs text-muted md:text-[13px] dark:text-zinc-400">{{ resource.product_page.date }}</dt>
+            <dd class="m-0 text-base font-bold md:text-xl">{{ product.date || '–' }}</dd>
+          </div>
+          <div class="flex flex-col gap-1.5 rounded-2xl bg-paper p-3.5 md:rounded-[18px] md:p-[18px] dark:bg-night-2">
+            <dt class="text-xs text-muted md:text-[13px] dark:text-zinc-400">{{ resource.product_page.creator }}</dt>
+            <dd class="m-0 text-base font-bold break-words md:text-xl">{{ product.author || '–' }}</dd>
+          </div>
+        </dl>
+
+        <button
+          type="button"
+          (click)="askQuestion()"
+          class="inline-flex h-[54px] w-full cursor-pointer items-center justify-center rounded-full border-0 bg-accent text-base font-semibold text-white transition-colors hover:bg-accent-hover"
+        >
+          {{ resource.product_page.ask }}
+        </button>
       </div>
     </div>
-  </div>
-  <!-- <div class="flex gy-4">
-      <app-comment-list></app-comment-list>
-    </div> -->
-</section>
-<!-- End Portfolio Details Section -->
+  }
+</main>
+
+@if (related.length) {
+  <section class="bg-paper py-14 md:py-20 dark:bg-night-2/60">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:gap-7 md:px-8">
+      <h2 class="m-0 font-display text-[26px] font-extrabold tracking-[-0.03em] md:text-4xl">{{ resource.product_page.related }}</h2>
+      <div class="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 md:mx-0 md:grid md:grid-cols-4 md:gap-5 md:overflow-visible md:px-0">
+        @for (item of related; track item.key) {
+          <a
+            [routerLink]="resource.portfolio.redirect_product_view | format: item.key"
+            class="flex w-40 shrink-0 flex-col overflow-hidden rounded-[18px] bg-white text-ink no-underline transition-shadow hover:text-ink hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] md:w-auto md:rounded-[22px] dark:bg-night-2 dark:text-white dark:hover:text-white"
+          >
+            <div class="aspect-square bg-[#ededea] dark:bg-night-line">
+              @if (item.picture) {
+                <img [src]="item.picture" [alt]="resource.home.piece_alt.format(item.title)" loading="lazy" class="block h-full w-full object-cover" />
+              }
+            </div>
+            <div class="flex flex-col gap-1 px-3 pt-2.5 pb-3 md:px-[18px] md:pt-4 md:pb-[18px]">
+              <span class="font-display text-[15px] font-bold md:text-lg">{{ item.title }}</span>
+              <span class="flex flex-col text-xs text-[#4a4a52] md:text-[13px] dark:text-zinc-300">
+                <span>Mini {{ item.mini }} cm</span>
+                <span>Midi {{ item.midi }} cm</span>
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+}

@@ -1,9 +1,8 @@
-import { MenubarModule } from 'primeng/menubar';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import * as AOS from 'aos';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { User } from 'src/app/api/models/class/user';
 import { AppResource } from 'src/app/shared/models/app.resource';
@@ -13,38 +12,63 @@ import { combineLatest, filter } from 'rxjs';
 import { severity } from '../../enum/severity';
 import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 
+interface NavLink {
+  label: string;
+  fragment: string;
+}
+
+interface AccountLink {
+  label: string;
+  routerLink?: string;
+  action?: () => void;
+}
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, MenubarModule, DrawerModule, ThemeSwitchComponent]
+  imports: [CommonModule, RouterModule, DrawerModule, ThemeSwitchComponent]
 })
 export class HeaderComponent extends BaseComponent implements OnInit {
-  isAuth: boolean = false;
-  isAdmin: boolean = false;
+  isAuth = false;
+  isAdmin = false;
   user!: User | null;
+
+  /** Menu mobile (drawer) */
   visibleSidebar = false;
-
-  menuItems: MenuItem[] = [];
-
+  /** Menu déroulant du compte (desktop) */
   isDropdownOpen = false;
+
+  navLinks: NavLink[] = [];
+  accountLinks: AccountLink[] = [];
+  adminLinks: AccountLink[] = [];
 
   constructor(
     resources: AppResource,
     private messageService: MessageService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private host: ElementRef<HTMLElement>
   ) {
     super(resources);
   }
 
   ngOnInit() {
     AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
+      duration: 800,
+      easing: 'ease-out',
       once: true,
       mirror: false
     });
+
+    const routes = this.resource.router.routes;
+    const menu = this.resource.layout.header.menu;
+    this.navLinks = [
+      { label: menu.achievements, fragment: routes.achievements },
+      { label: this.resource.home.menu_sizes, fragment: 'atelier' },
+      { label: menu.faq, fragment: routes.faq },
+      { label: menu.contact, fragment: routes.contact }
+    ];
 
     this.authService.currentUser$.subscribe(user => {
       this.user = user;
@@ -56,12 +80,41 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     ]).subscribe(([isAuth, isAdmin]) => {
       this.isAuth = isAuth;
       this.isAdmin = isAdmin;
-      this.updateMenuItems();
+      this.updateAccountLinks();
     });
+  }
+
+  /** Ferme le menu du compte lors d'un clic en dehors */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (this.isDropdownOpen && !this.host.nativeElement.contains(event.target as Node)) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.isDropdownOpen = false;
   }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  goTo(fragment: string) {
+    this.visibleSidebar = false;
+    this.isDropdownOpen = false;
+    scrollViewFragment(this.router, fragment);
+  }
+
+  runAccountLink(link: AccountLink) {
+    this.visibleSidebar = false;
+    this.isDropdownOpen = false;
+    if (link.action) {
+      link.action();
+    } else if (link.routerLink) {
+      this.router.navigate([link.routerLink]);
+    }
   }
 
   onProfil(key: string) {
@@ -75,106 +128,29 @@ export class HeaderComponent extends BaseComponent implements OnInit {
         summary: this.resource.layout.header.signout_success_summary,
         detail: this.resource.layout.header.signout_success_detail
       });
-      this.updateMenuItems();
+      this.updateAccountLinks();
       this.router.navigate([this.resource.router.routes.home]);
     });
   }
 
-  hasChildren(item: any): boolean {
-    return Array.isArray(item?.items) && item.items.length > 0;
-  }
+  private updateAccountLinks() {
+    const menu = this.resource.layout.header.menu;
+    const routes = this.resource.router.routes;
 
-  executeCommand(item: MenuItem) {
-    if (item.command) {
-      item.command({ originalEvent: undefined, item: item });
-      this.visibleSidebar = false;
-    }
-  }
+    this.accountLinks = this.isAuth
+      ? [{ label: menu.profile, action: () => this.onProfil(this.user?.key ?? '') }]
+      : [];
 
-  updateMenuItems() {
-    this.menuItems = [
-      {
-        label: this.resource.layout.header.menu.home,
-        icon: 'pi pi-home',
-        command: () => {
-          scrollViewFragment(this.router, this.resource.router.routes.welcome);
-        }
-      },
-      {
-        label: this.resource.layout.header.menu.achievements,
-        command: () => {
-          scrollViewFragment(this.router, this.resource.router.routes.achievements);
-        }
-      },
-      {
-        label: this.resource.layout.header.menu.faq,
-        command: () => {
-          scrollViewFragment(this.router, this.resource.router.routes.faq);
-        }
-      },
-      {
-        label: this.resource.layout.header.menu.contact,
-        command: () => {
-          scrollViewFragment(this.router, this.resource.router.routes.contact);
-        }
-      },
-      {
-        icon: 'pi pi-user',
-        items: [
-          {
-            label: this.resource.layout.header.menu.signin,
-            visible: !this.isAuth,
-            routerLink: this.resource.router.routes.signin
-          },
-          {
-            visible: this.isAuth,
-            label: this.resource.layout.header.menu.profile,
-            command: () => this.onProfil(this.user?.key ?? '')
-          },
-          {
-            visible: this.isAdmin && this.isAuth,
-            label: this.resource.layout.header.menu.admin,
-            items: [
-              {
-                visible: this.isAdmin && this.isAuth,
-                label: this.resource.layout.header.menu.products,
-                routerLink: this.resource.router.routes.products
-              },
-              {
-                visible: this.isAdmin && this.isAuth,
-                label: this.resource.layout.header.menu.tags,
-                routerLink: this.resource.router.routes.tags
-              },
-              {
-                visible: this.isAdmin && this.isAuth,
-                label: this.resource.layout.header.menu.perlertypes,
-                routerLink: this.resource.router.routes.perlertypes
-              },
-              {
-                visible: this.isAdmin && this.isAuth,
-                label: this.resource.layout.header.menu.contacts,
-                routerLink: this.resource.router.routes.contacts
-              },
-              {
-                visible: this.isAdmin && this.isAuth,
-                label: this.resource.layout.header.menu.users,
-                routerLink: this.resource.router.routes.users
-              }
-            ]
-          },
-          {
-            visible: this.isAuth,
-            label: this.resource.layout.header.menu.signout,
-            command: () => this.onSignOut()
-          }
-        ]
-      }
-    ];
-  }
-
-  isAbsolute(): boolean {
-    // Liste des pages où le menu doit être "absolute"
-    return ['/'].includes(this.router.url);
+    this.adminLinks =
+      this.isAuth && this.isAdmin
+        ? [
+            { label: menu.products, routerLink: routes.products },
+            { label: menu.tags, routerLink: routes.tags },
+            { label: menu.perlertypes, routerLink: routes.perlertypes },
+            { label: menu.contacts, routerLink: routes.contacts },
+            { label: menu.users, routerLink: routes.users }
+          ]
+        : [];
   }
 }
 
@@ -190,7 +166,7 @@ export function scrollViewFragment(
     if (el) {
       el.scrollIntoView({ behavior: scrollType });
     }
-    AOS.refresh(); // AOS est sûr car importé
+    AOS.refresh();
   };
 
   if (currentUrl !== '/') {

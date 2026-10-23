@@ -1,84 +1,149 @@
-<header id="header" class="header w-full top-0" [ngClass]="{ absolute: isAbsolute() }">
-  <div class="flex items-center justify-between">
+<header
+  id="header"
+  class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur-md dark:border-night-line dark:bg-night/85"
+>
+  <nav class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 md:px-8 md:py-4">
+    <!-- Logo -->
     <a
-      [routerLink]="resource.router.routes.home"
-      routerLinkActive="router-link-active"
-      class="flex logo items-center nav-link"
+      href="/"
+      class="flex items-center gap-3 text-ink no-underline dark:text-white"
+      (click)="$event.preventDefault(); goTo(resource.router.routes.welcome)"
     >
-      <img [src]="resource.layout.header.logo" alt="Logo" class="h-[42px] object-contain" />
-      <span
-        class="font-semibold leading-[1] lg:inline-block align-middle hidden dark:!text-white"
-        [innerHtml]="resource.layout.header.title"
-      ></span>
+      <img [src]="resource.layout.header.logo" alt="" class="h-9 w-9 object-contain" />
+      <span class="font-display text-xl font-extrabold tracking-tight">
+        Wyveth<span class="text-accent dark:text-[#8ea2ff]">.</span>
+      </span>
     </a>
 
-    <div class="flex items-center">
-      <p-menubar class="hidden md:block" [model]="menuItems" />
+    <!-- Liens (desktop) -->
+    <div class="hidden items-center gap-8 lg:flex">
+      @for (link of navLinks; track link.fragment) {
+        <a
+          [href]="'#' + link.fragment"
+          (click)="$event.preventDefault(); goTo(link.fragment)"
+          class="text-[15px] font-medium text-ink no-underline transition-colors hover:text-accent dark:text-zinc-200 dark:hover:text-white"
+          >{{ link.label }}</a
+        >
+      }
+    </div>
 
-      <p-drawer
-        [(visible)]="visibleSidebar"
-        [modal]="true"
-        position="left"
-        class="md:hidden"
-        (onHide)="visibleSidebar = false"
-      >
-        <ul class="menu-list p-0 m-0">
-          <ng-container *ngFor="let item of menuItems">
-            <ng-container *ngIf="item.visible !== false">
-              <li>
-                <a
-                  *ngIf="!item.items"
-                  (click)="executeCommand(item)"
-                  [routerLink]="item.routerLink"
-                  class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-                >
-                  <i *ngIf="item.icon" [class]="item.icon"></i>
-                  <span>{{ item.label }}</span>
-                </a>
-                <div *ngIf="item.items">
-                  <div class="flex items-center space-x-2 p-2 font-semibold">
-                    <i *ngIf="item.icon" [class]="item.icon"></i>
-                    <span>{{ item.label }}</span>
-                  </div>
-                  <ul class="ml-4">
-                    <li *ngFor="let subItem of item.items">
-                      <a
-                        *ngIf="subItem.visible !== false"
-                        (click)="executeCommand(subItem)"
-                        [routerLink]="subItem.routerLink"
-                        class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-                      >
-                        <span>{{ subItem.label }}</span>
-                      </a>
-                      <ul *ngIf="subItem.items" class="ml-4">
-                        <li *ngFor="let subSubItem of subItem.items">
-                          <a
-                            *ngIf="subSubItem.visible !== false"
-                            (click)="executeCommand(subSubItem)"
-                            [routerLink]="subSubItem.routerLink"
-                            class="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded cursor-pointer"
-                          >
-                            <span>{{ subSubItem.label }}</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ng-container>
-          </ng-container>
-        </ul>
-      </p-drawer>
+    <!-- Actions -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <app-theme-switch />
 
+      @if (!isAuth) {
+        <a
+          [routerLink]="resource.router.routes.signin"
+          class="hidden h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-white no-underline transition-colors hover:bg-accent hover:text-white sm:inline-flex dark:bg-white dark:text-ink dark:hover:bg-accent dark:hover:text-white"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>
+          {{ resource.layout.header.menu.signin }}
+        </a>
+      } @else {
+        <div class="relative hidden sm:block">
+          <button
+            type="button"
+            (click)="toggleDropdown()"
+            [attr.aria-expanded]="isDropdownOpen"
+            aria-haspopup="menu"
+            class="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full border border-line bg-white pr-4 pl-1.5 text-sm font-semibold text-ink transition-colors hover:border-ink dark:border-night-line dark:bg-night-2 dark:text-white dark:hover:border-zinc-400"
+          >
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft font-display text-sm font-bold text-accent uppercase dark:bg-[#1e2450] dark:text-[#b6c2ff]">
+              {{ (user?.displayName || '?').charAt(0) }}
+            </span>
+            {{ user?.displayName || resource.home.account }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+
+          @if (isDropdownOpen) {
+            <div
+              role="menu"
+              class="absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-xl shadow-black/5 dark:border-night-line dark:bg-night-2"
+            >
+              @for (link of accountLinks; track link.label) {
+                <button type="button" role="menuitem" (click)="runAccountLink(link)" class="menu-item">
+                  {{ link.label }}
+                </button>
+              }
+              @if (adminLinks.length) {
+                <p class="px-3 pt-3 pb-1 text-xs font-semibold tracking-widest text-muted uppercase dark:text-zinc-400">
+                  {{ resource.layout.header.menu.admin }}
+                </p>
+                @for (link of adminLinks; track link.label) {
+                  <button type="button" role="menuitem" (click)="runAccountLink(link)" class="menu-item">
+                    {{ link.label }}
+                  </button>
+                }
+              }
+              <div class="my-2 border-t border-line dark:border-night-line"></div>
+              <button type="button" role="menuitem" (click)="isDropdownOpen = false; onSignOut()" class="menu-item text-red-600 dark:text-red-400">
+                {{ resource.layout.header.menu.signout }}
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Burger (mobile / tablette) -->
       <button
-        class="block md:hidden w-10 h-10 text-black dark:!text-white"
+        type="button"
+        class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-0 bg-ink text-white lg:hidden dark:bg-white dark:text-ink"
+        [attr.aria-label]="resource.home.open_menu"
         (click)="visibleSidebar = true"
       >
-        <i class="pi pi-bars w-4 h-4"></i>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg>
       </button>
-
-      <app-theme-switch />
     </div>
-  </div>
+  </nav>
+
+  <!-- Menu mobile -->
+  <p-drawer
+    [(visible)]="visibleSidebar"
+    [modal]="true"
+    position="right"
+    styleClass="!w-[86vw] !max-w-sm"
+    (onHide)="visibleSidebar = false"
+  >
+    <ng-template #header>
+      <span class="font-display text-xl font-extrabold tracking-tight">Wyveth<span class="text-accent">.</span></span>
+    </ng-template>
+
+    <div class="flex flex-col gap-1">
+      @for (link of navLinks; track link.fragment) {
+        <a
+          [href]="'#' + link.fragment"
+          (click)="$event.preventDefault(); goTo(link.fragment)"
+          class="rounded-xl px-3 py-3 font-display text-2xl font-bold text-ink no-underline hover:bg-paper dark:text-white dark:hover:bg-night-2"
+          >{{ link.label }}</a
+        >
+      }
+
+      <div class="my-4 border-t border-line dark:border-night-line"></div>
+
+      @if (!isAuth) {
+        <a
+          [routerLink]="resource.router.routes.signin"
+          (click)="visibleSidebar = false"
+          class="flex h-12 items-center justify-center gap-2 rounded-full bg-ink font-semibold text-white no-underline dark:bg-white dark:text-ink"
+        >
+          {{ resource.layout.header.menu.signin }}
+        </a>
+      } @else {
+        @for (link of accountLinks; track link.label) {
+          <button type="button" (click)="runAccountLink(link)" class="menu-item text-base">{{ link.label }}</button>
+        }
+        @if (adminLinks.length) {
+          <p class="px-3 pt-3 pb-1 text-xs font-semibold tracking-widest text-muted uppercase dark:text-zinc-400">
+            {{ resource.layout.header.menu.admin }}
+          </p>
+          @for (link of adminLinks; track link.label) {
+            <button type="button" (click)="runAccountLink(link)" class="menu-item text-base">{{ link.label }}</button>
+          }
+        }
+        <button type="button" (click)="visibleSidebar = false; onSignOut()" class="menu-item text-base text-red-600 dark:text-red-400">
+          {{ resource.layout.header.menu.signout }}
+        </button>
+      }
+    </div>
+  </p-drawer>
 </header>

@@ -1,33 +1,40 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
 import { Theme, ThemeService } from 'src/app/api/services/theme.service';
+import { BaseComponent } from '../base/base.component';
+import { AppResource } from '../../models/app.resource';
 
 @Component({
   selector: 'app-theme-switch',
   templateUrl: './theme-switch.component.html',
   standalone: true,
-  imports: [CommonModule, ButtonModule]
+  imports: [CommonModule]
 })
-export class ThemeSwitchComponent {
+export class ThemeSwitchComponent extends BaseComponent {
   options: Theme[] = ['light', 'dark', 'auto'];
-  icons: Record<Theme, string> = {
-    light: '☀️',
-    dark: '🌙',
-    auto: '🖥️'
-  };
-
   current: Theme;
 
-  constructor(private themeService: ThemeService) {
+  constructor(
+    resources: AppResource,
+    private themeService: ThemeService
+  ) {
+    super(resources);
     this.current = this.themeService.getTheme();
   }
 
-  /** Passe à l’option suivante avec animation */
+  get label(): string {
+    const names: Record<Theme, string> = {
+      light: this.resource.home.theme_light,
+      dark: this.resource.home.theme_dark,
+      auto: this.resource.home.theme_auto
+    };
+    return this.resource.home.theme.format(names[this.current]);
+  }
+
+  /** Passe à l'option suivante : clair → sombre → automatique */
   nextTheme() {
     const currentIndex = this.options.indexOf(this.current);
-    const nextIndex = (currentIndex + 1) % this.options.length;
-    this.current = this.options[nextIndex];
+    this.current = this.options[(currentIndex + 1) % this.options.length];
     this.themeService.setTheme(this.current);
   }
 }
