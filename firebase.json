@@ -1,6 +1,7 @@
 {
   "hosting": {
     "site": "perlerwyveth",
+    "predeploy": ["npm run build"],
     "public": "dist/PerlerWyveth/browser",
     "ignore": ["**/.*", "**/node_modules/**"],
     "headers": [
