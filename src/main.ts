@@ -51,6 +51,8 @@ bootstrapApplication(AppComponent, {
       theme: {
         preset: Aura,
         options: {
+          // PrimeNG suit le thème du site (classe .dark sur <html>) et non plus celui du système
+          darkModeSelector: '.dark',
           cssLayer: {
             name: 'primeng',
             order: 'theme, base, primeng'
