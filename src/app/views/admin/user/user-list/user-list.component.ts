@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/api/models/class/user';
 import { UserService } from 'src/app/api/services/user.service';
-import { OverlayButton } from 'src/app/shared/component/image-overlay/image-overlay.component';
+import { OverlayButton } from 'src/app/Shared/Component/image-overlay/image-overlay.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { severity } from 'src/app/shared/enum/severity';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { severity } from 'src/app/Shared/enum/severity';
 import { TableModule } from 'primeng/table';
 
 @Component({

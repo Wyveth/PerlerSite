@@ -19,12 +19,14 @@
       <ng-template #body let-item>
         <tr class="!text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
           <td class="border border-gray-300 !text-center space-x-4 p-2">
-            <a
-              class="btn btn-sm btn-outline-light link-danger"
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-light link-danger inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-1"
+              [attr.aria-label]="resource.button.delete"
               (click)="onDelete($event, item.contact)"
             >
-              <i class="fas fa-trash"></i>
-            </a>
+              <i class="fas fa-trash" aria-hidden="true"></i>
+            </button>
           </td>
           <td class="border border-gray-300 p-2">{{ item.contact.name }}</td>
           <td class="border border-gray-300 p-2">{{ item.contact.email }}</td>

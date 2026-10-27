@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Theme, ThemeService } from 'src/app/api/services/theme.service';
 import { BaseComponent } from '../base/base.component';
-import { AppResource } from '../../models/app.resource';
+import { AppResource } from '../../Models/app.resource';
 
 @Component({
   selector: 'app-theme-switch',

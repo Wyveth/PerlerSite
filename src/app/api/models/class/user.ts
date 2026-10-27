@@ -1,6 +1,5 @@
 import { formatDate } from '@angular/common';
 import { Base } from './base';
-import { FileUpload } from './file-upload';
 
 export class User extends Base {
   key!: string;
@@ -18,14 +17,14 @@ export class User extends Base {
   constructor(
     displayName: string,
     email: string,
-    surname: string = '',
-    name: string = '',
-    adress: string = '',
-    zipcode: string = '',
-    city: string = '',
+    surname = '',
+    name = '',
+    adress = '',
+    zipcode = '',
+    city = '',
     pictureUrl: string | string[] | null = null,
-    admin: boolean = false,
-    disabled: boolean = false
+    admin = false,
+    disabled = false
   ) {
     super(formatDate(new Date(), 'dd/MM/yyyy', 'en'), formatDate(new Date(), 'dd/MM/yyyy', 'en'));
     this.displayName = displayName;

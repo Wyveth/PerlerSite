@@ -1,16 +1,15 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideFirebaseTesting } from 'src/testing/test-providers';
 import { TagService } from './tag.service';
 
-describe('Service: Tag', () => {
+describe('TagService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TagService]
+      providers: [...provideFirebaseTesting()]
     });
   });
 
-  it('should ...', inject([TagService], (service: TagService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', () => {
+    expect(TestBed.inject(TagService)).toBeTruthy();
+  });
 });

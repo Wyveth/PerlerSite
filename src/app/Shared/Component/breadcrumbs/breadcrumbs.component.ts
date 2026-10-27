@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { BaseComponent } from '../base/base.component';
-import { AppResource } from '../../models/app.resource';
+import { AppResource } from '../../Models/app.resource';
 
 @Component({
   selector: 'app-breadcrumbs',

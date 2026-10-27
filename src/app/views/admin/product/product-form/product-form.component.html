@@ -125,7 +125,7 @@
           </div>
           <div class="form-group">
             <div class="flex flex-col flex gap-4 items-center">
-              <label class="dark:text-white" [innerText]="resource.form.dimensions"></label>
+              <span class="font-medium dark:text-white" [innerText]="resource.form.dimensions"></span>
               <div class="flex gap-2">
                 <p-inputgroup>
                   <p-inputgroup-addon [innerText]="resource.generic.height"></p-inputgroup-addon>
@@ -163,7 +163,7 @@
           <!-- Disponibilité -->
           <div class="form-group">
             <div class="flex flex-col gap-4 items-center">
-              <label class="dark:text-white" [innerText]="resource.form.availability"></label>
+              <span class="font-medium dark:text-white" [innerText]="resource.form.availability"></span>
               <div class="grid w-full grid-cols-1 gap-3 md:grid-cols-2">
                 <div class="flex flex-col gap-3 rounded-xl border border-gray-200 p-4 dark:border-zinc-700">
                   <span class="font-semibold dark:text-white" [innerText]="resource.home.mini"></span>
@@ -193,7 +193,7 @@
 
           <div class="form-group">
             <div class="flex flex-col flex gap-4 items-center">
-              <label class="dark:text-white" [innerText]="resource.form.duration"></label>
+              <span class="font-medium dark:text-white" [innerText]="resource.form.duration"></span>
               <div class="flex gap-2">
                 <p-inputgroup>
                   <p-inputnumber

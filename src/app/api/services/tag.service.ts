@@ -60,7 +60,7 @@ export class TagService {
     const docSnap = await this.utilsService.getDocByKey(this.tagsRef, key);
     if (docSnap) {
       // On conserve la date de création et la clé d'origine
-      const { dateCreation, key: _key, ...fields } = tag as any;
+      const { dateCreation: _dateCreation, key: _key, ...fields } = tag as any;
       const updated = {
         ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')

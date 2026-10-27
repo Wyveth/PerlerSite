@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { User } from 'src/app/api/models/class/user';
-import { AppResource } from 'src/app/shared/models/app.resource';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
 import { BaseComponent } from '../base/base.component';
 import { DrawerModule } from 'primeng/drawer';
 import { combineLatest, filter } from 'rxjs';

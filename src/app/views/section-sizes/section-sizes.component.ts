@@ -3,9 +3,9 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Product } from 'src/app/api/models/class/product';
 import { ProductService } from 'src/app/api/services/product.service';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { formatSize, sizeArea, toMiniSize } from 'src/app/shared/utils/parseSize';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { formatSize, sizeArea, toMiniSize } from 'src/app/Shared/utils/parseSize';
 
 /** Section « Midi ou Mini » : explique la conversion de taille avec un exemple réel */
 @Component({

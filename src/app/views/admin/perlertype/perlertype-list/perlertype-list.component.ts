@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { PerlerType } from 'src/app/api/models/class/perler-type';
 import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,11 +10,11 @@ import { ButtonModule } from 'primeng/button';
 import {
   ImageOverlayComponent,
   OverlayButton
-} from 'src/app/shared/component/image-overlay/image-overlay.component';
-import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { severity } from 'src/app/shared/enum/severity';
+} from 'src/app/Shared/Component/image-overlay/image-overlay.component';
+import { FormatPipe } from 'src/app/Shared/pipe/format.pipe';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { severity } from 'src/app/Shared/enum/severity';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({

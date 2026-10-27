@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { Component } from '@angular/core';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { UserFormComponent } from '../admin/user/user-form/user-form.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { OrdererListComponent } from '../orderer-list/orderer-list.component';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
 
 @Component({
   selector: 'app-profil',
@@ -19,10 +19,8 @@ import { AppResource } from 'src/app/shared/models/app.resource';
     OrdererListComponent
   ]
 })
-export class ProfilComponent extends BaseComponent implements OnInit {
+export class ProfilComponent extends BaseComponent {
   constructor(resources: AppResource) {
     super(resources);
   }
-
-  ngOnInit() {}
 }

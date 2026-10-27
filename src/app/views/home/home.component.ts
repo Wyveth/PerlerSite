@@ -1,7 +1,6 @@
 import { SectionFaqComponent } from '../section-faq/section-faq.component';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { SectionWelcomeComponent } from '../section-welcome/section-welcome.component';
 import { SectionPortfolioComponent } from '../section-portfolio/section-portfolio.component';
 import { SectionContactComponent } from '../section-contact/section-contact.component';
@@ -20,8 +19,4 @@ import { SectionSizesComponent } from '../section-sizes/section-sizes.component'
     SectionContactComponent
   ]
 })
-export class HomeComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class HomeComponent {}

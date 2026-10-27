@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { User } from 'src/app/api/models/class/user';
 import { AuthService } from 'src/app/api/services/auth.service';
 import { UserService } from 'src/app/api/services/user.service';
@@ -16,10 +16,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
 import { MessageService } from 'primeng/api';
-import { severity } from 'src/app/shared/enum/severity';
+import { severity } from 'src/app/Shared/enum/severity';
 
 @Component({
   selector: 'app-signup',
@@ -91,7 +91,6 @@ export class SignupComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
     const formValue = this.signupForm.value;
-    const email = formValue['email'];
     const password = formValue['password'];
 
     const user = new User(formValue['displayName'], formValue['email']);

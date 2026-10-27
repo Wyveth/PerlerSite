@@ -2,8 +2,8 @@ import { formatDate } from '@angular/common';
 import { Base } from './base';
 import { FileUpload } from './file-upload';
 import { Tag } from './tag';
-import { parseTime } from 'src/app/shared/utils/parseTime';
-import { parseSize } from 'src/app/shared/utils/parseSize';
+import { parseTime } from 'src/app/Shared/utils/parseTime';
+import { parseSize } from 'src/app/Shared/utils/parseSize';
 
 export class Product extends Base {
   key!: string;

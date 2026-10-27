@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-orderer-list',
@@ -7,8 +7,4 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [CommonModule]
 })
-export class OrdererListComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class OrdererListComponent {}

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
@@ -11,9 +11,7 @@ import * as AOS from 'aos';
   standalone: true,
   imports: [CommonModule, RouterOutlet, ToastModule, ConfirmDialog]
 })
-export class AppComponent {
-  constructor() {}
-
+export class AppComponent implements OnInit {
   ngOnInit() {
     AOS.init();
   }

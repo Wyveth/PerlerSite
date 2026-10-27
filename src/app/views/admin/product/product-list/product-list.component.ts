@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { Product } from 'src/app/api/models/class/product';
 import { ProductService } from 'src/app/api/services/product.service';
 import { ButtonModule } from 'primeng/button';
@@ -11,11 +11,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {
   ImageOverlayComponent,
   OverlayButton
-} from 'src/app/shared/component/image-overlay/image-overlay.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { FormatPipe } from 'src/app/shared/pipe/format.pipe';
-import { severity } from 'src/app/shared/enum/severity';
+} from 'src/app/Shared/Component/image-overlay/image-overlay.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { FormatPipe } from 'src/app/Shared/pipe/format.pipe';
+import { severity } from 'src/app/Shared/enum/severity';
 
 @Component({
   selector: 'app-product-list',

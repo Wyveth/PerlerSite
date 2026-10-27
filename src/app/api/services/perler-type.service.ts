@@ -57,7 +57,7 @@ export class PerlerTypeService {
     const docSnap = await this.utilsService.getDocByKey(this.perlerTypesRef, key);
     if (docSnap) {
       // On conserve la date de création et la clé d'origine
-      const { dateCreation, key: _key, ...fields } = perlerType as any;
+      const { dateCreation: _dateCreation, key: _key, ...fields } = perlerType as any;
       const updated = {
         ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')

@@ -1,7 +1,7 @@
 export function parseSize(size: string) {
-  let sizeParts = size.split(/x|×/i);
-  let height = sizeParts[0].replace(',', '.').trim();
-  let width = sizeParts[1].replace(',', '.').trim();
+  const sizeParts = size.split(/x|×/i);
+  const height = sizeParts[0].replace(',', '.').trim();
+  const width = sizeParts[1].replace(',', '.').trim();
 
   return { height, width };
 }

@@ -1,27 +1,21 @@
-/* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { provideTestDefaults } from 'src/testing/test-providers';
 import { TagListComponent } from './tag-list.component';
 
 describe('TagListComponent', () => {
-  let component: TagListComponent;
   let fixture: ComponentFixture<TagListComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [TagListComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TagListComponent],
+      providers: provideTestDefaults()
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TagListComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

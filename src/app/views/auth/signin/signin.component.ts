@@ -1,6 +1,6 @@
 import { MessageService } from 'primeng/api';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -15,8 +15,8 @@ import { AuthService } from 'src/app/api/services/auth.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { severity } from 'src/app/shared/enum/severity';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { severity } from 'src/app/Shared/enum/severity';
 
 @Component({
   selector: 'app-signin',

@@ -1,16 +1,15 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideFirebaseTesting } from 'src/testing/test-providers';
 import { PerlerTypeService } from './perler-type.service';
 
-describe('Service: PerlerType', () => {
+describe('PerlerTypeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PerlerTypeService]
+      providers: [...provideFirebaseTesting()]
     });
   });
 
-  it('should ...', inject([PerlerTypeService], (service: PerlerTypeService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', () => {
+    expect(TestBed.inject(PerlerTypeService)).toBeTruthy();
+  });
 });
