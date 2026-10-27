@@ -21,26 +21,39 @@
       <ng-template #body let-item>
         <tr>
           <td class="border border-gray-300 !text-center md:space-x-6 space-x-1.5 md:p-2 p-0">
-            <a (click)="onEdit(item.user.key)">
-              <i class="fas fa-edit"></i>
-            </a>
-            <a (click)="onDelete($event, item.user)">
-              <i class="fas fa-trash"></i>
-            </a>
+            <button type="button" class="inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-1" [attr.aria-label]="resource.button.edit" (click)="onEdit(item.user.key)">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-1" [attr.aria-label]="resource.button.delete" (click)="onDelete($event, item.user)">
+              <i class="fas fa-trash" aria-hidden="true"></i>
+            </button>
           </td>
           <td>{{ item.user.email }}</td>
           <td>{{ item.user.displayName }}</td>
           <td>{{ item.user.surname }}</td>
           <td>{{ item.user.name }}</td>
           <td class="!text-center">
-            <a (click)="setAdmin(item.user)">
-              <i class="fas" [ngClass]="item.user.admin ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
-            </a>
+            <button
+              type="button"
+              class="inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-1"
+              [attr.aria-label]="resource.table.admin"
+              [attr.aria-pressed]="item.user.admin"
+              (click)="setAdmin(item.user)"
+            >
+              <i class="fas" aria-hidden="true" [ngClass]="item.user.admin ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
+            </button>
           </td>
           <td class="!text-center">
-            <a *ngIf="!item.user.admin" (click)="setDisabled(item.user)">
-              <i class="fas" [ngClass]="item.user.disabled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
-            </a>
+            <button
+              *ngIf="!item.user.admin"
+              type="button"
+              class="inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-1"
+              [attr.aria-label]="resource.table.account"
+              [attr.aria-pressed]="item.user.disabled"
+              (click)="setDisabled(item.user)"
+            >
+              <i class="fas" aria-hidden="true" [ngClass]="item.user.disabled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
+            </button>
           </td>
         </tr>
       </ng-template>

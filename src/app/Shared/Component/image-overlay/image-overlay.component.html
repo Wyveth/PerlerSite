@@ -1,7 +1,12 @@
 <div
   class="relative w-72 h-48 overflow-hidden rounded-xl"
   [class.group]="!active"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="title"
   (click)="toggleRequested.emit()"
+  (keydown.enter)="toggleRequested.emit()"
+  (keydown.space)="$event.preventDefault(); toggleRequested.emit()"
 >
   <img *ngIf="url" [src]="url" alt="Image" class="w-full h-full object-cover" />
   <div

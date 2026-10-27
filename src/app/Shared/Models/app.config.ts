@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AppConfig {
   private config: any = null!;
-  private env: string = '';
+  private env = '';
 
   constructor(private httpClient: HttpClient) {}
 

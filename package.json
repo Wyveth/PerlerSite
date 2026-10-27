@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --watch=false --no-progress --browsers=ChromeHeadlessCI",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -46,6 +48,8 @@
     "@types/isotope-layout": "^3.0.9",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.20.36",
+    "angular-eslint": "20.7.0",
+    "eslint": "^9.39.1",
     "jasmine-core": "~3.8.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.1.0",
@@ -55,6 +59,7 @@
     "less": "^4.2.0",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.11",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "8.46.4"
   }
 }

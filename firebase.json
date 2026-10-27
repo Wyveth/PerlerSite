@@ -1,7 +1,10 @@
 {
+  "functions": {
+    "source": "functions"
+  },
   "hosting": {
     "site": "perlerwyveth",
-    "predeploy": ["npm run build"],
+    "predeploy": ["npm run lint", "npm run test:ci", "npm run build"],
     "public": "dist/PerlerWyveth/browser",
     "ignore": ["**/.*", "**/node_modules/**"],
     "headers": [

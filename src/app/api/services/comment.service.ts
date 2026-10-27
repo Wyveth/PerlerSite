@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import {
   Firestore,
   collectionData,

@@ -8,7 +8,7 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -18,9 +18,9 @@ import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { User } from 'src/app/api/models/class/user';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
 import { UserService } from 'src/app/api/services/user.service';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { severity } from 'src/app/shared/enum/severity';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { severity } from 'src/app/Shared/enum/severity';
 
 @Component({
   selector: 'app-user-form',
@@ -47,7 +47,7 @@ export class UserFormComponent extends BaseComponent implements OnInit {
   originalInitialFiles: FileUpload[] = []; // snapshot immuable de départ
   removedInitialKeys = new Set<string>(); // ce que l’utilisateur retire en édition
 
-  @Input() option: string = 'Admin';
+  @Input() option = 'Admin';
 
   constructor(
     resources: AppResource,

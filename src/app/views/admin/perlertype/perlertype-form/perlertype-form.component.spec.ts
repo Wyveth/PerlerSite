@@ -1,27 +1,21 @@
-/* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { provideTestDefaults } from 'src/testing/test-providers';
 import { PerlertypeFormComponent } from './perlertype-form.component';
 
 describe('PerlertypeFormComponent', () => {
-  let component: PerlertypeFormComponent;
   let fixture: ComponentFixture<PerlertypeFormComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [PerlertypeFormComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PerlertypeFormComponent],
+      providers: provideTestDefaults()
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(PerlertypeFormComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

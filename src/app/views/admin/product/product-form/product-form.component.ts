@@ -9,16 +9,16 @@ import {
   FormGroup
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, combineLatest, filter, first, firstValueFrom } from 'rxjs';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { combineLatest, filter, first, firstValueFrom } from 'rxjs';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { Product } from 'src/app/api/models/class/product';
 import { PerlerTypeService } from 'src/app/api/services/perler-type.service';
 import { ProductService } from 'src/app/api/services/product.service';
 import { TagService } from 'src/app/api/services/tag.service';
 import { FileUploadService } from 'src/app/api/services/upload-file.service';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TextareaModule } from 'primeng/textarea';
@@ -30,12 +30,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { parseTime } from 'src/app/shared/utils/parseTime';
-import { parseSize } from 'src/app/shared/utils/parseSize';
-import { parseDate } from 'src/app/shared/utils/parseDate';
+import { parseTime } from 'src/app/Shared/utils/parseTime';
+import { parseSize } from 'src/app/Shared/utils/parseSize';
+import { parseDate } from 'src/app/Shared/utils/parseDate';
 import { Tag } from 'src/app/api/models/class/tag';
 import { PerlerType } from 'src/app/api/models/class/perler-type';
-import { severity } from 'src/app/shared/enum/severity';
+import { severity } from 'src/app/Shared/enum/severity';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -65,8 +65,8 @@ export class ProductFormComponent extends BaseComponent implements OnInit {
   id!: string;
   isAddMode!: boolean;
 
-  dropdownListTags!: Array<{ item_id: string; item_text: string }>;
-  dropdownListPerlerTypes!: Array<{ item_id: string; item_text: string }>;
+  dropdownListTags!: { item_id: string; item_text: string }[];
+  dropdownListPerlerTypes!: { item_id: string; item_text: string }[];
 
   uploadedFiles: FileUpload[] = [];
   initialFiles: FileUpload[] = [];

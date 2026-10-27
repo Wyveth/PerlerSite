@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BreadcrumbsComponent } from 'src/app/shared/component/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from 'src/app/Shared/Component/breadcrumbs/breadcrumbs.component';
 import { FileUpload } from 'src/app/api/models/class/file-upload';
 import { Tag } from 'src/app/api/models/class/tag';
 import { TagService } from 'src/app/api/services/tag.service';
@@ -17,9 +17,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
-import { severity } from 'src/app/shared/enum/severity';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
+import { severity } from 'src/app/Shared/enum/severity';
 import { MessageService } from 'primeng/api';
 
 @Component({

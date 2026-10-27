@@ -1,16 +1,15 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideFirebaseTesting } from 'src/testing/test-providers';
 import { FileUploadService } from './upload-file.service';
 
-describe('Service: UploadFile', () => {
+describe('FileUploadService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FileUploadService]
+      providers: [...provideFirebaseTesting()]
     });
   });
 
-  it('should ...', inject([FileUploadService], (service: FileUploadService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', () => {
+    expect(TestBed.inject(FileUploadService)).toBeTruthy();
+  });
 });

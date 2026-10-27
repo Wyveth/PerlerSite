@@ -13,8 +13,8 @@
       <form class="flex flex-col space-y-8" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="space-y-2">
           <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
-            <label [innerText]="resource.form.display_name"></label>
-            <input type="text" pInputText formControlName="displayName" class="w-full" />
+            <label for="signup-displayName" [innerText]="resource.form.display_name"></label>
+            <input id="signup-displayName" type="text" pInputText formControlName="displayName" class="w-full" />
           </p-floatlabel>
           <div
             *ngIf="f.displayName.errors && (f.displayName.touched || f.displayName.dirty)"
@@ -35,8 +35,8 @@
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
-            <label [innerText]="resource.form.email"></label>
-            <input type="text" pInputText formControlName="email" class="w-full" />
+            <label for="signup-email" [innerText]="resource.form.email"></label>
+            <input id="signup-email" type="email" pInputText formControlName="email" class="w-full" />
           </p-floatlabel>
           <div
             *ngIf="f.email.errors && (f.email.touched || f.email.dirty)"
@@ -52,8 +52,9 @@
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
-            <label class="z-1" [innerText]="resource.form.password"></label>
+            <label for="signup-password" class="z-1" [innerText]="resource.form.password"></label>
             <p-password
+              inputId="signup-password"
               type="password"
               formControlName="password"
               [inputStyleClass]="'w-full'"
@@ -92,8 +93,9 @@
         </div>
         <div class="space-y-2">
           <p-floatlabel class="flex md:w-8/10 w-full mx-auto">
-            <label class="z-1" [innerText]="resource.form.confirm_password"></label>
+            <label for="signup-confirmPassword" class="z-1" [innerText]="resource.form.confirm_password"></label>
             <p-password
+              inputId="signup-confirmPassword"
               type="password"
               formControlName="confirmPassword"
               [inputStyleClass]="'w-full'"

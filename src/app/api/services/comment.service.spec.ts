@@ -1,16 +1,15 @@
-/* tslint:disable:no-unused-variable */
-
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideFirebaseTesting } from 'src/testing/test-providers';
 import { CommentService } from './comment.service';
 
-describe('Service: Comment', () => {
+describe('CommentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CommentService]
+      providers: [...provideFirebaseTesting()]
     });
   });
 
-  it('should ...', inject([CommentService], (service: CommentService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', () => {
+    expect(TestBed.inject(CommentService)).toBeTruthy();
+  });
 });

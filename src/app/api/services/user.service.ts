@@ -68,7 +68,13 @@ export class UserService {
     const docSnap = await this.utilsService.getDocByKey(this.usersRef, key);
     if (docSnap) {
       // On ne touche jamais aux champs gérés ailleurs (droits, statut, date de création, clé)
-      const { admin, disabled, dateCreation, key: _key, ...fields } = user as any;
+      const {
+        admin: _admin,
+        disabled: _disabled,
+        dateCreation: _dateCreation,
+        key: _key,
+        ...fields
+      } = user as any;
       const updated = {
         ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppResource } from '../../models/app.resource';
+import { AppResource } from '../../Models/app.resource';
 import { BaseComponent } from '../base/base.component';
 import { scrollViewFragment } from '../header/header.component';
 

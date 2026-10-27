@@ -14,10 +14,10 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from 'src/app/shared/models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from 'src/app/Shared/Models/app.resource';
 import { getAuth } from '@angular/fire/auth';
-import { severity } from 'src/app/shared/enum/severity';
+import { severity } from 'src/app/Shared/enum/severity';
 
 @Component({
   selector: 'app-change-password',
@@ -107,7 +107,7 @@ export class ChangePasswordComponent extends BaseComponent implements OnInit {
         summary: this.resource.generic.success,
         detail: this.resource.change_password.success
       });
-    } catch (err: any) {
+    } catch {
       this.messageService.add({
         severity: severity.error,
         summary: this.resource.generic.error,

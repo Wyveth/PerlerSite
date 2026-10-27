@@ -1,7 +1,7 @@
-import { ExtraOptions, Routes } from '@angular/router';
-import { LayoutComponent } from './shared/component/layout/layout.component';
-import { AuthAdminGuardService } from './shared/guard/authAdmin-guard.service';
-import { AuthGuardService } from './shared/guard/auth-guard.service';
+import { Routes } from '@angular/router';
+import { LayoutComponent } from './Shared/Component/layout/layout.component';
+import { AuthAdminGuardService } from './Shared/Guard/authAdmin-guard.service';
+import { AuthGuardService } from './Shared/Guard/auth-guard.service';
 
 export const routes: Routes = [
   {

@@ -69,7 +69,7 @@ export class ProductService {
     const docSnap = await this.utilsService.getDocByKey(this.productsRef, key);
     if (docSnap) {
       // On conserve la date de création et la clé d'origine
-      const { dateCreation, key: _key, ...fields } = product as any;
+      const { dateCreation: _dateCreation, key: _key, ...fields } = product as any;
       const updated = {
         ...fields,
         dateModification: formatDate(new Date(), 'dd/MM/yyyy', 'en')

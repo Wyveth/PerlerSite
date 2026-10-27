@@ -9,10 +9,10 @@ import {
 } from '@angular/forms';
 import { Contact } from 'src/app/api/models/class/contact';
 import { ContactService } from 'src/app/api/services/contact.service';
-import { BaseComponent } from 'src/app/shared/component/base/base.component';
-import { AppResource } from './../../shared/models/app.resource';
+import { BaseComponent } from 'src/app/Shared/Component/base/base.component';
+import { AppResource } from './../../Shared/Models/app.resource';
 import { MessageService } from 'primeng/api';
-import { severity } from 'src/app/shared/enum/severity';
+import { severity } from 'src/app/Shared/enum/severity';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 })
 export class SectionContactComponent extends BaseComponent implements OnInit {
   contactForm!: UntypedFormGroup;
-  loading: boolean = false;
+  loading = false;
 
   constructor(
     resources: AppResource,

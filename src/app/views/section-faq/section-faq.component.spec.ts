@@ -1,27 +1,21 @@
-/* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { provideTestDefaults } from 'src/testing/test-providers';
 import { SectionFaqComponent } from './section-faq.component';
 
-describe('SectionResumeComponent', () => {
-  let component: SectionFaqComponent;
+describe('SectionFaqComponent', () => {
   let fixture: ComponentFixture<SectionFaqComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [SectionFaqComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SectionFaqComponent],
+      providers: provideTestDefaults()
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(SectionFaqComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

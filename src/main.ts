@@ -20,9 +20,9 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { AppResource } from './app/shared/models/app.resource';
-import { AppConfig } from './app/shared/models/app.config';
-import './app/shared/extension/string.extension';
+import { AppResource } from './app/Shared/Models/app.resource';
+import { AppConfig } from './app/Shared/Models/app.config';
+import './app/Shared/extension/string.extension';
 
 export function loadResources(resourceService: AppResource) {
   return () => resourceService.load();

@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { Resource } from 'src/app/resources/resource';
-import { AppResource } from '../../models/app.resource';
+import { AppResource } from '../../Models/app.resource';
 
 @Directive()
 export abstract class BaseComponent {
